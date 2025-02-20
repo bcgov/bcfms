@@ -42,6 +42,17 @@ services:
     stdin_open: true
     tty: true
 
+  bcfms-pg_tileserv:
+    container_name: bcfms-pg_tileserv7-6
+    hostname: bcfms-pg_tileserv7-6
+    image: pramsey/pg_tileserv:latest
+    env_file:
+      - ./docker/pg_tileserv/pg_tileserv.env
+    ports:
+      - "7800:7800"
+    stdin_open: true
+    tty: true
+
 networks:
   default:
     external: true
