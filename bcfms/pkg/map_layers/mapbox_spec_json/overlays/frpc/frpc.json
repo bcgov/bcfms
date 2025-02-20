@@ -16,7 +16,7 @@
     "centery": null,
     "icon": "fa fa-globe",
     "isoverlay": true,
-    "legend": "<p><em>Fossil Resource Potential Classification - Bedrock</em><br /><img alt=\"\" class=\"frpc-high legend-swatch\" src=\"/{ url_context_root }/static/img/blank.png\" />High Potential<br /> <img alt=\"\" class=\"frpc-medium legend-swatch\" src=\"/{ url_context_root }/static/img/blank.png\" />Medium Potential<br /> <img alt=\"\" class=\"frpc-low legend-swatch\" src=\"/{ url_context_root }/static/img/blank.png\" />Low Potential<br /> <img alt=\"\" class=\"frpc-very-low legend-swatch\" src=\"/{ url_context_root }/static/img/blank.png\" />Very Low Potential</p>",
+    "legend": "<p><em>Fossil Resource Potential Classification - Bedrock</em><br /><div class=\"frpc-high legend-swatch\"></div>High Potential<br /> <div class=\"frpc-medium legend-swatch\"></div>Medium Potential<br /> <div class=\"frpc-low legend-swatch\"></div>Low Potential<br /> <div class=\"frpc-very-low legend-swatch\"></div>Very Low Potential</p>",
     "searchonly": false,
     "sortorder": 0,
     "zoom": null
