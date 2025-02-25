@@ -1,4 +1,5 @@
 from arches.app.models import models
+from arches.app.models.concept import Concept
 from bcfms.util.bcfms_aliases import (
     GraphSlugs,
     CollectionEventAliases,
@@ -199,11 +200,25 @@ class IPADataProxy(BusinessDataProxy):
         )
 
     @staticmethod
-    def get_last_report_id(node_id, report_type_abbreviation):
+    def get_last_report_id(node_id, report_type_abbreviation=None, value_id=None):
         # Gets the next report number in the sequence.
         # Assumes that there is only one report type abbreviation for any particular node
         # Report number format is <year>-<abbreviation>-<seq#> eg: 2024-PSR-001
+        abbreviation = None
         current_year = str(date.today().year)
+        if value_id:
+            value_object = models.Value.objects.get(valueid=value_id)
+            concept = Concept().get(id=value_object.concept.conceptid)
+            first_match = next(
+                (value for value in concept.values if value.type == "abbreviation"),
+                None,
+            )
+            abbreviation = first_match.value
+        elif report_type_abbreviation is not None:
+            abbreviation = report_type_abbreviation
+
+        if abbreviation is None:
+            raise ValueError("No abbreviation found")
 
         node = models.Node.objects.get(nodeid=node_id)
         tiles = (
@@ -215,7 +230,10 @@ class IPADataProxy(BusinessDataProxy):
             list(
                 map(
                     lambda tile: (
-                        tile[node_id]["en"]["value"] if tile[node_id] else None
+                        tile[node_id]
+                        if tile[node_id]
+                        and f"{current_year}-{abbreviation}-" in tile[node_id]
+                        else None
                     ),
                     tiles,
                 )
@@ -223,8 +241,12 @@ class IPADataProxy(BusinessDataProxy):
             reverse=True,
         )
 
-        if len(values) < 1 or not re.match(r"^%s" % current_year, values[0]):
-            return "%s-%s-001" % (current_year, report_type_abbreviation)
+        if (
+            len(values) < 1
+            or values[0] is None
+            or not re.match(r"^%s" % current_year, values[0])
+        ):
+            return f"{current_year}-{abbreviation}-001"
         else:
             val = "{:0=3}".format(int(re.split("-", values[0])[2]) + 1)
             return re.sub("[^-]{3}$", val, values[0])

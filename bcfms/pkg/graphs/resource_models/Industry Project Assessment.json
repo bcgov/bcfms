@@ -336,6 +336,58 @@
                 {
                     "card_id": "83860218-3ada-4ad1-bd45-ab1308647f04",
                     "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "IPA Number",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "reportTypeAbbreviation": "IPA",
+                        "submissionTypeNodeAlias": "",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "220dbded-bd13-4699-8b6b-3c67b93a8e66",
+                    "label": {
+                        "en": "IPA Number"
+                    },
+                    "node_id": "37ca3e6c-dc67-11ef-a53d-0242ac170009",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000106"
+                },
+                {
+                    "card_id": "67158fce-ef0f-490b-8dc4-5bcd1dbf4689",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Submission Number",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
+                        "reportTypeAbbreviation": "",
+                        "submissionTypeNodeAlias": "submission_type",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "4232c87a-26dc-4aa2-9f15-743ecf82f784",
+                    "label": {
+                        "en": "Submission Number"
+                    },
+                    "node_id": "beb5a62e-f0d4-11ef-b226-0242ac170009",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000106"
+                },
+                {
+                    "card_id": "83860218-3ada-4ad1-bd45-ab1308647f04",
+                    "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Assessment Start Date",
@@ -365,72 +417,72 @@
                             {
                                 "children": [],
                                 "collector": "",
-                                "conceptid": "4625da90-452f-4195-9695-2cf264851f11",
-                                "id": "b6916d86-ccc4-4b41-9a00-b780bff92a89",
+                                "conceptid": "750a89ed-e186-4bb7-ac54-7225a30b2104",
+                                "id": "9660c3f9-476b-48ff-8c6a-6e0c89c96b37",
                                 "sortorder": "05",
                                 "text": "Chance Find Protocol"
                             },
                             {
                                 "children": [],
                                 "collector": "",
-                                "conceptid": "183a838c-fb4a-4fb5-8a79-3ab196f3747d",
-                                "id": "8886bc67-7fa6-4336-b0aa-9b9d3e240c76",
+                                "conceptid": "4a94250e-4bec-413a-a586-de0b6c30c0d5",
+                                "id": "4ed3a5cc-edda-400c-a1e1-a0551b072929",
                                 "sortorder": "10",
                                 "text": "Preliminary Study Report"
                             },
                             {
                                 "children": [],
                                 "collector": "",
-                                "conceptid": "5164f737-5238-42c6-93d1-5d71674e7fba",
-                                "id": "53b63fe4-f389-49bc-8f48-2319adab1dcc",
+                                "conceptid": "621b3e22-5fb1-4602-b5f1-9320d1d03b2b",
+                                "id": "a19ed0e3-92f5-46be-8d8a-ecde9d1dd895",
                                 "sortorder": "15",
                                 "text": "Fossil Impact Assessment Plan"
                             },
                             {
                                 "children": [],
                                 "collector": "",
-                                "conceptid": "98755434-ba2c-427e-bb60-77b76b26f12f",
-                                "id": "a602de65-7910-4fdf-a619-5d0c50b438ce",
+                                "conceptid": "c6040910-d1cb-45ca-9ff9-75c563555d35",
+                                "id": "783494c6-5da9-4ea6-96bb-2649679b09f6",
                                 "sortorder": "20",
                                 "text": "Fossil Impact Assessment"
                             },
                             {
                                 "children": [],
                                 "collector": "",
-                                "conceptid": "03b2f74b-83b0-4120-b7a2-238524df0241",
-                                "id": "bab49c27-9e46-4b47-9b5c-79d6c08e8999",
+                                "conceptid": "f4a80698-91c7-4bf7-8cb7-5c6e18a843d2",
+                                "id": "1e24cb4b-40c0-4d6b-94d7-ad77bff5b993",
                                 "sortorder": "25",
                                 "text": "Impact Mitigation Plan"
                             },
                             {
                                 "children": [],
                                 "collector": "",
-                                "conceptid": "f6ce9089-de7b-4dc9-b587-38d562bd1b2a",
-                                "id": "5212e27a-a13d-4a0e-bba8-8deda2296a61",
+                                "conceptid": "6ce97c8a-1d5f-4102-a703-694c4ee939ee",
+                                "id": "1aad1f25-a1f9-4fb0-ab73-b008f7874669",
                                 "sortorder": "30",
                                 "text": "Impact Mitigation Final Report"
                             },
                             {
                                 "children": [],
                                 "collector": "",
-                                "conceptid": "edb07ae4-4736-4206-8f4c-c0b72e58e345",
-                                "id": "8f5ce1d6-4eef-4f97-8b5f-3ee568faed11",
+                                "conceptid": "43737420-43f7-4d4d-bc8c-59295203ccc3",
+                                "id": "c89c4aa8-c196-4c10-97b8-dbfc49b460d8",
                                 "sortorder": "35",
                                 "text": "Site Assessment Plan"
                             },
                             {
                                 "children": [],
                                 "collector": "",
-                                "conceptid": "ca12865a-33b3-473d-b382-fabd94b262f0",
-                                "id": "0eaf1752-8601-486c-b64c-5c243f1de3d4",
+                                "conceptid": "8fcda57b-f3a0-4ccf-96ee-192eb68e0d14",
+                                "id": "6cfdc8b0-806b-4375-ad12-36bedb1d38ba",
                                 "sortorder": "40",
                                 "text": "Site Assessment Final Report"
                             },
                             {
                                 "children": [],
                                 "collector": "",
-                                "conceptid": "92363280-0977-4745-81eb-9619566ed7a7",
-                                "id": "d4faeb9f-1a07-4593-97db-d8ae8347b929",
+                                "conceptid": "7e1f90bc-b6b6-4cec-8cba-ce1878a7ce76",
+                                "id": "e6e4ed57-4a15-4d5a-b9ec-05996ab5136a",
                                 "sortorder": "45",
                                 "text": "Other Requirement"
                             }
@@ -707,8 +759,8 @@
                             {
                                 "children": [],
                                 "collector": "",
-                                "conceptid": "b60b4e1f-54e2-4683-886f-ccca701a6dd1",
-                                "id": "73ca3b70-1bf5-4870-879c-c3f8c6726931",
+                                "conceptid": "02bf9833-78ce-4a8a-bb5c-0ad9ae1d3d32",
+                                "id": "ecea8078-1333-46a8-8924-4d5c96fd7cce",
                                 "sortorder": "",
                                 "text": "to be determined"
                             }
@@ -1754,36 +1806,6 @@
                 {
                     "card_id": "67158fce-ef0f-490b-8dc4-5bcd1dbf4689",
                     "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Submission Number",
-                        "maxLength": null,
-                        "placeholder": {
-                            "en": "Enter text"
-                        },
-                        "reportTypeAbbreviation": "AAA",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "a722c8e7-6593-4ff4-ba2f-bc0f06f708ef",
-                    "label": {
-                        "en": "Submission Number"
-                    },
-                    "node_id": "5e33612e-e4c7-11ef-afe5-0242ac170009",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000106"
-                },
-                {
-                    "card_id": "67158fce-ef0f-490b-8dc4-5bcd1dbf4689",
-                    "config": {
                         "defaultValue": "",
                         "i18n_properties": [
                             "placeholder"
@@ -1822,36 +1844,6 @@
                     "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "83860218-3ada-4ad1-bd45-ab1308647f04",
-                    "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "IPA Number",
-                        "maxLength": null,
-                        "placeholder": {
-                            "en": "Enter text"
-                        },
-                        "reportTypeAbbreviation": "IPA",
-                        "uneditable": false,
-                        "width": "100%%"
-                    },
-                    "id": "da097bc3-32fc-45a5-ac50-82abb6d69f81",
-                    "label": {
-                        "en": "IPA Number"
-                    },
-                    "node_id": "37ca3e6c-dc67-11ef-a53d-0242ac170009",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000106"
                 },
                 {
                     "card_id": "83860218-3ada-4ad1-bd45-ab1308647f04",
@@ -2077,15 +2069,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P115_finishes",
                     "rangenode_id": "683bab26-dc67-11ef-a53d-0242ac170009"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "8e177c12-dc5d-11ef-b664-0242ac170009",
-                    "edgeid": "6d490e75-5c23-4ef9-9f09-c638ac766207",
-                    "graph_id": "a237a6dc-dc5c-11ef-80ef-0242ac170009",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "5e33612e-e4c7-11ef-afe5-0242ac170009"
                 },
                 {
                     "description": null,
@@ -2554,6 +2537,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.ics.forth.gr/isl/CRMsci/O13_triggers",
                     "rangenode_id": "86895a94-e4c6-11ef-a3b6-0242ac170009"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "8e177c12-dc5d-11ef-b664-0242ac170009",
+                    "edgeid": "f602df36-5e7c-430d-809b-ee0445e555b7",
+                    "graph_id": "a237a6dc-dc5c-11ef-80ef-0242ac170009",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "beb5a62e-f0d4-11ef-b226-0242ac170009"
                 }
             ],
             "functions_x_graphs": [
@@ -2689,7 +2681,7 @@
                     "config": {
                         "en": ""
                     },
-                    "datatype": "string",
+                    "datatype": "non-localized-string",
                     "description": "Unique identifier for the IPA.",
                     "exportable": false,
                     "fieldname": null,
@@ -3151,29 +3143,6 @@
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0,
-                    "sourcebranchpublication_id": null
-                },
-                {
-                    "alias": "submission_number",
-                    "config": {
-                        "en": ""
-                    },
-                    "datatype": "string",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "a237a6dc-dc5c-11ef-80ef-0242ac170009",
-                    "hascustomalias": false,
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Submission Number",
-                    "nodegroup_id": "8e177c12-dc5d-11ef-b664-0242ac170009",
-                    "nodeid": "5e33612e-e4c7-11ef-afe5-0242ac170009",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "sortorder": 1,
                     "sourcebranchpublication_id": null
                 },
                 {
@@ -4769,6 +4738,29 @@
                     "sourcebranchpublication_id": null
                 },
                 {
+                    "alias": "submission_number",
+                    "config": {
+                        "en": ""
+                    },
+                    "datatype": "non-localized-string",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "a237a6dc-dc5c-11ef-80ef-0242ac170009",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Submission Number",
+                    "nodegroup_id": "8e177c12-dc5d-11ef-b664-0242ac170009",
+                    "nodeid": "beb5a62e-f0d4-11ef-b226-0242ac170009",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "sortorder": 1,
+                    "sourcebranchpublication_id": null
+                },
+                {
                     "alias": "fmo_approval_date",
                     "config": {
                         "dateFormat": "YYYY-MM-DD"
@@ -4819,8 +4811,8 @@
             "publication": {
                 "graph_id": "a237a6dc-dc5c-11ef-80ef-0242ac170009",
                 "notes": null,
-                "publicationid": "231272bc-ef47-11ef-a897-0242ac170007",
-                "published_time": "2025-02-20T04:57:08.190"
+                "publicationid": "f733bda6-f3c7-11ef-8b36-0242ac17000a",
+                "published_time": "2025-02-25T22:29:24.318"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],

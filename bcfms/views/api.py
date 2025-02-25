@@ -3,9 +3,14 @@ from arches.app.views.api import MVT as MVTBase
 from arches.app.views.api import APIBase
 from arches.app.utils.response import JSONResponse, JSONErrorResponse
 from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
-from bcfms.util.business_data_proxy import FossilSampleDataProxy, CollectionEventDataProxy, IPADataProxy
+from bcfms.util.business_data_proxy import (
+    FossilSampleDataProxy,
+    CollectionEventDataProxy,
+    IPADataProxy,
+)
 from arches.app.models import models
 from bcfms.util.mvt_tiler import MVTTiler
+
 
 class MVT(MVTBase):
 
@@ -39,6 +44,13 @@ class CollectionEventFossilNames(APIBase):
 
 
 class ReportNumberGenerator(APIBase):
-    def get(self, request, nodeid, typeAbbreviation):
-        report_number = {"status": "success", "report_number": IPADataProxy().get_last_report_id(nodeid, typeAbbreviation)}
+    def get(self, request, nodeid):
+        abbreviation = request.GET.get("abbreviation")
+        value_id = request.GET.get("valueId")
+        report_number = {
+            "status": "success",
+            "report_number": IPADataProxy().get_last_report_id(
+                nodeid, report_type_abbreviation=abbreviation, value_id=value_id
+            ),
+        }
         return JSONResponse(JSONSerializer().serializeToPython(report_number))

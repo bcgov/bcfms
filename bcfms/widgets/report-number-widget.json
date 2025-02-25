@@ -1,13 +1,14 @@
 {
     "widgetid": "10000000-0000-0000-0000-000000000106",
     "component": "views/components/widgets/report-number-widget",
-    "datatype": "string",
+    "datatype": "non-localized-string",
     "defaultconfig": {
         "width": "10%",
         "maxLength": 13,
         "uneditable": true,
         "defaultValue": "",
-        "reportTypeAbbreviation": "AAA"
+        "reportTypeAbbreviation": "AAA",
+        "submissionTypeNodeAlias": "submission_type"
     },
     "helptext": null,
     "name": "report-number-widget"
