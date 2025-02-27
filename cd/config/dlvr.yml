@@ -1,0 +1,14 @@
+arches_server_port: "8012"
+tileserv_http_listen_port: "7811"
+
+celery_broker_url: "{{ default_cache_backend_location }}/11"
+
+db_databc_user: "proxy_databc_dlvr"
+
+django_debug_mode: "True"
+
+webpack_internal_url: "https://dlvrapps-endowment.nrs.bcgov:8010"
+
+oauth_auth_endpoint: "https://dev.loginproxy.gov.bc.ca/auth/realms/bcregistry/protocol/openid-connect/auth"
+oauth_token_endpoint: "https://dev.loginproxy.gov.bc.ca/auth/realms/bcregistry/protocol/openid-connect/token"
+oauth_jwks_uri: "https://dev.loginproxy.gov.bc.ca/auth/realms/bcregistry/protocol/openid-connect/certs"

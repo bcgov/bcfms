@@ -1,0 +1,9 @@
+arches_server_port: "8002"
+
+db_databc_user: "proxy_databc_prod"
+
+webpack_internal_url: "https://prodapps-early.nrs.bcgov:8000"
+
+oauth_auth_endpoint: "https://loginproxy.gov.bc.ca/auth/realms/bcregistry/protocol/openid-connect/auth"
+oauth_token_endpoint: "https://loginproxy.gov.bc.ca/auth/realms/bcregistry/protocol/openid-connect/token"
+oauth_jwks_uri: "https://loginproxy.gov.bc.ca/auth/realms/bcregistry/protocol/openid-connect/certs"
