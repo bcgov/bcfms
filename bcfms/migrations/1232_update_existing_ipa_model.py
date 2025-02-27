@@ -9,7 +9,7 @@ def replace_ipa_graph(apps, schema_editor):
             "resources",
             operation="remove_resources",
             graph=graph.graphid,
-            quiet=True,
+            yes=True,
         )
 
         # Make sure we remove the old indexed objects as we're changing
