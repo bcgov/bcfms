@@ -2621,7 +2621,7 @@
                     "parentnodegroup_id": "8e177c12-dc5d-11ef-b664-0242ac170009"
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "8e177c12-dc5d-11ef-b664-0242ac170009",
                     "parentnodegroup_id": null
@@ -4811,8 +4811,8 @@
             "publication": {
                 "graph_id": "a237a6dc-dc5c-11ef-80ef-0242ac170009",
                 "notes": null,
-                "publicationid": "f733bda6-f3c7-11ef-8b36-0242ac17000a",
-                "published_time": "2025-02-25T22:29:24.318"
+                "publicationid": "bc00d640-f4c8-11ef-8ef8-0242ac170008",
+                "published_time": "2025-02-27T05:07:25.658"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
