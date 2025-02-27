@@ -4,14 +4,25 @@ from arches.app.models.graph import Graph
 
 def replace_ipa_graph(apps, schema_editor):
     graph = Graph.objects.filter(slug="project_assessment").first()
-    call_command(
-        "resources",
-        operation="remove_resources",
-        graph=graph.graphid,
-        yes = True
-    )
+    if graph:
+        call_command(
+            "resources",
+            operation="remove_resources",
+            graph=graph.graphid,
+            quiet=True,
+        )
 
-    graph.delete()
+        # Make sure we remove the old indexed objects as we're changing
+        # some datatypes
+        call_command(
+            "es",
+            operation="index_resources_by_type",
+            resource_types=[graph.graphid],
+            clear_index=True,
+            quiet=True
+        )
+
+        graph.delete()
     call_command(
         "packages",
         operation="import_graphs",
