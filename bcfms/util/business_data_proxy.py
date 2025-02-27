@@ -1,3 +1,5 @@
+from django.core.exceptions import ValidationError
+
 from arches.app.models import models
 from arches.app.models.concept import Concept
 from bcfms.util.bcfms_aliases import (
@@ -207,15 +209,27 @@ class IPADataProxy(BusinessDataProxy):
         abbreviation = None
         current_year = str(date.today().year)
         if value_id:
-            value_object = models.Value.objects.get(valueid=value_id)
-            concept = Concept().get(id=value_object.concept.conceptid)
-            first_match = next(
-                (value for value in concept.values if value.type == "abbreviation"),
-                None,
-            )
-            abbreviation = first_match.value
+            try:
+                value_object = models.Value.objects.get(valueid=value_id)
+                concept = Concept().get(id=value_object.concept.conceptid)
+                first_match = next(
+                    (value for value in concept.values if value.type == "abbreviation"),
+                    None,
+                )
+                if not first_match:
+                    raise ValueError(
+                        f"Concept {concept.id} does not have an abbreviation value."
+                    )
+                abbreviation = first_match.value
+            except models.Value.DoesNotExist as e:
+                raise ValueError(f"Value ID does not exist {value_id}.")
+            except ValidationError as e:
+                raise ValueError(str(e))
+
         elif report_type_abbreviation is not None:
             abbreviation = report_type_abbreviation
+        else:
+            raise ValueError(f"Either an abbreviation or value ID must be provided.")
 
         if abbreviation is None:
             raise ValueError("No abbreviation found")
@@ -230,10 +244,10 @@ class IPADataProxy(BusinessDataProxy):
             list(
                 map(
                     lambda tile: (
-                        tile[node_id]
-                        if tile[node_id]
-                        and f"{current_year}-{abbreviation}-" in tile[node_id]
-                        else None
+                        tile[str(node_id)]
+                        if str(node_id) in tile
+                        and f"{current_year}-{abbreviation}-" in tile[str(node_id)]
+                        else ""
                     ),
                     tiles,
                 )

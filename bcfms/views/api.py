@@ -47,10 +47,19 @@ class ReportNumberGenerator(APIBase):
     def get(self, request, nodeid):
         abbreviation = request.GET.get("abbreviation")
         value_id = request.GET.get("valueId")
-        report_number = {
-            "status": "success",
-            "report_number": IPADataProxy().get_last_report_id(
+
+        try:
+            report_number = IPADataProxy().get_last_report_id(
                 nodeid, report_type_abbreviation=abbreviation, value_id=value_id
-            ),
-        }
-        return JSONResponse(JSONSerializer().serializeToPython(report_number))
+            )
+            response = {
+                "status": "success",
+                "report_number": report_number,
+            }
+        except ValueError as e:
+            response = {
+                "status": "fail",
+                "error_message": str(e),
+            }
+
+        return JSONResponse(JSONSerializer().serializeToPython(response))

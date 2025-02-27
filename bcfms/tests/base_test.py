@@ -18,14 +18,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import os
 from django.test import TestCase
+from django.test.utils import captured_stdout
 from arches.app.models.graph import Graph
 from arches.app.models.models import Ontology
 from arches.app.models.system_settings import settings
 from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
-from arches.app.utils.data_management.resource_graphs.importer import import_graph as ResourceGraphImporter
+from arches.app.utils.data_management.resource_graphs.importer import (
+    import_graph as ResourceGraphImporter,
+)
 from arches.app.utils.data_management.resources.importer import BusinessDataImporter
 from bcfms.tests import test_settings
 from arches.app.utils.context_processors import app_settings
+from arches.app.utils.skos import SKOSReader
 from django.db import connection
 from django.core import management
 from django.test.runner import DiscoverRunner
@@ -51,7 +55,11 @@ CREATE_TOKEN_SQL = """
             token, expires, scope, application_id, user_id, created, updated)
             VALUES ('{token}', '1-1-2068', 'read write', 44, {user_id}, '1-1-2018', '1-1-2018');
     """
-DELETE_TOKEN_SQL = "DELETE FROM public.oauth2_provider_accesstoken WHERE application_id = 44;"
+DELETE_TOKEN_SQL = (
+    "DELETE FROM public.oauth2_provider_accesstoken WHERE application_id = 44;"
+)
+
+PACKAGE_ROOT = os.path.join(settings.APP_ROOT, "pkg")
 
 
 class ArchesTestRunner(DiscoverRunner):
@@ -63,6 +71,76 @@ class ArchesTestRunner(DiscoverRunner):
         prepare_concepts_index(create=True)
         prepare_search_index(create=True)
 
+        # Setup the base config - functions, widgets, vocabularies, ontologies and graphs
+        # Load app functions
+        file_paths = [
+            os.path.abspath(os.path.join(settings.APP_ROOT, "functions", file_path))
+            for file_path in (os.listdir(os.path.join(settings.APP_ROOT, "functions")))
+            if file_path.endswith(".py") and file_path != "__init__.py"
+        ] + [
+            os.path.abspath(os.path.join(settings.COMMON_ROOT, "functions", file_path))
+            for file_path in (
+                os.listdir(os.path.join(settings.COMMON_ROOT, "functions"))
+            )
+            if file_path.endswith(".py") and file_path != "__init__.py"
+        ]
+        for file_path in file_paths:
+            management.call_command("fn", "register", "-s", file_path)
+
+        # Load app widgets
+        file_paths = [
+            os.path.abspath(os.path.join(settings.APP_ROOT, "widgets", file_path))
+            for file_path in os.listdir(os.path.join(settings.APP_ROOT, "widgets"))
+            if file_path.endswith(".json")
+        ] + [
+            os.path.abspath(os.path.join(settings.COMMON_ROOT, "widgets", file_path))
+            for file_path in os.listdir(os.path.join(settings.COMMON_ROOT, "widgets"))
+            if file_path.endswith(".json")
+        ]
+
+        for file_path in file_paths:
+            management.call_command("widget", "register", "-s", file_path)
+
+        for skospath in [
+            os.path.join(
+                PACKAGE_ROOT,
+                "reference_data",
+                "concepts",
+                "bcgov_fossils_concept_scheme.xml",
+            ),
+            os.path.join(
+                PACKAGE_ROOT,
+                "reference_data",
+                "collections",
+                "bc_fossils_collections.xml",
+            ),
+        ]:
+            skos = SKOSReader()
+            rdf = skos.read_file(skospath)
+            skos.save_concepts_from_skos(rdf)
+
+        # Load ontologies
+        ArchesTestCase.loadOntology()
+
+        # Load graphs
+        file_paths = [
+            os.path.join(
+                settings.APP_ROOT, "pkg", "graphs", "resource_models", file_path
+            )
+            for file_path in os.listdir(
+                os.path.join(settings.APP_ROOT, "pkg", "graphs", "resource_models")
+            )
+            if file_path.endswith(".json")
+        ]
+        for file_path in file_paths:
+            with captured_stdout() as captured:
+                with open(file_path, "r") as f:
+                    archesfile = JSONDeserializer().deserialize(f)
+                    errs, importer = ResourceGraphImporter(
+                        archesfile["graph"], overwrite_graphs=True
+                    )
+                print(captured)
+
         return ret
 
     def teardown_databases(self, old_config, **kwargs):
@@ -72,15 +150,22 @@ class ArchesTestRunner(DiscoverRunner):
 
         super().teardown_databases(old_config, **kwargs)
 
+
 class ArchesTestCase(TestCase):
     def __init__(self, *args, **kwargs):
         super(ArchesTestCase, self).__init__(*args, **kwargs)
         if settings.DEFAULT_BOUNDS is None:
-            management.call_command("migrate")
-            with open(os.path.join("tests/fixtures/system_settings/Arches_System_Settings_Model.json"), "r") as f:
+            with open(
+                os.path.join(
+                    "tests/fixtures/system_settings/Arches_System_Settings_Model.json"
+                ),
+                "r",
+            ) as f:
                 archesfile = JSONDeserializer().deserialize(f)
             ResourceGraphImporter(archesfile["graph"], True)
-            BusinessDataImporter("tests/fixtures/system_settings/Arches_System_Settings_Local.json").import_business_data()
+            BusinessDataImporter(
+                "tests/fixtures/system_settings/Arches_System_Settings_Local.json"
+            ).import_business_data()
             settings.update_from_db()
 
     @classmethod

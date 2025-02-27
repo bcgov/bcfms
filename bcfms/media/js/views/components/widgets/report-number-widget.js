@@ -3,9 +3,10 @@ define([
     'knockout',
     'underscore',
     'viewmodels/widget',
+    'viewmodels/alert',
     'arches',
     'templates/views/components/widgets/report-number-widget.htm'
-], function ($, ko, _, WidgetViewModel, arches, reportNumberWidgetTemplate) {
+], function ($, ko, _, WidgetViewModel, AlertViewModel, arches, reportNumberWidgetTemplate) {
     /**
      * registers a report-number-widget component for use in forms
      * Extension of non-localized-text widget
@@ -61,17 +62,35 @@ define([
                     });
                     url = url + `valueId=${ko.unwrap(self.tile.data[node.nodeid])}`;
             }
-            console.log(`Get report number from ${url}...`);
             self.form.loading(true);
             $.ajax({
                 // type: "PUT",
                 url: url
             }).done(function (data) {
-                console.log(`Data: ${JSON.stringify(data)}`);
-                console.log(data);
+                self.form.loading(false);
                 if (data.status === "success") {
                     self.value(data.report_number);
                 }
+                else
+                {
+                     self.form.alert(new AlertViewModel(
+                        'ep-alert-red',
+                        'Submission type required',
+                        'Please select a submission type before generating submission number',
+                        null,
+                        function(){}
+                    ));
+                }
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                console.log(errorThrown);
+                self.form.alert(new AlertViewModel(
+                    'ep-alert-red',
+                    `Unable to get submission number: ${textStatus}`,
+                    `Please check the browser console for details`,
+                    null,
+                    function(){}
+                ));
                 self.form.loading(false);
             });
         };
