@@ -29,85 +29,22 @@ s3_endpoint: "https://nrs.objectstore.gov.bc.ca/"
 configure_tileserv: True
 tileserv_http_listen_port: "7801"
 
-staging_schema: "fossils_data"
-# Data transfer settings
-source_db:
-  host: "postgres16-3_arches7-5-2"
-  port: "5432"
-  database: "fossils"
-  user: "fossils"
-  password: "{{ src_db_passwd }}"
-
-tunnel_data:
-  ssh_user: bferguso
-  ssh_target: "{{ inventory_hostname }}"
-  local_port: 5433
-  local_host: localhost
-  remote_port: "{{ cd_database_port }}"
-  remote_host: "{{ cd_database_host }}"
-
-
-target_db:
-  host: "{{ tunnel_data.local_host }}"
-  port: "{{ tunnel_data.local_port }}"
-  database: "{{ cd_database_name }}"
-  user: "{{ cd_database_user }}"
-  password: "{{ cd_database_password }}"
-
-app_script_location: "src/{{ project_name }}/sql/direct_import"
-common_script_location: "src/common/sql"
-
+# Need to eliminate these
 additional_files_to_configure:
   - "pkg/business_data/resource_views/0005_databc_proxy_grants.sql"
   - "migrations/0001_create_databc_proxy_role.py"
 
-transfer_scripts:
- - {script: "{{ common_script_location }}/transfer_tables.sh"}
+django_key: "{{ lookup('ansible.builtin.env', 'DJANGO_KEY') }}"
+db_password: "{{ lookup('ansible.builtin.env', 'DB_PASSWORD') }}"
+db_databc_password: "{{ lookup('ansible.builtin.env', 'DB_DATABC_PASSWORD') }}" # Password used by DataBC to export data
 
-transfer_tables:
- - "cleaned_fossil_names"
- - "cleaned_genus"
- - "cleaned_species"
- - "cleaned_common_names"
- - "fiss_collection_events"
- - "fiss_locations"
- - "fiss_collection_event_notes"
- - "fiss_collectors_x_collection_events"
- - "fiss_contributors"
- - "fiss_collected_samples"
- - "fiss_sample_fossils"
- - "fiss_collected_sample_notes"
- - "fiss_collected_samples_sig_rank_details"
- - "fiss_stratigraphy"
- - "fiss_storage_locations"
- - "fiss_storage_locations_x_fossils"
- - "fiss_important_fossil_areas"
- - "fiss_prov_prot_sites"
- - "fiss_geological_groups"
- - "fiss_geological_formations"
- - "fiss_geological_members"
- - "fiss_geological_informal_names"
- - "fiss_references"
- - "fiss_reference_authors"
- - "fiss_frpc_br"
- - "fiss_frpc_ovb"
+es_api_key: "{{ lookup('ansible.builtin.env', 'ES_API_KEY') }}"
 
-import_scripts:
- - "{{ app_script_location }}/part0a_setup_import.sql"
- - "{{ common_script_location }}/get_uuid_lookup_table.sql"
- - "{{ app_script_location }}/part0b_taxonomy.sql"
- - "{{ app_script_location }}/part0c_convert_geologic_timescale.sql"
- - "{{ app_script_location }}/part1_provincially_protected_sites.sql"
- - "{{ app_script_location }}/part1b_important_fossil_areas.sql"
- - "{{ app_script_location }}/part2_collection_event.sql"
- - "{{ app_script_location }}/part3_contributors.sql"
- - "{{ app_script_location }}/part4_fossil_samples.sql"
- - "{{ app_script_location }}/part4b_collection_event_x_fossil_sample.sql"
- - "{{ app_script_location }}/part4c_capitalize_common_names.sql"
- - "{{ app_script_location }}/part5_storage_locations.sql"
- - "{{ app_script_location }}/part5b_storage_location_x_fossil_sample.sql"
- - "{{ app_script_location }}/part6_publications.sql"
- - "{{ app_script_location }}/part99_frpc.sql"
- - "{{ app_script_location }}/part9_drop_transfer_schema.sql"
+s3_bucket: "{{ lookup('ansible.builtin.env', 'S3_BUCKET') }}"
+s3_access_key_id: "{{ lookup('ansible.builtin.env', 'S3_ACCESS_KEY_ID') }}"
+s3_secret_access_key: "{{ lookup('ansible.builtin.env', 'S3_SECRET_ACCESS_KEY') }}"
 
+planet_api_key: "{{ lookup('ansible.builtin.env', 'PLANET_API_KEY') }}"
+mapbox_key: "{{ lookup('ansible.builtin.env', 'MAPBOX_KEY') }}"
+oauth_client_secret: "{{ lookup('ansible.builtin.env', 'OAUTH_CLIENT_SECRET') }}"
 
