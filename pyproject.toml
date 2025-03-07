@@ -26,6 +26,7 @@ requires-python = ">=3.10"
 dependencies = [
     "arches @ git+https://github.com/bcgov/arches.git#v7.6.4.1_bcgov",
     "bcgov_arches_common @ git+https://github.com/bcgov/arches_common@feat/add_rdm_functions",
+    "python-dotenv",
 ]
 version = "1.2.0-b0"
 
