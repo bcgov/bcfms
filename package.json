@@ -24,12 +24,12 @@
         "rimraf": "^5.0.7",
         "underscore": "^1.13.6"
     },
+    "dependencies": {
+        "arches": "github:bcgov/arches.git#v7.6.4.1_bcgov",
+        "bcgov_arches_common": "github:bcgov/arches_common#feat/add_rdm_functions"
+    },
     "devDependencies": {
         "arches-dev-dependencies": "archesproject/arches-dev-dependencies#stable/7.6.4"
-    },
-    "dependencies": {
-        "arches": "github:bcgov/arches#v7.6.4.1_bcgov",
-        "bcgov_arches_common": "github:bcgov/arches_common#feat/add_rdm_functions"
     },
     "nodeModulesPaths": {}
 }
