@@ -24,7 +24,8 @@ classifiers = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "arches @ git+https://github.com/bcgov/arches.git#v7.6.4.1_bcgov",
+#    "arches @ git+https://github.com/bcgov/arches.git#v7.6.4.1_bcgov",
+    "arches==7.6.4",
     "bcgov_arches_common @ git+https://github.com/bcgov/arches_common@feat/add_rdm_functions",
     "python-dotenv",
 ]
