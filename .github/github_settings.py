@@ -224,12 +224,12 @@ MIDDLEWARE.append(  # this must resolve last MIDDLEWARE entry
     "django_hosts.middleware.HostsResponseMiddleware"
 )
 
-STATICFILES_DIRS = build_staticfiles_dirs(app_root=APP_ROOT)
+# STATICFILES_DIRS = build_staticfiles_dirs(app_root=APP_ROOT)
 
-TEMPLATES = build_templates_config(
-    debug=DEBUG,
-    app_root=APP_ROOT,
-)
+# TEMPLATES = build_templates_config(
+#     debug=DEBUG,
+#     app_root=APP_ROOT,
+# )
 
 ALLOWED_HOSTS = ["localhost"]
 
