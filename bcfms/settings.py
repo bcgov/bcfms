@@ -168,7 +168,13 @@ DATABASES = {
         "PASSWORD": get_env_variable("PGPASSWORD"),
         "PORT": "5432",
         "POSTGIS_TEMPLATE": "template_postgis",
-        "TEST": {"CHARSET": None, "COLLATION": None, "MIRROR": None, "NAME": None},
+        "TEST": {
+            "CHARSET": None,
+            "COLLATION": None,
+            "MIRROR": None,
+            "NAME": None,
+            "MIGRATE": False,
+        },
         "TIME_ZONE": None,
         "USER": get_env_variable("PGUSERNAME"),
     }

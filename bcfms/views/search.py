@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 def export_results(request):
     # This can't be imported above due to circular reference
     from bcfms.search.search_export import BCFMSSearchResultsExporter
+
     # Merge the GET and POST data. Arches assumes data is in the GET object
     request.GET = request.GET.copy()
     for key, value in request.POST.items():

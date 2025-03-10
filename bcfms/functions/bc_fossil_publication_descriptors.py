@@ -1,5 +1,7 @@
 from bcfms.util.bcfms_aliases import GraphSlugs, PublicationAliases as aliases
-from bcgov_arches_common.util.bc_primary_descriptors_function import BCPrimaryDescriptorsFunction
+from bcgov_arches_common.util.bc_primary_descriptors_function import (
+    BCPrimaryDescriptorsFunction,
+)
 from bcgov_arches_common.util.graph_lookup import GraphLookup
 
 details = {
@@ -12,12 +14,9 @@ details = {
         "module": "bcfms.functions.bc_fossil_publication_descriptors",
         "class_name": "BCFossilsPublicationDescriptors",
         "descriptor_types": {
-            "name": {
-            },
-            "description": {
-            },
-            "map_popup": {
-            },
+            "name": {},
+            "description": {},
+            "map_popup": {},
         },
         "triggering_nodegroups": [],
     },
@@ -36,9 +35,15 @@ class BCFossilPublicationDescriptors(BCPrimaryDescriptorsFunction):
 
     def __init__(self):
         super(BCFossilPublicationDescriptors).__init__()
-        self._graph_lookup = GraphLookup(BCFossilPublicationDescriptors._graph_slug, BCFossilPublicationDescriptors._name_nodes + BCFossilPublicationDescriptors._card_nodes)
+        self._graph_lookup = GraphLookup(
+            BCFossilPublicationDescriptors._graph_slug,
+            BCFossilPublicationDescriptors._name_nodes
+            + BCFossilPublicationDescriptors._card_nodes,
+        )
 
-    def get_primary_descriptor_from_nodes(self, resource, config, context=None, descriptor=None):
+    def get_primary_descriptor_from_nodes(
+        self, resource, config, context=None, descriptor=None
+    ):
         return_value = ""
 
         try:
@@ -49,11 +54,12 @@ class BCFossilPublicationDescriptors(BCPrimaryDescriptorsFunction):
                 value = self.get_value_from_node(
                     self._graph_lookup.get_node(node_alias),
                     self._graph_lookup.get_datatype(node_alias),
-                    resource)
+                    resource,
+                )
                 if value:
                     return_value += self.format_value(
-                        self._graph_lookup.get_node(node_alias).name,
-                        value, True)
+                        self._graph_lookup.get_node(node_alias).name, value, True
+                    )
 
             return return_value
 
@@ -66,17 +72,20 @@ class BCFossilPublicationDescriptors(BCPrimaryDescriptorsFunction):
         publication_type = self.get_value_from_node(
             self._graph_lookup.get_node(aliases.PUBLICATION_TYPE),
             self._graph_lookup.get_datatype(aliases.PUBLICATION_TYPE),
-            resource)
+            resource,
+        )
         if publication_type == "Volume / Publication Number":
-            parent_publication_name = \
-                "%s " % self.get_value_from_node(self._graph_lookup.get_node(aliases.JOURNAL_OR_PUBLICATION_NAME),
-                                                 self._graph_lookup.get_datatype(aliases.JOURNAL_OR_PUBLICATION_NAME),
-                                                 resource)
+            parent_publication_name = "%s " % self.get_value_from_node(
+                self._graph_lookup.get_node(aliases.JOURNAL_OR_PUBLICATION_NAME),
+                self._graph_lookup.get_datatype(aliases.JOURNAL_OR_PUBLICATION_NAME),
+                resource,
+            )
 
         title = self.get_value_from_node(
             self._graph_lookup.get_node(aliases.TITLE),
             self._graph_lookup.get_datatype(aliases.TITLE),
-            resource)
+            resource,
+        )
 
         # print("Resource: %s, Title: %s, Parent: %s" % (resource, title, parent_publication_name))
         # This shouldn't be necessary but we have some cardinality violations
