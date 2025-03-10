@@ -145,11 +145,17 @@ DATABASES = {
         "PASSWORD": "postgis",
         "PORT": "5432",
         "POSTGIS_TEMPLATE": "template_postgis",
-        "TEST": {"CHARSET": None, "COLLATION": None, "MIRROR": None, "NAME": None, "MIGRATE": False},
+        "TEST": {
+            "CHARSET": None,
+            "COLLATION": None,
+            "MIRROR": None,
+            "NAME": None,
+            "MIGRATE": False,
+        },
         "TIME_ZONE": None,
         "USER": "postgres",
         "DATABC_USER": "proxy_databc",
-        "DATABC_PASSWORD": "proxy_databc", # This is only used for deploy time
+        "DATABC_PASSWORD": "proxy_databc",  # This is only used for deploy time
     }
 }
 
