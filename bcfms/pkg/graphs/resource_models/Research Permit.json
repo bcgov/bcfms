@@ -416,12 +416,7 @@
                 {
                     "card_id": "07f2e120-4834-11ef-8aee-0242ac170009",
                     "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
+                        "defaultValue": "",
                         "i18n_properties": [
                             "placeholder"
                         ],
@@ -431,14 +426,15 @@
                             "en": "Enter text"
                         },
                         "reportTypeAbbreviation": "IRR",
+                        "submissionTypeNodeAlias": "",
                         "uneditable": false,
-                        "width": "100%%"
+                        "width": "100%"
                     },
-                    "id": "07f2ef3a-4834-11ef-8aee-0242ac170009",
+                    "id": "85e12d6b-ed18-4597-ae70-afcc9d20a28d",
                     "label": {
                         "en": "Interim Research Report Number"
                     },
-                    "node_id": "07f2e63e-4834-11ef-8aee-0242ac170009",
+                    "node_id": "fe14ce42-05c1-11f0-bb5d-0242ac170008",
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000106"
@@ -1193,12 +1189,7 @@
                 {
                     "card_id": "109b48ee-d968-11ed-b8ae-5254004d77d3",
                     "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
+                        "defaultValue": "",
                         "i18n_properties": [
                             "placeholder"
                         ],
@@ -1208,14 +1199,15 @@
                             "en": "Enter text"
                         },
                         "reportTypeAbbreviation": "RP",
+                        "submissionTypeNodeAlias": "",
                         "uneditable": false,
                         "width": "100%%"
                     },
-                    "id": "a28e06db-338f-4ec7-8a21-8354f3c0e7ed",
+                    "id": "58c2254a-35dc-4da7-8f9e-e60c22810d81",
                     "label": {
                         "en": "Research Plan Report Number"
                     },
-                    "node_id": "d46b8cb6-482f-11ef-94eb-0242ac170009",
+                    "node_id": "c699caa8-05c1-11f0-bb5d-0242ac170008",
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000106"
@@ -1223,12 +1215,7 @@
                 {
                     "card_id": "109a8e72-d968-11ed-b8ae-5254004d77d3",
                     "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
+                        "defaultValue": "",
                         "i18n_properties": [
                             "placeholder"
                         ],
@@ -1238,14 +1225,15 @@
                             "en": "Enter text"
                         },
                         "reportTypeAbbreviation": "FRR",
+                        "submissionTypeNodeAlias": "",
                         "uneditable": false,
-                        "width": "100%%"
+                        "width": "100%"
                     },
-                    "id": "d6b19fc1-cec0-4dba-bb04-934be4b40911",
+                    "id": "157f15a0-ad51-4a1d-8c63-86e9b22d69dd",
                     "label": {
                         "en": "Final Research Report Number"
                     },
-                    "node_id": "98c675de-482c-11ef-b41c-0242ac170009",
+                    "node_id": "54a213c8-05c2-11f0-bb5d-0242ac170008",
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000106"
@@ -1480,15 +1468,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P115i_is_finished_by",
                     "rangenode_id": "07f2e882-4834-11ef-8aee-0242ac170009"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "07f2df68-4834-11ef-8aee-0242ac170009",
-                    "edgeid": "07f354b6-4834-11ef-8aee-0242ac170009",
-                    "graph_id": "109a0272-d968-11ed-b8ae-5254004d77d3",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "07f2e63e-4834-11ef-8aee-0242ac170009"
                 },
                 {
                     "description": null,
@@ -1789,6 +1768,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "109b3e58-d968-11ed-b8ae-5254004d77d3",
+                    "edgeid": "10f69537-27b2-4fc1-9000-b4b09543a48a",
+                    "graph_id": "109a0272-d968-11ed-b8ae-5254004d77d3",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "c699caa8-05c1-11f0-bb5d-0242ac170008"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "109acc48-d968-11ed-b8ae-5254004d77d3",
                     "edgeid": "4a5e88bc-05b5-4954-8451-9f5912791fe7",
                     "graph_id": "109a0272-d968-11ed-b8ae-5254004d77d3",
@@ -1843,15 +1831,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "109a8a58-d968-11ed-b8ae-5254004d77d3",
-                    "edgeid": "a887efa9-f44d-4162-9c6c-f1dd048342df",
-                    "graph_id": "109a0272-d968-11ed-b8ae-5254004d77d3",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "98c675de-482c-11ef-b41c-0242ac170009"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "1071050a-fb0c-11ed-a587-5254004d77d3",
                     "edgeid": "b41ada1a-cf2f-40a0-9f8c-a32e4199b879",
                     "graph_id": "109a0272-d968-11ed-b8ae-5254004d77d3",
@@ -1879,12 +1858,12 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "109b3e58-d968-11ed-b8ae-5254004d77d3",
-                    "edgeid": "f7a29307-6eb7-41f6-9a8c-76a15abcb0ad",
+                    "domainnode_id": "07f2df68-4834-11ef-8aee-0242ac170009",
+                    "edgeid": "f5f96ecc-cdae-4401-9b51-b87d4df2aa10",
                     "graph_id": "109a0272-d968-11ed-b8ae-5254004d77d3",
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "d46b8cb6-482f-11ef-94eb-0242ac170009"
+                    "rangenode_id": "fe14ce42-05c1-11f0-bb5d-0242ac170008"
                 },
                 {
                     "description": null,
@@ -1894,6 +1873,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P20_had_specific_purpose",
                     "rangenode_id": "07f2e2ec-4834-11ef-8aee-0242ac170009"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "109a8a58-d968-11ed-b8ae-5254004d77d3",
+                    "edgeid": "fc7f955b-c836-41b8-bd4b-10f42b790b0f",
+                    "graph_id": "109a0272-d968-11ed-b8ae-5254004d77d3",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "54a213c8-05c2-11f0-bb5d-0242ac170008"
                 }
             ],
             "functions_x_graphs": [
@@ -2109,7 +2097,7 @@
                     "config": {
                         "en": ""
                     },
-                    "datatype": "string",
+                    "datatype": "non-localized-string",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -2121,7 +2109,7 @@
                     "istopnode": false,
                     "name": "Interim Research Report Number",
                     "nodegroup_id": "07f2df68-4834-11ef-8aee-0242ac170009",
-                    "nodeid": "07f2e63e-4834-11ef-8aee-0242ac170009",
+                    "nodeid": "fe14ce42-05c1-11f0-bb5d-0242ac170008",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0,
@@ -3415,7 +3403,7 @@
                     "config": {
                         "en": ""
                     },
-                    "datatype": "string",
+                    "datatype": "non-localized-string",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -3427,7 +3415,7 @@
                     "istopnode": false,
                     "name": "Final Research Report Number",
                     "nodegroup_id": "109a8a58-d968-11ed-b8ae-5254004d77d3",
-                    "nodeid": "98c675de-482c-11ef-b41c-0242ac170009",
+                    "nodeid": "54a213c8-05c2-11f0-bb5d-0242ac170008",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0,
@@ -3461,7 +3449,7 @@
                     "config": {
                         "en": ""
                     },
-                    "datatype": "string",
+                    "datatype": "non-localized-string",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -3473,7 +3461,7 @@
                     "istopnode": false,
                     "name": "Research Plan Report Number",
                     "nodegroup_id": "109b3e58-d968-11ed-b8ae-5254004d77d3",
-                    "nodeid": "d46b8cb6-482f-11ef-94eb-0242ac170009",
+                    "nodeid": "c699caa8-05c1-11f0-bb5d-0242ac170008",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E42_Identifier",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0,
@@ -3627,8 +3615,8 @@
             "publication": {
                 "graph_id": "109a0272-d968-11ed-b8ae-5254004d77d3",
                 "notes": null,
-                "publicationid": "c84638b0-50df-11ef-81fe-0242ac170006",
-                "published_time": "2024-08-02T09:59:13.975"
+                "publicationid": "73530da4-05c2-11f0-bb5d-0242ac170008",
+                "published_time": "2025-03-20T19:35:16.510"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -3664,8 +3652,8 @@
     ],
     "metadata": {
         "db": "PostgreSQL 16.3 (Debian 16.3-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit",
-        "git hash": "7a36d9589 2024-08-01 14:01:52 -0700",
+        "git hash": "c2d44664b1 2025-01-15 20:52:27 -0800",
         "os": "Linux",
-        "os version": "6.6.31-linuxkit"
+        "os version": "6.10.14-linuxkit"
     }
 }
