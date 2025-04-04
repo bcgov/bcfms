@@ -9,7 +9,7 @@ details = {
     "description": "Refreshes the primary descriptors for associated collection events",
     "defaultconfig": {"triggering_nodegroups": []},
     "classname": "ParentCollectionEventRefresh",
-    "component": "views/components/functions/parent-collection-event-refresh",
+    "component": "views/components/functions/refresh-parent-collection-event-descriptors",
 }
 
 
