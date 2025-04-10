@@ -2350,18 +2350,6 @@
             "functions_x_graphs": [
                 {
                     "config": {
-                        "node_id": "7f2c823e-6c51-11ed-9b7d-5254004d77d3",
-                        "triggering_nodegroups": [
-                            "7f2c2dde-6c51-11ed-9b7d-5254004d77d3"
-                        ],
-                        "unique_value": true
-                    },
-                    "function_id": "60000000-0000-0000-0000-000000002001",
-                    "graph_id": "7f2c2082-6c51-11ed-9b7d-5254004d77d3",
-                    "id": "1abd9324-558e-4910-a1ed-37230e3456e6"
-                },
-                {
-                    "config": {
                         "triggering_nodegroups": []
                     },
                     "function_id": "60000000-0000-0000-0000-000000001006",

@@ -30,7 +30,9 @@ dl.stratigraphy > dd > div.stratigraphy-level > div
 }
 
 .card_component.journal_or_volume_name, .card_component.other_journal_or_volume_name,
-.card_component.project_start_date, .card_component.project_end_date {
+.card_component.project_start_date, .card_component.project_end_date,
+.card_component.assessment_start_date, .card_component.assessment_completion_date
+{
    display: inline-block;
    width: 49%;
    vertical-align: top;

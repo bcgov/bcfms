@@ -27,20 +27,21 @@ except ImportError:  # unable to import prior to installing requirements.txt in 
     pass
 
 PACKAGE_NAME = "bcfms"
-ROOT_DIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-print("Root dir: %s" % ROOT_DIR)
-ROOT_DIR = os.path.normpath(os.path.join(ROOT_DIR, "..", "..", "bcfms"))
-print("Root dir: %s" % ROOT_DIR)
-ROOT_DIR = os.path.normpath(os.path.join("/apps_ux","projects","arches-core","arches"))
-print("Root dir: %s" % ROOT_DIR)
-# TEST_ROOT = os.path.normpath(os.path.join(ROOT_DIR, "tests"))
-TEST_ROOT = os.path.normpath(os.path.join("apps_ux","projects","bcfms", "bcfms", "tests"))
-# APP_ROOT = os.path.normpath(os.path.join(ROOT_DIR, "bcfms"))
-APP_ROOT = ""
+TEST_ROOT = os.path.normpath(os.path.join(ROOT_DIR, "tests"))
+APP_ROOT = os.path.abspath(
+    os.path.join(os.path.dirname(inspect.getfile(inspect.currentframe())), "..")
+)
+COMMON_ROOT = os.path.abspath(
+    os.path.join(
+        os.path.dirname(inspect.getfile(inspect.currentframe())),
+        "..",
+        "..",
+        "..",
+        "arches_common",
+        "bcgov_arches_common",
+    )
+)
 ELASTICSEARCH_HTTP_PORT = 9200
-
-MIN_ARCHES_VERSION = arches.__version__
-MAX_ARCHES_VERSION = arches.__version__
 
 # LOAD_V3_DATA_DURING_TESTS = True will engage the most extensive the of the v3
 # data migration tests, which could add over a minute to the test process. It's
@@ -51,7 +52,7 @@ LOAD_V3_DATA_DURING_TESTS = False
 RESOURCE_GRAPH_LOCATIONS = (os.path.join(TEST_ROOT, "fixtures", "resource_graphs"),)
 
 ONTOLOGY_FIXTURES = os.path.join(TEST_ROOT, "fixtures", "ontologies", "test_ontology")
-ONTOLOGY_PATH = os.path.join(TEST_ROOT, "fixtures", "ontologies", "cidoc_crm")
+ONTOLOGY_PATH = os.path.join(APP_ROOT, "pkg", "ontologies", "cidoc_crm")
 
 BUSISNESS_DATA_FILES = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -72,6 +73,13 @@ CACHES = {
 ELASTICSEARCH_PREFIX = "test"
 
 TEST_RUNNER = "bcfms.tests.base_test.ArchesTestRunner"
+
+SILENCED_SYSTEM_CHECKS.append(
+    "arches.W001",
+)  # Cache backend does not support rate-limiting
+SILENCED_SYSTEM_CHECKS.append(
+    "arches.E001",
+)  # Cache backend does not support rate-limiting
 
 # could add Chrome, PhantomJS etc... here
 LOCAL_BROWSERS = []  # ['Firefox']
@@ -100,6 +108,33 @@ REMOTE_BROWSERS = [
     #  "version": "45"}
 ]
 
+INSTALLED_APPS = (
+    "webpack_loader",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.gis",
+    "django_hosts",
+    "arches",
+    "arches.app.models",
+    "arches.management",
+    "guardian",
+    "captcha",
+    "revproxy",
+    "corsheaders",
+    "oauth2_provider",
+    "django_celery_results",
+    # "compressor",
+    # "silk",
+    "storages",
+    "bcfms",
+    "bcgov_arches_common",
+)
+INSTALLED_APPS += ("arches.app",)
+
 
 OVERRIDE_RESOURCE_MODEL_LOCK = True
 
@@ -108,19 +143,24 @@ FORCE_TWO_FACTOR_AUTHENTICATION = False
 
 DATATYPE_LOCATIONS.append("tests.fixtures.datatypes")
 # ELASTICSEARCH_HOSTS = [{"scheme": "http", "host": "localhost", "port": ELASTICSEARCH_HTTP_PORT}]
-ELASTICSEARCH_HOSTS = [{"scheme": "https", "host": "localhost", "port": ELASTICSEARCH_HTTP_PORT}]
-ELASTICSEARCH_CERT_LOCATION="/etc/elasticsearch/certs/http_ca.crt"
-ELASTICSEARCH_CONNECTION_OPTIONS = {"timeout": 30,
-                                    "verify_certs": True,
-                                    "ca_certs": ELASTICSEARCH_CERT_LOCATION,
-                                    "basic_auth": ("arches_test2", "arches_test")}
+ELASTICSEARCH_PORT = ELASTICSEARCH_HTTP_PORT = 9200
+ELASTICSEARCH_HOSTS = [
+    {
+        "scheme": "http",
+        "host": "elasticsearch8-3_arches7-5-2",
+        "port": ELASTICSEARCH_HTTP_PORT,
+    }
+]
+# ELASTICSEARCH_CERT_LOCATION="/etc/elasticsearch/certs/http_ca.crt"
+ELASTICSEARCH_CONNECTION_OPTIONS = {
+    "timeout": 30,
+    # "verify_certs": True,
+    # "ca_certs": ELASTICSEARCH_CERT_LOCATION,
+    "basic_auth": ("arches_test2", "arches_test"),
+}
 
 LANGUAGES = [
-    ("de", _("German")),
     ("en", _("English")),
-    ("en-gb", _("British English")),
-    ("es", _("Spanish")),
-    ("ar", _("Arabic")),
 ]
 
 DOCKER = False
@@ -136,8 +176,6 @@ if DOCKER:
     except ImportError:
         pass
 
-ELASTICSEARCH_CONNECTION_OPTIONS["verify_certs"] = True
-ELASTICSEARCH_CONNECTION_OPTIONS["ca_certs"] = ELASTICSEARCH_CERT_LOCATION
 print(ELASTICSEARCH_CONNECTION_OPTIONS)
 print(ROOT_DIR)
 print(TEST_ROOT)

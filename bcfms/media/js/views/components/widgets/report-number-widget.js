@@ -1,15 +1,15 @@
 define([
     'jquery',
     'knockout',
-    'knockout-mapping',
     'underscore',
     'viewmodels/widget',
+    'viewmodels/alert',
     'arches',
-    'templates/views/components/widgets/report-number-widget.htm',
-    'bindings/chosen'
-], function($, ko, koMapping, _, WidgetViewModel, arches, bordenNumberWidgetTemplate) {
+    'templates/views/components/widgets/report-number-widget.htm'
+], function ($, ko, _, WidgetViewModel, AlertViewModel, arches, reportNumberWidgetTemplate) {
     /**
-     * registers a text-widget component for use in forms
+     * registers a report-number-widget component for use in forms
+     * Extension of non-localized-text widget
      * @function external:"ko.components".text-widget
      * @param {object} params
      * @param {string} params.value - the value being managed
@@ -17,200 +17,87 @@ define([
      * @param {string} params.config().label - label to use alongside the text input
      * @param {string} params.config().placeholder - default text to show in the text input
      * @param {string} params.config().uneditable - disables widget
-     * @param {string} params.config().reportTypeAbbreviation - 3-character report type abbreviation
      */
 
-        const viewModel = function(params) {
-            params.configKeys = ['width', 'maxLength', 'defaultValue', 'uneditable', 'reportTypeAbbreviation'];
+    const viewModel = function (params) {
+        params.configKeys = ['placeholder', 'width', 'maxLength', 'defaultValue', 'uneditable', 'reportTypeAbbreviation', 'submissionTypeNodeAlias'];
 
-            WidgetViewModel.apply(this, [params]);
-            const self = this;
+        WidgetViewModel.apply(this, [params]);
 
-            self.card = params.card;
-            self.currentLanguage = ko.observable({code: arches.activeLanguage});
-            self.languages = ko.observableArray();
-            self.currentText = ko.observable();
-            self.currentDirection = ko.observable();
-            self.showi18nOptions = ko.observable(false);
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const self = this;
+        self.urls = arches.urls;
 
-            self.currentDefaultText = ko.observable();
-            self.currentDefaultDirection = ko.observable();
-            self.currentDefaultLanguage = ko.observable({code: arches.activeLanguage});
-            self.urls = arches.urls;
+        this.disable = ko.computed(() => {
+            return ko.unwrap(self.disabled) ||
+                ko.unwrap(self.uneditable) ||
+                !!ko.unwrap(self.value) ||
+                ko.unwrap(self.controlWidgetEmpty);
+        }, self);
 
-            const initialCurrent = {};
-            const initialDefault = {};
-            initialDefault[arches.activeLanguage] = {value: '', direction: 'ltr'};
-            initialCurrent[arches.activeLanguage] = {value: '', direction: 'ltr'};
-            let currentDefaultValue = ko.unwrap(self.defaultValue) || initialDefault;
-            let currentValue = koMapping.toJS(self.value)|| initialCurrent;
-
-            if(self.form){
-                self.form.on('after-update', (req, tile) => {
-                    if (!!req.responseJSON.data[self.node.id]){
-                        self.currentText(req.responseJSON.data[self.node.id][self.currentLanguage().code].value)
-                    }
-                });
-                self.form.on('tile-reset', (x) => {
-                    if (ko.unwrap(self.value)) {
-                        currentValue = koMapping.toJS(self.value);
-                        self.currentText(currentValue[self.currentLanguage().code]?.value);
-                        self.currentDirection(currentValue[self.currentLanguage().code]?.direction);
-                    }
-                });
-            }
-
-            const init = async() => {
-                const languages = arches.languages;
-                const currentLanguage = languages?.find(element => element.code == arches.activeLanguage);
-                self.languages(languages);
-                self.currentLanguage(currentLanguage);
-                self.currentDefaultLanguage(currentLanguage);
-
-                if (currentLanguage?.code && currentValue?.[currentLanguage.code]){
-                    self.currentText(currentValue?.[currentLanguage.code]?.value);
-                    self.currentDirection(currentValue?.[currentLanguage.code]?.direction);
-                } else if (!currentLanguage?.code) {
-                    self.currentText('');
-                    self.currentDirection('ltr');
-                } else if (currentValue) {
-                    self.currentText('');
-                    self.currentDirection('ltr');
-                    currentValue[currentLanguage.code] = {value: '', direction: 'ltr'};
-                }
-
-                if(currentLanguage?.code && currentDefaultValue?.[currentLanguage.code]){
-                    self.currentDefaultText(currentDefaultValue?.[currentLanguage.code]?.value);
-                    self.currentDefaultDirection(currentDefaultValue?.[currentLanguage.code]?.direction);
-                } else if (!currentLanguage?.code) {
-                    self.currentDefaultText('');
-                    self.currentDefaultDirection('ltr');
-                } else if (currentDefaultValue) {
-                    self.currentDefaultText('');
-                    self.currentDefaultDirection('ltr');
-                    currentDefaultValue[currentLanguage.code] = {value: '', direction: 'ltr'};
-                }
-                self.placeholder = ko.computed(() => {
-                    const year = new Date().getFullYear();
-                    return `${year}-${ko.unwrap(self.reportTypeAbbreviation)}-000`;
-                });
-            };
-
-            init();
-
-            self.disable = ko.computed(() => {
-                return ko.unwrap(self.disabled) ||
-                    ko.unwrap(self.uneditable) ||
-                    !!ko.unwrap(self.currentText);
-            }, self);
-
-            self.currentDefaultText.subscribe(newValue => {
-                const currentLanguage = self.currentDefaultLanguage();
-                if(!currentLanguage) { return; }
-                currentDefaultValue[currentLanguage.code].value = newValue;
-                self.defaultValue(currentDefaultValue);
-                self.card._card.valueHasMutated();
-            });
-
-            self.currentDefaultDirection.subscribe(newValue => {
-                const currentLanguage = self.currentDefaultLanguage();
-                if(!currentLanguage) { return; }
-                if(!currentDefaultValue?.[currentLanguage.code]){
-                    currentDefaultValue[currentLanguage.code] = {};
-                }
-                currentDefaultValue[currentLanguage.code].direction = newValue;
-                self.defaultValue(currentDefaultValue);
-                self.card._card.valueHasMutated();
-            });
-
-            self.currentDefaultLanguage.subscribe(newValue => {
-                if(!self.currentDefaultLanguage()){ return; }
-                const currentLanguage = self.currentDefaultLanguage();
-                if(!currentDefaultValue?.[currentLanguage.code]) {
-                    currentDefaultValue[currentLanguage.code] = {
-                        value: '',
-                        direction: currentLanguage?.default_direction
-                    };
-                    self.defaultValue(currentDefaultValue);
-                    self.card._card.valueHasMutated();
-                }
-
-                self.currentDefaultText(self.defaultValue()?.[currentLanguage.code]?.value);
-                self.currentDefaultDirection(self.defaultValue()?.[currentLanguage.code]?.direction);
-
-            });
-
-        const valueLeaf = self.value?.[arches.activeLanguage]?.value || self.value;
-        valueLeaf?.subscribe(newValue => {
-            const currentLanguage = self.currentLanguage();
-            if(!currentLanguage) { return; }
-            if(JSON.stringify(currentValue) != JSON.stringify(ko.toJS(ko.unwrap(self.value)))){
-                self.currentText(newValue?.[currentLanguage.code]?.value || newValue);
-            }
+        self.placeholder = ko.computed(() => {
+            const year = new Date().getFullYear();
+            const abbr = ko.unwrap(self.submissionTypeNodeAlias) ? `<${ko.unwrap(self.submissionTypeNodeAlias)}>` : ko.unwrap(self.reportTypeAbbreviation);
+            return `${year}-${abbr}-000`;
         });
 
-            self.currentText.subscribe(newValue => {
-                const currentLanguage = self.currentLanguage();
-                if(!currentLanguage) { return; }
-
-            if(!currentValue?.[currentLanguage.code]){
-                currentValue[currentLanguage.code] = {};
+        self.controlWidgetEmpty = ko.computed(() => {
+            // The widget isn't driven by a control widget, it's a straight abbreviation
+            if (!this.config().submissionTypeNodeAlias && this.config().reportTypeAbbreviation || !ko.unwrap(this.form)) {
+                return false;
             }
-            currentValue[currentLanguage.code].value = newValue?.[currentLanguage.code] ? newValue[currentLanguage.code]?.value : newValue;
-
-                if (ko.isObservable(self.value)) {
-                    self.value(currentValue);
-                } else {
-                    self.value[currentLanguage.code].value(newValue);
-                }
-
+            const node = _.find(this.form.nodeLookup, (node) => {
+                return node.alias && node.alias() === this.config().submissionTypeNodeAlias;
             });
+            return !node || !ko.unwrap(self.tile.data[node.noodeid]);
+        });
 
-            self.currentDirection.subscribe(newValue => {
-                const currentLanguage = self.currentLanguage();
-                if(!currentLanguage) { return; }
-
-                if(!currentValue?.[currentLanguage.code]){
-                    currentValue[currentLanguage.code] = {};
-                }
-                currentValue[currentLanguage.code].direction = newValue;
-                if (ko.isObservable(self.value)) {
-                    self.value(currentValue);
-                } else {
-                    self.value[currentLanguage.code].direction(newValue);
-                }
-            });
-
-            self.currentLanguage.subscribe(() => {
-                if(!self.currentLanguage()){ return; }
-                const currentLanguage = self.currentLanguage();
-
-                self.currentText(koMapping.toJS(self.value)[currentLanguage.code]?.value);
-                self.currentDirection(koMapping.toJS(self.value)[currentLanguage.code]?.direction);
-
-            });
-
-            self.getReportNumber = function() {
-                let url = `${self.urls.root}get_next_report_number/${self.node.id}/${ko.unwrap(self.widget.config.reportTypeAbbreviation)}`;
-                console.log(`Get borden number from ${url}...`)
-                self.form.loading(true);
-                $.ajax({
-                    // type: "PUT",
-                    url: url
-                }).done(function(data){
-                    console.log(`Data: ${JSON.stringify(data)}`);
-                    console.log(data);
-                    if (data.status === "success")
-                    {
-                        self.currentText(data.report_number);
-                    }
-                    self.form.loading(false);
-                });
+        self.getReportNumber = function () {
+            let url = `${self.urls.root}get_next_report_number/${self.node.id}?`;
+            if (ko.unwrap(self.widget.config.reportTypeAbbreviation)) {
+                url = url + `abbreviation=${ko.unwrap(self.widget.config.reportTypeAbbreviation)}`;
+            } else {
+                    const node = _.find(self.widget.card.nodes(), node => {
+                        return ko.unwrap(node.alias) === ko.unwrap(self.widget.config.submissionTypeNodeAlias);
+                    });
+                    url = url + `valueId=${ko.unwrap(self.tile.data[node.nodeid])}`;
             }
+            self.form.loading(true);
+            $.ajax({
+                // type: "PUT",
+                url: url
+            }).done(function (data) {
+                self.form.loading(false);
+                if (data.status === "success") {
+                    self.value(data.report_number);
+                }
+                else
+                {
+                     self.form.alert(new AlertViewModel(
+                        'ep-alert-red',
+                        'Submission type required',
+                        'Please select a submission type before generating submission number',
+                        null,
+                        function(){}
+                    ));
+                }
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                console.log(errorThrown);
+                self.form.alert(new AlertViewModel(
+                    'ep-alert-red',
+                    `Unable to get submission number: ${textStatus}`,
+                    `Please check the browser console for details`,
+                    null,
+                    function(){}
+                ));
+                self.form.loading(false);
+            });
         };
+    };
 
     return ko.components.register('report-number-widget', {
         viewModel: viewModel,
-        template: bordenNumberWidgetTemplate
+        template: reportNumberWidgetTemplate
     });
 });
