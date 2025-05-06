@@ -36,8 +36,8 @@ class Migration(migrations.Migration):
 
     refresh_materialized_views = "begin; call refresh_export_mvs(); commit;"
     grant_materialized_views = format_files_into_sql(
-        ["2024-08-15_databc_grants.sql"],
-        sql_dir,
+        ["2025-05-06_databc_grants.sql"],
+        os.path.join(sql_dir, "2025"),
     )
 
     operations = [
