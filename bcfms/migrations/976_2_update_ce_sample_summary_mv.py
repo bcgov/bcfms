@@ -5,7 +5,7 @@ from bcgov_arches_common.migrations.operations.privileged_sql import RunPrivileg
 
 
 class Migration(migrations.Migration):
-    dependencies = [("bcfms", "976_1_create_html_to_plain_string")]
+    dependencies = [("bcfms", "976_1_1_fix_bc_format_uncertainty")]
 
     sql_dir = os.path.join(os.path.dirname(__file__), "sql")
 
