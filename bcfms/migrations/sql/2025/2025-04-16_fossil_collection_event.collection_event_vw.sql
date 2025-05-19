@@ -12,9 +12,6 @@ select
     __bc_point_from_tile(cel.tiledata, fossil_collection_event.collection_location_nodeid()) collection_location,
     __arches_get_node_display_value(cea.tiledata, fossil_collection_event.fossil_abundance_nodeid()) fossil_abundance,
     coalesce((cea.tiledata->>fossil_collection_event.collection_event_significant_nodeid()::text)::boolean, false) collection_event_significant,
---     st_asgeojson(cel.tiledata->>'collection_location')::jsonb->'coordinates'->0 "Collection Location",
---     __arches_get_node_display_value(cel.tiledata, fossil_collection_event.collection_location_nodeid()),
---     cesc.samples_collected_uuid,
     coll.collector_ids,
     coll.collector_names,
     ce_sample_summary.storage_locations,
@@ -34,7 +31,6 @@ select
     coalesce(pub_summ.publication_years, '') publication_years,
     coalesce(pub_summ.publication_types,'')  publication_types,
     coalesce(pub_summ.authors,'')  authors
---     ,*
 from ce_collection_details ced
          left join fossil_sample.ce_sample_summary_mv ce_sample_summary on ce_sample_summary.collection_event_id = ced.resourceinstanceid
          left join ce_location cel on cel.parenttileid = ced.tileid

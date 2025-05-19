@@ -4,7 +4,6 @@ select row_uuid,
        collection_event_id,
        location_descriptor,
        collection_start_year::int collection_start_year,
---        array_to_string(collector_names, ', ') collectors,
        geological_groups geological_group,
        geological_formations geological_formation,
        geological_members geological_member,
@@ -22,5 +21,4 @@ select row_uuid,
        round(((collection_location::json)->>1)::numeric, 6) latitude,
        round(((collection_location::json)->>0)::numeric, 6) longitude,
        st_point(((collection_location::json)->>0)::numeric, ((collection_location::json)->>1)::numeric) collection_location
---        collection_event_significant,
 from fossil_collection_event.collection_event_vw;
