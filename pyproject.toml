@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "bcfms"
 readme = "README.md"
 authors = []
-license = {text = "GNU AGPL3"}
+license = { text = "GNU AGPL3" }
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Programming Language :: Python",
@@ -25,7 +25,9 @@ classifiers = [
 requires-python = ">=3.10"
 dependencies = [
     "arches==7.6.4",
-    "bcgov_arches_common>=1.1.0-b0",
+    "bcgov_arches_common @ git+https://github.com/bcgov/arches_common@v1.1.0-b0",
+    "django-storages==1.13",
+    "python-dotenv",
 ]
 version = "1.2.0"
 
