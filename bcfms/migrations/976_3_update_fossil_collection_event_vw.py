@@ -23,20 +23,30 @@ class Migration(migrations.Migration):
     )
 
     create_fossil_collection_event_collection_event_vw = (
-        drop_dependant_views + "\n" +
-        format_files_into_sql(
-        ["2025-04-16_fossil_collection_event.collection_event_vw.sql"],
-        os.path.join(sql_dir, "2025"),
-    ) + "\n"  + recreate_dependent_views
+        drop_dependant_views
+        + "\n"
+        + format_files_into_sql(
+            ["2025-04-16_fossil_collection_event.collection_event_vw.sql"],
+            os.path.join(sql_dir, "2025"),
+        )
+        + "\n"
+        + recreate_dependent_views
     )
 
     revert_fossil_collection_event_collection_event_vw = (
-            drop_dependant_views + "\n" +
-        format_files_into_sql(
-        ["2024-07-25_fossil_collection_event.collection_event_vw.sql"],
-        sql_dir,
-    )+ "\n"  + recreate_dependent_views)
+        drop_dependant_views
+        + "\n"
+        + format_files_into_sql(
+            ["2024-07-25_fossil_collection_event.collection_event_vw.sql"],
+            sql_dir,
+        )
+        + "\n"
+        + recreate_dependent_views
+    )
 
     operations = [
-        migrations.RunSQL(create_fossil_collection_event_collection_event_vw, revert_fossil_collection_event_collection_event_vw)
+        migrations.RunSQL(
+            create_fossil_collection_event_collection_event_vw,
+            revert_fossil_collection_event_collection_event_vw,
+        )
     ]

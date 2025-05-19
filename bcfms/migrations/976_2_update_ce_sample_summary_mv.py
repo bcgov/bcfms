@@ -48,5 +48,8 @@ class Migration(migrations.Migration):
     )
 
     operations = [
-        migrations.RunSQL(create_fossil_sample_ce_sample_summary_mv, revert_fossil_sample_ce_sample_summary_mv)
+        migrations.RunSQL(
+            create_fossil_sample_ce_sample_summary_mv,
+            revert_fossil_sample_ce_sample_summary_mv,
+        )
     ]
