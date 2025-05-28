@@ -11,7 +11,7 @@ BEGIN
         return '';
     else
         begin
-            is_uncertain = (tiledata->uncertainty_nodeid::text) is not null and (tiledata->uncertainty_nodeid::text)::boolean;
+            is_uncertain = (tiledata->>uncertainty_nodeid::text) is not null and (tiledata->uncertainty_nodeid::text)::boolean;
         exception when others then
             is_uncertain = false;
             raise WARNING 'Unable to format as uncertainty: %', tiledata->>uncertainty_nodeid::text;
