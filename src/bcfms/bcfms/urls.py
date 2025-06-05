@@ -10,6 +10,7 @@ from bcgov_arches_common.views.map import (
 )
 from bcfms.views.search import export_results as bcfms_export_results
 from bcfms.views.auth import ExternalOauth, UnauthorizedView
+from bcfms.views.root import BcfmsRootView
 import re
 
 uuid_regex = settings.UUID_REGEX
@@ -43,6 +44,9 @@ for pattern in bc_url_resolver.url_patterns:
     # print("After: %s" % pattern.pattern)
 
 urlpatterns = [
+        re_path(
+        bc_path_prefix(r"^submissions/"), BcfmsRootView.as_view(), name="submissions"
+    ),
     re_path(
         bc_path_prefix(r"^bctileserver/(?P<path>.*)$"), BCTileserverProxyView.as_view()
     ),
