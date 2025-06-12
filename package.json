@@ -3,7 +3,7 @@
     "license": "AGPL-3.0-only",
     "version": "1.2.0",
     "scripts": {
-        "build_development": "npm i typescript@5.6.2 && npm run eslint:check && npm run ts:check && cross-env NODE_OPTIONS=--max-old-space-size=2048 webpack --config ./webpack/webpack.config.dev.js",
+        "build_development": "npm i typescript@5.6.2 && cross-env NODE_OPTIONS=--max-old-space-size=2048 webpack --config ./webpack/webpack.config.dev.js",
         "build_production": "npm run eslint:check && npm run ts:check && cross-env NODE_OPTIONS=--max-old-space-size=2048 NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",
         "build_test": "npm run eslint:check && npm run ts:check && cross-env NODE_OPTIONS=--max-old-space-size=2048 webpack --config ./webpack/webpack.config.dev.js --env test=true",
         "eslint:check": "eslint **/src",
@@ -52,8 +52,8 @@
         "@vue/cli": "^5.0.8",
         "arches": "github:bcgov/arches#v7.6.4.1_bcgov",
         "bcgov_arches_common": "github:bcgov/arches_common",
-        "js-cookie": "^2.1.1",
         "ckeditor5": "44.2.0",
+        "js-cookie": "^2.1.1",
         "primevue": "^4.2.5",
         "vite": "^6.2.1",
         "vite-plugin-css-injected-by-js": "^3.5.2",

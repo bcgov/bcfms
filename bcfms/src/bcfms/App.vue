@@ -40,7 +40,7 @@ const router = useRouter();
 const route = useRoute();
 const toast = useToast();
 const { $gettext } = useGettext();
-setUrlPrefix('http://localhost');
+setUrlPrefix('http://localhost:81');
 setUrlContextRoot('/bc-fossil-management');
 
 router.beforeEach(async (to, _from, next) => {
@@ -54,7 +54,7 @@ router.beforeEach(async (to, _from, next) => {
                 'Heritage Branch' in userData.groups
             )
         ) {
-            window.location.replace(window.location.origin + '/bcfms');
+            window.location.replace(window.location.origin + '/bc-fossil-management');
         }
 
         setUser(userData);

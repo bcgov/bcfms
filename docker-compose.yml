@@ -12,7 +12,6 @@ services:
     volumes:
       - ../arches/:/web_root/arches
       - ./:/web_root/bcfms
-      - ../common/:/web_root/common
       - ../arches_common/:/web_root/arches_common
       - ../arches-component-lab/:/web_root/arches-component-lab
     env_file:

@@ -98,10 +98,10 @@ urlpatterns = [
         UnauthorizedView.as_view(),
         name="unauthorized",
     ),
-    re_path(r"^bcfms/", include("bcgov_arches_common.urls")),
-    path("bcfms/", include("arches_component_lab.urls")),
-    path("bcfms/", include("arches.urls")),
-        bc_url_resolver,
+    re_path(r"^bc-fossil-management/", include("bcgov_arches_common.urls")),
+    path("bc-fossil-management/", include("arches_component_lab.urls")),
+    path("bc-fossil-management/", include("arches.urls")),
+        # bc_url_resolver,
 ]
 
 # Ensure Arches core urls are superseded by project-level urls
