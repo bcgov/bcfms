@@ -14,9 +14,9 @@ class BcfmsRootView(BaseManagerView):
         return render(
             request,
             (
-                "bc-fossil-management/root_vue_dev.htm"
+                "bcfms/root_vue_dev.htm"
                 if settings.DJANGO_VITE["default"]["dev_mode"]
-                else "bc-fossil-management/root.htm"
+                else "bcfms/root.htm"
             ),
             context,
         )

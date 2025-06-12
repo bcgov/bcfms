@@ -20,6 +20,7 @@ services:
       - 5689:5678
       - 81:80
       - 444:443
+      - 5173:5173
     stdin_open: true
     tty: true
 

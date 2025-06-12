@@ -116,7 +116,7 @@ const BCGovPreset = definePreset(Aura, {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    fetch(`http://localhost/${arches.urls.api_get_frontend_i18n_data}`)
+    fetch(`http://localhost:81/${arches.urls.api_get_frontend_i18n_data}`)
         .then(function (resp) {
             if (!resp.ok) {
                 throw new Error(resp.statusText);
