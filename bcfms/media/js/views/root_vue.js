@@ -20,6 +20,7 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
+
 const BCGovPreset = definePreset(Aura, {
     options: {
         prefix: 'p',
