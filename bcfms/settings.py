@@ -197,11 +197,31 @@ INSTALLED_APPS = (
     "django_celery_results",
     # "compressor",
     # "silk",
+    "django_vite",
     "storages",
     "bcfms",
+    "arches_component_lab",
     "bcgov_arches_common",
 )
 INSTALLED_APPS += ("arches.app",)
+
+DJANGO_VITE = {
+    "default": {
+        "dev_mode": False,
+        "static_url_prefix": "/",
+    }
+}
+
+# django_vite SETTINGS
+BASE_DIR = "/web_root/bcfms/bcfms/src"
+# Where ViteJS assets are built.
+DJANGO_VITE_ASSETS_PATH = os.path.join(BASE_DIR, "staticfiles", "dist")
+# If use HMR or not.
+# DJANGO_VITE_DEV_MODE = DEBUG
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+# END django_vite SETTINGS
 
 ROOT_HOSTCONF = "bcfms.hosts"
 DEFAULT_HOST = "bcfms"
@@ -246,6 +266,7 @@ MIDDLEWARE.append(  # this must resolve last MIDDLEWARE entry
 )
 
 STATICFILES_DIRS = build_staticfiles_dirs(app_root=APP_ROOT)
+STATICFILES_DIRS += (DJANGO_VITE_ASSETS_PATH,)
 
 TEMPLATES = build_templates_config(
     debug=DEBUG,
