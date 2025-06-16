@@ -5,7 +5,7 @@ const routes = [
     {
         path: '/bc-fossil-management/submissions/',
         name: 'root',
-        component: () => import('@/bcfms/pages/Submissions.vue'),
+        component: () => import('@/bcfms/ipa/pages/Submissions.vue'),
         meta: {
             shouldShowNavigation: true,
             requiresAuthentication: !dev_mode,
@@ -13,8 +13,9 @@ const routes = [
     },
     {
         path: '/bc-fossil-management/submissions/new-project/',
-        name: 'newProject',
-        component: () => import('@/bcfms/pages/NewProject.vue'),
+        name: 'submitProject',
+        component: () =>
+            import('@/bcfms/ipa/pages/SubmitProject/SubmitProject.vue'),
         meta: {
             shouldShowNavigation: true,
             requiresAuthentication: !dev_mode,
@@ -23,13 +24,13 @@ const routes = [
 ];
 
 type BCFMSRouteNamesType = RouteNamesType & {
-    newProject: string;
+    submitProject: string;
 };
 
 const routeNames: BCFMSRouteNamesType = {
     home: 'root',
     login: 'login',
-    newProject: 'newProject',
+    submitProject: 'submitProject',
 };
 
 export { routes, routeNames };
