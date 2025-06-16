@@ -7,7 +7,7 @@ import StepList from 'primevue/steplist';
 import StepPanels from 'primevue/steppanels';
 import StepperNavigation from '@/bcgov_arches_common/components/stepper/StepperNavigation.vue';
 import Panel from 'primevue/panel';
-import SubmitProjectStep1 from './ipa/pages/SubmitProject/steps/Step1_About.vue';
+import SubmitProjectStep1 from '@/bcfms/ipa/pages/SubmitProject/steps/Step1_About.vue';
 
 import type { Ref } from 'vue';
 import type { StepperProps } from 'primevue/stepper';
