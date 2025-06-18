@@ -8,21 +8,19 @@ const InitialProjectReviewSchema = z.object({
     assessmentDueDate: z.date(),
     intersectsIFA: z.boolean().default(false),
     proximityToFossils: z
-        .uuid()
-        .min(1, { message: 'Proximity To Fossils is required.' })
-        .max(36)
+        .string()
+        .uuid({ message: 'Proximity To Fossils is required.' })
         .nullable(),
     groundDisturbance: z
-        .uuid()
-        .min(1, { message: 'Ground Disturbance is required.' })
-        .max(36)
+        .string()
+        .uuid({ message: 'Ground Disturbance is required.' })
         .nullable(),
-    metamorphicRock: z.uuid().max(36).nullable(),
-    igneousRock: z.uuid().max(36).nullable(),
-    sedimentaryRock: z.uuid().max(36).nullable(),
-    quaternarySediments: z.uuid().max(36).nullable(),
-    FRPR: z.uuid().max(36).nullable(),
-    initialReviewLevelOfRisk: z.uuid().max(36).nullable(),
+    metamorphicRock: z.string().uuid().nullable(),
+    igneousRock: z.string().uuid().nullable(),
+    sedimentaryRock: z.string().uuid().nullable(),
+    quaternarySediments: z.string().uuid().nullable(),
+    FRPR: z.string().uuid().nullable(),
+    initialReviewLevelOfRisk: z.string().uuid().nullable(),
     initialReviewInternalNotes: z
         .string({
             invalid_type_error: 'Initial Review Internal Notes are required.',
