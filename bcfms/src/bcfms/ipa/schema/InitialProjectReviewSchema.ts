@@ -8,31 +8,28 @@ const InitialProjectReviewSchema = z.object({
     assessmentDueDate: z.date(),
     intersectsIFA: z.boolean().default(false),
     proximityToFossils: z
-        .string({
-            invalid_type_error: 'Proximity To Fossils is required.',
-        })
+        .uuid()
         .min(1, { message: 'Proximity To Fossils is required.' })
-        .max(250)
+        .max(36)
         .nullable(),
     groundDisturbance: z
-        .string({
-            invalid_type_error: 'Ground Disturbance is required.',
-        })
+        .uuid()
         .min(1, { message: 'Ground Disturbance is required.' })
-        .max(250)
+        .max(36)
         .nullable(),
-    metamorphicRock: z.string().max(250).nullable(),
-    igneousRock: z.string().max(250).nullable(),
-    sedimentaryRock: z.string().max(250).nullable(),
-    quaternarySediments: z.string().max(250).nullable(),
-    FRPR: z.string().max(250).nullable(),
-    initialReviewLevelOfRisk: z.string().max(250).nullable(),
+    metamorphicRock: z.uuid().max(36).nullable(),
+    igneousRock: z.uuid().max(36).nullable(),
+    sedimentaryRock: z.uuid().max(36).nullable(),
+    quaternarySediments: z.uuid().max(36).nullable(),
+    FRPR: z.uuid().max(36).nullable(),
+    initialReviewLevelOfRisk: z.uuid().max(36).nullable(),
     initialReviewInternalNotes: z
         .string({
             invalid_type_error: 'Initial Review Internal Notes are required.',
         })
         .min(1, { message: 'Initial Review Internal Notes are required.' })
         .max(4000),
+    initialReviewOutcome: z.string().max(4000),
 });
 
 const requiredInitialProjectReviewSchema = InitialProjectReviewSchema.partial();
@@ -57,6 +54,7 @@ class InitialProjectReview implements InitialProjectReviewType {
         this.FRPR = '';
         this.initialReviewLevelOfRisk = '';
         this.initialReviewInternalNotes = '';
+        this.initialReviewOutcome = '';
     }
     dateSubmitted: Date | null;
     assessmentDueDate: Date | null;
@@ -70,6 +68,7 @@ class InitialProjectReview implements InitialProjectReviewType {
     igneousRock: string;
     sedimentaryRock: string;
     quaternarySediments: string;
+    initialReviewOutcome: string;
 }
 
 export {
