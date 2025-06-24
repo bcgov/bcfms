@@ -65,7 +65,6 @@ defineExpose({ isValid });
                 hint="Enter a brief project type"
                 input-name="otherProjectType"
                 :error-message="$form.otherProjectType?.error?.message"
-                :required="true"
             >
                 <InputText
                     id="otherProjectType"

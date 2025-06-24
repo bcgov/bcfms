@@ -49,155 +49,166 @@ defineExpose({ isValid });
         v-slot="$form"
         name="projectDetailsForm"
         :validateOnBlur="true"
-    >
-        <FormField
-            :resolver="zodProjectNameResolver"
-            name="projectName"
-        >
-            <LabelledInput
-                label="Project Name"
-                hint="Enter a specific project name, in sentence case, that includes the geographic location and project type"
-                input-name="projectName"
-                :error-message="$form.projectName?.error?.message"
-                :required="true"
+        ><div class="formfield-margin-bottom">
+            <FormField
+                :resolver="zodProjectNameResolver"
+                name="projectName"
             >
-                <InputText
-                    id="projectName"
-                    ref="projectNameField"
-                    v-model="ipa.projectDetails.projectName"
-                    aria-describedby="project-name-help"
-                    aria-required="true"
-                    fluid
-                    class="inline-block"
-                />
-            </LabelledInput>
-        </FormField>
-        <FormField
-            :resolver="zodProjectInitiatorResolver"
-            name="projectInitiator"
-        >
-            <LabelledInput
-                label="Initiator"
-                hint="Select the organization or individual initiating the assessment"
-                input-name="projectInitiator"
-                :error-message="$form.projectInitiator?.error?.message"
-                :required="true"
+                <LabelledInput
+                    label="Project Name"
+                    hint="Enter a specific project name, in sentence case, that includes the geographic location and project type"
+                    input-name="projectName"
+                    :error-message="$form.projectName?.error?.message"
+                    :required="true"
+                >
+                    <InputText
+                        id="projectName"
+                        ref="projectNameField"
+                        v-model="ipa.projectDetails.projectName"
+                        aria-describedby="project-name-help"
+                        aria-required="true"
+                        fluid
+                        class="inline-block"
+                    />
+                </LabelledInput>
+            </FormField>
+        </div>
+        <div class="formfield-margin-bottom">
+            <FormField
+                :resolver="zodProjectInitiatorResolver"
+                name="projectInitiator"
             >
-                <ConceptSelect
-                    id="projectInitiator"
-                    ref="projectInitiatorField"
-                    v-model="ipa.projectDetails.projectInitiator"
-                    graph-slug="project_assessment"
-                    node-alias="project_initiator"
-                />
-            </LabelledInput>
-        </FormField>
-        <FormField
-            :resolver="zodIndustryCompanyNameResolver"
-            name="industryCompanyName"
-        >
-            <LabelledInput
-                label="Industry Company / Individual / Organization"
-                hint="Enter the name of Company / Individual / Organization that is responsible for executing the project"
-                input-name="industryCompanyName"
-                :error-message="$form.industryCompanyName?.error?.message"
-                :required="true"
+                <LabelledInput
+                    label="Initiator"
+                    hint="Select the organization or individual initiating the assessment"
+                    input-name="projectInitiator"
+                    :error-message="$form.projectInitiator?.error?.message"
+                    :required="true"
+                >
+                    <ConceptSelect
+                        id="projectInitiator"
+                        ref="projectInitiatorField"
+                        v-model="ipa.projectDetails.projectInitiator"
+                        graph-slug="project_assessment"
+                        node-alias="project_initiator"
+                    />
+                </LabelledInput>
+            </FormField>
+        </div>
+        <div class="formfield-margin-bottom">
+            <FormField
+                :resolver="zodIndustryCompanyNameResolver"
+                name="industryCompanyName"
             >
-                <InputText
-                    id="industryCompanyName"
-                    ref="industryCompanyNameField"
-                    v-model="ipa.projectDetails.industryCompanyName"
-                    aria-describedby="project-initiator-help"
-                    aria-required="true"
-                    fluid
-                    class="inline-block"
-                />
-            </LabelledInput>
-        </FormField>
-        <FormField
-            :resolver="zodProjectAuthorizingAgencyResolver"
-            name="projectAuthorizingAgency"
-        >
-            <LabelledInput
-                label="Authorizing Agency"
-                hint="Select the Agency that is authorizing the project"
-                input-name="projectAuthorizingAgency"
-                :error-message="$form.projectAuthorizingAgency?.error?.message"
-                :required="true"
+                <LabelledInput
+                    label="Industry Company / Individual / Organization"
+                    hint="Enter the name of Company / Individual / Organization that is responsible for executing the project"
+                    input-name="industryCompanyName"
+                    :error-message="$form.industryCompanyName?.error?.message"
+                    :required="true"
+                >
+                    <InputText
+                        id="industryCompanyName"
+                        ref="industryCompanyNameField"
+                        v-model="ipa.projectDetails.industryCompanyName"
+                        aria-describedby="project-initiator-help"
+                        aria-required="true"
+                        fluid
+                        class="inline-block"
+                    />
+                </LabelledInput>
+            </FormField>
+        </div>
+        <div class="formfield-margin-bottom flex-row">
+            <FormField
+                :resolver="zodProjectAuthorizingAgencyResolver"
+                name="projectAuthorizingAgency"
             >
-                <ConceptSelect
-                    id="projectAuthorizingAgency"
-                    ref="projectAuthorizingAgencyField"
-                    v-model="ipa.projectDetails.projectAuthorizingAgency"
-                    graph-slug="project_assessment"
-                    node-alias="project_authorizing_agency"
-                />
-            </LabelledInput>
-        </FormField>
-        <FormField
-            :resolver="zodLandActFileNumberResolver"
-            name="landActFileNumber"
-        >
-            <LabelledInput
-                label="Land Act #"
-                input-name="landActFileNumber"
-                :error-message="$form.landActFileNumber?.error?.message"
+                <LabelledInput
+                    label="Authorizing Agency"
+                    hint="Select the Agency that is authorizing the project"
+                    input-name="projectAuthorizingAgency"
+                    :error-message="
+                        $form.projectAuthorizingAgency?.error?.message
+                    "
+                    :required="true"
+                >
+                    <ConceptSelect
+                        id="projectAuthorizingAgency"
+                        ref="projectAuthorizingAgencyField"
+                        v-model="ipa.projectDetails.projectAuthorizingAgency"
+                        graph-slug="project_assessment"
+                        node-alias="project_authorizing_agency"
+                    />
+                </LabelledInput>
+            </FormField>
+            <FormField
+                :resolver="zodLandActFileNumberResolver"
+                name="landActFileNumber"
             >
-                <InputText
-                    id="landActFileNumber"
-                    ref="landActFileNumberField"
-                    v-model="ipa.projectDetails.landActFileNumber"
-                    aria-describedby="land-act-number-help"
-                    aria-required="true"
-                    fluid
-                    class="inline-block"
-                />
-            </LabelledInput>
-        </FormField>
-        <FormField
-            :resolver="zodEstimatedStartDatesResolver"
-            name="estimatedStartDate"
-        >
-            <LabelledInput
-                label="Estimated Start Date"
-                hint="Enter the estimated start date"
-                input-name="estimatedStartDate"
-                :error-message="$form.estimatedStartDate?.error?.message"
-                :required="true"
+                <LabelledInput
+                    label="Land Act #"
+                    input-name="landActFileNumber"
+                    :error-message="$form.landActFileNumber?.error?.message"
+                >
+                    <InputText
+                        id="landActFileNumber"
+                        ref="landActFileNumberField"
+                        v-model="ipa.projectDetails.landActFileNumber"
+                        aria-describedby="land-act-number-help"
+                        aria-required="true"
+                        fluid
+                        class="inline-block"
+                    />
+                </LabelledInput>
+            </FormField>
+        </div>
+        <div class="flex-row">
+            <FormField
+                :resolver="zodEstimatedStartDatesResolver"
+                name="estimatedStartDate"
             >
-                <DatePicker
-                    id="estimatedStartDate"
-                    ref="estimatedStartDateField"
-                    v-model="ipa.projectDetails.estimatedStartDate"
-                    :dateFormat="DATE_FORMAT"
-                    showIcon
-                    aria-describedby="estimated-start-date-help"
-                    aria-required="true"
-                />
-            </LabelledInput>
-        </FormField>
-        <FormField
-            :resolver="zodEstimatedEndDatesResolver"
-            name="estimatedEndDate"
-        >
-            <LabelledInput
-                label="Estimated End Date"
-                hint="Enter the estimated end date"
-                input-name="estimatedEndDate"
-                :error-message="$form.estimatedEndDate?.error?.message"
-                :required="true"
+                <LabelledInput
+                    label="Estimated Start Date"
+                    hint="Enter the estimated start date"
+                    input-name="estimatedStartDate"
+                    :error-message="$form.estimatedStartDate?.error?.message"
+                    :required="true"
+                >
+                    <DatePicker
+                        id="estimatedStartDate"
+                        ref="estimatedStartDateField"
+                        v-model="ipa.projectDetails.estimatedStartDate"
+                        :dateFormat="DATE_FORMAT"
+                        showIcon
+                        aria-describedby="estimated-start-date-help"
+                        aria-required="true"
+                    />
+                </LabelledInput>
+            </FormField>
+            <FormField
+                :resolver="zodEstimatedEndDatesResolver"
+                name="estimatedEndDate"
             >
-                <DatePicker
-                    id="estimatedEndDate"
-                    ref="estimatedEndDateField"
-                    v-model="ipa.projectDetails.estimatedEndDate"
-                    :dateFormat="DATE_FORMAT"
-                    showIcon
-                    aria-describedby="estimated-end-date-help"
-                    aria-required="true"
-                />
-            </LabelledInput>
-        </FormField>
+                <LabelledInput
+                    label="Estimated End Date"
+                    hint="Enter the estimated end date"
+                    input-name="estimatedEndDate"
+                    :error-message="$form.estimatedEndDate?.error?.message"
+                    :required="true"
+                >
+                    <DatePicker
+                        id="estimatedEndDate"
+                        ref="estimatedEndDateField"
+                        v-model="ipa.projectDetails.estimatedEndDate"
+                        :dateFormat="DATE_FORMAT"
+                        showIcon
+                        aria-describedby="estimated-end-date-help"
+                        aria-required="true"
+                    />
+                </LabelledInput>
+            </FormField>
+        </div>
     </Form>
 </template>
 
@@ -205,5 +216,12 @@ defineExpose({ isValid });
 .inline-block {
     display: inline-block;
     width: unset;
+}
+.formfield-margin-bottom {
+    margin-bottom: 1rem;
+}
+.flex-row {
+    display: flex;
+    flex-direction: row;
 }
 </style>

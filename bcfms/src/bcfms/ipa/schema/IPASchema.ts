@@ -16,7 +16,6 @@ function getIPA(): IPAType {
 }
 
 class IPA implements IPAType {
-    static projectDetails: any;
     constructor() {
         this.projectDetails = {};
         this.initialProjectReview = {};
