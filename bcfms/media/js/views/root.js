@@ -78,9 +78,9 @@ const BCGovPreset = definePreset(Aura, {
                 light: {
                     background: '{grey.50}',
                 },
-                // dark: {
-                //     background: '#222',
-                // },
+                dark: {
+                    background: '#222',
+                },
             },
         },
         stepper: {
