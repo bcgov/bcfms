@@ -119,29 +119,13 @@ select,
 optgroup,
 textarea,
 ::file-selector-button {
-
     font: inherit;
-    font: inherit;
-
     font-feature-settings: inherit;
-    font-feature-settings: inherit;
-
     font-variation-settings: inherit;
-    font-variation-settings: inherit;
-
     letter-spacing: inherit;
-    letter-spacing: inherit;
-
     color: inherit;
-    color: inherit;
-
     border-radius: 0;
-    border-radius: 0;
-
     background-color: transparent;
-    background-color: transparent;
-
-    opacity: 1;
     opacity: 1;
 }
 
@@ -156,7 +140,6 @@ textarea,
 
 textarea {
     resize: vertical;
-
 }
 
 :-moz-ui-invalid {
@@ -166,10 +149,7 @@ textarea {
 button,
 input:where([type="button"], [type="reset"], [type="submit"]),
 ::file-selector-button {
-
     appearance: button;
-    appearance: button;
-
 }
 
 [hidden]:where(:not([hidden="until-found"])) {

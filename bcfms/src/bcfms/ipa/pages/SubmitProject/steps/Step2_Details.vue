@@ -5,6 +5,8 @@ import type { Ref } from 'vue';
 import InputText from 'primevue/inputtext';
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
 import ConceptSelect from '@/bcgov_arches_common/components/ConceptSelect/ConceptSelect.vue';
+import ResourceInstanceSelectWidget from '@/arches_component_lab/widgets/ResourceInstanceSelectWidget/ResourceInstanceSelectWidget.vue';
+import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
 import { Form, FormField, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import DatePicker from 'primevue/datepicker';
@@ -85,12 +87,12 @@ defineExpose({ isValid });
                     :error-message="$form.projectInitiator?.error?.message"
                     :required="true"
                 >
-                    <ConceptSelect
-                        id="projectInitiator"
-                        ref="projectInitiatorField"
-                        v-model="ipa.projectDetails.projectInitiator"
+                    <ResourceInstanceSelectWidget
+                        :mode="EDIT"
+                        :initial-value="null"
                         graph-slug="project_assessment"
                         node-alias="project_initiator"
+                        :show-label="false"
                     />
                 </LabelledInput>
             </FormField>
