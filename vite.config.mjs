@@ -198,6 +198,7 @@ export default defineConfig({
             '/bc-fossil-management/arches-component-lab/api': 'http://localhost:80',
             '/bc-fossil-management/api': 'http://localhost:80',
             '/bc-fossil-management/static/css': 'http://localhost:80',
+            '/bc-fossil-management/static/img': 'http://localhost:80',
         },
         fs: {
             allow: [
