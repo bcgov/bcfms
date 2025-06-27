@@ -144,7 +144,6 @@ onMounted(() => {
                             <div class="">
                                 <StepperNavigation
                                     :step-number="1"
-                                    :show-previous="false"
                                     :validate-fn="isValid"
                                     @next-click="activateCallback(2)"
                                 ></StepperNavigation>
@@ -161,7 +160,6 @@ onMounted(() => {
                             <div class="">
                                 <StepperNavigation
                                     :step-number="2"
-                                    :show-previous="false"
                                     :validate-fn="isValid"
                                     @next-click="activateCallback(3)"
                                     @previous-click="activateCallback(1)"
@@ -179,7 +177,6 @@ onMounted(() => {
                             <div class="">
                                 <StepperNavigation
                                     :step-number="3"
-                                    :show-previous="false"
                                     :validate-fn="isValid"
                                     @next-click="activateCallback(4)"
                                     @previous-click="activateCallback(2)"
@@ -197,7 +194,6 @@ onMounted(() => {
                             <div class="">
                                 <StepperNavigation
                                     :step-number="4"
-                                    :show-previous="false"
                                     :validate-fn="isValid"
                                     @next-click="activateCallback(5)"
                                     @previous-click="activateCallback(3)"
@@ -215,7 +211,6 @@ onMounted(() => {
                             <div class="">
                                 <StepperNavigation
                                     :step-number="5"
-                                    :show-previous="false"
                                     :validate-fn="isValid"
                                     @next-click="activateCallback(6)"
                                     @previous-click="activateCallback(4)"
