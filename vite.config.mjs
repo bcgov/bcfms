@@ -179,7 +179,7 @@ export default defineConfig({
     server: {
         root: path.resolve('./bcfms/src'),
         host: 'localhost',
-        // port: 5174,
+        port: 5174,
         open: false,
         cors: true,
         base: '/bc-fossil-management/static',

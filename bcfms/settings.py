@@ -208,6 +208,7 @@ INSTALLED_APPS += ("arches.app",)
 DJANGO_VITE = {
     "default": {
         "dev_mode": False,
+        "dev_server_port": 5174,
         "static_url_prefix": "/",
     }
 }
@@ -219,7 +220,7 @@ DJANGO_VITE_ASSETS_PATH = os.path.join(BASE_DIR, "staticfiles", "dist")
 # If use HMR or not.
 # DJANGO_VITE_DEV_MODE = DEBUG
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
+    "http://localhost:5174",
 ]
 # END django_vite SETTINGS
 
