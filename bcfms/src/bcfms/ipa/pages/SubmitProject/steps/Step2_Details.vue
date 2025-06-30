@@ -51,6 +51,7 @@ defineExpose({ isValid });
         v-slot="$form"
         name="projectDetailsForm"
         :validateOnBlur="true"
+        :resolver="zodResolver(ProjectDetailsSchema)"
         ><div class="formfield-margin-bottom">
             <FormField
                 :resolver="zodProjectNameResolver"
