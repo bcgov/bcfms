@@ -123,28 +123,32 @@ defineExpose({ isValid });
             </FormField>
         </div>
         <div class="formfield-margin-bottom flex-row">
-            <FormField
-                :resolver="zodProjectAuthorizingAgencyResolver"
-                name="projectAuthorizingAgency"
-            >
-                <LabelledInput
-                    label="Authorizing Agency"
-                    hint="Select the Agency that is authorizing the project"
-                    input-name="projectAuthorizingAgency"
-                    :error-message="
-                        $form.projectAuthorizingAgency?.error?.message
-                    "
-                    :required="true"
+            <div class="formfield-flex-grow">
+                <FormField
+                    :resolver="zodProjectAuthorizingAgencyResolver"
+                    name="projectAuthorizingAgency"
                 >
-                    <ConceptSelect
-                        id="projectAuthorizingAgency"
-                        ref="projectAuthorizingAgencyField"
-                        v-model="ipa.projectDetails.projectAuthorizingAgency"
-                        graph-slug="project_assessment"
-                        node-alias="project_authorizing_agency"
-                    />
-                </LabelledInput>
-            </FormField>
+                    <LabelledInput
+                        label="Authorizing Agency"
+                        hint="Select the Agency that is authorizing the project"
+                        input-name="projectAuthorizingAgency"
+                        :error-message="
+                            $form.projectAuthorizingAgency?.error?.message
+                        "
+                        :required="true"
+                    >
+                        <ConceptSelect
+                            id="projectAuthorizingAgency"
+                            ref="projectAuthorizingAgencyField"
+                            v-model="
+                                ipa.projectDetails.projectAuthorizingAgency
+                            "
+                            graph-slug="project_assessment"
+                            node-alias="project_authorizing_agency"
+                        />
+                    </LabelledInput>
+                </FormField>
+            </div>
             <FormField
                 :resolver="zodLandActFileNumberResolver"
                 name="landActFileNumber"
@@ -167,50 +171,56 @@ defineExpose({ isValid });
             </FormField>
         </div>
         <div class="flex-row">
-            <FormField
-                :resolver="zodEstimatedStartDatesResolver"
-                name="estimatedStartDate"
-            >
-                <LabelledInput
-                    label="Estimated Start Date"
-                    hint="Enter the estimated start date"
-                    input-name="estimatedStartDate"
-                    :error-message="$form.estimatedStartDate?.error?.message"
-                    :required="true"
+            <div class="formfield-flex-grow">
+                <FormField
+                    :resolver="zodEstimatedStartDatesResolver"
+                    name="estimatedStartDate"
                 >
-                    <DatePicker
-                        id="estimatedStartDate"
-                        ref="estimatedStartDateField"
-                        v-model="ipa.projectDetails.estimatedStartDate"
-                        :dateFormat="DATE_FORMAT"
-                        showIcon
-                        aria-describedby="estimated-start-date-help"
-                        aria-required="true"
-                    />
-                </LabelledInput>
-            </FormField>
-            <FormField
-                :resolver="zodEstimatedEndDatesResolver"
-                name="estimatedEndDate"
-            >
-                <LabelledInput
-                    label="Estimated End Date"
-                    hint="Enter the estimated end date"
-                    input-name="estimatedEndDate"
-                    :error-message="$form.estimatedEndDate?.error?.message"
-                    :required="true"
+                    <LabelledInput
+                        label="Estimated Start Date"
+                        hint="Enter the estimated start date"
+                        input-name="estimatedStartDate"
+                        :error-message="
+                            $form.estimatedStartDate?.error?.message
+                        "
+                        :required="true"
+                    >
+                        <DatePicker
+                            id="estimatedStartDate"
+                            ref="estimatedStartDateField"
+                            v-model="ipa.projectDetails.estimatedStartDate"
+                            :dateFormat="DATE_FORMAT"
+                            showIcon
+                            aria-describedby="estimated-start-date-help"
+                            aria-required="true"
+                        />
+                    </LabelledInput>
+                </FormField>
+            </div>
+            <div class="formfield-flex-grow">
+                <FormField
+                    :resolver="zodEstimatedEndDatesResolver"
+                    name="estimatedEndDate"
                 >
-                    <DatePicker
-                        id="estimatedEndDate"
-                        ref="estimatedEndDateField"
-                        v-model="ipa.projectDetails.estimatedEndDate"
-                        :dateFormat="DATE_FORMAT"
-                        showIcon
-                        aria-describedby="estimated-end-date-help"
-                        aria-required="true"
-                    />
-                </LabelledInput>
-            </FormField>
+                    <LabelledInput
+                        label="Estimated End Date"
+                        hint="Enter the estimated end date"
+                        input-name="estimatedEndDate"
+                        :error-message="$form.estimatedEndDate?.error?.message"
+                        :required="true"
+                    >
+                        <DatePicker
+                            id="estimatedEndDate"
+                            ref="estimatedEndDateField"
+                            v-model="ipa.projectDetails.estimatedEndDate"
+                            :dateFormat="DATE_FORMAT"
+                            showIcon
+                            aria-describedby="estimated-end-date-help"
+                            aria-required="true"
+                        />
+                    </LabelledInput>
+                </FormField>
+            </div>
         </div>
     </Form>
 </template>
@@ -226,5 +236,9 @@ defineExpose({ isValid });
 .flex-row {
     display: flex;
     flex-direction: row;
+}
+.formfield-flex-grow {
+    flex-grow: 2;
+    margin-right: 1rem;
 }
 </style>
