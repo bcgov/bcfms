@@ -14,6 +14,7 @@ services:
       - ./:/web_root/bcfms
       - ../arches_common/:/web_root/arches_common
       - ../arches-component-lab/:/web_root/arches-component-lab
+      - ../arches-querysets/:/web_root/arches-querysets
     env_file:
       - ./docker/env_file.env
     ports:

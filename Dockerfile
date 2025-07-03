@@ -9,6 +9,7 @@ ENV ARCHES_ROOT=${WEB_ROOT}/arches
 ENV ARCHES_COMMON_ROOT=${WEB_ROOT}/arches_common
 # Arches Component Lab root
 ENV ARCHES_COMPONENT_LAB_ROOT=${WEB_ROOT}/arches-component-lab
+ENV ARCHES_QUERYSETS_ROOT=${WEB_ROOT}/arches-querysets
 ENV PG_TILESERV_ROOT=${WEB_ROOT}/pg_tileserv
 ENV WHEELS=/wheels
 ENV PYTHONUNBUFFERED=1
@@ -54,6 +55,7 @@ RUN rm -rf /root/.cache/pip/*
 COPY ./arches ${ARCHES_ROOT}
 COPY ./arches_common ${ARCHES_COMMON_ROOT}
 COPY ./arches-component-lab ${ARCHES_COMPONENT_LAB_ROOT}
+COPY ./arches-querysets ${ARCHES_QUERYSETS_ROOT}
 # From here, run commands from ARCHES_ROOT
 WORKDIR ${ARCHES_ROOT}
 RUN pip install -e .[dev]&& \
@@ -66,6 +68,10 @@ RUN pip install -e .
 
 # Install Arches Component Lab
 WORKDIR ${ARCHES_COMPONENT_LAB_ROOT}
+RUN pip install -e .
+
+WORKDIR ${ARCHES_QUERYSETS_ROOT}
+RUN ls -l > ${ARCHES_COMMON_ROOT}/qs_list.txt
 RUN pip install -e .
 
 COPY ./bcfms/docker/entrypoint.sh ${WEB_ROOT}/entrypoint.sh
