@@ -9,12 +9,13 @@ BC Fossil Management Office implementation of Arches
 1. Create a directory called `bcfms`
 2. Open a terminal and navigate to the `bcfms` directory
 3. Run the following to clone the repositories required for this project:
-```
+``` shell
 git clone https://github.com/bcgov/arches-dependency-containers
 git clone https://github.com/bcgov/arches
 git clone https://github.com/bcgov/arches_common
 git clone https://github.com/bcgov/bcfms
 git clone https://github.com/archesproject/arches-component-lab
+git clone https://github.com/archesproject/arches-querysets
 ```
 
 - You should now have the following directory structure:
@@ -24,15 +25,16 @@ git clone https://github.com/archesproject/arches-component-lab
     ├── 📁 arches-dependency-containers/
     ├── 📁 arches/
     ├── 📁 arches_common/
-    └── 📁 bcfms/
-    └── 📁 arches-component-lab/
+    ├── 📁 bcfms/
+    ├── 📁 arches-component-lab/
+    └── 📁 arches-querysets/
 ```
 
 ## Arches
 1. Open or navigate to the `bcfms` directory in the terminal
 2. Run the following command:
 ```
-cd arches && git checkout stable/7.6.4.1_bcgov
+cd arches && git checkout stable/7.6.12_bcgov
 ```
 
 ## Arches Dependency Containers
