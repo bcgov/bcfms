@@ -200,6 +200,7 @@ INSTALLED_APPS = (
     "django_vite",
     "storages",
     "bcfms",
+    "arches_querysets",
     "arches_component_lab",
     "bcgov_arches_common",
 )
