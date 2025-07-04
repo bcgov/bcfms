@@ -34,10 +34,10 @@ const zodLandActFileNumberResolver = zodResolver(
     ProjectDetailsSchema.shape.landActFileNumber,
 );
 const zodEstimatedStartDatesResolver = zodResolver(
-    ProjectDetailsSchema.shape.estimatedStartDate,
+    ProjectDetailsSchema.shape.projectStartDate,
 );
 const zodEstimatedEndDatesResolver = zodResolver(
-    ProjectDetailsSchema.shape.estimatedEndDate,
+    ProjectDetailsSchema.shape.projectEndDate,
 );
 const isValid = () => {
     return projectDetailsForm.value?.valid;
@@ -188,7 +188,7 @@ defineExpose({ isValid });
                         <DatePicker
                             id="estimatedStartDate"
                             ref="estimatedStartDateField"
-                            v-model="ipa.projectDetails.estimatedStartDate"
+                            v-model="ipa.projectDetails.projectStartDate"
                             :dateFormat="DATE_FORMAT"
                             showIcon
                             aria-describedby="estimated-start-date-help"
@@ -212,7 +212,7 @@ defineExpose({ isValid });
                         <DatePicker
                             id="estimatedEndDate"
                             ref="estimatedEndDateField"
-                            v-model="ipa.projectDetails.estimatedEndDate"
+                            v-model="ipa.projectDetails.projectEndDate"
                             :dateFormat="DATE_FORMAT"
                             showIcon
                             aria-describedby="estimated-end-date-help"
@@ -240,5 +240,69 @@ defineExpose({ isValid });
 .formfield-flex-grow {
     flex-grow: 2;
     margin-right: 1rem;
+}
+.p-datepicker-panel {
+    background-color: #f9f9f9 !important;
+}
+.p-datepicker {
+    background-color: #f9f9f9 !important;
+    color: #000000 !important;
+}
+.p-datepicker-header {
+    background-color: #f0f0f0 !important;
+    color: #000000 !important;
+}
+.p-datepicker-prev,
+.p-datepicker-next {
+    color: #000000 !important;
+}
+.p-datepicker-calendar thead th {
+    background-color: #f9f9f9 !important;
+    color: #000000 !important;
+    font-weight: 600;
+}
+.p-datepicker-calendar tbody td {
+    background-color: #f9f9f9 !important;
+}
+.p-datepicker-calendar tbody td span {
+    color: #000000 !important;
+}
+.p-datepicker-calendar td span.p-highlight {
+    background-color: #e0e0e0 !important;
+    color: #000000 !important;
+}
+.p-datepicker-calendar td span:hover {
+    background-color: #eaeaea !important;
+    color: #000000 !important;
+}
+
+.p-datepicker-calendar {
+    background-color: #eaeaea !important;
+    color: #000000 !important;
+}
+.p-datepicker-weekday {
+    background-color: #eaeaea !important;
+    color: #000000 !important;
+}
+.p-select-list-container {
+    background-color: #f9f9f9 !important;
+    color: #000000 !important;
+    border: 1px solid #dcdcdc !important;
+    border-radius: 4px;
+}
+
+.p-select-item {
+    background-color: #f9f9f9 !important;
+    color: #000000 !important;
+}
+
+.p-select-item.p-highlight {
+    background-color: #e0e0e0 !important;
+    color: #000000 !important;
+}
+
+.p-focus {
+    background-color: #eaeaea !important;
+    color: #000000 !important;
 }
 </style>
