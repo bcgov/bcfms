@@ -1,5 +1,4 @@
 // // add the beginning of your app entry
-import 'vite/modulepreload-polyfill';
 import { createRouter, createWebHistory } from 'vue-router';
 import BCFMSApp from '@/bcfms/App.vue';
 import { routes } from '@/bcfms/routes.ts';
