@@ -143,6 +143,7 @@ onMounted(() => {
                             <StepperNavigation
                                 :step-number="1"
                                 :validate-fn="isValid"
+                                :show-previous="showPrevious"
                                 @next-click="activateCallback(2)"
                             ></StepperNavigation>
                         </StepPanel>
@@ -154,7 +155,6 @@ onMounted(() => {
                             <SubmitProjectStep2
                                 ref="step2"
                             ></SubmitProjectStep2>
-
                             <StepperNavigation
                                 :step-number="2"
                                 :validate-fn="isValid"
@@ -170,7 +170,6 @@ onMounted(() => {
                             <SubmitProjectStep3
                                 ref="step3"
                             ></SubmitProjectStep3>
-
                             <StepperNavigation
                                 :step-number="3"
                                 :validate-fn="isValid"
@@ -186,7 +185,6 @@ onMounted(() => {
                             <SubmitProjectStep4
                                 ref="step4"
                             ></SubmitProjectStep4>
-
                             <StepperNavigation
                                 :step-number="4"
                                 :validate-fn="isValid"
@@ -202,7 +200,6 @@ onMounted(() => {
                             <SubmitProjectStep5
                                 ref="step5"
                             ></SubmitProjectStep5>
-
                             <StepperNavigation
                                 :step-number="5"
                                 :validate-fn="isValid"
