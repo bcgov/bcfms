@@ -1,5 +1,5 @@
 // // add the beginning of your app entry
-// import 'vite/modulepreload-polyfill';
+import 'vite/modulepreload-polyfill';
 import { createRouter, createWebHistory } from 'vue-router';
 import BCFMSApp from '@/bcfms/App.vue';
 import { routes } from '@/bcfms/routes.ts';
@@ -21,11 +21,10 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
-
 const BCGovPreset = definePreset(Aura, {
     options: {
         prefix: 'p',
-        darkModeSelector: 'system',
+        darkModeSelector: false,
         cssLayer: false,
     },
     semantic: {
@@ -44,81 +43,128 @@ const BCGovPreset = definePreset(Aura, {
         },
         colorScheme: {
             light: {
-                color: '{gray.50}',
+                color: '{gray.900}', // Font/text color
+                background: '{gray.50}', // App/page background
                 formField: {
-                    hoverBorderColor: '{primary.color}',
+                    hoverBorderColor: '{primary.500}',
                 },
-            },
-            dark: {
-                formField: {
-                    hoverBorderColor: '{primary.color}',
+                button: {
+                    primary: '{primary.500}',
                 },
             },
         },
     },
     components: {
         button: {
-            paddingX: '.75rem;',
-            paddingY: '0.1rem;',
+            paddingX: '.75rem',
+            paddingY: '0.1rem',
+            colorScheme: {
+                light: {
+                    color: '{gray.500}',
+                },
+            },
         },
         card: {
-            titleFontSize: '1.0rem',
+            titleFontSize: '1rem',
+            colorScheme: {
+                light: {
+                    background: '{gray.50}',
+                    color: '{gray.900}',
+                },
+            },
         },
         fieldset: {
             colorScheme: {
                 light: {
-                    background: '{grey.50}',
-                    legendBackground: '{grey.50}',
-                },
-                dark: {
-                    background: '{grey.900}',
-                    legendBackground: '{grey.900}',
+                    background: '{gray.50}',
+                    legendBackground: '{gray.50}',
+                    color: '{gray.900}',
                 },
             },
         },
         inputtext: {
+            colorScheme: {
+                light: {
+                    background: '{gray.50}',
+                    color: '{gray.900}',
+                },
+            },
             paddingX: '0.2rem',
             paddingY: '0.2rem',
         },
         select: {
+            colorScheme: {
+                light: {
+                    background: '{gray.50}',
+                    color: '{gray.900}',
+                },
+            },
             paddingX: '0.2rem',
             paddingY: '0.2rem',
         },
-        checkbox: {
-            width: '1.0rem',
-            height: '1.0rem',
-        },
-        radiobutton: {
-            width: '1.0rem',
-            height: '1.0rem',
-        },
-        panel: {
-            contentPadding: '1.0rem',
+        calendar: {
             colorScheme: {
                 light: {
-                    background: '{grey.50}',
+                    background: '{gray.50}',
+                    color: '{gray.900}',
                 },
-                dark: {
-                    background: '#222',
+            },
+        },
+        dropdown: {
+            colorScheme: {
+                light: {
+                    background: '{gray.50}',
+                    color: '{gray.900}',
+                },
+            },
+        },
+        checkbox: {
+            colorScheme: {
+                light: {
+                    background: '{gray.50}',
+                    color: '{gray.900}',
+                },
+            },
+            width: '1rem',
+            height: '1rem',
+        },
+        radiobutton: {
+            colorScheme: {
+                light: {
+                    background: '{gray.50}',
+                    color: '{gray.900}',
+                },
+            },
+            width: '1rem',
+            height: '1rem',
+        },
+        panel: {
+            contentPadding: '1rem',
+            colorScheme: {
+                light: {
+                    background: '{gray.50}',
+                    color: '{gray.900}',
                 },
             },
         },
         stepper: {
             stepNumberSize: '1.5rem',
-            stepNumberFontSize: '1.0rem',
+            stepNumberFontSize: '1rem',
             steppanel: {
-                background: '{grey.50}',
+                background: '{gray.50}',
+                color: '{gray.900}',
             },
         },
     },
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    fetch(arches.urls.api_get_frontend_i18n_data)
+    fetch(`http://localhost:81/${arches.urls.api_get_frontend_i18n_data}`)
         .then(function (resp) {
             if (!resp.ok) {
                 throw new Error(resp.statusText);
             }
+
             return resp.json();
         })
         .then(function (respJSON) {
@@ -128,6 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 translations: respJSON['translations'],
             });
             const vueApp = createApp(BCFMSApp);
+
             vueApp.use(PrimeVue, {
                 theme: {
                     preset: BCGovPreset,

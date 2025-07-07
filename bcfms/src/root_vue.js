@@ -24,7 +24,7 @@ const router = createRouter({
 const BCGovPreset = definePreset(Aura, {
     options: {
         prefix: 'p',
-        darkModeSelector: 'system',
+        darkModeSelector: false,
         cssLayer: false,
     },
     semantic: {
@@ -43,73 +43,116 @@ const BCGovPreset = definePreset(Aura, {
         },
         colorScheme: {
             light: {
-                color: '{gray.50}',
+                color: '{gray.900}', // Font/text color
+                background: '{gray.50}', // App/page background
                 formField: {
-                    hoverBorderColor: '{primary.color}',
+                    hoverBorderColor: '{primary.500}',
                 },
                 button: {
-                    primary: 'red',
-                },
-            },
-            dark: {
-                formField: {
-                    hoverBorderColor: '{primary.color}',
+                    primary: '{primary.500}',
                 },
             },
         },
     },
     components: {
         button: {
-            paddingX: '.75rem;',
-            paddingY: '0.1rem;',
+            paddingX: '.75rem',
+            paddingY: '0.1rem',
+            colorScheme: {
+                light: {
+                    color: '{gray.500}',
+                },
+            },
         },
         card: {
-            titleFontSize: '1.0rem',
+            titleFontSize: '1rem',
+            colorScheme: {
+                light: {
+                    background: '{gray.50}',
+                    color: '{gray.900}',
+                },
+            },
         },
         fieldset: {
             colorScheme: {
                 light: {
-                    background: '{grey.50}',
-                    legendBackground: '{grey.50}',
-                },
-                dark: {
-                    background: '{grey.900}',
-                    legendBackground: '{grey.900}',
+                    background: '{gray.50}',
+                    legendBackground: '{gray.50}',
+                    color: '{gray.900}',
                 },
             },
         },
         inputtext: {
+            colorScheme: {
+                light: {
+                    background: '{gray.50}',
+                    color: '{gray.900}',
+                },
+            },
             paddingX: '0.2rem',
             paddingY: '0.2rem',
         },
         select: {
+            colorScheme: {
+                light: {
+                    background: '{gray.50}',
+                    color: '{gray.900}',
+                },
+            },
             paddingX: '0.2rem',
             paddingY: '0.2rem',
         },
-        checkbox: {
-            width: '1.0rem',
-            height: '1.0rem',
-        },
-        radiobutton: {
-            width: '1.0rem',
-            height: '1.0rem',
-        },
-        panel: {
-            contentPadding: '1.0rem',
+        calendar: {
             colorScheme: {
                 light: {
-                    background: '{grey.50}',
+                    background: '{gray.50}',
+                    color: '{gray.900}',
                 },
-                dark: {
-                    background: '#222',
+            },
+        },
+        dropdown: {
+            colorScheme: {
+                light: {
+                    background: '{gray.50}',
+                    color: '{gray.900}',
+                },
+            },
+        },
+        checkbox: {
+            colorScheme: {
+                light: {
+                    background: '{gray.50}',
+                    color: '{gray.900}',
+                },
+            },
+            width: '1rem',
+            height: '1rem',
+        },
+        radiobutton: {
+            colorScheme: {
+                light: {
+                    background: '{gray.50}',
+                    color: '{gray.900}',
+                },
+            },
+            width: '1rem',
+            height: '1rem',
+        },
+        panel: {
+            contentPadding: '1rem',
+            colorScheme: {
+                light: {
+                    background: '{gray.50}',
+                    color: '{gray.900}',
                 },
             },
         },
         stepper: {
             stepNumberSize: '1.5rem',
-            stepNumberFontSize: '1.0rem',
+            stepNumberFontSize: '1rem',
             steppanel: {
-                background: '{grey.50}',
+                background: '{gray.50}',
+                color: '{gray.900}',
             },
         },
     },

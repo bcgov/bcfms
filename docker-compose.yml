@@ -14,13 +14,14 @@ services:
       - ./:/web_root/bcfms
       - ../arches_common/:/web_root/arches_common
       - ../arches-component-lab/:/web_root/arches-component-lab
+      - ../arches-querysets/:/web_root/arches-querysets
     env_file:
       - ./docker/env_file.env
     ports:
       - 5689:5678
       - 81:80
       - 444:443
-      - 5173:5173
+      - 5174:5174
     stdin_open: true
     tty: true
 
