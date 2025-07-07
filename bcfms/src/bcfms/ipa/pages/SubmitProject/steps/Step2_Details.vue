@@ -207,7 +207,6 @@ defineExpose({ isValid });
                         hint="Enter the estimated end date"
                         input-name="estimatedEndDate"
                         :error-message="$form.estimatedEndDate?.error?.message"
-                        :required="true"
                     >
                         <DatePicker
                             id="estimatedEndDate"
