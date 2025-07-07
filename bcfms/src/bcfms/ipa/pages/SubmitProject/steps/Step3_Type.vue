@@ -41,7 +41,7 @@ defineExpose({ isValid });
             name="projectType"
         >
             <LabelledInput
-                label="Authorizing Agency"
+                label="Project Type"
                 hint="Select type of project. If project type is not listed, select Other"
                 input-name="projectType"
                 :error-message="$form.projectType?.error?.message"
