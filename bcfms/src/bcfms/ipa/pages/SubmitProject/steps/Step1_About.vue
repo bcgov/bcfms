@@ -9,11 +9,9 @@ defineExpose({ isValid });
 </script>
 <template>
     <FieldSet legend="Before you begin">
-        <div class="mb-2">
-            <p>The entire submission will need to be completed at once.</p>
-        </div>
+        <p>The entire submission will need to be completed at once.</p>
         <p>You will need the following:</p>
-        <ol class="ml-4">
+        <ol>
             <li>First thing</li>
             <li>Second thing</li>
             <li>Third thing</li>

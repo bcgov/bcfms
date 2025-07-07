@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, provide, onMounted } from 'vue';
 import Stepper from 'primevue/stepper';
 import Step from 'primevue/step';
 import StepPanel from 'primevue/steppanel';
@@ -7,11 +7,17 @@ import StepList from 'primevue/steplist';
 import StepPanels from 'primevue/steppanels';
 import StepperNavigation from '@/bcgov_arches_common/components/stepper/StepperNavigation.vue';
 import Panel from 'primevue/panel';
-import SubmitProjectStep1 from '@/bcfms/ipa/pages/SubmitProject/steps/Step1_About.vue';
-
-import type { Ref } from 'vue';
 import type { StepperProps } from 'primevue/stepper';
 import type { StepperState } from 'primevue/stepper';
+import SubmitProjectStep1 from '@/bcfms/ipa/pages/SubmitProject/steps/Step1_About.vue';
+import SubmitProjectStep2 from '@/bcfms/ipa/pages/SubmitProject/steps/Step2_Details.vue';
+import SubmitProjectStep3 from '@/bcfms/ipa/pages/SubmitProject/steps/Step3_Type.vue';
+import SubmitProjectStep4 from '@/bcfms/ipa/pages/SubmitProject/steps/Step4_Location.vue';
+import SubmitProjectStep5 from '@/bcfms/ipa/pages/SubmitProject/steps/Step5_Documents.vue';
+import SubmitProjectStep6 from '@/bcfms/ipa/pages/SubmitProject/steps/Step6_ReviewSubmission.vue';
+import { getIPA } from '@/bcfms/ipa/schema/IPASchema.ts';
+import { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
+import type { Ref } from 'vue';
 
 const activateNextStep = () => {
     myStepper.value.d_value++;
@@ -40,6 +46,9 @@ const isValid = (step: number) => {
 
     return stepValid;
 };
+const printDetails = () => {
+    console.log('printDetails');
+};
 const stepperProps: Ref<StepperProps | null> = ref(null);
 const stepperState: Ref<StepperState | null> = ref(null);
 const myStepper = ref();
@@ -49,16 +58,16 @@ const step3 = ref();
 const step4 = ref();
 const step5 = ref();
 const step6 = ref();
+const step7 = ref();
 const steps: Ref[] = [];
 let lastStep = 1;
 const currentStep = computed(() => {
     return myStepper.value?.d_value;
 });
 const submitted = ref(false);
+const ipa: Ref<typeof IPA> = ref(getIPA());
 
-onMounted(() => {
-    steps.push(step1, step2, step3, step4, step5, step6);
-});
+provide('ipa', ipa);
 
 const nextLabel = computed(() => {
     if (currentStep.value === steps.length) return 'Print';
@@ -67,13 +76,23 @@ const nextLabel = computed(() => {
 const showPrevious = computed(() => {
     return !(currentStep.value === steps.length || currentStep.value === 1);
 });
+
 const showDebug = ref(false);
+
+onMounted(() => {
+    steps.push(step1, step2, step3, step4, step5, step6, step7);
+});
 </script>
 
 <template>
-    <!-- <div id="debug-div" :v-show="showDebug" class="debug-step" :class="{ 'show-debug': showDebug }">
-        {{ JSON.stringify(heritageSite) }}
-    </div> -->
+    <div
+        id="debug-div"
+        :v-show="showDebug"
+        class="debug-step"
+        :class="{ 'show-debug': showDebug }"
+    >
+        {{ JSON.stringify(ipa) }}
+    </div>
     <i
         style="margin-top: 30px"
         class="fa fa-eye-slash debug-toggle"
@@ -98,21 +117,20 @@ const showDebug = ref(false);
                         <Step :value="4">Location</Step>
                         <Step :value="5">Documents</Step>
                         <Step :value="6">Review Submission</Step>
+                        <Step :value="7">Submission Complete</Step>
                     </StepList>
                 </div>
                 <div class="bcgov-vertical-step-panels">
-                    <h3>Submit New Project Assessment</h3>
-                    <div class="">
-                        <StepperNavigation
-                            :step-number="currentStep"
-                            :validate-fn="isValid"
-                            :show-previous="showPrevious"
-                            :next-label="nextLabel"
-                            @next-click="activateNextStep"
-                            @previous-click="activatePreviousStep"
-                        >
-                        </StepperNavigation>
-                    </div>
+                    <h3 class="heading-black">Submit New Project Assessment</h3>
+                    <StepperNavigation
+                        :step-number="currentStep"
+                        :validate-fn="isValid"
+                        :show-previous="showPrevious"
+                        :next-label="nextLabel"
+                        @next-click="activateNextStep"
+                        @previous-click="activatePreviousStep"
+                    >
+                    </StepperNavigation>
                     <StepPanels>
                         <StepPanel
                             v-slot="{ activateCallback }"
@@ -121,14 +139,103 @@ const showDebug = ref(false);
                             <SubmitProjectStep1
                                 ref="step1"
                             ></SubmitProjectStep1>
-                            <div class="">
-                                <StepperNavigation
-                                    :step-number="1"
-                                    :show-previous="false"
-                                    :validate-fn="isValid"
-                                    @next-click="activateCallback(2)"
-                                ></StepperNavigation>
-                            </div>
+
+                            <StepperNavigation
+                                :step-number="1"
+                                :validate-fn="isValid"
+                                @next-click="activateCallback(2)"
+                            ></StepperNavigation>
+                        </StepPanel>
+                        <StepPanel
+                            v-slot="{ activateCallback }"
+                            :value="2"
+                        >
+                            <div class="step-title">Project Details</div>
+                            <SubmitProjectStep2
+                                ref="step2"
+                            ></SubmitProjectStep2>
+
+                            <StepperNavigation
+                                :step-number="2"
+                                :validate-fn="isValid"
+                                @next-click="activateCallback(3)"
+                                @previous-click="activateCallback(1)"
+                            ></StepperNavigation>
+                        </StepPanel>
+                        <StepPanel
+                            v-slot="{ activateCallback }"
+                            :value="3"
+                        >
+                            <div class="step-title">Project Type</div>
+                            <SubmitProjectStep3
+                                ref="step3"
+                            ></SubmitProjectStep3>
+
+                            <StepperNavigation
+                                :step-number="3"
+                                :validate-fn="isValid"
+                                @next-click="activateCallback(4)"
+                                @previous-click="activateCallback(2)"
+                            ></StepperNavigation>
+                        </StepPanel>
+                        <StepPanel
+                            v-slot="{ activateCallback }"
+                            :value="4"
+                        >
+                            <div class="step-title">Project Location</div>
+                            <SubmitProjectStep4
+                                ref="step4"
+                            ></SubmitProjectStep4>
+
+                            <StepperNavigation
+                                :step-number="4"
+                                :validate-fn="isValid"
+                                @next-click="activateCallback(5)"
+                                @previous-click="activateCallback(3)"
+                            ></StepperNavigation>
+                        </StepPanel>
+                        <StepPanel
+                            v-slot="{ activateCallback }"
+                            :value="5"
+                        >
+                            <div class="step-title">Project Documents</div>
+                            <SubmitProjectStep5
+                                ref="step5"
+                            ></SubmitProjectStep5>
+
+                            <StepperNavigation
+                                :step-number="5"
+                                :validate-fn="isValid"
+                                @next-click="activateCallback(6)"
+                                @previous-click="activateCallback(4)"
+                            ></StepperNavigation>
+                        </StepPanel>
+                        <StepPanel
+                            v-slot="{ activateCallback }"
+                            :value="6"
+                        >
+                            <div class="step-title">Review Submission</div>
+                            <SubmitProjectStep6
+                                ref="step6"
+                            ></SubmitProjectStep6>
+                            <StepperNavigation
+                                :step-number="6"
+                                :validate-fn="isValid"
+                                next-label="Submit"
+                                @next-click="activateCallback(7)"
+                                @previous-click="activateCallback(5)"
+                            >
+                            </StepperNavigation>
+                        </StepPanel>
+                        <StepPanel :value="7">
+                            <div class="step-title">Submission Complete</div>
+                            <StepperNavigation
+                                :step-number="7"
+                                :validate-fn="isValid"
+                                :show-previous="false"
+                                next-label="Print"
+                                @next-click="printDetails"
+                            ></StepperNavigation>
                         </StepPanel>
                     </StepPanels>
                 </div>
@@ -180,5 +287,16 @@ li {
     left: 0.5rem;
     color: white;
     z-index: 9000;
+}
+
+.heading-black {
+    color: black;
+}
+
+.p-panel {
+    color: white;
+}
+.stepper-nav-panel {
+    color: white;
 }
 </style>

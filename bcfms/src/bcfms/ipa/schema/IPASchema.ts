@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { ProjectDetailsSchema } from '@/bcfms/schema/ProjectDetailsSchema.ts';
-import { InitialProjectReviewSchema } from '@/bcfms/schema/InitialProjectReviewSchema.ts';
+import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
+import { InitialProjectReviewSchema } from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
 
 const IPASchema = z.object({
     projectDetails: z.array(ProjectDetailsSchema),
