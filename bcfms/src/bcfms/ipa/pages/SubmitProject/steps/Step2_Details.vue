@@ -71,6 +71,7 @@ defineExpose({ isValid });
                         aria-describedby="project-name-help"
                         aria-required="true"
                         fluid
+                        placeholder="Project Name"
                         class="inline-block"
                     />
                 </LabelledInput>
@@ -117,6 +118,7 @@ defineExpose({ isValid });
                         aria-describedby="project-initiator-help"
                         aria-required="true"
                         fluid
+                        placeholder="Enter the company name"
                         class="inline-block"
                     />
                 </LabelledInput>
@@ -154,7 +156,7 @@ defineExpose({ isValid });
                 name="landActFileNumber"
             >
                 <LabelledInput
-                    label="Land Act #"
+                    label="Land Act Number"
                     input-name="landActFileNumber"
                     :error-message="$form.landActFileNumber?.error?.message"
                 >
@@ -163,8 +165,8 @@ defineExpose({ isValid });
                         ref="landActFileNumberField"
                         v-model="ipa.projectDetails.landActFileNumber"
                         aria-describedby="land-act-number-help"
-                        aria-required="true"
                         fluid
+                        placeholder="Land Act Number"
                         class="inline-block"
                     />
                 </LabelledInput>
@@ -172,52 +174,42 @@ defineExpose({ isValid });
         </div>
         <div class="flex-row">
             <div class="formfield-flex-grow">
+                <label for="estimatedStartDate">Estimated Start Date</label>
                 <FormField
                     :resolver="zodEstimatedStartDatesResolver"
                     name="estimatedStartDate"
                 >
-                    <LabelledInput
-                        label="Estimated Start Date"
-                        hint="Enter the estimated start date"
-                        input-name="estimatedStartDate"
-                        :error-message="
-                            $form.estimatedStartDate?.error?.message
-                        "
-                        :required="true"
-                    >
-                        <DatePicker
-                            id="estimatedStartDate"
-                            ref="estimatedStartDateField"
-                            v-model="ipa.projectDetails.projectStartDate"
-                            :dateFormat="DATE_FORMAT"
-                            showIcon
-                            aria-describedby="estimated-start-date-help"
-                            aria-required="true"
-                        />
-                    </LabelledInput>
+                    <DatePicker
+                        id="estimatedStartDate"
+                        ref="estimatedStartDateField"
+                        v-model="ipa.projectDetails.projectStartDate"
+                        :dateFormat="DATE_FORMAT"
+                        showIcon
+                        placeholder="Project Start Date"
+                        aria-describedby="estimated-start-date-help"
+                        class="datepicker-width"
+                        aria-required="true"
+                    />
                 </FormField>
             </div>
             <div class="formfield-flex-grow">
+                <label for="estimatedEndDate"
+                    >Estimated End Date (if known)</label
+                >
                 <FormField
                     :resolver="zodEstimatedEndDatesResolver"
                     name="estimatedEndDate"
                 >
-                    <LabelledInput
-                        label="Estimated End Date"
-                        hint="Enter the estimated end date"
-                        input-name="estimatedEndDate"
-                        :error-message="$form.estimatedEndDate?.error?.message"
-                    >
-                        <DatePicker
-                            id="estimatedEndDate"
-                            ref="estimatedEndDateField"
-                            v-model="ipa.projectDetails.projectEndDate"
-                            :dateFormat="DATE_FORMAT"
-                            showIcon
-                            aria-describedby="estimated-end-date-help"
-                            aria-required="true"
-                        />
-                    </LabelledInput>
+                    <DatePicker
+                        id="estimatedEndDate"
+                        ref="estimatedEndDateField"
+                        v-model="ipa.projectDetails.projectEndDate"
+                        :dateFormat="DATE_FORMAT"
+                        showIcon
+                        placeholder="Project End Date"
+                        class="datepicker-width"
+                        aria-describedby="estimated-start-date-help"
+                    />
                 </FormField>
             </div>
         </div>
@@ -303,5 +295,8 @@ defineExpose({ isValid });
 .p-focus {
     background-color: #eaeaea !important;
     color: #000000 !important;
+}
+.datepicker-width {
+    width: 85%;
 }
 </style>
