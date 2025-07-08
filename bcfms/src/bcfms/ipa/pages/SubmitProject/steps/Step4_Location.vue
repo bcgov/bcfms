@@ -54,6 +54,7 @@ defineExpose({ isValid });
                     aria-describedby="location-description-help"
                     aria-required="true"
                     fluid
+                    placeholder="Enter a description of the project location(s)"
                     class="inline-block"
                 />
             </LabelledInput>
@@ -94,6 +95,7 @@ defineExpose({ isValid });
                     aria-describedby="multiple-geometry-qualifier-help"
                     aria-required="true"
                     fluid
+                    placeholder="Multiple Geometry Qualifiers"
                     class="inline-block"
                 />
             </LabelledInput>
