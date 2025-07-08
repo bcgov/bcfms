@@ -73,6 +73,7 @@ defineExpose({ isValid });
                     aria-describedby="other-project-type-help"
                     aria-required="true"
                     fluid
+                    placeholder="Other Project Type"
                     class="inline-block"
                 />
             </LabelledInput>
@@ -95,6 +96,7 @@ defineExpose({ isValid });
                     aria-describedby="project-activity-help"
                     aria-required="true"
                     fluid
+                    placeholder="Proposed Activity"
                     class="inline-block"
                 />
             </LabelledInput>
