@@ -289,11 +289,4 @@ li {
 .heading-black {
     color: black;
 }
-
-.p-panel {
-    color: white;
-}
-.stepper-nav-panel {
-    color: white;
-}
 </style>
