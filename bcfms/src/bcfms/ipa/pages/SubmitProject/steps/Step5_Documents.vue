@@ -22,8 +22,8 @@ defineExpose({ isValid });
         name="projectDocumentsForm"
         :validateOnBlur="true"
     >
-        Upload project doocuments such as Application Information Requirements
-        (AIR) or Land Act project description document , if applicable
+        Upload project documents such as Application Information Requirements
+        (AIR) or Land Act project description document, if applicable
     </Form>
 </template>
 
