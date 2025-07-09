@@ -6,7 +6,7 @@ const ProjectDetailsSchema = z.object({
             invalid_type_error: 'Project Name is required.',
         })
         .min(1, { message: 'Project Name is required.' })
-        .max(250)
+        .max(120)
         .nullable(),
     projectInitiator: z
         .string()
@@ -21,7 +21,7 @@ const ProjectDetailsSchema = z.object({
             message:
                 'Industry Company / Individual / Organization is required.',
         })
-        .max(250)
+        .max(60)
         .nullable(),
     projectAuthorizingAgency: z
         .string()
@@ -29,6 +29,7 @@ const ProjectDetailsSchema = z.object({
         .nullable(),
     landActFileNumber: z
         .string()
+        .max(30)
         .transform((val: string, ctx: any) => {
             const parsed = parseInt(val);
 
@@ -52,20 +53,20 @@ const ProjectDetailsSchema = z.object({
         .string()
         .uuid({ message: 'Project Type is required.' })
         .nullable(),
-    otherProjectType: z.string().max(250).nullable(),
+    otherProjectType: z.string().max(60).nullable(),
     proposedActivity: z
         .string({
             invalid_type_error: 'Proposed Activity is required.',
         })
         .min(1, { message: 'Proposed Activity is required.' })
-        .max(250)
+        .max(60)
         .nullable(),
     locationDescription: z
         .string({
             invalid_type_error: 'Location Description is required.',
         })
         .min(1, { message: 'Location Description is required.' })
-        .max(250)
+        .max(60)
         .nullable(),
     geometryQualifier: z.string().uuid().max(250).nullable(),
     multipleGeometryQualifier: z.string().max(250).nullable(),

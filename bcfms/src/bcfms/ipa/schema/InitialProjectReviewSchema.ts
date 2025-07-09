@@ -26,8 +26,8 @@ const InitialProjectReviewSchema = z.object({
             invalid_type_error: 'Initial Review Internal Notes are required.',
         })
         .min(1, { message: 'Initial Review Internal Notes are required.' })
-        .max(4000),
-    initialReviewOutcome: z.string().max(4000),
+        .max(500),
+    initialReviewOutcome: z.string().max(500),
 });
 
 const requiredInitialProjectReviewSchema = InitialProjectReviewSchema.partial();
