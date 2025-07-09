@@ -7,7 +7,7 @@ import StepList from 'primevue/steplist';
 import StepPanels from 'primevue/steppanels';
 import StepperNavigation from '@/bcgov_arches_common/components/stepper/StepperNavigation.vue';
 import Panel from 'primevue/panel';
-import SubmitProjectStep1 from '@/bcfms/ipa/pages/SubmitProject/steps/Step1_About.vue';
+import NewProjectStep1 from './steps/Step1_About.vue';
 
 import type { Ref } from 'vue';
 import type { StepperProps } from 'primevue/stepper';
@@ -118,9 +118,7 @@ const showDebug = ref(false);
                             v-slot="{ activateCallback }"
                             :value="1"
                         >
-                            <SubmitProjectStep1
-                                ref="step1"
-                            ></SubmitProjectStep1>
+                            <NewProjectStep1 ref="step1"></NewProjectStep1>
                             <div class="">
                                 <StepperNavigation
                                     :step-number="1"

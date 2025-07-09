@@ -54,9 +54,7 @@ router.beforeEach(async (to, _from, next) => {
                 'Heritage Branch' in userData.groups
             )
         ) {
-            window.location.replace(
-                window.location.origin + '/bc-fossil-management',
-            );
+            window.location.replace(window.location.origin + '/bc-fossil-management');
         }
 
         setUser(userData);

@@ -14,7 +14,7 @@ const workflowItems = ref([
         description: $gettext('Add a new project'),
         icon: 'fa fa-file',
         class: 'dashboard-card ipa',
-        routeName: routeNames.submitProject,
+        routeName: routeNames.newProject,
     },
 ]);
 </script>
