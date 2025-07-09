@@ -24,14 +24,14 @@ const workflowItems = ref([
         class="full-height"
     >
         <Fluid>
-            <div class="flex max-w-2xl">
+            <div class="dashboard-div-flex">
                 <Card
                     v-for="item in workflowItems"
                     :key="item.routeName"
                     :class="item.class"
                 >
                     <template #title>
-                        <p class="dashboard-card-title mt-2">
+                        <p class="dashboard-card-title">
                             {{ item.label }}
                         </p>
                     </template>
@@ -74,7 +74,6 @@ const workflowItems = ref([
 .dashboard-card.ipa {
     border: 1px solid #7847ce;
     border-radius: 0%;
-    height: 253px;
     max-width: 275px;
     margin: 5px;
     text-align: center;
@@ -87,6 +86,11 @@ const workflowItems = ref([
     padding: 0rem;
 }
 
+.dashboard-card-description {
+    margin-bottom: 0;
+    padding-top: .25rem;
+}
+
 .dashboard-card.ipa:hover {
     background: #6da8d3;
 }
@@ -96,6 +100,7 @@ const workflowItems = ref([
     color: #440ea2;
     text-align: center;
     overflow-wrap: break-word;
+    margin-top: 1rem;
 }
 
 .dashboard-card-icon {
@@ -124,7 +129,6 @@ const workflowItems = ref([
 }
 
 .dashboard-card-footer {
-    height: 50px;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -133,5 +137,10 @@ const workflowItems = ref([
 
 .dashboard-card.collection-event {
     border: solid thick rgba(50, 50, 50, 0.7);
+}
+
+.dashboard-div-flex {
+    display: flex;
+    max-width: 46rem;
 }
 </style>
