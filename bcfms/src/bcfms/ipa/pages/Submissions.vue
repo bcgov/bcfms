@@ -74,7 +74,6 @@ const workflowItems = ref([
 .dashboard-card.ipa {
     border: 1px solid #7847ce;
     border-radius: 0%;
-    height: 239px;
     max-width: 275px;
     margin: 5px;
     text-align: center;
@@ -85,6 +84,11 @@ const workflowItems = ref([
 
 .dashboard-card.ipa :deep(.p-card-body) {
     padding: 0rem;
+}
+
+.dashboard-card-description {
+    margin-bottom: 0;
+    padding-top: .25rem;
 }
 
 .dashboard-card.ipa:hover {
@@ -125,7 +129,6 @@ const workflowItems = ref([
 }
 
 .dashboard-card-footer {
-    height: 50px;
     position: absolute;
     bottom: 0;
     width: 100%;
