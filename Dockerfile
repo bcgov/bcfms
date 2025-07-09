@@ -7,8 +7,6 @@ ENV APP_ROOT=${WEB_ROOT}/${PROJECT_NAME}
 # Root project folder
 ENV ARCHES_ROOT=${WEB_ROOT}/arches
 ENV ARCHES_COMMON_ROOT=${WEB_ROOT}/arches_common
-# Arches Component Lab root
-ENV ARCHES_COMPONENT_LAB_ROOT=${WEB_ROOT}/arches-component-lab
 ENV PG_TILESERV_ROOT=${WEB_ROOT}/pg_tileserv
 ENV WHEELS=/wheels
 ENV PYTHONUNBUFFERED=1
@@ -53,19 +51,13 @@ RUN rm -rf /root/.cache/pip/*
 # FIXME: ADD from github repository instead?
 COPY ./arches ${ARCHES_ROOT}
 COPY ./arches_common ${ARCHES_COMMON_ROOT}
-COPY ./arches-component-lab ${ARCHES_COMPONENT_LAB_ROOT}
 # From here, run commands from ARCHES_ROOT
 WORKDIR ${ARCHES_ROOT}
 RUN pip install -e .[dev]&& \
     pip install python-dotenv boto3==1.26 django-storages==1.13 oracledb html2text cffi redis && \
-    pip install django_vite && \
     pip install --upgrade cryptography PyJWT
 
 WORKDIR ${ARCHES_COMMON_ROOT}
-RUN pip install -e .
-
-# Install Arches Component Lab
-WORKDIR ${ARCHES_COMPONENT_LAB_ROOT}
 RUN pip install -e .
 
 COPY ./bcfms/docker/entrypoint.sh ${WEB_ROOT}/entrypoint.sh

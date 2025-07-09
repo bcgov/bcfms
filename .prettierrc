@@ -1,8 +1,4 @@
 {
     "singleAttributePerLine": true,
-    "tabWidth": 4,
-    "printWidth": 80,
-    "singleQuote": true,
-    "bracketSpacing": true,
-    "jsxBracketSameLine": false
+    "tabWidth": 4
 }

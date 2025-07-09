@@ -2,6 +2,7 @@ from django.urls import include, path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
+from django.urls.resolvers import RegexPattern
 from bcfms.views.api import MVT, CollectionEventFossilNames, ReportNumberGenerator
 from bcgov_arches_common.views.map import (
     BCTileserverProxyView,
@@ -9,10 +10,10 @@ from bcgov_arches_common.views.map import (
 )
 from bcfms.views.search import export_results as bcfms_export_results
 from bcfms.views.auth import ExternalOauth, UnauthorizedView
-from bcfms.views.root import BcfmsRootView
 import re
 
 uuid_regex = settings.UUID_REGEX
+
 
 path_prefix_re = re.compile(r"^(\^)(.*)$")
 
@@ -25,27 +26,33 @@ def bc_path_prefix(path):
         return new_path % settings.BCGOV_PROXY_PREFIX
 
 
+class BCRegexPattern(RegexPattern):
+    def __init__(self, regexpattern):
+        super().__init__(
+            bc_path_prefix(regexpattern.regex.pattern),
+            regexpattern.name,
+            regexpattern._is_endpoint,
+        )
+
+
+bc_url_resolver = re_path(r"^", include("arches.urls"))
+
+for pattern in bc_url_resolver.url_patterns:
+    # print("Before: %s" % pattern.pattern)
+    pattern.pattern = BCRegexPattern(pattern.pattern)
+    # print("After: %s" % pattern.pattern)
+
 urlpatterns = [
     re_path(
-        bc_path_prefix(r"^submissions/"), BcfmsRootView.as_view(), name="submissions"
-    ),
-    re_path(
-        bc_path_prefix(r"^bctileserver/(?P<path>.*)$"),
-        BCTileserverProxyView.as_view(),
-        name="bcfms_tile_server",
+        bc_path_prefix(r"^bctileserver/(?P<path>.*)$"), BCTileserverProxyView.as_view()
     ),
     re_path(
         bc_path_prefix(r"^bclocaltileserver/(?P<path>.*)$"),
         BCTileserverLocalProxyView.as_view(),
-        name="bcfms_local_tile_server",
     ),
     re_path(
-        bc_path_prefix(
-            r"^get_next_report_number/(?P<nodeid>%s)/(?P<typeAbbreviation>%s)$"
-            % (uuid_regex, "[A-Z]{2,4}")
-        ),
+        bc_path_prefix(r"^get_next_report_number/(?P<nodeid>%s)$" % uuid_regex),
         ReportNumberGenerator.as_view(),
-        name="get_next_report_number",
     ),
     re_path(
         bc_path_prefix(
@@ -87,14 +94,11 @@ urlpatterns = [
         UnauthorizedView.as_view(),
         name="unauthorized",
     ),
-    re_path(r"^bc-fossil-management/", include("bcgov_arches_common.urls")),
-    path("bc-fossil-management/", include("arches_component_lab.urls")),
-    path("bc-fossil-management/", include("arches.urls")),
-    # bc_url_resolver,
+    bc_url_resolver,
 ]
 
 # Ensure Arches core urls are superseded by project-level urls
-# urlpatterns.append(path("", include("arches.urls")))
+urlpatterns.append(path("", include("arches.urls")))
 
 # Adds URL pattern to serve media files during development
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
