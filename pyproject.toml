@@ -25,11 +25,11 @@ classifiers = [
 requires-python = ">=3.10"
 dependencies = [
     "arches==7.6.4",
-    "bcgov_arches_common @ git+https://github.com/bcgov/bcgov-aches-common@v1.1.0-b0",
+    "bcgov_arches_common @ git+https://github.com/bcgov/bcgov-aches-common@v1.2.0",
     "django-storages==1.13",
     "python-dotenv",
 ]
-version = "1.2.0"
+version = "1.2.2"
 
 [project.optional-dependencies]
 dev = [
