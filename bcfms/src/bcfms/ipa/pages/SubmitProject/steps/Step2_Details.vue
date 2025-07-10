@@ -57,7 +57,8 @@ defineExpose({ isValid });
         name="projectDetailsForm"
         :validateOnBlur="true"
         :resolver="zodResolver(ProjectDetailsSchema)"
-        ><div class="formfield-margin-bottom">
+    >
+        <div class="formfield-margin-bottom">
             <FormField
                 :resolver="zodProjectNameResolver"
                 name="projectName"
@@ -227,47 +228,59 @@ defineExpose({ isValid });
     display: inline-block;
     width: unset;
 }
+
 .formfield-margin-bottom {
     margin-bottom: 1rem;
 }
+
 .flex-row {
     display: flex;
     flex-direction: row;
 }
+
 .formfield-flex-grow {
     flex-grow: 2;
     margin-right: 1rem;
 }
+
 .p-datepicker-panel {
     background-color: #f9f9f9 !important;
 }
+
 .p-datepicker {
     background-color: #f9f9f9 !important;
     color: #000000 !important;
 }
+
 .p-datepicker-header {
     background-color: #f0f0f0 !important;
     color: #000000 !important;
 }
+
 .p-datepicker-prev,
 .p-datepicker-next {
     color: #000000 !important;
 }
+
 .p-datepicker-calendar thead th {
     background-color: #f9f9f9 !important;
     color: #000000 !important;
     font-weight: 600;
 }
+
 .p-datepicker-calendar tbody td {
     background-color: #f9f9f9 !important;
 }
+
 .p-datepicker-calendar tbody td span {
     color: #000000 !important;
 }
+
 .p-datepicker-calendar td span.p-highlight {
     background-color: #e0e0e0 !important;
     color: #000000 !important;
 }
+
 .p-datepicker-calendar td span:hover {
     background-color: #eaeaea !important;
     color: #000000 !important;
@@ -277,10 +290,12 @@ defineExpose({ isValid });
     background-color: #eaeaea !important;
     color: #000000 !important;
 }
+
 .p-datepicker-weekday {
     background-color: #eaeaea !important;
     color: #000000 !important;
 }
+
 .p-select-list-container {
     background-color: #f9f9f9 !important;
     color: #000000 !important;
@@ -302,7 +317,12 @@ defineExpose({ isValid });
     background-color: #eaeaea !important;
     color: #000000 !important;
 }
+
 .datepicker-width {
     width: 85%;
+}
+
+.p-select-option-label {
+    font-size: 0.9rem;
 }
 </style>
