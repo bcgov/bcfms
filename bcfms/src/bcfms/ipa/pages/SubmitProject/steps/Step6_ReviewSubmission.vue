@@ -13,12 +13,6 @@ const ipa: typeof IPA = inject('ipa') as typeof IPA;
     </p>
     <p class="p-underline-bold">Filling Details</p>
     <div class="div-grid-cols">
-        <div>Submission Date</div>
-        <div>
-            {{ ipa.projectDetails.projectStartDate }}
-        </div>
-    </div>
-    <div class="div-grid-cols">
         <div>Project Name</div>
         <div>
             {{ ipa.projectDetails.projectName }}
