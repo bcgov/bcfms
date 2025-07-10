@@ -1,6 +1,14 @@
 @import "map_legend.css";
 @import url("node_modules/bcgov_arches_common/bcgov_arches_common/media/css/project.css");
 
+.tp-caption {
+   left: 0 !important;
+}
+
+.bc-full-height-image {
+   height: 100vh !important;
+}
+
 .p-fieldset {
     border: solid thin #999;
     margin: 1rem 0;
@@ -58,4 +66,13 @@
 
 .next-button {
     right: 1rem;
+}
+
+.bc-details-tab dt {
+   width: 300px !important;
+}
+
+.empty-section {
+   color: lightgray !important;
+   font-style: italic;
 }
