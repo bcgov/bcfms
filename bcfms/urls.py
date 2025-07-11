@@ -9,7 +9,6 @@ from bcgov_arches_common.views.map import (
     BCTileserverLocalProxyView,
 )
 from bcfms.views.search import export_results as bcfms_export_results
-from bcfms.views.auth import ExternalOauth, UnauthorizedView
 import re
 
 uuid_regex = settings.UUID_REGEX
@@ -34,13 +33,6 @@ class BCRegexPattern(RegexPattern):
             regexpattern._is_endpoint,
         )
 
-
-bc_url_resolver = re_path(r"^", include("arches.urls"))
-
-for pattern in bc_url_resolver.url_patterns:
-    # print("Before: %s" % pattern.pattern)
-    pattern.pattern = BCRegexPattern(pattern.pattern)
-    # print("After: %s" % pattern.pattern)
 
 urlpatterns = [
     re_path(
@@ -76,29 +68,9 @@ urlpatterns = [
         bcfms_export_results,
         name="export_results",
     ),
-    re_path(
-        bc_path_prefix(r"^auth/$"), ExternalOauth.start, name="external_oauth_start"
-    ),
-    re_path(
-        bc_path_prefix(r"^auth/eoauth_cb$"),
-        ExternalOauth.callback,
-        name="external_oauth_callback",
-    ),
-    re_path(
-        bc_path_prefix(r"^auth/eoauth_start$"),
-        ExternalOauth.start,
-        name="external_oauth_start",
-    ),
-    re_path(
-        bc_path_prefix(r"^unauthorized/"),
-        UnauthorizedView.as_view(),
-        name="unauthorized",
-    ),
-    bc_url_resolver,
+    path("bc-fossil-management/", include("bcgov_arches_common.urls")),
+    path("bc-fossil-management/", include("arches.urls")),
 ]
-
-# Ensure Arches core urls are superseded by project-level urls
-urlpatterns.append(path("", include("arches.urls")))
 
 # Adds URL pattern to serve media files during development
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

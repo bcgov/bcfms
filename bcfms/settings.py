@@ -36,7 +36,7 @@ load_dotenv(
     os.path.join(os.path.split(os.path.dirname(os.path.abspath(__file__)))[0], ".env")
 )
 APP_NAME = "bcfms"
-APP_VERSION = semantic_version.Version(major=1, minor=2, patch=0)
+APP_VERSION = semantic_version.Version(major=1, minor=2, patch=2)
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 # PROXY prefix used - NB - cannot have leading "/", and must have trailing "/"
@@ -56,7 +56,7 @@ SEARCH_COMPONENT_LOCATIONS.append("bcfms.search.components")
 
 LOCALE_PATHS.insert(0, os.path.join(APP_ROOT, "locale"))
 
-FILE_TYPE_CHECKING = False
+FILE_TYPE_CHECKING = 'Strict'
 FILE_TYPES = [
     "bmp",
     "gif",
@@ -208,9 +208,8 @@ DEFAULT_HOST = "bcfms"
 
 AUTHENTICATION_BACKENDS = (
     # "arches.app.utils.email_auth_backend.EmailAuthenticationBackend", #Comment out for IDIR
-    "bcfms.util.auth.external_oauth_backend.ExternalOauthAuthenticationBackend",
     "oauth2_provider.backends.OAuth2Backend",
-    # "django.contrib.auth.backends.ModelBackend",  # this is default # Comment out for IDIR
+    "django.contrib.auth.backends.ModelBackend",  # this is default # Comment out for IDIR
     # "django.contrib.auth.backends.RemoteUserBackend",
     # "bcfms.util.auth.backends.BCGovRemoteUserBackend",  # For IDIR authentication
     "guardian.backends.ObjectPermissionBackend",
@@ -230,7 +229,7 @@ MIDDLEWARE = [
     "oauth2_provider.middleware.OAuth2TokenMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     # "bcfms.util.auth.middleware.SiteminderMiddleware",
-    "bcfms.util.auth.auth_required_middleware.AuthRequiredMiddleware",
+    "bcgov_arches_common.util.auth.oauth_token_refresh.OAuthTokenRefreshMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "arches.app.utils.middleware.SetAnonymousUser",
@@ -371,20 +370,32 @@ GRAPH_MODEL_CACHE_TIMEOUT = None
 
 OAUTH_CLIENT_ID = ""  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
 
-EXTERNAL_OAUTH_CONFIGURATION = {
-    # claim to be used to assign arches username from
-    "uid_claim": "preferred_username",
-    # application ID and secret assigned to your arches application
-    "app_id": get_env_variable("OAUTH_CLIENT_ID"),
-    "app_secret": get_env_variable("OAUTH_CLIENT_SECRET"),
-    # provider scopes must at least give Arches access to openid, email and profile
-    "scopes": ["openid", "profile", "email"],
-    # authorization, token and jwks URIs must be configured for your provider
-    "authorization_endpoint": get_env_variable("OAUTH_AUTH_ENDPOINT"),
-    "token_endpoint": get_env_variable("OAUTH_TOKEN_ENDPOINT"),
-    "jwks_uri": get_env_variable("OAUTH_JWKS_URI"),
-    # enforces token validation on authentication, AVOID setting this to False,
-    "validate_id_token": True,
+AUTHLIB_OAUTH_CLIENTS = {
+    "default": {
+        "client_id": get_env_variable("OAUTH_CLIENT_ID"),
+        "client_secret": get_env_variable("OAUTH_CLIENT_SECRET"),
+        "authorize_url": get_env_variable("OAUTH_AUTH_ENDPOINT"),
+        "access_token_url": get_env_variable("OAUTH_TOKEN_ENDPOINT"),
+        "refresh_token_url": get_env_variable("OAUTH_TOKEN_ENDPOINT"),
+        "server_metadata_url": get_env_variable("OAUTH_SERVER_METADATA_URL"),
+        "client_kwargs": {
+            "scope": "openid profile email",
+            "token_endpoint_auth_method": "client_secret_post",
+        },
+        "urls": {
+            "home_page": "/bc-fossil-management/",
+            "unauthorized_page": "/bc-fossil-management/unauthorized",
+            "unauthorized_template": "unauthorized.htm",
+            "auth_exempt_pages": [
+                "/bc-fossil-management",
+                "/unauthorized",
+                "/bc-fossil-management/index.htm",
+                "/bc-fossil-management/auth",
+                "/bc-fossil-management/auth/eoauth_start",
+                "/bc-fossil-management/auth/eoauth_cb",
+            ],
+        },
+    }
 }
 
 APP_TITLE = "BC Government | Fossil Management System"
