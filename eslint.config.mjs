@@ -4,6 +4,7 @@ import tseslint from 'typescript-eslint';
 import pluginVue from 'eslint-plugin-vue';
 import prettier from 'eslint-plugin-prettier/recommended';
 import vueConfigPrettier from '@vue/eslint-config-prettier';
+import html from '@html-eslint/eslint-plugin';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -39,6 +40,24 @@ export default [
             parserOptions: {
                 parser: tseslint.parser,
             },
+        },
+    },
+    // html
+    {
+        ...html.configs['flat/recommended'],
+        files: ['**/*.html', '**/*.htm'],
+        plugins: {
+            '@html-eslint': html,
+        },
+        rules: {
+            '@html-eslint/no-duplicate-attrs': 'off',
+            '@html-eslint/require-closing-tags': 'off',
+            '@html-eslint/no-extra-spacing-attrs': 'off',
+            '@html-eslint/require-li-container': 'off',
+            '@html-eslint/no-obsolete-tags': 'off',
+            '@html-eslint/no-inline-styles': 'warn',
+            '@html-eslint/require-button-type': 'warn',
+            // Removed non-existent rule: '@html-eslint/attr-hyphen-case'
         },
     },
     {
