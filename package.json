@@ -25,11 +25,11 @@
         "underscore": "^1.13.6"
     },
     "devDependencies": {
-        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#stable/7.6.4"
+        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#stable/7.6.12"
     },
     "dependencies": {
-        "arches": "github:bcgov/arches#v7.6.4.1_bcgov",
-        "bcgov_arches_common": "github:bcgov/bcgov-arches-ccommon"
+        "arches": "github:bcgov/arches#stable/7.6.12_bcgov",
+        "bcgov_arches_common": "github:bcgov/bcgov-arches-common#release/1.2.0_update_oauth_framework"
     },
     "nodeModulesPaths": {}
 }
