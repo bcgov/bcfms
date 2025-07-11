@@ -37,7 +37,7 @@ COMMON_ROOT = os.path.abspath(
         "..",
         "..",
         "..",
-        "arches_common",
+        "bcgov-arches-common",
         "bcgov_arches_common",
     )
 )

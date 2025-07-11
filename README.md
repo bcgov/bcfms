@@ -20,13 +20,13 @@ Arches (Postgres, Elasticsearch, Redis, etc).
 ``` shell
 cd git/bcfms/src
 git clone https://github.com/bcgov/arches
-git clone https://github.com/bcgov/arches_common
+git clone https://github.com/bcgov/bcgov-arches-common
 cd arches && git checkout stable/7.6.4.1_bcgov
 # This should result in a directory structure like the below:
 ~/git/bcfms/
      /bcfms/src/arches/         # <- This is a clone of the arches bcgov/arches repo
      /bcfms/src/bcfms/          # <- This directory
-     /bcfms/src/arches_common/   # <- This is a clone of the bcgov/arches_common repo
+     /bcfms/src/bcgov-arches-common/   # <- This is a clone of the bcgov/bcgov-arches-common repo
 ```
 
 
