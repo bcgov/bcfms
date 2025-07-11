@@ -24,10 +24,11 @@ classifiers = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "arches==7.6.4",
-    "bcgov_arches_common @ git+https://github.com/bcgov/arches_common@v1.1.0-b0",
+    "arches==7.6.12",
+    "bcgov_arches_common @ git+https://github.com/bcgov/arches_common@release/1.2.0_update_oauth_framework",
     "django-storages==1.13",
     "python-dotenv",
+    "Authlib"
 ]
 version = "1.2.0"
 
