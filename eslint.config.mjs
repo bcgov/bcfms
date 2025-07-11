@@ -49,6 +49,16 @@ export default [
         plugins: {
             '@html-eslint': html,
         },
+        rules: {
+            '@html-eslint/no-duplicate-attrs': 'off',
+            '@html-eslint/require-closing-tags': 'off',
+            '@html-eslint/no-extra-spacing-attrs': 'off',
+            '@html-eslint/require-li-container': 'off',
+            '@html-eslint/no-obsolete-tags': 'off',
+            '@html-eslint/no-inline-styles': 'warn',
+            '@html-eslint/require-button-type': 'warn',
+            // Removed non-existent rule: '@html-eslint/attr-hyphen-case'
+        },
     },
     {
         rules: {
