@@ -58,8 +58,8 @@ urlpatterns = [
         bcfms_export_results,
         name="export_results",
     ),
-    path("", include("bcgov_arches_common.urls")),
-    path("", include("arches.urls")),
+    path(bc_path_prefix(), include("bcgov_arches_common.urls")),
+    path(bc_path_prefix(), include("arches.urls")),
 ]
 
 # Adds URL pattern to serve media files during development
