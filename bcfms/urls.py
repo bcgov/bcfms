@@ -2,7 +2,6 @@ from django.urls import include, path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
-from django.urls.resolvers import RegexPattern
 from bcfms.views.api import MVT, CollectionEventFossilNames, ReportNumberGenerator
 from bcgov_arches_common.views.map import (
     BCTileserverProxyView,
@@ -12,26 +11,17 @@ from bcfms.views.search import export_results as bcfms_export_results
 import re
 
 uuid_regex = settings.UUID_REGEX
-
-
 path_prefix_re = re.compile(r"^(\^)(.*)$")
 
 
-def bc_path_prefix(path):
+def bc_path_prefix(path=""):
     if not settings.BCGOV_PROXY_PREFIX:
         return path
     else:
+        if not path:
+            return settings.BCGOV_PROXY_PREFIX
         new_path = path_prefix_re.sub(r"\1%s\2", path)
         return new_path % settings.BCGOV_PROXY_PREFIX
-
-
-class BCRegexPattern(RegexPattern):
-    def __init__(self, regexpattern):
-        super().__init__(
-            bc_path_prefix(regexpattern.regex.pattern),
-            regexpattern.name,
-            regexpattern._is_endpoint,
-        )
 
 
 urlpatterns = [
@@ -68,8 +58,8 @@ urlpatterns = [
         bcfms_export_results,
         name="export_results",
     ),
-    path("bc-fossil-management/", include("bcgov_arches_common.urls")),
-    path("bc-fossil-management/", include("arches.urls")),
+    path("", include("bcgov_arches_common.urls")),
+    path("", include("arches.urls")),
 ]
 
 # Adds URL pattern to serve media files during development
