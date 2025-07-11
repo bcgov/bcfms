@@ -56,7 +56,7 @@ SEARCH_COMPONENT_LOCATIONS.append("bcfms.search.components")
 
 LOCALE_PATHS.insert(0, os.path.join(APP_ROOT, "locale"))
 
-FILE_TYPE_CHECKING = 'Strict'
+FILE_TYPE_CHECKING = "Strict"
 FILE_TYPES = [
     "bmp",
     "gif",
@@ -368,6 +368,9 @@ TILE_CACHE_TIMEOUT = 600  # seconds
 CLUSTER_DISTANCE_MAX = 20000  # meters
 GRAPH_MODEL_CACHE_TIMEOUT = None
 
+# We are using a fork of the Arches Core and not publishing to PyPi so this needs to be silenced
+SILENCED_SYSTEM_CHECKS = ["arches.E002"]
+
 OAUTH_CLIENT_ID = ""  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
 
 AUTHLIB_OAUTH_CLIENTS = {
@@ -409,7 +412,9 @@ ENABLE_CAPTCHA = False
 NOCAPTCHA = True
 # RECAPTCHA_PROXY = 'http://127.0.0.1:8000'
 if DEBUG is True:
-    SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
+    SILENCED_SYSTEM_CHECKS.append(  # this must resolve last MIDDLEWARE entry
+        "captcha.recaptcha_test_key_error"
+    )
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  #<-- Only need to uncomment this for testing without an actual email server
