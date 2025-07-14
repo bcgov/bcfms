@@ -2,7 +2,7 @@
 import { inject } from 'vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 
-const ipa: typeof IPA = inject('ipa') as typeof IPA;
+const ipa = inject<IPA>('ipa');
 </script>
 
 <template>
@@ -15,40 +15,40 @@ const ipa: typeof IPA = inject('ipa') as typeof IPA;
     <div class="div-grid-cols">
         <div>Submission Date</div>
         <div>
-            {{ ipa.projectDetails.projectStartDate }}
+            {{ ipa?.projectDetails.projectStartDate }}
         </div>
     </div>
     <div class="div-grid-cols">
         <div>Project Name</div>
         <div>
-            {{ ipa.projectDetails.projectName }}
+            {{ ipa?.projectDetails.projectName }}
         </div>
     </div>
     <div class="div-grid-cols">
         <div>Initiator</div>
         <div>
-            {{ ipa.projectDetails.projectInitiator }}
+            {{ ipa?.projectDetails.projectInitiator }}
         </div>
     </div>
     <div class="div-grid-cols">
         <div>Industry Company / Individual / Organization</div>
         <div>
-            {{ ipa.projectDetails.industryCompanyName }}
+            {{ ipa?.projectDetails.industryCompanyName }}
         </div>
     </div>
     <div class="div-grid-cols">
         <div>Authorizing Agency</div>
         <div>
-            {{ ipa.projectDetails.projectAuthorizingAgency }}
+            {{ ipa?.projectDetails.projectAuthorizingAgency }}
         </div>
     </div>
     <div class="div-grid-cols">
         <div>Estimated Project Start / End Dates</div>
         <div>
-            {{ ipa.projectDetails.projectStartDate }} -
+            {{ ipa?.projectDetails.projectStartDate }} -
             {{
-                ipa.projectDetails.projectEndDate
-                    ? ipa.projectDetails.projectEndDate
+                ipa?.projectDetails.projectEndDate
+                    ? ipa?.projectDetails.projectEndDate
                     : ''
             }}
         </div>
@@ -56,19 +56,19 @@ const ipa: typeof IPA = inject('ipa') as typeof IPA;
     <div class="div-grid-cols">
         <div>Project Type</div>
         <div>
-            {{ ipa.projectDetails.projectType }}
+            {{ ipa?.projectDetails.projectType }}
         </div>
     </div>
     <div class="div-grid-cols">
         <div>Proposed Activity</div>
         <div>
-            {{ ipa.projectDetails.proposedActivity }}
+            {{ ipa?.projectDetails.proposedActivity }}
         </div>
     </div>
     <div class="div-grid-cols">
         <div>Location Description</div>
         <div>
-            {{ ipa.projectDetails.locationDescription }}
+            {{ ipa?.projectDetails.locationDescription }}
         </div>
     </div>
     <div class="div-grid-cols">

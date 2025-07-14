@@ -10,7 +10,12 @@ import ConceptSelect from '@/bcgov_arches_common/components/ConceptSelect/Concep
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
 
-const ipa: typeof IPA = inject('ipa') as typeof IPA;
+const ipa = inject<IPA>('ipa');
+
+if (!ipa) {
+    throw new Error('IPA instance not provided.');
+}
+
 const projectLocationForm: Ref<FormInstance | null> = useTemplateRef(
     'projectLocationForm',
 ) as Ref<FormInstance | null>;
