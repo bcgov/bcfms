@@ -45,47 +45,43 @@ defineExpose({ isValid });
             :resolver="zodProjectTypeResolver"
             name="projectType"
         >
-            <div class="formfield-margin-bottom">
-                <LabelledInput
-                    label="Project Type"
-                    hint="Select type of project. If project type is not listed, select Other"
-                    input-name="projectType"
-                    :error-message="$form.projectType?.error?.message"
-                    :required="true"
-                >
-                    <ConceptSelect
-                        id="projectType"
-                        ref="projectTypeField"
-                        v-model="ipa.projectDetails.projectType"
-                        graph-slug="project_assessment"
-                        node-alias="project_type"
-                    />
-                </LabelledInput>
-            </div>
+            <LabelledInput
+                label="Project Type"
+                hint="Select type of project. If project type is not listed, select Other"
+                input-name="projectType"
+                :error-message="$form.projectType?.error?.message"
+                :required="true"
+            >
+                <ConceptSelect
+                    id="projectType"
+                    ref="projectTypeField"
+                    v-model="ipa.projectDetails.projectType"
+                    graph-slug="project_assessment"
+                    node-alias="project_type"
+                />
+            </LabelledInput>
         </FormField>
         <FormField
             :resolver="zodOtherProjectTypeResolver"
             name="otherProjectType"
         >
-            <div class="formfield-margin-bottom">
-                <LabelledInput
-                    label="Other Project Type"
-                    hint="Enter a brief project type"
-                    input-name="otherProjectType"
-                    :error-message="$form.otherProjectType?.error?.message"
-                >
-                    <InputText
-                        id="otherProjectType"
-                        ref="otherProjectTypeField"
-                        v-model="ipa.projectDetails.otherProjectType"
-                        aria-describedby="other-project-type-help"
-                        aria-required="true"
-                        fluid
-                        placeholder="Other Project Type"
-                        class="inline-block"
-                    />
-                </LabelledInput>
-            </div>
+            <LabelledInput
+                label="Other Project Type"
+                hint="Enter a brief project type"
+                input-name="otherProjectType"
+                :error-message="$form.otherProjectType?.error?.message"
+            >
+                <InputText
+                    id="otherProjectType"
+                    ref="otherProjectTypeField"
+                    v-model="ipa.projectDetails.otherProjectType"
+                    aria-describedby="other-project-type-help"
+                    aria-required="true"
+                    fluid
+                    placeholder="Other Project Type"
+                    class="inline-block"
+                />
+            </LabelledInput>
         </FormField>
         <FormField
             :resolver="zodProposedActivityResolver"

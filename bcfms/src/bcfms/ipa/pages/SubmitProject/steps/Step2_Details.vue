@@ -58,127 +58,116 @@ defineExpose({ isValid });
         :validateOnBlur="true"
         :resolver="zodResolver(ProjectDetailsSchema)"
     >
-        <div class="formfield-margin-bottom">
+        <FormField
+            :resolver="zodProjectNameResolver"
+            name="projectName"
+        >
+            <LabelledInput
+                label="Project Name"
+                hint="Enter a specific project name, in sentence case, that includes the geographic location and project type"
+                input-name="projectName"
+                :error-message="$form.projectName?.error?.message"
+                :required="true"
+            >
+                <InputText
+                    id="projectName"
+                    ref="projectNameField"
+                    v-model="ipa.projectDetails.projectName"
+                    aria-describedby="project-name-help"
+                    aria-required="true"
+                    fluid
+                    placeholder="Project Name"
+                    class="inline-block"
+                />
+            </LabelledInput>
+        </FormField>
+        <FormField
+            :resolver="zodProjectInitiatorResolver"
+            name="projectInitiator"
+        >
+            <LabelledInput
+                label="Initiator"
+                hint="Select the organization or individual initiating the assessment"
+                input-name="projectInitiator"
+                :error-message="$form.projectInitiator?.error?.message"
+                :required="true"
+            >
+                <ResourceInstanceSelectWidget
+                    :mode="EDIT"
+                    :initial-value="null"
+                    graph-slug="project_assessment"
+                    node-alias="project_initiator"
+                    :show-label="false"
+                />
+            </LabelledInput>
+        </FormField>
+        <FormField
+            :resolver="zodIndustryCompanyNameResolver"
+            name="industryCompanyName"
+        >
+            <LabelledInput
+                label="Industry Company / Individual / Organization"
+                hint="Enter the name of Company / Individual / Organization that is responsible for executing the project"
+                input-name="industryCompanyName"
+                :error-message="$form.industryCompanyName?.error?.message"
+                :required="true"
+            >
+                <InputText
+                    id="industryCompanyName"
+                    ref="industryCompanyNameField"
+                    v-model="ipa.projectDetails.industryCompanyName"
+                    aria-describedby="project-initiator-help"
+                    aria-required="true"
+                    fluid
+                    placeholder="Enter the company name"
+                    class="inline-block"
+                />
+            </LabelledInput>
+        </FormField>
+        <div class="formfield-flex-grow">
             <FormField
-                :resolver="zodProjectNameResolver"
-                name="projectName"
+                :resolver="zodProjectAuthorizingAgencyResolver"
+                name="projectAuthorizingAgency"
             >
                 <LabelledInput
-                    label="Project Name"
-                    hint="Enter a specific project name, in sentence case, that includes the geographic location and project type"
-                    input-name="projectName"
-                    :error-message="$form.projectName?.error?.message"
+                    label="Authorizing Agency"
+                    hint="Select the Agency that is authorizing the project"
+                    input-name="projectAuthorizingAgency"
+                    :error-message="
+                        $form.projectAuthorizingAgency?.error?.message
+                    "
                     :required="true"
                 >
-                    <InputText
-                        id="projectName"
-                        ref="projectNameField"
-                        v-model="ipa.projectDetails.projectName"
-                        aria-describedby="project-name-help"
-                        aria-required="true"
-                        fluid
-                        placeholder="Project Name"
-                        class="inline-block"
-                    />
-                </LabelledInput>
-            </FormField>
-        </div>
-        <div class="formfield-margin-bottom">
-            <FormField
-                :resolver="zodProjectInitiatorResolver"
-                name="projectInitiator"
-            >
-                <LabelledInput
-                    label="Initiator"
-                    hint="Select the organization or individual initiating the assessment"
-                    input-name="projectInitiator"
-                    :error-message="$form.projectInitiator?.error?.message"
-                    :required="true"
-                >
-                    <ResourceInstanceSelectWidget
-                        v-model="ipa.projectDetails.projectInitiator"
-                        :mode="EDIT"
-                        :initial-value="null"
+                    <ConceptSelect
+                        id="projectAuthorizingAgency"
+                        ref="projectAuthorizingAgencyField"
+                        v-model="ipa.projectDetails.projectAuthorizingAgency"
                         graph-slug="project_assessment"
-                        node-alias="project_initiator"
-                        :show-label="false"
+                        node-alias="project_authorizing_agency"
                     />
                 </LabelledInput>
             </FormField>
         </div>
-        <div class="formfield-margin-bottom">
-            <FormField
-                :resolver="zodIndustryCompanyNameResolver"
-                name="industryCompanyName"
+        <FormField
+            :resolver="zodLandActFileNumberResolver"
+            name="landActFileNumber"
+        >
+            <LabelledInput
+                label="Land Act Number"
+                input-name="landActFileNumber"
+                :error-message="$form.landActFileNumber?.error?.message"
             >
-                <LabelledInput
-                    label="Industry Company / Individual / Organization"
-                    hint="Enter the name of Company / Individual / Organization that is responsible for executing the project"
-                    input-name="industryCompanyName"
-                    :error-message="$form.industryCompanyName?.error?.message"
-                    :required="true"
-                >
-                    <InputText
-                        id="industryCompanyName"
-                        ref="industryCompanyNameField"
-                        v-model="ipa.projectDetails.industryCompanyName"
-                        aria-describedby="project-initiator-help"
-                        aria-required="true"
-                        fluid
-                        placeholder="Enter the company name"
-                        class="inline-block"
-                    />
-                </LabelledInput>
-            </FormField>
-        </div>
-        <div class="formfield-margin-bottom flex-row">
-            <div class="formfield-flex-grow">
-                <FormField
-                    :resolver="zodProjectAuthorizingAgencyResolver"
-                    name="projectAuthorizingAgency"
-                >
-                    <LabelledInput
-                        label="Authorizing Agency"
-                        hint="Select the Agency that is authorizing the project"
-                        input-name="projectAuthorizingAgency"
-                        :error-message="
-                            $form.projectAuthorizingAgency?.error?.message
-                        "
-                        :required="true"
-                    >
-                        <ConceptSelect
-                            id="projectAuthorizingAgency"
-                            ref="projectAuthorizingAgencyField"
-                            v-model="
-                                ipa.projectDetails.projectAuthorizingAgency
-                            "
-                            graph-slug="project_assessment"
-                            node-alias="project_authorizing_agency"
-                        />
-                    </LabelledInput>
-                </FormField>
-            </div>
-            <FormField
-                :resolver="zodLandActFileNumberResolver"
-                name="landActFileNumber"
-            >
-                <LabelledInput
-                    label="Land Act Number"
-                    input-name="landActFileNumber"
-                    :error-message="$form.landActFileNumber?.error?.message"
-                >
-                    <InputText
-                        id="landActFileNumber"
-                        ref="landActFileNumberField"
-                        v-model="ipa.projectDetails.landActFileNumber"
-                        aria-describedby="land-act-number-help"
-                        fluid
-                        placeholder="Land Act Number"
-                        class="inline-block"
-                    />
-                </LabelledInput>
-            </FormField>
-        </div>
+                <InputText
+                    id="landActFileNumber"
+                    ref="landActFileNumberField"
+                    v-model="ipa.projectDetails.landActFileNumber"
+                    aria-describedby="land-act-number-help"
+                    fluid
+                    placeholder="Land Act Number"
+                    class="inline-block"
+                />
+            </LabelledInput>
+        </FormField>
         <div class="flex-row">
             <div class="formfield-flex-grow">
                 <label for="estimatedStartDate">Estimated Start Date</label>
@@ -229,10 +218,6 @@ defineExpose({ isValid });
     width: unset;
 }
 
-.formfield-margin-bottom {
-    margin-bottom: 1rem;
-}
-
 .flex-row {
     display: flex;
     flex-direction: row;
@@ -243,86 +228,7 @@ defineExpose({ isValid });
     margin-right: 1rem;
 }
 
-.p-datepicker-panel {
-    background-color: #f9f9f9 !important;
-}
-
-.p-datepicker {
-    background-color: #f9f9f9 !important;
-    color: #000000 !important;
-}
-
-.p-datepicker-header {
-    background-color: #f0f0f0 !important;
-    color: #000000 !important;
-}
-
-.p-datepicker-prev,
-.p-datepicker-next {
-    color: #000000 !important;
-}
-
-.p-datepicker-calendar thead th {
-    background-color: #f9f9f9 !important;
-    color: #000000 !important;
-    font-weight: 600;
-}
-
-.p-datepicker-calendar tbody td {
-    background-color: #f9f9f9 !important;
-}
-
-.p-datepicker-calendar tbody td span {
-    color: #000000 !important;
-}
-
-.p-datepicker-calendar td span.p-highlight {
-    background-color: #e0e0e0 !important;
-    color: #000000 !important;
-}
-
-.p-datepicker-calendar td span:hover {
-    background-color: #eaeaea !important;
-    color: #000000 !important;
-}
-
-.p-datepicker-calendar {
-    background-color: #eaeaea !important;
-    color: #000000 !important;
-}
-
-.p-datepicker-weekday {
-    background-color: #eaeaea !important;
-    color: #000000 !important;
-}
-
-.p-select-list-container {
-    background-color: #f9f9f9 !important;
-    color: #000000 !important;
-    border: 1px solid #dcdcdc !important;
-    border-radius: 4px;
-}
-
-.p-select-item {
-    background-color: #f9f9f9 !important;
-    color: #000000 !important;
-}
-
-.p-select-item.p-highlight {
-    background-color: #e0e0e0 !important;
-    color: #000000 !important;
-}
-
-.p-focus {
-    background-color: #eaeaea !important;
-    color: #000000 !important;
-}
-
 .datepicker-width {
     width: 85%;
-}
-
-.p-select-option-label {
-    font-size: 0.9rem;
 }
 </style>
