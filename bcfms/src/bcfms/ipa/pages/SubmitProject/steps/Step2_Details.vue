@@ -14,7 +14,12 @@ import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
 import { DATE_FORMAT } from '@/bcfms/constants.ts';
 
-const ipa: typeof IPA = inject('ipa') as typeof IPA;
+const ipa = inject<IPA>('ipa');
+
+if (!ipa) {
+    throw new Error('IPA instance not provided.');
+}
+
 const projectDetailsForm: Ref<FormInstance | null> = useTemplateRef(
     'projectDetailsForm',
 ) as Ref<FormInstance | null>;
@@ -90,6 +95,7 @@ defineExpose({ isValid });
                     :required="true"
                 >
                     <ResourceInstanceSelectWidget
+                        v-model="ipa.projectDetails.projectInitiator"
                         :mode="EDIT"
                         :initial-value="null"
                         graph-slug="project_assessment"

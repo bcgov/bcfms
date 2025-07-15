@@ -20,8 +20,8 @@ class IPA implements IPAType {
         this.projectDetails = {};
         this.initialProjectReview = {};
     }
-    projectDetails: object;
-    initialProjectReview: object;
+    projectDetails: typeof ProjectDetailsSchema;
+    initialProjectReview: typeof InitialProjectReviewSchema;
 }
 
 console.log(requiredIPASchema);
