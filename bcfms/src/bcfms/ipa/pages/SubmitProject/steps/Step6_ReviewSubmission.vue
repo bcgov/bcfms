@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { inject } from 'vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
+import DateWidget from '@/arches_component_lab/widgets/DateWidget/DateWidget.vue';
+import { VIEW } from '@/arches_component_lab/widgets/constants.ts';
 
 const ipa: typeof IPA = inject('ipa') as typeof IPA;
 </script>
@@ -44,14 +46,20 @@ const ipa: typeof IPA = inject('ipa') as typeof IPA;
     </div>
     <div class="div-grid-cols">
         <div>Estimated Project Start / End Dates</div>
-        <div>
-            {{ ipa.projectDetails.projectStartDate }} -
-            {{
-                ipa.projectDetails.projectEndDate
-                    ? ipa.projectDetails.projectEndDate
-                    : ''
-            }}
-        </div>
+        <DateWidget
+            :mode="VIEW"
+            :value="ipa.projectDetails.projectStartDate"
+            graph-slug="project_assessment"
+            node-alias="project_start_date"
+            :show-label="false"
+        />
+        <DateWidget
+            :mode="VIEW"
+            :value="ipa.projectDetails.projectEndDate"
+            graph-slug="project_assessment"
+            node-alias="project_end_date"
+            :show-label="false"
+        />
     </div>
     <div class="div-grid-cols">
         <div>Project Type</div>
