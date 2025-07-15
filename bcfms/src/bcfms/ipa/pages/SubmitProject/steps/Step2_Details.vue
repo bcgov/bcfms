@@ -208,6 +208,8 @@ defineExpose({ isValid });
 </template>
 
 <style>
+@import url('node_modules/bcgov_arches_common/bcgov_arches_common/css/arches_common.css');
+
 .inline-block {
     display: inline-block;
     width: unset;
