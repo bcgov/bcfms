@@ -1,5 +1,7 @@
 @import "map_legend.css";
 @import url("node_modules/bcgov_arches_common/bcgov_arches_common/media/css/project.css");
+@import url("node_modules/bcgov_arches_common/bcgov_arches_common/media/css/arches_common.css");
+
 /* Index page */
 .tp-caption {
    left: 0 !important;

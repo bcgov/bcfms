@@ -40,73 +40,65 @@ defineExpose({ isValid });
             :resolver="zodLocationDescriptionResolver"
             name="locationDescription"
         >
-            <div class="formfield-margin-bottom">
-                <LabelledInput
-                    label="Location Description"
-                    hint="Provide geographic names and distances -- e.g., A River, 3km north of Highway XX crossing"
-                    input-name="locationDescription"
-                    :error-message="$form.locationDescription?.error?.message"
-                    :required="true"
-                >
-                    <InputText
-                        id="locationDescription"
-                        ref="locationDescriptionField"
-                        v-model="ipa.projectDetails.locationDescription"
-                        aria-describedby="location-description-help"
-                        aria-required="true"
-                        fluid
-                        placeholder="Enter a description of the project location(s)"
-                        class="inline-block"
-                    />
-                </LabelledInput>
-            </div>
+            <LabelledInput
+                label="Location Description"
+                hint="Provide geographic names and distances -- e.g., A River, 3km north of Highway XX crossing"
+                input-name="locationDescription"
+                :error-message="$form.locationDescription?.error?.message"
+                :required="true"
+            >
+                <InputText
+                    id="locationDescription"
+                    ref="locationDescriptionField"
+                    v-model="ipa.projectDetails.locationDescription"
+                    aria-describedby="location-description-help"
+                    aria-required="true"
+                    fluid
+                    placeholder="Enter a description of the project location(s)"
+                    class="inline-block"
+                />
+            </LabelledInput>
         </FormField>
         <FormField
             :resolver="zodGeometryQualifierResolver"
             name="geometryQualifier"
         >
-            <div class="formfield-margin-bottom">
-                <LabelledInput
-                    label="Geometry Qualifier"
-                    hint="Select the meaning of the geometry"
-                    input-name="geometryQualifier"
-                    :error-message="$form.geometryQualifier?.error?.message"
-                >
-                    <ConceptSelect
-                        id="geometryQualifier"
-                        ref="geometryQualifierField"
-                        v-model="ipa.projectDetails.geometryQualifier"
-                        graph-slug="project_assessment"
-                        node-alias="geometry_qualifier"
-                    />
-                </LabelledInput>
-            </div>
+            <LabelledInput
+                label="Geometry Qualifier"
+                hint="Select the meaning of the geometry"
+                input-name="geometryQualifier"
+                :error-message="$form.geometryQualifier?.error?.message"
+            >
+                <ConceptSelect
+                    id="geometryQualifier"
+                    ref="geometryQualifierField"
+                    v-model="ipa.projectDetails.geometryQualifier"
+                    graph-slug="project_assessment"
+                    node-alias="geometry_qualifier"
+                />
+            </LabelledInput>
         </FormField>
         <FormField
             :resolver="zodMultipleGeometryQualifierResolver"
             name="multipleGeometryQualifier"
         >
-            <div class="formfield-margin-bottom">
-                <LabelledInput
-                    label="Multiple Geometry Qualifier"
-                    hint="If the project has more than one area, add any qualifying remarks here"
-                    input-name="multipleGeometryQualifier"
-                    :error-message="
-                        $form.multipleGeometryQualifier?.error?.message
-                    "
-                >
-                    <InputText
-                        id="multipleGeometryQualifier"
-                        ref="multipleGeometryQualifierField"
-                        v-model="ipa.projectDetails.multipleGeometryQualifier"
-                        aria-describedby="multiple-geometry-qualifier-help"
-                        aria-required="true"
-                        fluid
-                        placeholder="Multiple Geometry Qualifiers"
-                        class="inline-block"
-                    />
-                </LabelledInput>
-            </div>
+            <LabelledInput
+                label="Multiple Geometry Qualifier"
+                hint="If the project has more than one area, add any qualifying remarks here"
+                input-name="multipleGeometryQualifier"
+                :error-message="$form.multipleGeometryQualifier?.error?.message"
+            >
+                <InputText
+                    id="multipleGeometryQualifier"
+                    ref="multipleGeometryQualifierField"
+                    v-model="ipa.projectDetails.multipleGeometryQualifier"
+                    aria-describedby="multiple-geometry-qualifier-help"
+                    aria-required="true"
+                    fluid
+                    placeholder="Multiple Geometry Qualifiers"
+                    class="inline-block"
+                />
+            </LabelledInput>
         </FormField>
     </Form>
 </template>
