@@ -1,5 +1,14 @@
 import { z } from 'zod';
 
+function normalizeEditorContent(value: string | null): string {
+    if (!value) return '';
+
+    return value
+        .replace(/<[^>]*>/g, '')
+        .replace(/&nbsp;/g, ' ')
+        .trim();
+}
+
 const InitialProjectReviewSchema = z.object({
     dateSubmitted: z.date({
         // This handles null values -> null !== typeof Date
@@ -22,11 +31,16 @@ const InitialProjectReviewSchema = z.object({
     FRPR: z.string().uuid().nullable(),
     initialReviewLevelOfRisk: z.string().uuid().nullable(),
     initialReviewInternalNotes: z
-        .string({
-            invalid_type_error: 'Initial Review Internal Notes are required.',
+        .string()
+        .transform(normalizeEditorContent)
+        .refine((value: string) => value !== '', {
+            message: 'Initial Review Internal Notes are required.',
         })
-        .min(1, { message: 'Initial Review Internal Notes are required.' })
-        .max(500),
+        .refine((value: string) => value.length <= 500, {
+            message:
+                'Initial Review Internal Notes must be 500 characters or less.',
+        })
+        .nullable(),
     initialReviewOutcome: z.string().max(500),
 });
 
