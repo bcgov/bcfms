@@ -3,8 +3,7 @@ from bcgov_arches_common.migrations.operations.privileged_sql import RunPrivileg
 
 
 class Migration(migrations.Migration):
-    dependencies = [('bcfms',
-                     '0001_create_databc_proxy_role')]
+    dependencies = [("bcfms", "0001_create_databc_proxy_role")]
 
     create_create_node_aliases = """
         create or replace procedure __bc_create_node_aliases(p_graph_slug text, p_schema_name text default null) as
@@ -103,7 +102,6 @@ class Migration(migrations.Migration):
     drop_unique_array = """
         drop function if exists __bc_unique_array;
         """
-
 
     create_format_scientific_name = """
         create or replace function __bc_format_scientific_name(name text, name_rank text, connector text, other_name text, other_name_rank text) returns text as
