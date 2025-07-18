@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
         "2024-08-15_databc.provincially_protected_fossil_sites_vw.sql",
         "2024-08-15_databc.fossil_sites_vw.sql",
         "2024-07-25_refresh_export_mvs.sql",
-        "2024-08-15_databc_grants.sql"
+        "2024-08-15_databc_grants.sql",
     ]
     sql_dir = os.path.join(os.path.dirname(__file__), "sql")
     reverse_sql_string = (

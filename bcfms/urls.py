@@ -8,19 +8,19 @@ from bcgov_arches_common.views.map import (
     BCTileserverLocalProxyView,
 )
 from bcfms.views.search import export_results as bcfms_export_results
-from bcfms.views.auth import ExternalOauth, UnauthorizedView
 from bcfms.views.root import BcfmsRootView
 import re
 
 uuid_regex = settings.UUID_REGEX
-
 path_prefix_re = re.compile(r"^(\^)(.*)$")
 
 
-def bc_path_prefix(path):
+def bc_path_prefix(path=""):
     if not settings.BCGOV_PROXY_PREFIX:
         return path
     else:
+        if not path:
+            return settings.BCGOV_PROXY_PREFIX
         new_path = path_prefix_re.sub(r"\1%s\2", path)
         return new_path % settings.BCGOV_PROXY_PREFIX
 
@@ -69,32 +69,10 @@ urlpatterns = [
         bcfms_export_results,
         name="export_results",
     ),
-    re_path(
-        bc_path_prefix(r"^auth/$"), ExternalOauth.start, name="external_oauth_start"
-    ),
-    re_path(
-        bc_path_prefix(r"^auth/eoauth_cb$"),
-        ExternalOauth.callback,
-        name="external_oauth_callback",
-    ),
-    re_path(
-        bc_path_prefix(r"^auth/eoauth_start$"),
-        ExternalOauth.start,
-        name="external_oauth_start",
-    ),
-    re_path(
-        bc_path_prefix(r"^unauthorized/"),
-        UnauthorizedView.as_view(),
-        name="unauthorized",
-    ),
-    re_path(r"^bc-fossil-management/", include("bcgov_arches_common.urls")),
-    path("bc-fossil-management/", include("arches_component_lab.urls")),
-    path("bc-fossil-management/", include("arches.urls")),
-    # bc_url_resolver,
+    path(bc_path_prefix(), include("bcgov_arches_common.urls")),
+    path(bc_path_prefix(), include("arches_component_lab.urls")),
+    path(bc_path_prefix(), include("arches.urls")),
 ]
-
-# Ensure Arches core urls are superseded by project-level urls
-# urlpatterns.append(path("", include("arches.urls")))
 
 # Adds URL pattern to serve media files during development
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,7 +6,7 @@ ENV WEB_ROOT=/web_root
 ENV APP_ROOT=${WEB_ROOT}/${PROJECT_NAME}
 # Root project folder
 ENV ARCHES_ROOT=${WEB_ROOT}/arches
-ENV ARCHES_COMMON_ROOT=${WEB_ROOT}/arches_common
+ENV ARCHES_COMMON_ROOT=${WEB_ROOT}/bcgov-arches-common
 # Arches Component Lab root
 ENV ARCHES_COMPONENT_LAB_ROOT=${WEB_ROOT}/arches-component-lab
 ENV ARCHES_QUERYSETS_ROOT=${WEB_ROOT}/arches-querysets
@@ -53,7 +53,7 @@ RUN rm -rf /root/.cache/pip/*
 # Install the Arches application
 # FIXME: ADD from github repository instead?
 COPY ./arches ${ARCHES_ROOT}
-COPY ./arches_common ${ARCHES_COMMON_ROOT}
+COPY ./bcgov-arches-common ${ARCHES_COMMON_ROOT}
 COPY ./arches-component-lab ${ARCHES_COMPONENT_LAB_ROOT}
 COPY ./arches-querysets ${ARCHES_QUERYSETS_ROOT}
 # From here, run commands from ARCHES_ROOT

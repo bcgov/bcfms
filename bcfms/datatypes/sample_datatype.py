@@ -19,7 +19,9 @@ details = {
 
 
 class SampleDataType(BaseDataType):
-    def validate(self, value, row_number=None, source=None, node=None, nodeid=None, strict=False):
+    def validate(
+        self, value, row_number=None, source=None, node=None, nodeid=None, strict=False
+    ):
         errors = []
         try:
             value.upper()
@@ -28,14 +30,21 @@ class SampleDataType(BaseDataType):
                 {
                     "type": "ERROR",
                     "message": "datatype: {0} value: {1} {2} {3} - {4}. {5}".format(
-                        self.datatype_model.datatype, value, row_number, source, "this is not a string", "This data was not imported."
+                        self.datatype_model.datatype,
+                        value,
+                        row_number,
+                        source,
+                        "this is not a string",
+                        "This data was not imported.",
                     ),
                 }
             )
         return errors
 
     def append_to_document(self, document, nodevalue, nodeid, tile):
-        document["strings"].append({"string": nodevalue, "nodegroup_id": tile.nodegroup_id})
+        document["strings"].append(
+            {"string": nodevalue, "nodegroup_id": tile.nodegroup_id}
+        )
 
     def transform_export_values(self, value, *args, **kwargs):
         if value is not None:
@@ -44,7 +53,9 @@ class SampleDataType(BaseDataType):
     def get_search_terms(self, nodevalue, nodeid=None):
         terms = []
         if nodevalue is not None:
-            if settings.WORDS_PER_SEARCH_TERM is None or (len(nodevalue.split(" ")) < settings.WORDS_PER_SEARCH_TERM):
+            if settings.WORDS_PER_SEARCH_TERM is None or (
+                len(nodevalue.split(" ")) < settings.WORDS_PER_SEARCH_TERM
+            ):
                 terms.append(nodevalue)
         return terms
 
@@ -52,7 +63,11 @@ class SampleDataType(BaseDataType):
         try:
             if value["val"] != "":
                 match_type = "phrase_prefix" if "~" in value["op"] else "phrase"
-                match_query = Match(field="tiles.data.%s" % (str(node.pk)), query=value["val"], type=match_type)
+                match_query = Match(
+                    field="tiles.data.%s" % (str(node.pk)),
+                    query=value["val"],
+                    type=match_type,
+                )
                 if "!" in value["op"]:
                     query.must_not(match_query)
                     query.filter(Exists(field="tiles.data.%s" % (str(node.pk))))

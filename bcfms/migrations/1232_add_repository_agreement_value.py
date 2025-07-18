@@ -24,6 +24,7 @@ delete_value = """
    call delete_concept_and_children('to be determined');
 """
 
+
 class Migration(migrations.Migration):
     dependencies = [
         ("bcfms", "1232_add_ipa_submission_types"),
