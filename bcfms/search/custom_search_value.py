@@ -8,7 +8,7 @@ from bcfms.util.business_data_proxy import (
     FossilSampleDataProxy,
     CollectionEventDataProxy,
 )
-from arches.app.search.es_mapping_modifier import  EsMappingModifier
+from arches.app.search.es_mapping_modifier import EsMappingModifier
 
 
 class CustomSearchValue(EsMappingModifier):

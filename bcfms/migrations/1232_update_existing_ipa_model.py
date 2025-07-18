@@ -2,6 +2,7 @@ from django.db import migrations
 from django.core.management import call_command
 from arches.app.models.graph import Graph
 
+
 def replace_ipa_graph(apps, schema_editor):
     graph = Graph.objects.filter(slug="project_assessment").first()
     if graph:
@@ -19,15 +20,16 @@ def replace_ipa_graph(apps, schema_editor):
             operation="index_resources_by_type",
             resource_types=[graph.graphid],
             clear_index=True,
-            quiet=True
+            quiet=True,
         )
 
         graph.delete()
     call_command(
         "packages",
         operation="import_graphs",
-        source="bcfms/pkg/graphs/resource_models/Industry Project Assessment.json"
+        source="bcfms/pkg/graphs/resource_models/Industry Project Assessment.json",
     )
+
 
 class Migration(migrations.Migration):
     dependencies = [

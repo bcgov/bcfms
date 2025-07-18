@@ -3,7 +3,7 @@ USER root
 ENV WEB_ROOT=/web_root
 ENV ARCHES_ROOT=${WEB_ROOT}/arches
 ENV APP_ROOT=${WEB_ROOT}/bcfms
-ENV ARCHES_COMMON=${WEB_ROOT}/arches_common
+ENV ARCHES_COMMON=${WEB_ROOT}/bcgov-arches-common
 #ENV AFS_ROOT=${WEB_ROOT}/arches-for-science
 ENV NODE_MAJOR=20
 RUN mkdir -p ${APP_ROOT}/bcfms/webpack
@@ -25,6 +25,7 @@ RUN set -ex \
   python3.11-venv \
   dos2unix \
   git \
+  vim \
   " \
   && apt-get install -y --no-install-recommends curl \
   && apt-get install -y --no-install-recommends $RUN_DEPS 
@@ -33,7 +34,7 @@ RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python3 get-pip.p
   && pip install setuptools python-dotenv django-storages
 
 COPY ./arches ${ARCHES_ROOT}
-COPY ./arches_common ${ARCHES_COMMON}
+COPY ./bcgov-arches-common ${ARCHES_COMMON}
 
 RUN apt-get update && apt-get -y install curl \
   && apt-get install nodejs && apt install wait-for-it
