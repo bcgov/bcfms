@@ -19,6 +19,7 @@ const ipa = inject<IPA>('ipa');
         </div>
     </div>
     <div class="div-grid-cols">
+
         <div>Project Name</div>
         <div>
             {{ ipa?.projectDetails.projectName }}
