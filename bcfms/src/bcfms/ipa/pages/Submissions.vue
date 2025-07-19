@@ -16,6 +16,13 @@ const workflowItems = ref([
         class: 'dashboard-card ipa',
         routeName: routeNames.submitProject,
     },
+    {
+        label: $gettext('Review Project'),
+        description: $gettext('Review existing project'),
+        icon: 'fa fa-file',
+        class: 'dashboard-card ipa',
+        routeName: routeNames.reviewProject,
+    },
 ]);
 </script>
 <template>
@@ -88,7 +95,7 @@ const workflowItems = ref([
 
 .dashboard-card-description {
     margin-bottom: 0;
-    padding-top: .25rem;
+    padding-top: 0.25rem;
 }
 
 .dashboard-card.ipa:hover {

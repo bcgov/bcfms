@@ -21,16 +21,29 @@ const routes = [
             requiresAuthentication: !dev_mode,
         },
     },
+    {
+        path: '/bc-fossil-management/submissions/review-project/',
+        name: 'reviewProject',
+        component: () =>
+            import('@/bcfms/ipa/pages/ReviewProject/ReviewProject.vue'),
+        meta: {
+            shouldShowNavigation: true,
+            requiresAuthentication: !dev_mode,
+        },
+    },
 ];
 
 type BCFMSRouteNamesType = RouteNamesType & {
     submitProject: string;
+    reviewProject: string;
 };
 
 const routeNames: BCFMSRouteNamesType = {
     home: 'root',
     login: 'login',
     submitProject: 'submitProject',
+    reviewProject: 'reviewProject',
+
 };
 
 export { routes, routeNames };
