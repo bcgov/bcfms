@@ -19,5 +19,11 @@
       "vitest/globals"
     ],
     "allowImportingTsExtensions": true,
-  }
+  },
+  "include": [
+    "bcfms/src/**/*.ts",
+    "bcfms/src/**/*.js",
+    "bcfms/src/**/*.tsx",
+    // any other code folders
+  ]
 }
