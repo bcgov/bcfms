@@ -12,7 +12,6 @@ import { zodResolver } from '@primevue/forms/resolvers/zod';
 import DateWidget from '@/arches_component_lab/widgets/DateWidget/DateWidget.vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
-import { DATE_FORMAT } from '@/bcfms/constants.ts';
 
 const ipa = inject<IPA>('ipa');
 
@@ -204,8 +203,6 @@ defineExpose({ isValid });
 </template>
 
 <style>
-@import url('node_modules/bcgov_arches_common/bcgov_arches_common/css/arches_common.css');
-
 .inline-block {
     display: inline-block;
     width: unset;

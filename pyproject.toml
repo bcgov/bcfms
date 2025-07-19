@@ -39,6 +39,7 @@ dev = [
     "django-silk==5.1.0",
     "pre-commit==3.8.0",
     "black==24.4.2",
+    "django-vite",
 ]
 
 [tool.setuptools]
