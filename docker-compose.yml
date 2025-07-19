@@ -12,7 +12,7 @@ services:
     volumes:
       - ../arches/:/web_root/arches
       - ./:/web_root/bcfms
-      - ../arches_common/:/web_root/arches_common
+      - ../bcgov-arches-common/:/web_root/bcgov-arches-common
       - ../arches-component-lab/:/web_root/arches-component-lab
       - ../arches-querysets/:/web_root/arches-querysets
     env_file:
@@ -35,7 +35,7 @@ services:
   #   command: run_webpack
   #   volumes:
   #     - ../arches/:/web_root/arches
-  #     - ../arches_common/:/web_root/arches_common
+  #     - ../bcgov-arches-common/:/web_root/bcgov-arches-common
   #     - ./:/web_root/bcfms
   #     - ../arches-component-lab/:/web_root/arches-component-lab
   #   env_file:

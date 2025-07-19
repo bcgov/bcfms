@@ -20,7 +20,6 @@ class Migration(migrations.Migration):
         grant all privileges on schema databc to {{ arches_db_user }};
     """
 
-
     create_databc_proxy_role = """
         DO
         $$
@@ -75,4 +74,3 @@ class Migration(migrations.Migration):
             drop_databc_proxy_role,
         ),
     ]
-

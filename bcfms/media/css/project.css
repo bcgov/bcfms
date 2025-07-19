@@ -55,25 +55,6 @@ dl.stratigraphy > dd > div.stratigraphy-level > div
    color: rgb(120,120,120);
    font-style: italic;
 }
-.header-link {
-    color: white;
-    font-size: 0.8rem;
-}
-
-.card_component.start_year,
-.card_component.end_year,
-.card_component.dates_approximate {
-    display: inline-block;
-    width: 30%;
-}
-
-.card_component.pid,
-.card_component.pin {
-    display: inline-block;
-    /*max-width: 45%;*/
-    /*min-width: 350px;*/
-    width: 350px;
-}
 
 .p-fieldset {
     border: solid thin #999;
@@ -81,7 +62,6 @@ dl.stratigraphy > dd > div.stratigraphy-level > div
     padding: 0 1rem;
     padding-bottom: 0.5rem;
 }
-
 .p-fieldset-legend {
     font-size: 1.2rem;
     font-weight: 300;
@@ -90,36 +70,26 @@ dl.stratigraphy > dd > div.stratigraphy-level > div
     padding: 0 .5rem;
     width: fit-content;
 }
-
 .p-radiobutton {
     align-self: start;
     margin-right: .5rem;
 }
-
 .bcgov-vertical-step-panels {
     max-width: calc(100% - 200px);
 }
-
-.ql-container {
-    background-color: #fff;
-}
-
 .p-inputtext-fluid.inline-block {
     width: calc(100% - 6.5rem);
     margin-right: 1rem;
     vertical-align: top;
     align-self: start;
 }
-
 .inline-block {
     vertical-align: top;
 }
-
 .p-checkbox {
     vertical-align: top;
     margin-right: .5rem;
 }
-
 .stepper-nav-panel {
     background: var(--p-panel-background);
     display: flex;
@@ -129,107 +99,16 @@ dl.stratigraphy > dd > div.stratigraphy-level > div
     justify-content: space-between;
     width: calc(100% - 2rem);
 }
-
 .p-fileupload-advanced {
     max-width: 350px;
 }
-
 .next-button {
     right: 1rem;
 }
-
-.card_component.pin::before {
-    content: "or" !important;
-    position: relative;
-    top: 60px;
-    margin-left: -20px
+.bc-details-tab dt {
+   width: 300px !important;
 }
-
-.card_component.dates_approximate {
-    vertical-align: bottom;
-}
-
-.crhp-submit-widget {
-    display: inline-block;
-}
-
-.crhp-export-button {
-    padding: 10px 5px 25px 5px;
-    display: inline-block;
-    vertical-align: bottom;
-}
-
-.summary-slider img {
-    height: 350px;
-}
-
-/*Details Card*/
-.details-card-section>.rp-card-section {
-    margin-top: 2.5rem;
-}
-
-.card-content-section {
-    margin-top: 1.5rem;
-}
-
-.details-authority-section {
-    margin-bottom: 1.5rem;
-}
-
-.street_address,
-.city,
-.province,
-.address_separator {
-    font-size: 1.4rem;
-}
-
-/* Image slider caption information */
-.photo-info {
-    max-width: 500px;
-    margin: 1rem 2rem;
-    font-size: 0;
-}
-
-.photo-info span.separator {
-    margin-right: .5rem;
-}
-
-.slick-slide .photo-info {
-    opacity: 0;
-}
-
-.photo-caption-part>span,
-.photo-info dl,
-span.separator {
-    font-size: 1.4rem;
-}
-
-.photo-info dt {
-    width: 110px !important;
-    text-align: left !important;
-    padding-left: 0;
-}
-
-.photo-info dd {
-    width: unset !important;
-    padding-left: 0;
-}
-
-/*.details-photo {*/
-/*    padding-left: 3px;*/
-/*    padding-right: 3px;*/
-/*}*/
-
-.slick-slide img.details-photo {
-    scale: 80% !important;
-    opacity: 80% !important;
-}
-
-.slick-slide.slick-current img.details-photo {
-    scale: 100% !important;
-    opacity: 100% !important;
-}
-
-.slick-slide.slick-current .photo-info {
-    opacity: 100% !important;
+.empty-section {
+   color: lightgray !important;
+   font-style: italic;
 }
