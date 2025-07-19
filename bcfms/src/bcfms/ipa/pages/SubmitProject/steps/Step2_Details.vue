@@ -9,7 +9,7 @@ import ResourceInstanceSelectWidget from '@/arches_component_lab/widgets/Resourc
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
 import { Form, FormField, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
-import DatePicker from 'primevue/datepicker';
+import DateWidget from '@/arches_component_lab/widgets/DateWidget/DateWidget.vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
 import { DATE_FORMAT } from '@/bcfms/constants.ts';
@@ -170,41 +170,32 @@ defineExpose({ isValid });
         </FormField>
         <div class="flex-row">
             <div class="formfield-flex-grow">
-                <label for="estimatedStartDate">Estimated Start Date</label>
                 <FormField
                     :resolver="zodEstimatedStartDatesResolver"
                     name="estimatedStartDate"
                 >
-                    <DatePicker
+                    <DateWidget
                         id="estimatedStartDate"
-                        ref="estimatedStartDateField"
-                        v-model="ipa.projectDetails.projectStartDate"
-                        :dateFormat="DATE_FORMAT"
-                        showIcon
-                        placeholder="Project Start Date"
-                        aria-describedby="estimated-start-date-help"
-                        class="datepicker-width"
-                        aria-required="true"
+                        :mode="EDIT"
+                        :value="ipa.projectDetails.projectStartDate"
+                        graph-slug="project_assessment"
+                        node-alias="project_start_date"
+                        :show-label="true"
                     />
                 </FormField>
             </div>
             <div class="formfield-flex-grow">
-                <label for="estimatedEndDate"
-                    >Estimated End Date (if known)</label
-                >
                 <FormField
                     :resolver="zodEstimatedEndDatesResolver"
                     name="estimatedEndDate"
                 >
-                    <DatePicker
+                    <DateWidget
                         id="estimatedEndDate"
-                        ref="estimatedEndDateField"
-                        v-model="ipa.projectDetails.projectEndDate"
-                        :dateFormat="DATE_FORMAT"
-                        showIcon
-                        placeholder="Project End Date"
-                        class="datepicker-width"
-                        aria-describedby="estimated-start-date-help"
+                        :mode="EDIT"
+                        :value="ipa.projectDetails.projectEndDate"
+                        graph-slug="project_assessment"
+                        node-alias="project_end_date"
+                        :show-label="true"
                     />
                 </FormField>
             </div>
