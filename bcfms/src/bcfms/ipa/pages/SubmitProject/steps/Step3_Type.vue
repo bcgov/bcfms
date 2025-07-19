@@ -66,6 +66,10 @@ defineExpose({ isValid });
             name="otherProjectType"
         >
             <LabelledInput
+                v-if="
+                    ipa.projectDetails.projectType ===
+                    '54722cfa-61f7-41e9-9e02-5b676e3bcc3e'
+                "
                 label="Other Project Type"
                 hint="Enter a brief project type"
                 input-name="otherProjectType"
