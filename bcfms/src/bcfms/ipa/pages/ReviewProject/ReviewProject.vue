@@ -209,6 +209,9 @@ onMounted(() => {
     </Panel>
 </template>
 
+<style>
+@import url('@/bcgov_arches_common/css/arches_common.css');
+</style>
 <style scoped>
 .dashboard-card {
     font-size: 1.1rem;
