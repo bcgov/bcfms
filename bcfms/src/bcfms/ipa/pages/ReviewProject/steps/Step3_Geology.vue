@@ -31,7 +31,19 @@ const zodQuaternarySedimentsResolver = zodResolver(
     InitialProjectReviewSchema.shape.quaternarySediments,
 );
 const isValid = () => {
-    return projectGeologyForm.value?.valid;
+    return (
+        (projectGeologyForm.value?.valid &&
+            !(
+                projectGeologyForm.value?.states.metamorphicRock.pristine ||
+                projectGeologyForm.value?.states.igneousRock.pristine ||
+                projectGeologyForm.value?.states.sedimentaryRock.pristine ||
+                projectGeologyForm.value?.states.quaternarySediments.pristine
+            )) ||
+        ((ipa as any).value?.initialProjectReview.metamorphicRock &&
+            (ipa as any).value?.initialProjectReview.igneousRock &&
+            (ipa as any).value?.initialProjectReview.sedimentaryRock &&
+            (ipa as any).value?.initialProjectReview.quaternarySediments)
+    );
 };
 
 defineExpose({ isValid });

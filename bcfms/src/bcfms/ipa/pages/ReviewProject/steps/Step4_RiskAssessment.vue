@@ -27,7 +27,22 @@ const zodInitialReviewInternalNotesResolver = zodResolver(
     InitialProjectReviewSchema.shape.initialReviewInternalNotes,
 );
 const isValid = () => {
-    return projectRiskAssessmentForm.value?.valid;
+    return (
+        (projectRiskAssessmentForm.value?.valid &&
+            !(
+                projectRiskAssessmentForm.value?.states.FRPR.pristine ||
+                projectRiskAssessmentForm.value?.states.initialReviewLevelOfRisk
+                    .pristine ||
+                projectRiskAssessmentForm.value?.states
+                    .initialReviewInternalNotes.pristine
+            )) ||
+        ((ipa as any).value?.initialProjectReview.FRPR &&
+            (ipa as any).value?.initialProjectReview.initialReviewLevelOfRisk &&
+            (ipa as any).value?.initialProjectReview.initialReviewInternalNotes
+                .replace(/<[^>]*>/g, '')
+                .replace(/&nbsp;/g, ' ')
+                .trim())
+    );
 };
 
 defineExpose({ isValid });
@@ -45,7 +60,7 @@ defineExpose({ isValid });
             name="FRPR"
         >
             <LabelledInput
-                label="Metamorphic Rock"
+                label="Fossil Resource Potential Ranking"
                 hint="???"
                 input-name="FRPR"
                 :error-message="$form.FRPR?.error?.message"

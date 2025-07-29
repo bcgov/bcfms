@@ -127,14 +127,23 @@ onMounted(() => {
                             v-slot="{ activateCallback }"
                             :value="1"
                         >
+                            <StepperNavigation
+                                :step-number="currentStep"
+                                :validate-fn="isValid"
+                                :show-previous="showPrevious"
+                                :next-label="'Start'"
+                                @next-click="activateNextStep"
+                                @previous-click="activatePreviousStep"
+                            >
+                            </StepperNavigation>
                             <SubmitProjectStep1
                                 ref="step1"
                             ></SubmitProjectStep1>
-
                             <StepperNavigation
-                                :step-number="1"
+                                :step-number="currentStep"
                                 :validate-fn="isValid"
                                 :show-previous="showPrevious"
+                                :next-label="'Start'"
                                 @next-click="activateCallback(2)"
                             ></StepperNavigation>
                         </StepPanel>
@@ -158,8 +167,10 @@ onMounted(() => {
                                 ref="step2"
                             ></SubmitProjectStep2>
                             <StepperNavigation
-                                :step-number="2"
+                                :step-number="currentStep"
                                 :validate-fn="isValid"
+                                :show-previous="showPrevious"
+                                :next-label="nextLabel"
                                 @next-click="activateCallback(3)"
                                 @previous-click="activateCallback(1)"
                             ></StepperNavigation>
@@ -182,8 +193,10 @@ onMounted(() => {
                                 ref="step3"
                             ></SubmitProjectStep3>
                             <StepperNavigation
-                                :step-number="3"
+                                :step-number="currentStep"
                                 :validate-fn="isValid"
+                                :show-previous="showPrevious"
+                                :next-label="nextLabel"
                                 @next-click="activateCallback(4)"
                                 @previous-click="activateCallback(2)"
                             ></StepperNavigation>
@@ -208,8 +221,10 @@ onMounted(() => {
                                 ref="step4"
                             ></SubmitProjectStep4>
                             <StepperNavigation
-                                :step-number="4"
+                                :step-number="currentStep"
                                 :validate-fn="isValid"
+                                :show-previous="showPrevious"
+                                :next-label="nextLabel"
                                 @next-click="activateCallback(5)"
                                 @previous-click="activateCallback(3)"
                             ></StepperNavigation>
@@ -234,8 +249,10 @@ onMounted(() => {
                                 ref="step5"
                             ></SubmitProjectStep5>
                             <StepperNavigation
-                                :step-number="5"
+                                :step-number="currentStep"
                                 :validate-fn="isValid"
+                                :show-previous="showPrevious"
+                                :next-label="nextLabel"
                                 @next-click="activateCallback(6)"
                                 @previous-click="activateCallback(4)"
                             ></StepperNavigation>
@@ -260,8 +277,9 @@ onMounted(() => {
                                 ref="step6"
                             ></SubmitProjectStep6>
                             <StepperNavigation
-                                :step-number="6"
+                                :step-number="currentStep"
                                 :validate-fn="isValid"
+                                :show-previous="showPrevious"
                                 next-label="Submit"
                                 @next-click="activateCallback(7)"
                                 @previous-click="activateCallback(5)"

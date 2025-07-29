@@ -29,7 +29,11 @@ const zodMultipleGeometryQualifierResolver = zodResolver(
     ProjectDetailsSchema.shape.multipleGeometryQualifier,
 );
 const isValid = () => {
-    return projectLocationForm.value?.valid;
+    return (
+        (projectLocationForm.value?.valid &&
+            !projectLocationForm.value?.states.locationDescription.pristine) ||
+        (ipa as any).value?.projectDetails.locationDescription
+    );
 };
 
 defineExpose({ isValid });

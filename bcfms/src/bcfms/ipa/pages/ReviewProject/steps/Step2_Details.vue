@@ -37,7 +37,18 @@ const zodIntersectsResolver = zodResolver(
     InitialProjectReviewSchema.shape.intersectsIFA,
 );
 const isValid = () => {
-    return projectDetailsForm.value?.valid;
+    return (
+        (projectDetailsForm.value?.valid &&
+            !(
+                projectDetailsForm.value?.states.assessment_start_date
+                    ?.pristine ||
+                projectDetailsForm.value?.states.proximityToFossils.pristine ||
+                projectDetailsForm.value?.states.groundDisturbance.pristine
+            )) ||
+        ((ipa as any).value?.initialProjectReview.assessment_start_date &&
+            (ipa as any).value?.initialProjectReview.proximityToFossils &&
+            (ipa as any).value?.initialProjectReview.groundDisturbance)
+    );
 };
 
 defineExpose({ isValid });

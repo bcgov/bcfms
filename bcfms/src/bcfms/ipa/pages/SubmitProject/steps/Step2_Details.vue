@@ -12,7 +12,6 @@ import { zodResolver } from '@primevue/forms/resolvers/zod';
 import DateWidget from '@/arches_component_lab/widgets/DateWidget/DateWidget.vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
-import { DATE_FORMAT } from '@/bcfms/constants.ts';
 
 const ipa = inject<IPA>('ipa');
 
@@ -45,7 +44,22 @@ const zodEstimatedEndDatesResolver = zodResolver(
     ProjectDetailsSchema.shape.projectEndDate,
 );
 const isValid = () => {
-    return projectDetailsForm.value?.valid;
+    return (
+        (projectDetailsForm.value?.valid &&
+            !(
+                projectDetailsForm.value?.states.projectName.pristine ||
+                projectDetailsForm.value?.states.project_initiator?.pristine ||
+                projectDetailsForm.value?.states.industryCompanyName.pristine ||
+                projectDetailsForm.value?.states.projectAuthorizingAgency
+                    .pristine ||
+                projectDetailsForm.value?.states.project_start_date?.pristine
+            )) ||
+        ((ipa as any).value?.projectDetails.projectName &&
+            (ipa as any).value?.projectDetails.project_initiator &&
+            (ipa as any).value?.projectDetails.industryCompanyName &&
+            (ipa as any).value?.projectDetails.projectAuthorizingAgency &&
+            (ipa as any).value?.projectDetails.project_start_date)
+    );
 };
 
 defineExpose({ isValid });

@@ -9,10 +9,11 @@ import StepperNavigation from '@/bcgov_arches_common/components/stepper/StepperN
 import Panel from 'primevue/panel';
 import type { StepperProps } from 'primevue/stepper';
 import type { StepperState } from 'primevue/stepper';
-import ReviewProjectStep1 from '@/bcfms/ipa/pages/ReviewProject/steps/Step1_Details.vue';
-import ReviewProjectStep2 from '@/bcfms/ipa/pages/ReviewProject/steps/Step2_Geology.vue';
-import ReviewProjectStep3 from '@/bcfms/ipa/pages/ReviewProject/steps/Step3_RiskAssessment.vue';
-import ReviewProjectStep4 from '@/bcfms/ipa/pages/ReviewProject/steps/Step4_AssessmentOutcome.vue';
+import ReviewProjectStep1 from '@/bcfms/ipa/pages/ReviewProject/steps/Step1_Requirements.vue';
+import ReviewProjectStep2 from '@/bcfms/ipa/pages/ReviewProject/steps/Step2_Details.vue';
+import ReviewProjectStep3 from '@/bcfms/ipa/pages/ReviewProject/steps/Step3_Geology.vue';
+import ReviewProjectStep4 from '@/bcfms/ipa/pages/ReviewProject/steps/Step4_RiskAssessment.vue';
+import ReviewProjectStep5 from '@/bcfms/ipa/pages/ReviewProject/steps/Step5_AssessmentOutcome.vue';
 import { getIPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import type { Ref } from 'vue';
@@ -54,6 +55,7 @@ const step1 = ref();
 const step2 = ref();
 const step3 = ref();
 const step4 = ref();
+const step5 = ref();
 const steps: Ref[] = [];
 let lastStep = 1;
 const currentStep = computed(() => {
@@ -75,7 +77,7 @@ const showPrevious = computed(() => {
 const showDebug = ref(false);
 
 onMounted(() => {
-    steps.push(step1, step2, step3, step4);
+    steps.push(step1, step2, step3, step4, step5);
 });
 </script>
 
@@ -106,10 +108,11 @@ onMounted(() => {
             <div class="bcgov-stepper">
                 <div class="bcgov-vertical-steps">
                     <StepList>
-                        <Step :value="1">Details</Step>
-                        <Step :value="2">Geology</Step>
-                        <Step :value="3">Risk Assessment</Step>
-                        <Step :value="4">Assessment Outcome</Step>
+                        <Step :value="1">Submission Requirements</Step>
+                        <Step :value="2">Details</Step>
+                        <Step :value="3">Geology</Step>
+                        <Step :value="4">Risk Assessment</Step>
+                        <Step :value="5">Assessment Outcome</Step>
                     </StepList>
                 </div>
                 <div class="bcgov-vertical-step-panels">
@@ -120,13 +123,22 @@ onMounted(() => {
                             :value="1"
                         >
                             <h3 class="heading-margin-bottom">
-                                Project Details
+                                Submission Requirements
                             </h3>
+                            <StepperNavigation
+                                :step-number="currentStep"
+                                :validate-fn="isValid"
+                                :show-previous="showPrevious"
+                                :next-label="nextLabel"
+                                @next-click="activateNextStep"
+                                @previous-click="activatePreviousStep"
+                            >
+                            </StepperNavigation>
                             <ReviewProjectStep1
                                 ref="step1"
                             ></ReviewProjectStep1>
                             <StepperNavigation
-                                :step-number="1"
+                                :step-number="currentStep"
                                 :validate-fn="isValid"
                                 :show-previous="showPrevious"
                                 @next-click="activateCallback(2)"
@@ -136,7 +148,9 @@ onMounted(() => {
                             v-slot="{ activateCallback }"
                             :value="2"
                         >
-                            <h3 class="heading-margin-bottom">Geology</h3>
+                            <h3 class="heading-margin-bottom">
+                                Project Details
+                            </h3>
                             <StepperNavigation
                                 :step-number="currentStep"
                                 :validate-fn="isValid"
@@ -150,19 +164,17 @@ onMounted(() => {
                                 ref="step2"
                             ></ReviewProjectStep2>
                             <StepperNavigation
-                                :step-number="2"
+                                :step-number="currentStep"
                                 :validate-fn="isValid"
+                                :show-previous="showPrevious"
                                 @next-click="activateCallback(3)"
-                                @previous-click="activateCallback(1)"
                             ></StepperNavigation>
                         </StepPanel>
                         <StepPanel
                             v-slot="{ activateCallback }"
                             :value="3"
                         >
-                            <h3 class="heading-margin-bottom">
-                                Risk Assessment
-                            </h3>
+                            <h3 class="heading-margin-bottom">Geology</h3>
                             <StepperNavigation
                                 :step-number="currentStep"
                                 :validate-fn="isValid"
@@ -176,8 +188,9 @@ onMounted(() => {
                                 ref="step3"
                             ></ReviewProjectStep3>
                             <StepperNavigation
-                                :step-number="3"
+                                :step-number="currentStep"
                                 :validate-fn="isValid"
+                                :show-previous="showPrevious"
                                 @next-click="activateCallback(4)"
                                 @previous-click="activateCallback(2)"
                             ></StepperNavigation>
@@ -187,20 +200,45 @@ onMounted(() => {
                             :value="4"
                         >
                             <h3 class="heading-margin-bottom">
-                                Assessment Outcome
+                                Risk Assessment
                             </h3>
                             <StepperNavigation
-                                :step-number="4"
+                                :step-number="currentStep"
                                 :validate-fn="isValid"
                                 :show-previous="showPrevious"
-                                :next-label="nextLabel"
-                                @next-click="printDetails"
-                                @previous-click="activateCallback(3)"
+                                @next-click="activateNextStep"
+                                @previous-click="activatePreviousStep"
                             >
                             </StepperNavigation>
                             <ReviewProjectStep4
                                 ref="step4"
                             ></ReviewProjectStep4>
+                            <StepperNavigation
+                                :step-number="currentStep"
+                                :validate-fn="isValid"
+                                :show-previous="showPrevious"
+                                @next-click="activateCallback(5)"
+                                @previous-click="activateCallback(3)"
+                            ></StepperNavigation>
+                        </StepPanel>
+                        <StepPanel
+                            v-slot="{ activateCallback }"
+                            :value="5"
+                        >
+                            <h3 class="heading-margin-bottom">
+                                Assessment Outcome
+                            </h3>
+                            <StepperNavigation
+                                :step-number="currentStep"
+                                :validate-fn="isValid"
+                                :next-label="nextLabel"
+                                @next-click="printDetails"
+                                @previous-click="activateCallback(4)"
+                            >
+                            </StepperNavigation>
+                            <ReviewProjectStep5
+                                ref="step5"
+                            ></ReviewProjectStep5>
                         </StepPanel>
                     </StepPanels>
                 </div>

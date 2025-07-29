@@ -29,7 +29,13 @@ const zodProposedActivityResolver = zodResolver(
     ProjectDetailsSchema.shape.proposedActivity,
 );
 const isValid = () => {
-    return projectTypeForm.value?.valid;
+    return (
+        (projectTypeForm.value?.valid &&
+            !projectTypeForm.value?.states.projectType.pristine &&
+            !projectTypeForm.value?.states.proposedActivity.pristine) ||
+        ((ipa as any).value?.projectDetails.projectType &&
+            (ipa as any).value?.projectDetails.proposedActivity)
+    );
 };
 
 defineExpose({ isValid });

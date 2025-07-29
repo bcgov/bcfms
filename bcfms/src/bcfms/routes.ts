@@ -43,7 +43,6 @@ const routeNames: BCFMSRouteNamesType = {
     login: 'login',
     submitProject: 'submitProject',
     reviewProject: 'reviewProject',
-
 };
 
 export { routes, routeNames };
