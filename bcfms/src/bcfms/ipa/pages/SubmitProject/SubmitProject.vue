@@ -123,10 +123,7 @@ onMounted(() => {
                 <div class="bcgov-vertical-step-panels">
                     <h1 class="heading-black">Submit New Project Assessment</h1>
                     <StepPanels>
-                        <StepPanel
-                            v-slot="{ activateCallback }"
-                            :value="1"
-                        >
+                        <StepPanel :value="1">
                             <StepperNavigation
                                 :step-number="currentStep"
                                 :validate-fn="isValid"
@@ -144,13 +141,11 @@ onMounted(() => {
                                 :validate-fn="isValid"
                                 :show-previous="showPrevious"
                                 :next-label="'Start'"
-                                @next-click="activateCallback(2)"
+                                @next-click="activateNextStep"
+                                @previous-click="activatePreviousStep"
                             ></StepperNavigation>
                         </StepPanel>
-                        <StepPanel
-                            v-slot="{ activateCallback }"
-                            :value="2"
-                        >
+                        <StepPanel :value="2">
                             <h3 class="heading-margin-bottom">
                                 Project Details
                             </h3>
@@ -171,14 +166,11 @@ onMounted(() => {
                                 :validate-fn="isValid"
                                 :show-previous="showPrevious"
                                 :next-label="nextLabel"
-                                @next-click="activateCallback(3)"
-                                @previous-click="activateCallback(1)"
+                                @next-click="activateNextStep"
+                                @previous-click="activatePreviousStep"
                             ></StepperNavigation>
                         </StepPanel>
-                        <StepPanel
-                            v-slot="{ activateCallback }"
-                            :value="3"
-                        >
+                        <StepPanel :value="3">
                             <h3 class="heading-margin-bottom">Project Type</h3>
                             <StepperNavigation
                                 :step-number="currentStep"
@@ -197,14 +189,11 @@ onMounted(() => {
                                 :validate-fn="isValid"
                                 :show-previous="showPrevious"
                                 :next-label="nextLabel"
-                                @next-click="activateCallback(4)"
-                                @previous-click="activateCallback(2)"
+                                @next-click="activateNextStep"
+                                @previous-click="activatePreviousStep"
                             ></StepperNavigation>
                         </StepPanel>
-                        <StepPanel
-                            v-slot="{ activateCallback }"
-                            :value="4"
-                        >
+                        <StepPanel :value="4">
                             <h3 class="heading-margin-bottom">
                                 Project Location
                             </h3>
@@ -225,14 +214,11 @@ onMounted(() => {
                                 :validate-fn="isValid"
                                 :show-previous="showPrevious"
                                 :next-label="nextLabel"
-                                @next-click="activateCallback(5)"
-                                @previous-click="activateCallback(3)"
+                                @next-click="activateNextStep"
+                                @previous-click="activatePreviousStep"
                             ></StepperNavigation>
                         </StepPanel>
-                        <StepPanel
-                            v-slot="{ activateCallback }"
-                            :value="5"
-                        >
+                        <StepPanel :value="5">
                             <h3 class="heading-margin-bottom">
                                 Project Documents
                             </h3>
@@ -253,14 +239,11 @@ onMounted(() => {
                                 :validate-fn="isValid"
                                 :show-previous="showPrevious"
                                 :next-label="nextLabel"
-                                @next-click="activateCallback(6)"
-                                @previous-click="activateCallback(4)"
+                                @next-click="activateNextStep"
+                                @previous-click="activatePreviousStep"
                             ></StepperNavigation>
                         </StepPanel>
-                        <StepPanel
-                            v-slot="{ activateCallback }"
-                            :value="6"
-                        >
+                        <StepPanel :value="6">
                             <h3 class="heading-margin-bottom">
                                 Review Submission
                             </h3>
@@ -281,8 +264,8 @@ onMounted(() => {
                                 :validate-fn="isValid"
                                 :show-previous="showPrevious"
                                 next-label="Submit"
-                                @next-click="activateCallback(7)"
-                                @previous-click="activateCallback(5)"
+                                @next-click="activateNextStep"
+                                @previous-click="activatePreviousStep"
                             >
                             </StepperNavigation>
                         </StepPanel>
