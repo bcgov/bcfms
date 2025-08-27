@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue';
 import type { Ref } from 'vue';
-import FileListWidget from '@/arches_component_lab/widgets/FileListWidget/FileListWidget.vue';
+import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
 
 import { Form, type FormInstance } from '@primevue/forms';
@@ -30,12 +30,14 @@ defineExpose({ isValid });
             applicable
         </p>
         <div class="div-file-widget">
-            <FileListWidget
+            <GenericWidget
                 :mode="EDIT"
-                :initial-value="null"
+                :should-show-label="false"
+                :aliasedNodeData="null"
                 graph-slug="project_assessment"
                 node-alias="project_documents"
-                :show-label="false"
+                placeholder="Project Documents"
+                group-direction="column"
             />
         </div>
     </Form>

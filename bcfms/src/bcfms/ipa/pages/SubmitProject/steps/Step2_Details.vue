@@ -5,11 +5,12 @@ import type { Ref } from 'vue';
 import InputText from 'primevue/inputtext';
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
 import ConceptSelect from '@/bcgov_arches_common/components/ConceptSelect/ConceptSelect.vue';
-import ResourceInstanceSelectWidget from '@/arches_component_lab/widgets/ResourceInstanceSelectWidget/ResourceInstanceSelectWidget.vue';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
 import { Form, FormField, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
-import DateWidget from '@/arches_component_lab/widgets/DateWidget/DateWidget.vue';
+// @ts-ignore
+import { camelCase } from 'lodash';
+import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
 
@@ -37,12 +38,6 @@ const zodProjectAuthorizingAgencyResolver = zodResolver(
 const zodLandActFileNumberResolver = zodResolver(
     ProjectDetailsSchema.shape.landActFileNumber,
 );
-const zodEstimatedStartDatesResolver = zodResolver(
-    ProjectDetailsSchema.shape.projectStartDate,
-);
-const zodEstimatedEndDatesResolver = zodResolver(
-    ProjectDetailsSchema.shape.projectEndDate,
-);
 const isValid = () => {
     return (
         (projectDetailsForm.value?.valid &&
@@ -60,6 +55,16 @@ const isValid = () => {
             (ipa as any).value?.projectDetails.projectAuthorizingAgency &&
             (ipa as any).value?.projectDetails.project_start_date)
     );
+};
+const updateModelValue = function (newValue: object, attribute_name: string) {
+    console.log('updateModelValue', attribute_name, newValue);
+
+    const validator = ProjectDetailsSchema.shape[camelCase(attribute_name)];
+    const result = validator.safeParse(newValue);
+
+    if (result.success) {
+        ipa.projectDetails[attribute_name] = result.data;
+    }
 };
 
 defineExpose({ isValid });
@@ -106,12 +111,17 @@ defineExpose({ isValid });
                 :error-message="$form.projectInitiator?.error?.message"
                 :required="true"
             >
-                <ResourceInstanceSelectWidget
+                <GenericWidget
                     :mode="EDIT"
-                    :initial-value="null"
+                    :should-show-label="false"
+                    :aliasedNodeData="null"
                     graph-slug="project_assessment"
                     node-alias="project_initiator"
-                    :show-label="false"
+                    placeholder="Project End Date"
+                    group-direction="column"
+                    @update:value="
+                        updateModelValue($event, 'project_initiator')
+                    "
                 />
             </LabelledInput>
         </FormField>
@@ -184,42 +194,36 @@ defineExpose({ isValid });
         </FormField>
         <div class="flex-row">
             <div class="formfield-flex-grow">
-                <FormField
-                    :resolver="zodEstimatedStartDatesResolver"
-                    name="estimatedStartDate"
-                >
-                    <DateWidget
-                        id="estimatedStartDate"
-                        :mode="EDIT"
-                        :value="ipa.projectDetails.projectStartDate"
-                        graph-slug="project_assessment"
-                        node-alias="project_start_date"
-                        :show-label="true"
-                    />
-                </FormField>
+                <GenericWidget
+                    :mode="EDIT"
+                    :should-show-label="false"
+                    :aliasedNodeData="null"
+                    graph-slug="project_assessment"
+                    node-alias="project_start_date"
+                    placeholder="Project Start Date"
+                    group-direction="column"
+                    @update:value="
+                        updateModelValue($event, 'project_start_date')
+                    "
+                />
             </div>
             <div class="formfield-flex-grow">
-                <FormField
-                    :resolver="zodEstimatedEndDatesResolver"
-                    name="estimatedEndDate"
-                >
-                    <DateWidget
-                        id="estimatedEndDate"
-                        :mode="EDIT"
-                        :value="ipa.projectDetails.projectEndDate"
-                        graph-slug="project_assessment"
-                        node-alias="project_end_date"
-                        :show-label="true"
-                    />
-                </FormField>
+                <GenericWidget
+                    :mode="EDIT"
+                    :should-show-label="false"
+                    :aliasedNodeData="null"
+                    graph-slug="project_assessment"
+                    node-alias="project_end_date"
+                    placeholder="Project End Date"
+                    group-direction="column"
+                    @update:value="updateModelValue($event, 'project_end_date')"
+                />
             </div>
         </div>
     </Form>
 </template>
 
 <style>
-@import url('node_modules/bcgov_arches_common/bcgov_arches_common/css/arches_common.css');
-
 .inline-block {
     display: inline-block;
     width: unset;

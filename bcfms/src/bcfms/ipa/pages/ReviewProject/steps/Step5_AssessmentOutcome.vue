@@ -22,7 +22,11 @@ const ipa = inject<IPA>('ipa');
         <div class="div-grid-cols">
             <div>Intersects with important Fossil Area</div>
             <div class="justify-self-center">
-                {{ ipa?.initialProjectReview.intersectsIFA }}
+                {{
+                    ipa?.initialProjectReview.intersectsIFA === true
+                        ? 'Yes'
+                        : 'No'
+                }}
             </div>
         </div>
         <div class="div-grid-cols">

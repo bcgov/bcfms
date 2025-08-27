@@ -6,7 +6,9 @@ import LabelledInput from '@/bcgov_arches_common/components/labelledinput/Labell
 import ConceptSelect from '@/bcgov_arches_common/components/ConceptSelect/ConceptSelect.vue';
 import { Form, FormField, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
-import DateWidget from '@/arches_component_lab/widgets/DateWidget/DateWidget.vue';
+// @ts-ignore
+import { camelCase } from 'lodash';
+import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 import RadioButton from 'primevue/radiobutton';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { InitialProjectReviewSchema } from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
@@ -21,12 +23,6 @@ if (!ipa) {
 const projectDetailsForm: Ref<FormInstance | null> = useTemplateRef(
     'projectDetailsForm',
 ) as Ref<FormInstance | null>;
-const zodDateSubmittedResolver = zodResolver(
-    InitialProjectReviewSchema.shape.estimatedStartDate,
-);
-const zodAssessmentDueDateResolver = zodResolver(
-    InitialProjectReviewSchema.shape.assessmentDueDate,
-);
 const zodProximityToFossilsResolver = zodResolver(
     InitialProjectReviewSchema.shape.proximityToFossils,
 );
@@ -50,6 +46,17 @@ const isValid = () => {
             (ipa as any).value?.initialProjectReview.groundDisturbance)
     );
 };
+const updateModelValue = function (newValue: object, attribute_name: string) {
+    console.log('updateModelValue', attribute_name, newValue);
+
+    const validator =
+        InitialProjectReviewSchema.shape[camelCase(attribute_name)];
+    const result = validator.safeParse(newValue);
+
+    if (result.success) {
+        ipa.initialProjectReview[attribute_name] = result.data;
+    }
+};
 
 defineExpose({ isValid });
 </script>
@@ -63,36 +70,32 @@ defineExpose({ isValid });
     >
         <div class="flex-row">
             <div class="formfield-flex-grow">
-                <FormField
-                    :resolver="zodDateSubmittedResolver"
-                    name="dateSubmitted"
-                >
-                    <DateWidget
-                        id="dateSubmitted"
-                        v-model="ipa.initialProjectReview.dateSubmitted"
-                        :mode="EDIT"
-                        :value="ipa.initialProjectReview.dateSubmitted"
-                        graph-slug="project_assessment"
-                        node-alias="assessment_start_date"
-                        :show-label="true"
-                    />
-                </FormField>
+                <GenericWidget
+                    :mode="EDIT"
+                    :should-show-label="false"
+                    :aliasedNodeData="null"
+                    graph-slug="project_assessment"
+                    node-alias="assessment_start_date"
+                    placeholder="Assessment Start Date"
+                    group-direction="column"
+                    @update:value="
+                        updateModelValue($event, 'assessment_start_date')
+                    "
+                />
             </div>
             <div class="formfield-flex-grow">
-                <FormField
-                    :resolver="zodAssessmentDueDateResolver"
-                    name="assessmentDueDate"
-                >
-                    <DateWidget
-                        id="assessmentDueDate"
-                        v-model="ipa.initialProjectReview.assessmentDueDate"
-                        :mode="EDIT"
-                        :value="ipa.initialProjectReview.assessmentDueDate"
-                        graph-slug="project_assessment"
-                        node-alias="assessment_completion_date"
-                        :show-label="true"
-                    />
-                </FormField>
+                <GenericWidget
+                    :mode="EDIT"
+                    :should-show-label="false"
+                    :aliasedNodeData="null"
+                    graph-slug="project_assessment"
+                    node-alias="assessment_completion_date"
+                    placeholder="Assessment Completion Date"
+                    group-direction="column"
+                    @update:value="
+                        updateModelValue($event, 'assessment_completion_date')
+                    "
+                />
             </div>
         </div>
         <FormField
