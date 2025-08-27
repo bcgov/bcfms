@@ -9,6 +9,7 @@ import { Form, FormField, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { InitialProjectReviewSchema } from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
+import DOMPurify from 'dompurify';
 
 const ipa = inject<IPA>('ipa');
 
@@ -38,10 +39,11 @@ const isValid = () => {
             )) ||
         ((ipa as any).value?.initialProjectReview.FRPR &&
             (ipa as any).value?.initialProjectReview.initialReviewLevelOfRisk &&
-            (ipa as any).value?.initialProjectReview.initialReviewInternalNotes
-                .replace(/<[^>]*>/g, '')
-                .replace(/&nbsp;/g, ' ')
-                .trim())
+            DOMPurify.sanitize(
+                (ipa as any).value?.initialProjectReview
+                    ?.initialReviewInternalNotes ?? '',
+                { ALLOWED_TAGS: [] },
+            ))
     );
 };
 

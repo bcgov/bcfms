@@ -1,13 +1,5 @@
 import { z } from 'zod';
-
-function normalizeEditorContent(value: string | null): string {
-    if (!value) return '';
-
-    return value
-        .replace(/<[^>]*>/g, '')
-        .replace(/&nbsp;/g, ' ')
-        .trim();
-}
+import DOMPurify from 'dompurify';
 
 const InitialProjectReviewSchema = z.object({
     dateSubmitted: z.date({
@@ -32,7 +24,11 @@ const InitialProjectReviewSchema = z.object({
     initialReviewLevelOfRisk: z.string().uuid().nullable(),
     initialReviewInternalNotes: z
         .string()
-        .transform(normalizeEditorContent)
+        .transform((value: string) => {
+            return DOMPurify.sanitize(value, {
+                ALLOWED_TAGS: [],
+            });
+        })
         .refine((value: string) => value !== '', {
             message: 'Initial Review Internal Notes are required.',
         })
