@@ -3,8 +3,13 @@ import { z } from 'zod';
 function normalizeEditorContent(value: string | null): string {
     if (!value) return '';
 
-    return value
-        .replace(/<[^>]*>/g, '')
+    let result = value;
+    let previous;
+    do {
+        previous = result;
+        result = result.replace(/<[^>]*>/g, '');
+    } while (result !== previous);
+    return result
         .replace(/&nbsp;/g, ' ')
         .trim();
 }
