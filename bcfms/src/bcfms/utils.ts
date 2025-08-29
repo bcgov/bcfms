@@ -20,7 +20,7 @@ export const blankResourceInstanceValue = function () {
 export const blankDateValue = function () {
     return {
         display_value: '',
-        node_value: null,
+        node_value: new Date(),
         details: [] as never[],
     };
 };

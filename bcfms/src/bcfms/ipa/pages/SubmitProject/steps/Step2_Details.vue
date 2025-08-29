@@ -2,13 +2,11 @@
 import { useTemplateRef, inject, ref } from 'vue';
 import type { Ref } from 'vue';
 
-import InputText from 'primevue/inputtext';
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
-import { Form, FormField, type FormInstance } from '@primevue/forms';
+import { Form, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 // @ts-ignore
-import { camelCase } from 'lodash';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import {
@@ -19,6 +17,7 @@ import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/util
 import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
+
 const blankProjectStart = ref({ display_value: '', node_value: null });
 const blankProjectEnd = ref({ display_value: '', node_value: null });
 const blankAuthorizingAgency = ref(blankConceptValue());
@@ -52,6 +51,17 @@ const isValid = () => {
             (ipa as any).value?.projectDetails.project_start_date)
     );
 };
+
+function getErrorsFromIssues(issues: z.ZodIssue[]) {
+    // Simple 1-level mapping. For nested shapes, join path segments with '.'.
+    const errors = {};
+    for (const issue of issues) {
+        const key = issue.path[0] as FormKeys | undefined;
+        if (key && errors[key] == null) {
+            errors[key] = issue.message;
+        }
+    }
+}
 const updateModelValue = function (
     newValue: AliasedNodeData,
     attribute_name: string,
@@ -64,6 +74,16 @@ const updateModelValue = function (
 
     if (result.success) {
         ipa.value.projectDetails[attribute_name] = result.data;
+        projectDetailsForm.value.fields[attribute_name].error = null;
+    } else {
+        if (projectDetailsForm.value) {
+            console.log(result.error.issues[0].message);
+            projectDetailsForm.value.fields[attribute_name].error = {
+                key: result.error.issues[0].code,
+                message: result.error.issues[0].message,
+            };
+            // result.error;
+        }
     }
 };
 
@@ -77,10 +97,15 @@ defineExpose({ isValid });
         :validateOnBlur="true"
         :resolver="zodResolver(ProjectDetailsSchema)"
     >
+        <div>
+            {{ projectDetailsForm?.fields }}
+        </div>
         <LabelledInput
             hint="Enter a specific project name, in sentence case, that includes the geographic location and project type"
             input-name="projectName"
-            :error-message="$form.project_name?.error?.message"
+            :error-message="
+                projectDetailsForm?.fields?.project_name?.error?.message
+            "
         >
             <GenericWidget
                 :mode="EDIT"
@@ -91,11 +116,11 @@ defineExpose({ isValid });
             />
         </LabelledInput>
         <LabelledInput
-            label="Initiator"
             hint="Select the organization or individual initiating the assessment"
             input-name="projectInitiator"
-            :error-message="$form.projectInitiator?.error?.message"
-            :required="true"
+            :error-message="
+                projectDetailsForm?.fields?.project_initiator?.error?.message
+            "
         >
             <GenericWidget
                 :mode="EDIT"
@@ -109,7 +134,10 @@ defineExpose({ isValid });
             label="Industry Company / Individual / Organization"
             hint="Enter the name of Company / Individual / Organization that is responsible for executing the project"
             input-name="industryCompanyName"
-            :error-message="$form.industryCompanyName?.error?.message"
+            :error-message="
+                projectDetailsForm?.fields?.industry_company_name?.error
+                    ?.message
+            "
             :required="true"
         >
             <GenericWidget
@@ -128,7 +156,10 @@ defineExpose({ isValid });
                 label="Authorizing Agency"
                 hint="Select the Agency that is authorizing the project"
                 input-name="projectAuthorizingAgency"
-                :error-message="$form.projectAuthorizingAgency?.error?.message"
+                :error-message="
+                    projectDetailsForm?.fields?.project_authorizing_agency
+                        ?.error?.message
+                "
                 :required="true"
             >
                 <GenericWidget
@@ -145,7 +176,9 @@ defineExpose({ isValid });
         <LabelledInput
             label="Land Act Number"
             input-name="landActFileNumber"
-            :error-message="$form.landActFileNumber?.error?.message"
+            :error-message="
+                projectDetailsForm?.fields?.land_act_file_number?.error?.message
+            "
         >
             <GenericWidget
                 :mode="EDIT"
@@ -161,7 +194,7 @@ defineExpose({ isValid });
                 <GenericWidget
                     :mode="EDIT"
                     :should-show-label="false"
-                    :aliased-node-data="blankProjectStart"
+                    :aliased-node-data="ipa?.projectDetails.project_start_date"
                     graph-slug="project_assessment"
                     node-alias="project_start_date"
                     placeholder="Project Start Date"
@@ -174,7 +207,7 @@ defineExpose({ isValid });
                 <GenericWidget
                     :mode="EDIT"
                     :should-show-label="false"
-                    :aliased-node-data="blankProjectEnd"
+                    :aliased-node-data="ipa?.projectDetails.project_end_date"
                     graph-slug="project_assessment"
                     node-alias="project_end_date"
                     placeholder="Project End Date"

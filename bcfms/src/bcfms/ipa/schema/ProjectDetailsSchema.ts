@@ -37,10 +37,11 @@ const ConceptValueRequiredSchema = ConceptValueSchema.safeExtend({
 /* Internal StringValue types */
 const languages = ['en'];
 const LanguageValueSchema = z.object({
-    value: z.string(),
+    value: z.string().nullable(),
     direction: z.enum(['ltr', 'rtl']),
 });
 const StringNodeValueSchema = z.looseObject({ en: LanguageValueSchema });
+
 const StringNodeValueRequiredSchema = z.looseObject({
     en: LanguageValueSchema.safeExtend({
         value: z.string().min(1, { message: 'Value is required.' }),
@@ -58,6 +59,35 @@ const StringValueRequiredSchema = z.object({
     node_value: StringNodeValueRequiredSchema,
 });
 
+const ResourceInstanceReferenceSchema = z.object({
+    resourceId: z.string().uuidv4(),
+    ontologyProperty: z.string().nullable(),
+    resourceXresourceId: z.string().nullable(),
+    inverseOntologyProperty: z.string().nullable(),
+});
+
+const ResourceInstanceValueDetailsSchema = z.object({
+    display_value: z.string(),
+    resource_id: z.string().uuidv4(),
+});
+const ResourceInstanceValueSchema = z.object({
+    display_value: z.string(),
+    node_value: ResourceInstanceReferenceSchema.nullable(),
+    details: z.array(ResourceInstanceValueDetailsSchema),
+});
+const ResourceInstanceValueRequiredSchema =
+    ResourceInstanceValueSchema.safeExtend({
+        node_value: ResourceInstanceReferenceSchema,
+    });
+
+const DateValueRequiredSchema = z.object({
+    display_value: z.string().nullish(),
+    node_value: z.iso.date(),
+});
+
+const DateValueSchema = DateValueRequiredSchema.safeExtend({
+    node_value: z.iso.date().nullish(),
+});
 /* End Generic Widget Schemas */
 
 const ProjectDetailsSchema = z.object({
@@ -69,10 +99,11 @@ const ProjectDetailsSchema = z.object({
     // .min(1, { message: 'Project Name is required.' })
     // .max(120)
     // .nullable(),
-    project_initiator: z
-        .string()
-        .uuidv4({ message: 'Initiator is required.' })
-        .nullable(),
+    project_initiator: ResourceInstanceValueRequiredSchema,
+    // z
+    // .string()
+    // .uuidv4({ message: 'Initiator is required.' })
+    // .nullable(),
     industry_company_name: StringValueRequiredSchema,
     // z.string({
     //     invalid_type_error:
@@ -102,11 +133,12 @@ const ProjectDetailsSchema = z.object({
     //     return parsed;
     // })
     // .nullable(),
-    project_start_date: z.date({
-        // This handles null values -> null !== typeof Date
-        invalid_type_error: 'Estimated Start Date is required.',
-    }),
-    project_end_date: z.date(),
+    project_start_date: DateValueRequiredSchema,
+    //     z.date({
+    //     // This handles null values -> null !== typeof Date
+    //     invalid_type_error: 'Estimated Start Date is required.',
+    // }),
+    project_end_date: DateValueSchema,
     project_type: z
         .string()
         .uuidv4({ message: 'Project Type is required.' })
