@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { useTemplateRef, inject } from 'vue';
+import { useTemplateRef, inject, ref } from 'vue';
 import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
-import ConceptSelect from '@/bcgov_arches_common/components/ConceptSelect/ConceptSelect.vue';
 import { Form, FormField, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 // @ts-ignore
@@ -13,8 +12,13 @@ import RadioButton from 'primevue/radiobutton';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { InitialProjectReviewSchema } from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
+import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/utils.ts';
 
 const ipa = inject<IPA>('ipa');
+const blankGroundDisturbance = ref(blankConceptValue());
+const blankProximityToFossils = ref(blankConceptValue());
+const blankCompletionDate = ref({ display_value: '', node_value: '' });
+const blankStartDate = ref({ display_value: '', node_value: '' });
 
 if (!ipa) {
     throw new Error('IPA instance not provided.');
@@ -73,7 +77,7 @@ defineExpose({ isValid });
                 <GenericWidget
                     :mode="EDIT"
                     :should-show-label="false"
-                    :aliasedNodeData="null"
+                    :aliased-node-data="blankStartDate"
                     graph-slug="project_assessment"
                     node-alias="assessment_start_date"
                     placeholder="Assessment Start Date"
@@ -87,7 +91,7 @@ defineExpose({ isValid });
                 <GenericWidget
                     :mode="EDIT"
                     :should-show-label="false"
-                    :aliasedNodeData="null"
+                    :aliased-node-data="blankCompletionDate"
                     graph-slug="project_assessment"
                     node-alias="assessment_completion_date"
                     placeholder="Assessment Completion Date"
@@ -139,10 +143,10 @@ defineExpose({ isValid });
                 :error-message="$form.proximityToFossils?.error?.message"
                 :required="true"
             >
-                <ConceptSelect
-                    id="proximityToFossils"
-                    ref="proximityToFossilsField"
-                    v-model="ipa.initialProjectReview.proximityToFossils"
+                <GenericWidget
+                    :mode="EDIT"
+                    :should-show-label="false"
+                    :aliased-node-data="blankProximityToFossils"
                     placeholder="Fossil Proximity"
                     graph-slug="project_assessment"
                     node-alias="proximity_to_fos"
@@ -160,10 +164,10 @@ defineExpose({ isValid });
                 :error-message="$form.groundDisturbance?.error?.message"
                 :required="true"
             >
-                <ConceptSelect
-                    id="groundDisturbance"
-                    ref="groundDisturbanceField"
-                    v-model="ipa.initialProjectReview.groundDisturbance"
+                <GenericWidget
+                    :mode="EDIT"
+                    :should-show-label="false"
+                    :aliased-node-data="blankGroundDisturbance"
                     placeholder="Ground Disturbance"
                     graph-slug="project_assessment"
                     node-alias="ground_disturbance"

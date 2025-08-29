@@ -6,9 +6,11 @@ import InputText from 'primevue/inputtext';
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
 import { Form, FormField, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
-import ConceptSelect from '@/bcgov_arches_common/components/ConceptSelect/ConceptSelect.vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
+import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
+import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
+import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/utils.ts';
 
 const ipa = inject<IPA>('ipa');
 
@@ -38,6 +40,8 @@ const isValid = () => {
     );
 };
 
+const blankProjectType = blankConceptValue();
+
 defineExpose({ isValid });
 </script>
 <template>
@@ -58,10 +62,10 @@ defineExpose({ isValid });
                 :error-message="$form.projectType?.error?.message"
                 :required="true"
             >
-                <ConceptSelect
-                    id="projectType"
-                    ref="projectTypeField"
-                    v-model="ipa.projectDetails.projectType"
+                <GenericWidget
+                    :mode="EDIT"
+                    :should-show-label="false"
+                    :aliased-node-data="blankProjectType"
                     graph-slug="project_assessment"
                     node-alias="project_type"
                 />

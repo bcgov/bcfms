@@ -1,16 +1,22 @@
 <script setup lang="ts">
-import { useTemplateRef } from 'vue';
+import { useTemplateRef, ref } from 'vue';
 import type { Ref } from 'vue';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
 
 import { Form, type FormInstance } from '@primevue/forms';
+import type { FileReference } from '@/arches_component_lab/datatypes/file-list/types.ts';
 //import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 
 //const ipa: typeof IPA = inject('ipa') as typeof IPA;
 const projectDocumentsForm: Ref<FormInstance | null> = useTemplateRef(
     'projectDocumentsForm',
 ) as Ref<FormInstance | null>;
+
+const blankProjectDocuments = ref({
+    display_value: '',
+    node_value: [] as FileReference[],
+});
 
 const isValid = () => {
     return projectDocumentsForm.value?.valid;
@@ -33,7 +39,7 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :should-show-label="false"
-                :aliasedNodeData="null"
+                :aliased-node-data="blankProjectDocuments"
                 graph-slug="project_assessment"
                 node-alias="project_documents"
                 placeholder="Project Documents"

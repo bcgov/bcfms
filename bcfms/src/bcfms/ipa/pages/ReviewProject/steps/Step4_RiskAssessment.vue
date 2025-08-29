@@ -1,17 +1,21 @@
 <script setup lang="ts">
-import { useTemplateRef, inject } from 'vue';
+import { useTemplateRef, inject, ref } from 'vue';
 import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
-import ConceptSelect from '@/bcgov_arches_common/components/ConceptSelect/ConceptSelect.vue';
 import Editor from 'primevue/editor';
 import { Form, FormField, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { InitialProjectReviewSchema } from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
 import DOMPurify from 'dompurify';
+import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
+import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
+import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/utils.ts';
 
 const ipa = inject<IPA>('ipa');
+const blankFrpr = ref(blankConceptValue());
+const blankLevelOfRisk = ref(blankConceptValue());
 
 if (!ipa) {
     throw new Error('IPA instance not provided.');
@@ -68,10 +72,10 @@ defineExpose({ isValid });
                 :error-message="$form.FRPR?.error?.message"
                 :required="true"
             >
-                <ConceptSelect
-                    id="FRPR"
-                    ref="FRPRField"
-                    v-model="ipa.initialProjectReview.FRPR"
+                <GenericWidget
+                    :mode="EDIT"
+                    :should-show-label="false"
+                    :aliased-node-data="blankFrpr"
                     placeholder="Select FRPR value"
                     graph-slug="project_assessment"
                     node-alias="frpr"
@@ -89,10 +93,10 @@ defineExpose({ isValid });
                 :error-message="$form.initialReviewLevelOfRisk?.error?.message"
                 :required="true"
             >
-                <ConceptSelect
-                    id="initialReviewLevelOfRisk"
-                    ref="initialReviewLevelOfRiskField"
-                    v-model="ipa.initialProjectReview.initialReviewLevelOfRisk"
+                <GenericWidget
+                    :mode="EDIT"
+                    :should-show-label="false"
+                    :aliased-node-data="blankLevelOfRisk"
                     placeholder="Select Initial Review Level of Risk"
                     graph-slug="project_assessment"
                     node-alias="initial_review_level_of_risk"

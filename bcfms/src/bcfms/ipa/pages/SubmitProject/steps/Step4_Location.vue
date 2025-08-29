@@ -1,20 +1,24 @@
 <script setup lang="ts">
-import { useTemplateRef, inject } from 'vue';
+import { useTemplateRef, inject, ref } from 'vue';
 import type { Ref } from 'vue';
 
 import InputText from 'primevue/inputtext';
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
 import { Form, FormField, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
-import ConceptSelect from '@/bcgov_arches_common/components/ConceptSelect/ConceptSelect.vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
+import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
+import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
+import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/utils.ts';
 
 const ipa = inject<IPA>('ipa');
 
 if (!ipa) {
     throw new Error('IPA instance not provided.');
 }
+
+const blankGeometryQualifier = ref(blankConceptValue());
 
 const projectLocationForm: Ref<FormInstance | null> = useTemplateRef(
     'projectLocationForm',
@@ -78,10 +82,10 @@ defineExpose({ isValid });
                 input-name="geometryQualifier"
                 :error-message="$form.geometryQualifier?.error?.message"
             >
-                <ConceptSelect
-                    id="geometryQualifier"
-                    ref="geometryQualifierField"
-                    v-model="ipa.projectDetails.geometryQualifier"
+                <GenericWidget
+                    :mode="EDIT"
+                    :should-show-label="false"
+                    :aliased-node-data="blankGeometryQualifier"
                     graph-slug="project_assessment"
                     node-alias="geometry_qualifier"
                 />

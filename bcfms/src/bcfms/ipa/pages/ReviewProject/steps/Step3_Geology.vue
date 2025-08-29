@@ -1,15 +1,21 @@
 <script setup lang="ts">
-import { useTemplateRef, inject } from 'vue';
+import { useTemplateRef, inject, ref } from 'vue';
 import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
-import ConceptSelect from '@/bcgov_arches_common/components/ConceptSelect/ConceptSelect.vue';
 import { Form, FormField, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { InitialProjectReviewSchema } from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
+import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
+import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
+import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/utils.ts';
 
 const ipa = inject<IPA>('ipa');
+const blankMetamorphicRock = ref(blankConceptValue());
+const blankIgneousRock = ref(blankConceptValue());
+const blankSedimentaryRock = ref(blankConceptValue());
+const blankQuaternaryDeposits = ref(blankConceptValue());
 
 if (!ipa) {
     throw new Error('IPA instance not provided.');
@@ -67,10 +73,10 @@ defineExpose({ isValid });
                 :error-message="$form.metamorphicRock?.error?.message"
                 :required="true"
             >
-                <ConceptSelect
-                    id="metamorphicRock"
-                    ref="metamorphicRockField"
-                    v-model="ipa.initialProjectReview.metamorphicRock"
+                <GenericWidget
+                    :mode="EDIT"
+                    :should-show-label="false"
+                    :aliased-node-data="blankMetamorphicRock"
                     placeholder="Select Metamorphic Rock"
                     graph-slug="project_assessment"
                     node-alias="metamorphic_rock"
@@ -88,10 +94,10 @@ defineExpose({ isValid });
                 :error-message="$form.igneousRock?.error?.message"
                 :required="true"
             >
-                <ConceptSelect
-                    id="igneousRock"
-                    ref="igneousRockField"
-                    v-model="ipa.initialProjectReview.igneousRock"
+                <GenericWidget
+                    :mode="EDIT"
+                    :aliased-node-data="blankIgneousRock"
+                    :should-show-label="false"
                     placeholder="Select Igneous Rock"
                     graph-slug="project_assessment"
                     node-alias="igneous_rock"
@@ -109,10 +115,10 @@ defineExpose({ isValid });
                 :error-message="$form.sedimentaryRock?.error?.message"
                 :required="true"
             >
-                <ConceptSelect
-                    id="sedimentaryRock"
-                    ref="sedimentaryRockField"
-                    v-model="ipa.initialProjectReview.sedimentaryRock"
+                <GenericWidget
+                    :mode="EDIT"
+                    :aliased-node-data="blankSedimentaryRock"
+                    :should-show-label="false"
                     placeholder="Select Sedimentary Rock"
                     graph-slug="project_assessment"
                     node-alias="sedimentary_rock"
@@ -130,10 +136,10 @@ defineExpose({ isValid });
                 :error-message="$form.quaternarySediments?.error?.message"
                 :required="true"
             >
-                <ConceptSelect
-                    id="quaternarySediments"
-                    ref="quaternarySedimentsField"
-                    v-model="ipa.initialProjectReview.quaternarySediments"
+                <GenericWidget
+                    :mode="EDIT"
+                    :aliased-node-data="blankQuaternaryDeposits"
+                    :should-show-label="false"
                     placeholder="Select Quaternary Sediments"
                     graph-slug="project_assessment"
                     node-alias="quaternary_deposits"

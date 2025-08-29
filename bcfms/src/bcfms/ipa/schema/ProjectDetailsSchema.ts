@@ -1,75 +1,133 @@
 import { z } from 'zod';
+import type { StringValue } from '@/arches_component_lab/datatypes/string/types.ts';
+import {
+    blankDateValue,
+    blankResourceInstanceValue,
+    blankStringValue,
+} from '@/bcfms/utils.ts';
+import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/utils.ts';
+import type { ConceptValue } from '@/arches_component_lab/datatypes/concept/types.ts';
+import type { ResourceInstanceValue } from '@/arches_component_lab/datatypes/resource-instance/types.ts';
+import type { DateValue } from '@/arches_component_lab/datatypes/date/types.ts';
+
+/* Generic Widget schemas
+  @todo - Split into separate file
+ */
+
+const CollectionItemSchema = z.object({
+    key: z.string(),
+    label: z.string(),
+    conceptid: z.string(),
+    sortOrder: z.string().nullish(),
+    get children() {
+        return z.array(CollectionItemSchema);
+    },
+});
+
+const ConceptValueSchema = z.object({
+    display_value: z.string(),
+    node_value: z.string().uuidv4(),
+    details: z.array(CollectionItemSchema),
+});
+
+const ConceptValueRequiredSchema = ConceptValueSchema.safeExtend({
+    node_value: z.string().uuidv4().min(1),
+});
+
+/* Internal StringValue types */
+const languages = ['en'];
+const LanguageValueSchema = z.object({
+    value: z.string(),
+    direction: z.enum(['ltr', 'rtl']),
+});
+const StringNodeValueSchema = z.looseObject({ en: LanguageValueSchema });
+const StringNodeValueRequiredSchema = z.looseObject({
+    en: LanguageValueSchema.safeExtend({
+        value: z.string().min(1, { message: 'Value is required.' }),
+    }),
+});
+/* END Internal StringValue types */
+
+const StringValueSchema = z.object({
+    display_value: z.string(),
+    node_value: StringNodeValueSchema,
+});
+
+const StringValueRequiredSchema = z.object({
+    display_value: z.string(),
+    node_value: StringNodeValueRequiredSchema,
+});
+
+/* End Generic Widget Schemas */
 
 const ProjectDetailsSchema = z.object({
-    projectName: z
-        .string({
-            invalid_type_error: 'Project Name is required.',
-        })
-        .min(1, { message: 'Project Name is required.' })
-        .max(120)
-        .nullable(),
-    projectInitiator: z
+    project_name: StringValueRequiredSchema,
+    // z
+    // .string({
+    //     invalid_type_error: 'Project Name is required.',
+    // })
+    // .min(1, { message: 'Project Name is required.' })
+    // .max(120)
+    // .nullable(),
+    project_initiator: z
         .string()
-        .uuid({ message: 'Initiator is required.' })
+        .uuidv4({ message: 'Initiator is required.' })
         .nullable(),
-    industryCompanyName: z
-        .string({
-            invalid_type_error:
-                'Industry Company / Individual / Organization is required.',
-        })
-        .min(1, {
-            message:
-                'Industry Company / Individual / Organization is required.',
-        })
-        .max(60)
-        .nullable(),
-    projectAuthorizingAgency: z
-        .string()
-        .uuid({ message: 'Authorizing Agency is required.' })
-        .nullable(),
-    landActFileNumber: z
-        .string()
-        .max(30)
-        .transform((val: string, ctx: any) => {
-            const parsed = parseInt(val);
-
-            if (isNaN(parsed)) {
-                ctx.addIssue({
-                    code: z.ZodIssueCode.custom,
-                    message: 'Land Act # must be a valid number.',
-                });
-                return z.NEVER;
-            }
-
-            return parsed;
-        })
-        .nullable(),
-    projectStartDate: z.date({
+    industry_company_name: StringValueRequiredSchema,
+    // z.string({
+    //     invalid_type_error:
+    //         'Industry Company / Individual / Organization is required.',
+    // })
+    // .min(1, {
+    //     message:
+    //         'Industry Company / Individual / Organization is required.',
+    // })
+    // .max(60)
+    // .nullable(),
+    project_authorizing_agency: ConceptValueRequiredSchema,
+    land_act_file_number: StringValueSchema,
+    // z.string()
+    // .max(30)
+    // .transform((val: string, ctx: any) => {
+    //     const parsed = parseInt(val);
+    //
+    //     if (isNaN(parsed)) {
+    //         ctx.addIssue({
+    //             code: z.ZodIssueCode.custom,
+    //             message: 'Land Act # must be a valid number.',
+    //         });
+    //         return z.NEVER;
+    //     }
+    //
+    //     return parsed;
+    // })
+    // .nullable(),
+    project_start_date: z.date({
         // This handles null values -> null !== typeof Date
         invalid_type_error: 'Estimated Start Date is required.',
     }),
-    projectEndDate: z.date(),
-    projectType: z
+    project_end_date: z.date(),
+    project_type: z
         .string()
-        .uuid({ message: 'Project Type is required.' })
+        .uuidv4({ message: 'Project Type is required.' })
         .nullable(),
-    otherProjectType: z.string().max(60).nullable(),
-    proposedActivity: z
+    other_project_type: z.string().max(60).nullable(),
+    proposed_activity: z
         .string({
             invalid_type_error: 'Proposed Activity is required.',
         })
         .min(1, { message: 'Proposed Activity is required.' })
         .max(60)
         .nullable(),
-    locationDescription: z
+    location_description: z
         .string({
             invalid_type_error: 'Location Description is required.',
         })
         .min(1, { message: 'Location Description is required.' })
         .max(60)
         .nullable(),
-    geometryQualifier: z.string().uuid().max(250).nullable(),
-    multipleGeometryQualifier: z.string().max(250).nullable(),
+    geometry_qualifier: z.uuidv4().nullable(),
+    multiple_geometry_qualifier: z.string().nullable(),
 });
 
 const requiredProjectDetailsSchema = ProjectDetailsSchema.partial();
@@ -83,33 +141,33 @@ function getProjectDetails(): ProjectDetailsType {
 // @todo - Figure out object state - New/Updated/Deleted
 class ProjectDetails implements ProjectDetailsType {
     constructor() {
-        this.projectName = '';
-        this.projectInitiator = '';
-        this.industryCompanyName = '';
-        this.projectAuthorizingAgency = '';
-        this.landActFileNumber = 0;
-        this.projectStartDate = null;
-        this.projectEndDate = null;
-        this.projectType = '';
-        this.otherProjectType = '';
-        this.proposedActivity = '';
-        this.locationDescription = '';
-        this.geometryQualifier = '';
-        this.multipleGeometryQualifier = '';
+        this.project_name = blankStringValue();
+        this.project_initiator = blankResourceInstanceValue();
+        this.industry_company_name = blankStringValue();
+        this.project_authorizing_agency = blankConceptValue();
+        this.land_act_file_number = 0;
+        this.project_start_date = blankDateValue();
+        this.project_end_date = blankDateValue();
+        this.project_type = '';
+        this.other_project_type = '';
+        this.proposed_activity = '';
+        this.location_description = '';
+        this.geometry_qualifier = '';
+        this.multiple_geometry_qualifier = '';
     }
-    projectName: string;
-    projectInitiator: string;
-    industryCompanyName: string;
-    projectAuthorizingAgency: string;
-    landActFileNumber: number;
-    projectStartDate: Date | null;
-    projectEndDate: Date | null;
-    projectType: string;
-    otherProjectType: string;
-    proposedActivity: string;
-    locationDescription: string;
-    geometryQualifier: string;
-    multipleGeometryQualifier: string;
+    project_name: StringValue;
+    project_initiator: ResourceInstanceValue;
+    industry_company_name: StringValue;
+    project_authorizing_agency: ConceptValue;
+    land_act_file_number: number;
+    project_start_date: DateValue;
+    project_end_date: DateValue;
+    project_type: string;
+    other_project_type: string;
+    proposed_activity: string;
+    location_description: string;
+    geometry_qualifier: string;
+    multiple_geometry_qualifier: string;
 }
 
 export {
