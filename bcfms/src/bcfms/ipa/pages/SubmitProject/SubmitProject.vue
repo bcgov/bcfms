@@ -21,8 +21,16 @@ import type { Ref } from 'vue';
 
 const activateNextStep = () => {
     myStepper.value.d_value++;
+    setCurrentStepValid(
+        steps[myStepper.value.d_value - 1].value.isValid(),
+        myStepper.value.d_value,
+    );
 };
 const activatePreviousStep = () => {
+    setCurrentStepValid(
+        steps[myStepper.value.d_value - 2].value.isValid(),
+        myStepper.value.d_value - 1,
+    );
     myStepper.value.d_value--;
 };
 
@@ -31,8 +39,19 @@ function activateStep(step: number) {
         myStepper.value.d_value = lastStep;
     } else {
         lastStep = step;
+        setCurrentStepValid(steps[step - 1].value.isValid(), step);
     }
 }
+
+const stepStatuses: Ref<boolean[]> = ref([]);
+
+const currentStepIsValid = computed(() => {
+    return stepStatuses.value[currentStep.value - 1];
+});
+
+const setCurrentStepValid = function (isValid: boolean, stepNumber: number) {
+    stepStatuses.value[stepNumber - 1] = isValid;
+};
 
 const isValid = (step: number) => {
     let stepValid = true;
@@ -58,7 +77,7 @@ const step3 = ref();
 const step4 = ref();
 const step5 = ref();
 const step6 = ref();
-const step7 = ref();
+// const step7 = ref();
 const steps: Ref[] = [];
 let lastStep = 1;
 const currentStep = computed(() => {
@@ -70,6 +89,7 @@ const ipa: Ref<typeof IPA> = ref(getIPA());
 provide('ipa', ipa);
 
 const nextLabel = computed(() => {
+    if (currentStep.value === 1) return 'Start';
     if (currentStep.value === steps.length) return 'Print';
     return currentStep.value < steps.length - 1 ? 'Next' : 'Submit';
 });
@@ -80,7 +100,8 @@ const showPrevious = computed(() => {
 const showDebug = ref(false);
 
 onMounted(() => {
-    steps.push(step1, step2, step3, step4, step5, step6, step7);
+    steps.push(step1, step2, step3, step4, step5, step6 /*, step7*/);
+    stepStatuses.value[0] = true;
 });
 </script>
 
@@ -126,9 +147,9 @@ onMounted(() => {
                         <StepPanel :value="1">
                             <StepperNavigation
                                 :step-number="currentStep"
-                                :validate-fn="isValid"
+                                :is-valid="currentStepIsValid"
                                 :show-previous="showPrevious"
-                                :next-label="'Start'"
+                                :next-label="nextLabel"
                                 @next-click="activateNextStep"
                                 @previous-click="activatePreviousStep"
                             >
@@ -138,9 +159,9 @@ onMounted(() => {
                             ></SubmitProjectStep1>
                             <StepperNavigation
                                 :step-number="currentStep"
-                                :validate-fn="isValid"
+                                :is-valid="currentStepIsValid"
                                 :show-previous="showPrevious"
-                                :next-label="'Start'"
+                                :next-label="nextLabel"
                                 @next-click="activateNextStep"
                                 @previous-click="activatePreviousStep"
                             ></StepperNavigation>
@@ -151,7 +172,7 @@ onMounted(() => {
                             </h3>
                             <StepperNavigation
                                 :step-number="currentStep"
-                                :validate-fn="isValid"
+                                :is-valid="currentStepIsValid"
                                 :show-previous="showPrevious"
                                 :next-label="nextLabel"
                                 @next-click="activateNextStep"
@@ -160,10 +181,13 @@ onMounted(() => {
                             </StepperNavigation>
                             <SubmitProjectStep2
                                 ref="step2"
+                                @update:step-is-valid="
+                                    setCurrentStepValid($event, 2)
+                                "
                             ></SubmitProjectStep2>
                             <StepperNavigation
                                 :step-number="currentStep"
-                                :validate-fn="isValid"
+                                :is-valid="currentStepIsValid"
                                 :show-previous="showPrevious"
                                 :next-label="nextLabel"
                                 @next-click="activateNextStep"

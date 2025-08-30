@@ -20,7 +20,15 @@ export const blankResourceInstanceValue = function () {
 export const blankDateValue = function () {
     return {
         display_value: '',
-        node_value: new Date(),
+        node_value: null,
+        details: [] as never[],
+    };
+};
+
+export const currentDateValue = function () {
+    return {
+        display_value: '',
+        node_value: new Date().toISOString().split('T')[0],
         details: [] as never[],
     };
 };

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTemplateRef, inject, ref } from 'vue';
+import { defineEmits, useTemplateRef, inject, ref } from 'vue';
 import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
@@ -18,6 +18,8 @@ import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
 
+const emit = defineEmits(['update:stepIsValid']);
+
 const blankProjectStart = ref({ display_value: '', node_value: null });
 const blankProjectEnd = ref({ display_value: '', node_value: null });
 const blankAuthorizingAgency = ref(blankConceptValue());
@@ -33,35 +35,20 @@ const projectDetailsForm: Ref<FormInstance | null> = useTemplateRef(
 ) as Ref<FormInstance | null>;
 
 const isValid = () => {
-    return (
-        (projectDetailsForm.value?.valid &&
-            !(
-                projectDetailsForm.value?.states.project_name.pristine ||
-                projectDetailsForm.value?.states.project_initiator?.pristine ||
-                projectDetailsForm.value?.states.industry_company_name
-                    .pristine ||
-                projectDetailsForm.value?.states.project_authorizing_agency
-                    .pristine ||
-                projectDetailsForm.value?.states.project_start_date?.pristine
-            )) ||
-        ((ipa as Ref<IPA>).value?.projectDetails.project_name &&
-            (ipa as any).value?.projectDetails.project_initiator &&
-            (ipa as any).value?.projectDetails.industry_company_name &&
-            (ipa as any).value?.projectDetails.project_authorizing_agency &&
-            (ipa as any).value?.projectDetails.project_start_date)
+    if (!projectDetailsForm.value || !ProjectDetailsSchema) return false;
+
+    const formStates = projectDetailsForm?.value?.states;
+    const projectDetailsShape = ProjectDetailsSchema?.shape;
+    const fields = Object.keys(projectDetailsForm.value.states);
+
+    const allValid = fields.every(
+        (field) =>
+            projectDetailsShape[field].safeParse(formStates?.[field]?.value)
+                .success,
     );
+    return allValid;
 };
 
-function getErrorsFromIssues(issues: z.ZodIssue[]) {
-    // Simple 1-level mapping. For nested shapes, join path segments with '.'.
-    const errors = {};
-    for (const issue of issues) {
-        const key = issue.path[0] as FormKeys | undefined;
-        if (key && errors[key] == null) {
-            errors[key] = issue.message;
-        }
-    }
-}
 const updateModelValue = function (
     newValue: AliasedNodeData,
     attribute_name: string,
@@ -85,6 +72,7 @@ const updateModelValue = function (
             // result.error;
         }
     }
+    emit('update:stepIsValid', isValid());
 };
 
 defineExpose({ isValid });
@@ -97,9 +85,6 @@ defineExpose({ isValid });
         :validateOnBlur="true"
         :resolver="zodResolver(ProjectDetailsSchema)"
     >
-        <div>
-            {{ projectDetailsForm?.fields }}
-        </div>
         <LabelledInput
             hint="Enter a specific project name, in sentence case, that includes the geographic location and project type"
             input-name="projectName"
@@ -193,7 +178,6 @@ defineExpose({ isValid });
             <div class="formfield-flex-grow">
                 <GenericWidget
                     :mode="EDIT"
-                    :should-show-label="false"
                     :aliased-node-data="ipa?.projectDetails.project_start_date"
                     graph-slug="project_assessment"
                     node-alias="project_start_date"
@@ -206,12 +190,10 @@ defineExpose({ isValid });
             <div class="formfield-flex-grow">
                 <GenericWidget
                     :mode="EDIT"
-                    :should-show-label="false"
                     :aliased-node-data="ipa?.projectDetails.project_end_date"
                     graph-slug="project_assessment"
                     node-alias="project_end_date"
                     placeholder="Project End Date"
-                    group-direction="column"
                     @update:value="updateModelValue($event, 'project_end_date')"
                 />
             </div>

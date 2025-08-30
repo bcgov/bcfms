@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import type { StringValue } from '@/arches_component_lab/datatypes/string/types.ts';
 import {
-    blankDateValue,
+    currentDateValue,
     blankResourceInstanceValue,
     blankStringValue,
 } from '@/bcfms/utils.ts';
@@ -178,8 +178,8 @@ class ProjectDetails implements ProjectDetailsType {
         this.industry_company_name = blankStringValue();
         this.project_authorizing_agency = blankConceptValue();
         this.land_act_file_number = 0;
-        this.project_start_date = blankDateValue();
-        this.project_end_date = blankDateValue();
+        this.project_start_date = currentDateValue();
+        this.project_end_date = currentDateValue();
         this.project_type = '';
         this.other_project_type = '';
         this.proposed_activity = '';
