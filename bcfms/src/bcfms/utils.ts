@@ -4,7 +4,10 @@ import type { AliasedNodeData } from '*.ts';
 export const blankStringValue = function () {
     return {
         display_value: '',
-        node_value: {} as Record<string, LanguageValue>,
+        node_value: { en: { value: '', direction: 'ltr' } } as Record<
+            string,
+            LanguageValue
+        >,
         details: [] as never[],
     };
 };

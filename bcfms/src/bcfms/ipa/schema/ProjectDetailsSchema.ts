@@ -177,7 +177,7 @@ class ProjectDetails implements ProjectDetailsType {
         this.project_initiator = blankResourceInstanceValue();
         this.industry_company_name = blankStringValue();
         this.project_authorizing_agency = blankConceptValue();
-        this.land_act_file_number = 0;
+        this.land_act_file_number = blankStringValue();
         this.project_start_date = currentDateValue();
         this.project_end_date = currentDateValue();
         this.project_type = '';
@@ -191,7 +191,7 @@ class ProjectDetails implements ProjectDetailsType {
     project_initiator: ResourceInstanceValue;
     industry_company_name: StringValue;
     project_authorizing_agency: ConceptValue;
-    land_act_file_number: number;
+    land_act_file_number: StringValue;
     project_start_date: DateValue;
     project_end_date: DateValue;
     project_type: string;
