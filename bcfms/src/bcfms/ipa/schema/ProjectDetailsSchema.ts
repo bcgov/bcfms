@@ -9,89 +9,21 @@ import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/util
 import type { ConceptValue } from '@/arches_component_lab/datatypes/concept/types.ts';
 import type { ResourceInstanceValue } from '@/arches_component_lab/datatypes/resource-instance/types.ts';
 import type { DateValue } from '@/arches_component_lab/datatypes/date/types.ts';
-
-/* Generic Widget schemas
-  @todo - Split into separate file
- */
-
-const CollectionItemSchema = z.object({
-    key: z.string(),
-    label: z.string(),
-    conceptid: z.string(),
-    sortOrder: z.string().nullish(),
-    get children() {
-        return z.array(CollectionItemSchema);
-    },
-});
-
-const ConceptValueSchema = z.object({
-    display_value: z.string(),
-    node_value: z.string().uuidv4(),
-    details: z.array(CollectionItemSchema),
-});
-
-const ConceptValueRequiredSchema = ConceptValueSchema.safeExtend({
-    node_value: z.string().uuidv4().min(1),
-});
-
-/* Internal StringValue types */
-const languages = ['en'];
-const LanguageValueSchema = z.object({
-    value: z.string().nullable(),
-    direction: z.enum(['ltr', 'rtl']),
-});
-const StringNodeValueSchema = z.looseObject({ en: LanguageValueSchema });
-
-const StringNodeValueRequiredSchema = z.looseObject({
-    en: LanguageValueSchema.safeExtend({
-        value: z.string().min(1, { message: 'Value is required.' }),
-    }),
-});
-/* END Internal StringValue types */
-
-const StringValueSchema = z.object({
-    display_value: z.string(),
-    node_value: StringNodeValueSchema,
-});
-
-const StringValueRequiredSchema = z.object({
-    display_value: z.string(),
-    node_value: StringNodeValueRequiredSchema,
-});
-
-const ResourceInstanceReferenceSchema = z.object({
-    resourceId: z.string().uuidv4(),
-    ontologyProperty: z.string().nullable(),
-    resourceXresourceId: z.string().nullable(),
-    inverseOntologyProperty: z.string().nullable(),
-});
-
-const ResourceInstanceValueDetailsSchema = z.object({
-    display_value: z.string(),
-    resource_id: z.string().uuidv4(),
-});
-const ResourceInstanceValueSchema = z.object({
-    display_value: z.string(),
-    node_value: ResourceInstanceReferenceSchema.nullable(),
-    details: z.array(ResourceInstanceValueDetailsSchema),
-});
-const ResourceInstanceValueRequiredSchema =
-    ResourceInstanceValueSchema.safeExtend({
-        node_value: ResourceInstanceReferenceSchema,
-    });
-
-const DateValueRequiredSchema = z.object({
-    display_value: z.string().nullish(),
-    node_value: z.iso.date(),
-});
-
-const DateValueSchema = DateValueRequiredSchema.safeExtend({
-    node_value: z.iso.date().nullish(),
-});
-/* End Generic Widget Schemas */
+import { ConceptValueRequiredSchema } from '@/bcgov_arches_common/datatypes/concept/validation/zod.ts';
+import {
+    StringValueSchema,
+    StringValueRequiredSchema,
+    getStringValueSchema,
+    getStringValueRequiredSchema,
+} from '@/bcgov_arches_common/datatypes/string/validation/zod.ts';
+import { ResourceInstanceValueRequiredSchema } from '@/bcgov_arches_common/datatypes/resource-instance/validation/zod.ts';
+import {
+    DateValueSchema,
+    DateValueRequiredSchema,
+} from '@/bcgov_arches_common/datatypes/date/validation/zod.ts';
 
 const ProjectDetailsSchema = z.object({
-    project_name: StringValueRequiredSchema,
+    project_name: getStringValueRequiredSchema(120),
     // z
     // .string({
     //     invalid_type_error: 'Project Name is required.',
@@ -104,7 +36,7 @@ const ProjectDetailsSchema = z.object({
     // .string()
     // .uuidv4({ message: 'Initiator is required.' })
     // .nullable(),
-    industry_company_name: StringValueRequiredSchema,
+    industry_company_name: getStringValueRequiredSchema(60),
     // z.string({
     //     invalid_type_error:
     //         'Industry Company / Individual / Organization is required.',
@@ -116,7 +48,9 @@ const ProjectDetailsSchema = z.object({
     // .max(60)
     // .nullable(),
     project_authorizing_agency: ConceptValueRequiredSchema,
-    land_act_file_number: StringValueSchema,
+    // Need to get this working
+    land_act_file_number: getStringValueSchema(30),
+    // land_act_file_number: StringValueSchema,
     // z.string()
     // .max(30)
     // .transform((val: string, ctx: any) => {
