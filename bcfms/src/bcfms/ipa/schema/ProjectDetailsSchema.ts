@@ -9,10 +9,11 @@ import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/util
 import type { ConceptValue } from '@/arches_component_lab/datatypes/concept/types.ts';
 import type { ResourceInstanceValue } from '@/arches_component_lab/datatypes/resource-instance/types.ts';
 import type { DateValue } from '@/arches_component_lab/datatypes/date/types.ts';
-import { ConceptValueRequiredSchema } from '@/bcgov_arches_common/datatypes/concept/validation/zod.ts';
 import {
-    StringValueSchema,
-    StringValueRequiredSchema,
+    ConceptValueRequiredSchema,
+    ConceptValueSchema,
+} from '@/bcgov_arches_common/datatypes/concept/validation/zod.ts';
+import {
     getStringValueSchema,
     getStringValueRequiredSchema,
 } from '@/bcgov_arches_common/datatypes/string/validation/zod.ts';
@@ -24,76 +25,18 @@ import {
 
 const ProjectDetailsSchema = z.object({
     project_name: getStringValueRequiredSchema(120),
-    // z
-    // .string({
-    //     invalid_type_error: 'Project Name is required.',
-    // })
-    // .min(1, { message: 'Project Name is required.' })
-    // .max(120)
-    // .nullable(),
     project_initiator: ResourceInstanceValueRequiredSchema,
-    // z
-    // .string()
-    // .uuidv4({ message: 'Initiator is required.' })
-    // .nullable(),
     industry_company_name: getStringValueRequiredSchema(60),
-    // z.string({
-    //     invalid_type_error:
-    //         'Industry Company / Individual / Organization is required.',
-    // })
-    // .min(1, {
-    //     message:
-    //         'Industry Company / Individual / Organization is required.',
-    // })
-    // .max(60)
-    // .nullable(),
     project_authorizing_agency: ConceptValueRequiredSchema,
-    // Need to get this working
     land_act_file_number: getStringValueSchema(30),
-    // land_act_file_number: StringValueSchema,
-    // z.string()
-    // .max(30)
-    // .transform((val: string, ctx: any) => {
-    //     const parsed = parseInt(val);
-    //
-    //     if (isNaN(parsed)) {
-    //         ctx.addIssue({
-    //             code: z.ZodIssueCode.custom,
-    //             message: 'Land Act # must be a valid number.',
-    //         });
-    //         return z.NEVER;
-    //     }
-    //
-    //     return parsed;
-    // })
-    // .nullable(),
     project_start_date: DateValueRequiredSchema,
-    //     z.date({
-    //     // This handles null values -> null !== typeof Date
-    //     invalid_type_error: 'Estimated Start Date is required.',
-    // }),
     project_end_date: DateValueSchema,
-    project_type: z
-        .string()
-        .uuidv4({ message: 'Project Type is required.' })
-        .nullable(),
-    other_project_type: z.string().max(60).nullable(),
-    proposed_activity: z
-        .string({
-            invalid_type_error: 'Proposed Activity is required.',
-        })
-        .min(1, { message: 'Proposed Activity is required.' })
-        .max(60)
-        .nullable(),
-    location_description: z
-        .string({
-            invalid_type_error: 'Location Description is required.',
-        })
-        .min(1, { message: 'Location Description is required.' })
-        .max(60)
-        .nullable(),
-    geometry_qualifier: z.uuidv4().nullable(),
-    multiple_geometry_qualifier: z.string().nullable(),
+    project_type: ConceptValueRequiredSchema,
+    other_project_type: getStringValueSchema(60),
+    proposed_activity: getStringValueRequiredSchema(60),
+    location_description: getStringValueRequiredSchema(60),
+    geometry_qualifier: ConceptValueSchema,
+    multiple_geometry_qualifier: getStringValueSchema(120),
 });
 
 const requiredProjectDetailsSchema = ProjectDetailsSchema.partial();
@@ -114,12 +57,12 @@ class ProjectDetails implements ProjectDetailsType {
         this.land_act_file_number = blankStringValue();
         this.project_start_date = currentDateValue();
         this.project_end_date = currentDateValue();
-        this.project_type = '';
-        this.other_project_type = '';
-        this.proposed_activity = '';
-        this.location_description = '';
-        this.geometry_qualifier = '';
-        this.multiple_geometry_qualifier = '';
+        this.project_type = blankConceptValue();
+        this.other_project_type = blankStringValue();
+        this.proposed_activity = blankStringValue();
+        this.location_description = blankStringValue();
+        this.geometry_qualifier = blankConceptValue();
+        this.multiple_geometry_qualifier = blankStringValue();
     }
     project_name: StringValue;
     project_initiator: ResourceInstanceValue;
@@ -128,12 +71,12 @@ class ProjectDetails implements ProjectDetailsType {
     land_act_file_number: StringValue;
     project_start_date: DateValue;
     project_end_date: DateValue;
-    project_type: string;
-    other_project_type: string;
-    proposed_activity: string;
-    location_description: string;
-    geometry_qualifier: string;
-    multiple_geometry_qualifier: string;
+    project_type: ConceptValue;
+    other_project_type: StringValue;
+    proposed_activity: StringValue;
+    location_description: StringValue;
+    geometry_qualifier: ConceptValue;
+    multiple_geometry_qualifier: StringValue;
 }
 
 export {

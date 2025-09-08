@@ -5,7 +5,7 @@ import Step from 'primevue/step';
 import StepPanel from 'primevue/steppanel';
 import StepList from 'primevue/steplist';
 import StepPanels from 'primevue/steppanels';
-import StepperNavigation from '@/bcgov_arches_common/components/stepper/StepperNavigation.vue';
+import StepperNavigation from '@/bcgov_arches_common/components/Stepper/components/StepperNavigation/StepperNavigation.vue';
 import Panel from 'primevue/panel';
 import type { StepperProps } from 'primevue/stepper';
 import type { StepperState } from 'primevue/stepper';

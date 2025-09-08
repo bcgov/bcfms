@@ -5,7 +5,7 @@ import Step from 'primevue/step';
 import StepPanel from 'primevue/steppanel';
 import StepList from 'primevue/steplist';
 import StepPanels from 'primevue/steppanels';
-import StepperNavigation from '@/bcgov_arches_common/components/stepper/StepperNavigation.vue';
+import StepperNavigation from '@/bcgov_arches_common/components/Stepper/components/StepperNavigation/StepperNavigation.vue';
 import Panel from 'primevue/panel';
 import type { StepperProps } from 'primevue/stepper';
 import type { StepperState } from 'primevue/stepper';
@@ -65,9 +65,11 @@ const isValid = (step: number) => {
 
     return stepValid;
 };
+
 const printDetails = () => {
     console.log('printDetails');
 };
+
 const stepperProps: Ref<StepperProps | null> = ref(null);
 const stepperState: Ref<StepperState | null> = ref(null);
 const myStepper = ref();
@@ -77,7 +79,7 @@ const step3 = ref();
 const step4 = ref();
 const step5 = ref();
 const step6 = ref();
-// const step7 = ref();
+const step7 = ref();
 const steps: Ref[] = [];
 let lastStep = 1;
 const currentStep = computed(() => {
@@ -91,7 +93,7 @@ provide('ipa', ipa);
 const nextLabel = computed(() => {
     if (currentStep.value === 1) return 'Start';
     if (currentStep.value === steps.length) return 'Print';
-    return currentStep.value < steps.length - 1 ? 'Next' : 'Submit';
+    return currentStep.value < steps.length ? 'Next' : 'Submit';
 });
 const showPrevious = computed(() => {
     return !(currentStep.value === steps.length || currentStep.value === 1);
@@ -100,7 +102,7 @@ const showPrevious = computed(() => {
 const showDebug = ref(false);
 
 onMounted(() => {
-    steps.push(step1, step2, step3, step4, step5, step6 /*, step7*/);
+    steps.push(step1, step2, step3, step4, step5, step6, step7);
     stepStatuses.value[0] = true;
 });
 </script>
@@ -144,167 +146,92 @@ onMounted(() => {
                 <div class="bcgov-vertical-step-panels">
                     <h1 class="heading-black">Submit New Project Assessment</h1>
                     <StepPanels>
+                        <StepperNavigation
+                            :step-number="currentStep"
+                            :is-valid="currentStepIsValid"
+                            :show-previous="showPrevious"
+                            :next-label="nextLabel"
+                            @next-click="activateNextStep"
+                            @previous-click="activatePreviousStep"
+                        >
+                        </StepperNavigation>
                         <StepPanel :value="1">
-                            <StepperNavigation
-                                :step-number="currentStep"
-                                :is-valid="currentStepIsValid"
-                                :show-previous="showPrevious"
-                                :next-label="nextLabel"
-                                @next-click="activateNextStep"
-                                @previous-click="activatePreviousStep"
-                            >
-                            </StepperNavigation>
                             <SubmitProjectStep1
                                 ref="step1"
                             ></SubmitProjectStep1>
-                            <StepperNavigation
-                                :step-number="currentStep"
-                                :is-valid="currentStepIsValid"
-                                :show-previous="showPrevious"
-                                :next-label="nextLabel"
-                                @next-click="activateNextStep"
-                                @previous-click="activatePreviousStep"
-                            ></StepperNavigation>
                         </StepPanel>
                         <StepPanel :value="2">
                             <h3 class="heading-margin-bottom">
                                 Project Details
                             </h3>
-                            <StepperNavigation
-                                :step-number="currentStep"
-                                :is-valid="currentStepIsValid"
-                                :show-previous="showPrevious"
-                                :next-label="nextLabel"
-                                @next-click="activateNextStep"
-                                @previous-click="activatePreviousStep"
-                            >
-                            </StepperNavigation>
                             <SubmitProjectStep2
                                 ref="step2"
                                 @update:step-is-valid="
                                     setCurrentStepValid($event, 2)
                                 "
                             ></SubmitProjectStep2>
-                            <StepperNavigation
-                                :step-number="currentStep"
-                                :is-valid="currentStepIsValid"
-                                :show-previous="showPrevious"
-                                :next-label="nextLabel"
-                                @next-click="activateNextStep"
-                                @previous-click="activatePreviousStep"
-                            ></StepperNavigation>
                         </StepPanel>
                         <StepPanel :value="3">
                             <h3 class="heading-margin-bottom">Project Type</h3>
-                            <StepperNavigation
-                                :step-number="currentStep"
-                                :validate-fn="isValid"
-                                :show-previous="showPrevious"
-                                :next-label="nextLabel"
-                                @next-click="activateNextStep"
-                                @previous-click="activatePreviousStep"
-                            >
-                            </StepperNavigation>
                             <SubmitProjectStep3
                                 ref="step3"
+                                @update:step-is-valid="
+                                    setCurrentStepValid($event, 3)
+                                "
                             ></SubmitProjectStep3>
-                            <StepperNavigation
-                                :step-number="currentStep"
-                                :validate-fn="isValid"
-                                :show-previous="showPrevious"
-                                :next-label="nextLabel"
-                                @next-click="activateNextStep"
-                                @previous-click="activatePreviousStep"
-                            ></StepperNavigation>
                         </StepPanel>
                         <StepPanel :value="4">
                             <h3 class="heading-margin-bottom">
                                 Project Location
                             </h3>
-                            <StepperNavigation
-                                :step-number="currentStep"
-                                :validate-fn="isValid"
-                                :show-previous="showPrevious"
-                                :next-label="nextLabel"
-                                @next-click="activateNextStep"
-                                @previous-click="activatePreviousStep"
-                            >
-                            </StepperNavigation>
                             <SubmitProjectStep4
                                 ref="step4"
+                                @update:step-is-valid="
+                                    setCurrentStepValid($event, 4)
+                                "
                             ></SubmitProjectStep4>
-                            <StepperNavigation
-                                :step-number="currentStep"
-                                :validate-fn="isValid"
-                                :show-previous="showPrevious"
-                                :next-label="nextLabel"
-                                @next-click="activateNextStep"
-                                @previous-click="activatePreviousStep"
-                            ></StepperNavigation>
                         </StepPanel>
                         <StepPanel :value="5">
                             <h3 class="heading-margin-bottom">
                                 Project Documents
                             </h3>
-                            <StepperNavigation
-                                :step-number="currentStep"
-                                :validate-fn="isValid"
-                                :show-previous="showPrevious"
-                                :next-label="nextLabel"
-                                @next-click="activateNextStep"
-                                @previous-click="activatePreviousStep"
-                            >
-                            </StepperNavigation>
                             <SubmitProjectStep5
                                 ref="step5"
+                                @update:step-is-valid="
+                                    setCurrentStepValid($event, 5)
+                                "
                             ></SubmitProjectStep5>
-                            <StepperNavigation
-                                :step-number="currentStep"
-                                :validate-fn="isValid"
-                                :show-previous="showPrevious"
-                                :next-label="nextLabel"
-                                @next-click="activateNextStep"
-                                @previous-click="activatePreviousStep"
-                            ></StepperNavigation>
                         </StepPanel>
                         <StepPanel :value="6">
                             <h3 class="heading-margin-bottom">
                                 Review Submission
                             </h3>
-                            <StepperNavigation
-                                :step-number="currentStep"
-                                :validate-fn="isValid"
-                                :show-previous="showPrevious"
-                                :next-label="nextLabel"
-                                @next-click="activateNextStep"
-                                @previous-click="activatePreviousStep"
-                            >
-                            </StepperNavigation>
                             <SubmitProjectStep6
                                 ref="step6"
+                                @update:step-is-valid="
+                                    setCurrentStepValid($event, 6)
+                                "
                             ></SubmitProjectStep6>
-                            <StepperNavigation
-                                :step-number="currentStep"
-                                :validate-fn="isValid"
-                                :show-previous="showPrevious"
-                                next-label="Submit"
-                                @next-click="activateNextStep"
-                                @previous-click="activatePreviousStep"
-                            >
-                            </StepperNavigation>
                         </StepPanel>
                         <StepPanel :value="7">
                             <h3 class="heading-margin-bottom">
                                 Submission Complete
                             </h3>
-                            <StepperNavigation
-                                :step-number="7"
-                                :validate-fn="isValid"
-                                :show-previous="false"
-                                next-label="Print"
-                                @next-click="printDetails"
-                            ></StepperNavigation>
+                            <SubmitProjectStep6
+                                ref="step7"
+                                @update:step-is-valid="
+                                    setCurrentStepValid($event, 7)
+                                "
+                            ></SubmitProjectStep6>
                         </StepPanel>
+                        <StepperNavigation
+                            :step-number="currentStep"
+                            :is-valid="currentStepIsValid"
+                            :show-previous="showPrevious"
+                            :next-label="nextLabel"
+                            @next-click="activateNextStep"
+                            @previous-click="activatePreviousStep"
+                        ></StepperNavigation>
                     </StepPanels>
                 </div>
             </div>

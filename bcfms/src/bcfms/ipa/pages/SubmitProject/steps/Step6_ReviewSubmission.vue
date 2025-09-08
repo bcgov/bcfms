@@ -1,78 +1,122 @@
 <script setup lang="ts">
 import { inject } from 'vue';
+import type { Ref } from 'vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
+import { EDIT, VIEW } from '@/arches_component_lab/widgets/constants.ts';
+import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
+import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
 
-const ipa = inject<IPA>('ipa');
+const ipa = inject<Ref<IPA>>('ipa');
+
+const isValid = () => {
+    console.log(ipa?.value);
+    return true;
+};
+
+const emit = defineEmits(['update:stepIsValid']);
+
+defineExpose({ isValid });
+
+emit('update:stepIsValid', isValid());
 </script>
 
 <template>
-    <div class="step-title">Submission Details</div>
-    <p class="p-margin-top-bottom">
-        Please review the entered information prior to submitting the
-        application:
-    </p>
-    <p class="p-underline-bold">Filling Details</p>
-    <div class="div-grid-cols">
-        <div>Submission Date</div>
-        <div>
-            {{ ipa?.projectDetails.projectStartDate }}
+    <div class="review_submit_page">
+        <div class="step-title">Submission Details</div>
+        <p class="p-margin-top-bottom">
+            Please review the entered information prior to submitting the
+            application:
+        </p>
+        <p class="p-underline-bold">Filling Details</p>
+        <div class="div-grid-cols">
+            <div>Submission Date</div>
+            <div>
+                {{ ipa?.projectDetails.project_start_date.display_value }}
+            </div>
         </div>
-    </div>
-    <div class="div-grid-cols">
-        <div>Project Name</div>
-        <div>
-            {{ ipa?.projectDetails.projectName }}
+        <div class="div-grid-cols">
+            <div>Uploaded Files</div>
         </div>
-    </div>
-    <div class="div-grid-cols">
-        <div>Initiator</div>
-        <div>
-            {{ ipa?.projectDetails.projectInitiator }}
-        </div>
-    </div>
-    <div class="div-grid-cols">
-        <div>Industry Company / Individual / Organization</div>
-        <div>
-            {{ ipa?.projectDetails.industryCompanyName }}
-        </div>
-    </div>
-    <div class="div-grid-cols">
-        <div>Authorizing Agency</div>
-        <div>
-            {{ ipa?.projectDetails.projectAuthorizingAgency }}
-        </div>
-    </div>
-    <div class="div-grid-cols">
-        <div>Estimated Project Start / End Dates</div>
-        <div>
-            {{ ipa?.projectDetails.projectStartDate }} -
-            {{
-                ipa?.projectDetails.projectEndDate
-                    ? ipa?.projectDetails.projectEndDate
-                    : ''
-            }}
-        </div>
-    </div>
-    <div class="div-grid-cols">
-        <div>Project Type</div>
-        <div>
-            {{ ipa?.projectDetails.projectType }}
-        </div>
-    </div>
-    <div class="div-grid-cols">
-        <div>Proposed Activity</div>
-        <div>
-            {{ ipa?.projectDetails.proposedActivity }}
-        </div>
-    </div>
-    <div class="div-grid-cols">
-        <div>Location Description</div>
-        <div>
-            {{ ipa?.projectDetails.locationDescription }}
-        </div>
-    </div>
-    <div class="div-grid-cols">
-        <div>Uploaded Files</div>
+
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.project_name"
+            graph-slug="project_assessment"
+            node-alias="project_name"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.project_initiator"
+            graph-slug="project_assessment"
+            node-alias="project_initiator"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.industry_company_name"
+            graph-slug="project_assessment"
+            node-alias="industry_company_name"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.project_authorizing_agency"
+            graph-slug="project_assessment"
+            node-alias="project_authorizing_agency"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails?.land_act_file_number"
+            graph-slug="project_assessment"
+            node-alias="land_act_file_number"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.project_start_date"
+            graph-slug="project_assessment"
+            node-alias="project_start_date"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.project_end_date"
+            graph-slug="project_assessment"
+            node-alias="project_end_date"
+        />
+
+        <GenericWidget
+            graph-slug="project_assessment"
+            node-alias="project_type"
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.project_type"
+        />
+        <GenericWidget
+            graph-slug="project_assessment"
+            node-alias="other_project_type"
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails?.other_project_type"
+        />
+        <GenericWidget
+            graph-slug="project_assessment"
+            node-alias="proposed_activity"
+            :aliased-node-data="ipa?.projectDetails?.proposed_activity"
+            :mode="VIEW"
+        />
+        <GenericWidget
+            graph-slug="project_assessment"
+            node-alias="location_description"
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.location_description"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.geometry_qualifier"
+            graph-slug="project_assessment"
+            node-alias="geometry_qualifier"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.multiple_geometry_qualifier"
+            graph-slug="project_assessment"
+            node-alias="multiple_geometry_qualifier"
+        />
     </div>
 </template>
 <style scoped>
@@ -94,5 +138,11 @@ const ipa = inject<IPA>('ipa');
 .div-grid-cols {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr) 1fr);
+}
+.widget {
+    margin-bottom: 1rem;
+}
+.review_submit_page {
+    line-height: 1.25;
 }
 </style>
