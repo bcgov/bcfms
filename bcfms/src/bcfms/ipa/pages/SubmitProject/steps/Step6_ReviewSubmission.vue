@@ -2,9 +2,8 @@
 import { inject } from 'vue';
 import type { Ref } from 'vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
-import { EDIT, VIEW } from '@/arches_component_lab/widgets/constants.ts';
+import { VIEW } from '@/arches_component_lab/widgets/constants.ts';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
-import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
 
 const ipa = inject<Ref<IPA>>('ipa');
 

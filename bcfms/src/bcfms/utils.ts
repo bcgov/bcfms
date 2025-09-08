@@ -1,10 +1,11 @@
 import type { Ref } from 'vue';
 import type { LanguageValue } from '@/arches_component_lab/datatypes/string/types.ts';
 import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
-import type { AnyZodObject } from 'zod';
+import * as z from 'zod';
 import type { FormInstance } from '@primevue/forms';
 
 export type FieldError = { type?: string; message: string };
+type GenericZodObjectType = typeof z.object;
 
 export const blankStringValue = function () {
     return {
@@ -41,7 +42,10 @@ export const currentDateValue = function () {
     };
 };
 
-export const isValid = (form: Ref<FormInstance>, schema: AnyZodObject) => {
+export const isValid = (
+    form: Ref<FormInstance>,
+    schema: GenericZodObjectType,
+) => {
     if (!form.value) return false;
 
     const formStates = form?.value?.states;
