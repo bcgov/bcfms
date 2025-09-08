@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTemplateRef, inject } from 'vue';
+import { useTemplateRef, inject, computed } from 'vue';
 import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
@@ -14,6 +14,7 @@ import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
 import {
     isValid as baseIsValid,
     updateModelValue as baseUpdateModelValue,
+    collapseFieldNames,
 } from '@/bcfms/utils.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
@@ -27,6 +28,8 @@ if (!ipa || !ipa.value) {
 const projectDetailsForm: Ref<FormInstance | null> = useTemplateRef(
     'projectDetailsForm',
 ) as Ref<FormInstance | null>;
+
+const baseZodResolver = zodResolver(ProjectDetailsSchema);
 
 const isValid = () => {
     return baseIsValid(
@@ -48,6 +51,20 @@ const updateModelValue = function (
     emit('update:stepIsValid', isValid());
 };
 
+const projectDetailsResolver /* : Resolver<Record<string, any>> */ = async (
+    values: any,
+) => {
+    // Run Zod first
+    const base = (await baseZodResolver(values)) || {};
+    const rawErrors = { ...(base.errors ?? {}) } as Record<
+        string,
+        Array<{ type?: string; message: string }>
+    >;
+    const errors = collapseFieldNames(rawErrors);
+    // Return just the errors bag; PrimeVue derives $form.*.invalid from this
+    return { errors };
+};
+
 defineExpose({ isValid });
 </script>
 <template>
@@ -55,14 +72,12 @@ defineExpose({ isValid });
         ref="projectDetailsForm"
         name="projectDetailsForm"
         :validateOnBlur="true"
-        :resolver="zodResolver(ProjectDetailsSchema)"
+        :validateOnValueUpdate="true"
+        :resolver="projectDetailsResolver"
     >
         <LabelledInput
             hint="Enter a specific project name, in sentence case, that includes the geographic location and project type"
             input-name="projectName"
-            :error-message="
-                projectDetailsForm?.fields?.project_name?.error?.message
-            "
         >
             <GenericWidget
                 :mode="EDIT"
@@ -75,9 +90,6 @@ defineExpose({ isValid });
         <LabelledInput
             hint="Select the organization or individual initiating the assessment"
             input-name="projectInitiator"
-            :error-message="
-                projectDetailsForm?.fields?.project_initiator?.error?.message
-            "
         >
             <GenericWidget
                 :mode="EDIT"
@@ -91,10 +103,6 @@ defineExpose({ isValid });
             label="Industry Company / Individual / Organization"
             hint="Enter the name of Company / Individual / Organization that is responsible for executing the project"
             input-name="industryCompanyName"
-            :error-message="
-                projectDetailsForm?.getFieldState('industry_company_name')
-                    ?.error?.message
-            "
             :required="true"
         >
             <GenericWidget
@@ -112,10 +120,6 @@ defineExpose({ isValid });
             label="Authorizing Agency"
             hint="Select the Agency that is authorizing the project"
             input-name="projectAuthorizingAgency"
-            :error-message="
-                projectDetailsForm?.fields?.project_authorizing_agency?.error
-                    ?.message
-            "
             :required="true"
         >
             <GenericWidget
@@ -131,12 +135,7 @@ defineExpose({ isValid });
                 "
             />
         </LabelledInput>
-        <LabelledInput
-            input-name="landActFileNumber"
-            :error-message="
-                projectDetailsForm?.fields?.land_act_file_number?.error?.message
-            "
-        >
+        <LabelledInput input-name="landActFileNumber">
             <GenericWidget
                 :mode="EDIT"
                 :aliased-node-data="ipa?.projectDetails?.land_act_file_number"
