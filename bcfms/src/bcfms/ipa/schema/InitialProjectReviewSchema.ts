@@ -1,43 +1,31 @@
 import { z } from 'zod';
-import DOMPurify from 'dompurify';
+//import DOMPurify from 'dompurify';
+import type { StringValue } from '@/arches_component_lab/datatypes/string/types.ts';
+import { currentDateValue, blankStringValue } from '@/bcfms/utils.ts';
+import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/utils.ts';
+import type { ConceptValue } from '@/arches_component_lab/datatypes/concept/types.ts';
+import type { DateValue } from '@/arches_component_lab/datatypes/date/types.ts';
+import { ConceptValueRequiredSchema } from '@/bcgov_arches_common/datatypes/concept/validation/zod.ts';
+import {
+    DateValueSchema,
+    DateValueRequiredSchema,
+} from '@/bcgov_arches_common/datatypes/date/validation/zod.ts';
+import { getStringValueRequiredSchema } from '@/bcgov_arches_common/datatypes/string/validation/zod.ts';
 
 const InitialProjectReviewSchema = z.object({
-    dateSubmitted: z.date({
-        // This handles null values -> null !== typeof Date
-        invalid_type_error: 'Date Submitted is required.',
-    }),
-    assessmentDueDate: z.date(),
-    intersectsIFA: z.boolean().default(false),
-    proximityToFossils: z
-        .string()
-        .uuid({ message: 'Proximity To Fossils is required.' })
-        .nullable(),
-    groundDisturbance: z
-        .string()
-        .uuid({ message: 'Ground Disturbance is required.' })
-        .nullable(),
-    metamorphicRock: z.string().uuid().nullable(),
-    igneousRock: z.string().uuid().nullable(),
-    sedimentaryRock: z.string().uuid().nullable(),
-    quaternarySediments: z.string().uuid().nullable(),
-    FRPR: z.string().uuid().nullable(),
-    initialReviewLevelOfRisk: z.string().uuid().nullable(),
-    initialReviewInternalNotes: z
-        .string()
-        .transform((value: string) => {
-            return DOMPurify.sanitize(value, {
-                ALLOWED_TAGS: [],
-            });
-        })
-        .refine((value: string) => value !== '', {
-            message: 'Initial Review Internal Notes are required.',
-        })
-        .refine((value: string) => value.length <= 500, {
-            message:
-                'Initial Review Internal Notes must be 500 characters or less.',
-        })
-        .nullable(),
-    initialReviewOutcome: z.string().max(500),
+    date_submitted: DateValueRequiredSchema,
+    assessment_due_date: DateValueSchema,
+    intersects_ifa: z.boolean().default(false),
+    proximity_to_fos: ConceptValueRequiredSchema,
+    ground_disturbance: ConceptValueRequiredSchema,
+    metamorphic_rock: ConceptValueRequiredSchema,
+    igneous_rock: ConceptValueRequiredSchema,
+    sedimentary_rock: ConceptValueRequiredSchema,
+    quaternary_deposits: ConceptValueRequiredSchema,
+    frpr: ConceptValueRequiredSchema,
+    initial_review_level_of_risk: ConceptValueRequiredSchema,
+    initial_review_internal_notes: getStringValueRequiredSchema(500),
+    initial_review_outcome: getStringValueRequiredSchema(500),
 });
 
 const requiredInitialProjectReviewSchema = InitialProjectReviewSchema.partial();
@@ -50,33 +38,33 @@ function getInitialProjectReview(): InitialProjectReviewType {
 
 class InitialProjectReview implements InitialProjectReviewType {
     constructor() {
-        this.dateSubmitted = null;
-        this.assessmentDueDate = null;
-        this.intersectsIFA = false;
-        this.proximityToFossils = '';
-        this.groundDisturbance = '';
-        this.metamorphicRock = '';
-        this.igneousRock = '';
-        this.sedimentaryRock = '';
-        this.quaternarySediments = '';
-        this.FRPR = '';
-        this.initialReviewLevelOfRisk = '';
-        this.initialReviewInternalNotes = '';
-        this.initialReviewOutcome = '';
+        this.date_submitted = currentDateValue();
+        this.assessment_due_date = currentDateValue();
+        this.intersects_ifa = false;
+        this.proximity_to_fos = blankConceptValue();
+        this.ground_disturbance = blankConceptValue();
+        this.metamorphic_rock = blankConceptValue();
+        this.igneous_rock = blankConceptValue();
+        this.sedimentary_rock = blankConceptValue();
+        this.quaternary_deposits = blankConceptValue();
+        this.frpr = blankConceptValue();
+        this.initial_review_level_of_risk = blankConceptValue();
+        this.initial_review_internal_notes = blankStringValue();
+        this.initial_review_outcome = blankStringValue();
     }
-    dateSubmitted: Date | null;
-    assessmentDueDate: Date | null;
-    intersectsIFA: boolean;
-    proximityToFossils: string;
-    groundDisturbance: string;
-    FRPR: string;
-    initialReviewLevelOfRisk: string;
-    initialReviewInternalNotes: string;
-    metamorphicRock: string;
-    igneousRock: string;
-    sedimentaryRock: string;
-    quaternarySediments: string;
-    initialReviewOutcome: string;
+    date_submitted: DateValue;
+    assessment_due_date: DateValue;
+    intersects_ifa: boolean;
+    proximity_to_fos: ConceptValue;
+    ground_disturbance: ConceptValue;
+    frpr: ConceptValue;
+    initial_review_level_of_risk: ConceptValue;
+    initial_review_internal_notes: StringValue;
+    metamorphic_rock: ConceptValue;
+    igneous_rock: ConceptValue;
+    sedimentary_rock: ConceptValue;
+    quaternary_deposits: ConceptValue;
+    initial_review_outcome: StringValue;
 }
 
 export {

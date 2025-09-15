@@ -1,55 +1,61 @@
 <script setup lang="ts">
-import { useTemplateRef, inject, ref } from 'vue';
+import { useTemplateRef, inject } from 'vue';
 import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
-import { Form, FormField, type FormInstance } from '@primevue/forms';
+import { Form, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { InitialProjectReviewSchema } from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
-import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/utils.ts';
+import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
+import {
+    isValid as baseIsValid,
+    updateModelValue as baseUpdateModelValue,
+    collapseFieldNames,
+} from '@/bcfms/utils.ts';
 
-const ipa = inject<IPA>('ipa');
-const blankMetamorphicRock = ref(blankConceptValue());
-const blankIgneousRock = ref(blankConceptValue());
-const blankSedimentaryRock = ref(blankConceptValue());
-const blankQuaternaryDeposits = ref(blankConceptValue());
+const ipa = inject<Ref<IPA>>('ipa');
+const emit = defineEmits(['update:stepIsValid']);
 
-if (!ipa) {
+if (!ipa || !ipa.value) {
     throw new Error('IPA instance not provided.');
 }
-
 const projectGeologyForm: Ref<FormInstance | null> = useTemplateRef(
     'projectGeologyForm',
 ) as Ref<FormInstance | null>;
-const zodMetamorphicRockResolver = zodResolver(
-    InitialProjectReviewSchema.shape.metamorphicRock,
-);
-const zodIgneousRockResolver = zodResolver(
-    InitialProjectReviewSchema.shape.igneousRock,
-);
-const zodSedimentaryRockResolver = zodResolver(
-    InitialProjectReviewSchema.shape.sedimentaryRock,
-);
-const zodQuaternarySedimentsResolver = zodResolver(
-    InitialProjectReviewSchema.shape.quaternarySediments,
-);
+const baseZodResolver = zodResolver(InitialProjectReviewSchema);
+
 const isValid = () => {
-    return (
-        (projectGeologyForm.value?.valid &&
-            !(
-                projectGeologyForm.value?.states.metamorphicRock.pristine ||
-                projectGeologyForm.value?.states.igneousRock.pristine ||
-                projectGeologyForm.value?.states.sedimentaryRock.pristine ||
-                projectGeologyForm.value?.states.quaternarySediments.pristine
-            )) ||
-        ((ipa as any).value?.initialProjectReview.metamorphicRock &&
-            (ipa as any).value?.initialProjectReview.igneousRock &&
-            (ipa as any).value?.initialProjectReview.sedimentaryRock &&
-            (ipa as any).value?.initialProjectReview.quaternarySediments)
+    return baseIsValid(
+        projectGeologyForm as Ref<FormInstance>,
+        InitialProjectReviewSchema,
     );
+};
+const updateModelValue = function (
+    newValue: AliasedNodeData,
+    attribute_name: string,
+) {
+    baseUpdateModelValue(
+        newValue,
+        attribute_name,
+        ipa.value.projectDetails,
+        projectGeologyForm as Ref<FormInstance>,
+    );
+    emit('update:stepIsValid', isValid());
+};
+
+const projectGeologyResolver /* : Resolver<Record<string, any>> */ = async (
+    values: any,
+) => {
+    const base = (await baseZodResolver(values)) || {};
+    const rawErrors = { ...(base.errors ?? {}) } as Record<
+        string,
+        Array<{ type?: string; message: string }>
+    >;
+    const errors = collapseFieldNames(rawErrors);
+    return { errors };
 };
 
 defineExpose({ isValid });
@@ -57,94 +63,76 @@ defineExpose({ isValid });
 <template>
     <Form
         ref="projectGeologyForm"
-        v-slot="$form"
         name="projectGeologyForm"
         :validateOnBlur="true"
-        :resolver="zodResolver(InitialProjectReviewSchema)"
+        :validateOnValueUpdate="true"
+        :resolver="projectGeologyResolver"
     >
-        <FormField
-            :resolver="zodMetamorphicRockResolver"
-            name="metamorphicRock"
+        <LabelledInput
+            label="Metamorphic Rock"
+            hint="Select option to best describe metamorphic rock, if present"
+            input-name="metamorphicRock"
+            :required="true"
         >
-            <LabelledInput
-                label="Metamorphic Rock"
-                hint="Select option to best describe metamorphic rock, if present"
-                input-name="metamorphicRock"
-                :error-message="$form.metamorphicRock?.error?.message"
-                :required="true"
-            >
-                <GenericWidget
-                    :mode="EDIT"
-                    :should-show-label="false"
-                    :aliased-node-data="blankMetamorphicRock"
-                    placeholder="Select Metamorphic Rock"
-                    graph-slug="project_assessment"
-                    node-alias="metamorphic_rock"
-                />
-            </LabelledInput>
-        </FormField>
-        <FormField
-            :resolver="zodIgneousRockResolver"
-            name="igneousRock"
+            <GenericWidget
+                :mode="EDIT"
+                :should-show-label="false"
+                :aliased-node-data="ipa.initialProjectReview?.metamorphic_rock"
+                placeholder="Select Metamorphic Rock"
+                graph-slug="project_assessment"
+                node-alias="metamorphic_rock"
+                @update:value="updateModelValue($event, 'metamorphic_rock')"
+            />
+        </LabelledInput>
+        <LabelledInput
+            label="Igneous Rock"
+            hint="Select option to best describe igneous rock, if present"
+            input-name="igneousRock"
+            :required="true"
         >
-            <LabelledInput
-                label="Igneous Rock"
-                hint="Select option to best describe igneous rock, if present"
-                input-name="igneousRock"
-                :error-message="$form.igneousRock?.error?.message"
-                :required="true"
-            >
-                <GenericWidget
-                    :mode="EDIT"
-                    :aliased-node-data="blankIgneousRock"
-                    :should-show-label="false"
-                    placeholder="Select Igneous Rock"
-                    graph-slug="project_assessment"
-                    node-alias="igneous_rock"
-                />
-            </LabelledInput>
-        </FormField>
-        <FormField
-            :resolver="zodSedimentaryRockResolver"
-            name="sedimentaryRock"
+            <GenericWidget
+                :mode="EDIT"
+                :aliased-node-data="ipa.initialProjectReview?.igneous_rock"
+                :should-show-label="false"
+                placeholder="Select Igneous Rock"
+                graph-slug="project_assessment"
+                node-alias="igneous_rock"
+                @update:value="updateModelValue($event, 'igneous_rock')"
+            />
+        </LabelledInput>
+        <LabelledInput
+            label="Sedimentary Rock"
+            hint="Select option to best describe sedimentary rock, if present"
+            input-name="sedimentaryRock"
+            :required="true"
         >
-            <LabelledInput
-                label="Sedimentary Rock"
-                hint="Select option to best describe sedimentary rock, if present"
-                input-name="sedimentaryRock"
-                :error-message="$form.sedimentaryRock?.error?.message"
-                :required="true"
-            >
-                <GenericWidget
-                    :mode="EDIT"
-                    :aliased-node-data="blankSedimentaryRock"
-                    :should-show-label="false"
-                    placeholder="Select Sedimentary Rock"
-                    graph-slug="project_assessment"
-                    node-alias="sedimentary_rock"
-                />
-            </LabelledInput>
-        </FormField>
-        <FormField
-            :resolver="zodQuaternarySedimentsResolver"
-            name="quaternarySediments"
+            <GenericWidget
+                :mode="EDIT"
+                :aliased-node-data="ipa.initialProjectReview?.sedimentary_rock"
+                :should-show-label="false"
+                placeholder="Select Sedimentary Rock"
+                graph-slug="project_assessment"
+                node-alias="sedimentary_rock"
+                @update:value="updateModelValue($event, 'sedimentary_rock')"
+            />
+        </LabelledInput>
+        <LabelledInput
+            label="Quaternary Sediments"
+            hint="Select option to best describe quaternary sediments, if present"
+            input-name="quaternarySediments"
+            :required="true"
         >
-            <LabelledInput
-                label="Quaternary Sediments"
-                hint="Select option to best describe quaternary sediments, if present"
-                input-name="quaternarySediments"
-                :error-message="$form.quaternarySediments?.error?.message"
-                :required="true"
-            >
-                <GenericWidget
-                    :mode="EDIT"
-                    :aliased-node-data="blankQuaternaryDeposits"
-                    :should-show-label="false"
-                    placeholder="Select Quaternary Sediments"
-                    graph-slug="project_assessment"
-                    node-alias="quaternary_deposits"
-                />
-            </LabelledInput>
-        </FormField>
+            <GenericWidget
+                :mode="EDIT"
+                :aliased-node-data="
+                    ipa.initialProjectReview?.quaternary_deposits
+                "
+                :should-show-label="false"
+                placeholder="Select Quaternary Sediments"
+                graph-slug="project_assessment"
+                node-alias="quaternary_deposits"
+                @update:value="updateModelValue($event, 'quaternary_deposits')"
+            />
+        </LabelledInput>
     </Form>
 </template>

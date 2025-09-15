@@ -1,94 +1,104 @@
 <script setup lang="ts">
 import { inject } from 'vue';
+import type { Ref } from 'vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
+import { VIEW } from '@/arches_component_lab/widgets/constants.ts';
+import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 
-const ipa = inject<IPA>('ipa');
+const ipa = inject<Ref<IPA>>('ipa');
+
+const isValid = () => {
+    console.log(ipa?.value);
+    return true;
+};
+
+const emit = defineEmits(['update:stepIsValid']);
+
+defineExpose({ isValid });
+
+emit('update:stepIsValid', isValid());
 </script>
 
 <template>
     <div>
         <p class="step-title">Project Assessment Details</p>
-        <div class="div-grid-cols">
-            <div>Project Submission / Assessment Due</div>
-            <div class="justify-self-center">
-                {{ ipa?.initialProjectReview.dateSubmitted }} -
-                {{
-                    ipa?.initialProjectReview.assessmentDueDate
-                        ? ipa?.initialProjectReview.assessmentDueDate
-                        : ''
-                }}
-            </div>
-        </div>
-        <div class="div-grid-cols">
-            <div>Intersects with important Fossil Area</div>
-            <div class="justify-self-center">
-                {{
-                    ipa?.initialProjectReview.intersectsIFA === true
-                        ? 'Yes'
-                        : 'No'
-                }}
-            </div>
-        </div>
-        <div class="div-grid-cols">
-            <div>Proximity to Fossils</div>
-            <div class="justify-self-center">
-                {{ ipa?.initialProjectReview.proximityToFossils }}
-            </div>
-        </div>
-        <div class="div-grid-cols">
-            <div>Ground Disturbance</div>
-            <div class="justify-self-center">
-                {{ ipa?.initialProjectReview.groundDisturbance }}
-            </div>
-        </div>
-        <div class="div-grid-cols">
-            <div>Metamorphic Rock</div>
-            <div class="justify-self-center">
-                {{ ipa?.initialProjectReview.metamorphicRock }}
-            </div>
-        </div>
-
-        <div class="div-grid-cols">
-            <div>Igneous Rock</div>
-            <div class="justify-self-center">
-                {{ ipa?.initialProjectReview.igneousRock }}
-            </div>
-        </div>
-        <div class="div-grid-cols">
-            <div>Sedimentary Rock</div>
-            <div class="justify-self-center">
-                {{ ipa?.initialProjectReview.sedimentaryRock }}
-            </div>
-        </div>
-        <div class="div-grid-cols">
-            <div>Quaternary Sediments</div>
-            <div class="justify-self-center">
-                {{ ipa?.initialProjectReview.quaternarySediments }}
-            </div>
-        </div>
-        <div class="div-grid-cols">
-            <div>FRPR</div>
-            <div class="justify-self-center">
-                {{ ipa?.initialProjectReview.FRPR }}
-            </div>
-        </div>
-        <div class="div-grid-cols">
-            <div>Initial Review Level Of Risk</div>
-            <div class="justify-self-center">
-                {{ ipa?.initialProjectReview.initialReviewLevelOfRisk }}
-            </div>
-        </div>
-        <div class="div-grid-cols">
-            <div>Initial Review Internal Notes</div>
-            <div class="justify-self-center">
-                <span
-                    v-html="
-                        ipa?.initialProjectReview.initialReviewInternalNotes
-                    "
-                >
-                </span>
-            </div>
-        </div>
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.assessment_start_date"
+            graph-slug="project_assessment"
+            node-alias="assessment_start_date"
+        />
+        -
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.assessment_completion_date"
+            graph-slug="project_assessment"
+            node-alias="assessment_completion_date"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.intersects_ifa"
+            graph-slug="project_assessment"
+            node-alias="intersects_ifa"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.proximity_to_fos"
+            graph-slug="project_assessment"
+            node-alias="proximity_to_fos"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.ground_disturbance"
+            graph-slug="project_assessment"
+            node-alias="ground_disturbance"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.metamorphic_rock"
+            graph-slug="project_assessment"
+            node-alias="metamorphic_rock"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.igneous_rock"
+            graph-slug="project_assessment"
+            node-alias="igneous_rock"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.sedimentary_rock"
+            graph-slug="project_assessment"
+            node-alias="sedimentary_rock"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.quaternary_deposits"
+            graph-slug="project_assessment"
+            node-alias="quaternary_deposits"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="ipa?.projectDetails.frpr"
+            graph-slug="project_assessment"
+            node-alias="frpr"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="
+                ipa?.projectDetails.initial_review_level_of_risk
+            "
+            graph-slug="project_assessment"
+            node-alias="initial_review_level_of_risk"
+        />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="
+                ipa?.projectDetails.initial_review_internal_notes
+            "
+            graph-slug="project_assessment"
+            node-alias="initial_review_internal_notes"
+        />
     </div>
 </template>
 <style scoped>

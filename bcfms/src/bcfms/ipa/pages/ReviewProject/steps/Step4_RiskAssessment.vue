@@ -1,133 +1,134 @@
 <script setup lang="ts">
-import { useTemplateRef, inject, ref } from 'vue';
+import { useTemplateRef, inject } from 'vue';
 import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
 import Editor from 'primevue/editor';
-import { Form, FormField, type FormInstance } from '@primevue/forms';
+import { Form, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { InitialProjectReviewSchema } from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
-import DOMPurify from 'dompurify';
+//import DOMPurify from 'dompurify';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
-import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/utils.ts';
+import {
+    isValid as baseIsValid,
+    updateModelValue as baseUpdateModelValue,
+    collapseFieldNames,
+} from '@/bcfms/utils.ts';
+import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
 
-const ipa = inject<IPA>('ipa');
-const blankFrpr = ref(blankConceptValue());
-const blankLevelOfRisk = ref(blankConceptValue());
+const ipa = inject<Ref<IPA>>('ipa');
+const emit = defineEmits(['update:stepIsValid']);
 
-if (!ipa) {
+if (!ipa || !ipa.value) {
     throw new Error('IPA instance not provided.');
 }
 
 const projectRiskAssessmentForm: Ref<FormInstance | null> = useTemplateRef(
     'projectRiskAssessmentForm',
 ) as Ref<FormInstance | null>;
-const zodFRPRResolver = zodResolver(InitialProjectReviewSchema.shape.FRPR);
-const zodInitialLevelOfRiskResolver = zodResolver(
-    InitialProjectReviewSchema.shape.initialReviewLevelOfRisk,
-);
-const zodInitialReviewInternalNotesResolver = zodResolver(
-    InitialProjectReviewSchema.shape.initialReviewInternalNotes,
-);
+const baseZodResolver = zodResolver(InitialProjectReviewSchema);
+
 const isValid = () => {
-    return (
-        (projectRiskAssessmentForm.value?.valid &&
-            !(
-                projectRiskAssessmentForm.value?.states.FRPR.pristine ||
-                projectRiskAssessmentForm.value?.states.initialReviewLevelOfRisk
-                    .pristine ||
-                projectRiskAssessmentForm.value?.states
-                    .initialReviewInternalNotes.pristine
-            )) ||
-        ((ipa as any).value?.initialProjectReview.FRPR &&
-            (ipa as any).value?.initialProjectReview.initialReviewLevelOfRisk &&
-            DOMPurify.sanitize(
-                (ipa as any).value?.initialProjectReview
-                    ?.initialReviewInternalNotes ?? '',
-                { ALLOWED_TAGS: [] },
-            ))
+    return baseIsValid(
+        projectRiskAssessmentForm as Ref<FormInstance>,
+        InitialProjectReviewSchema,
     );
 };
+const updateModelValue = function (
+    newValue: AliasedNodeData,
+    attribute_name: string,
+) {
+    baseUpdateModelValue(
+        newValue,
+        attribute_name,
+        ipa.value.projectDetails,
+        projectRiskAssessmentForm as Ref<FormInstance>,
+    );
+    emit('update:stepIsValid', isValid());
+};
+
+const projectRiskAssessmentResolver /* : Resolver<Record<string, any>> */ =
+    async (values: any) => {
+        //  DOMPurify.sanitize(
+        //             (ipa as any).value?.initialProjectReview
+        //                 ?.initialReviewInternalNotes ?? '',
+        //             { ALLOWED_TAGS: [] },
+        //         )
+        const base = (await baseZodResolver(values)) || {};
+        const rawErrors = { ...(base.errors ?? {}) } as Record<
+            string,
+            Array<{ type?: string; message: string }>
+        >;
+        const errors = collapseFieldNames(rawErrors);
+        return { errors };
+    };
 
 defineExpose({ isValid });
 </script>
 <template>
     <Form
         ref="projectRiskAssessmentForm"
-        v-slot="$form"
         name="projectRiskAssessmentForm"
         :validateOnBlur="true"
-        :resolver="zodResolver(InitialProjectReviewSchema)"
+        :validateOnValueUpdate="true"
+        :resolver="projectRiskAssessmentResolver"
     >
-        <FormField
-            :resolver="zodFRPRResolver"
-            name="FRPR"
+        <LabelledInput
+            label="Fossil Resource Potential Ranking"
+            hint="???"
+            input-name="FRPR"
+            :required="true"
         >
-            <LabelledInput
-                label="Fossil Resource Potential Ranking"
-                hint="???"
-                input-name="FRPR"
-                :error-message="$form.FRPR?.error?.message"
-                :required="true"
-            >
-                <GenericWidget
-                    :mode="EDIT"
-                    :should-show-label="false"
-                    :aliased-node-data="blankFrpr"
-                    placeholder="Select FRPR value"
-                    graph-slug="project_assessment"
-                    node-alias="frpr"
-                />
-            </LabelledInput>
-        </FormField>
-        <FormField
-            :resolver="zodInitialLevelOfRiskResolver"
-            name="initialReviewLevelOfRisk"
+            <GenericWidget
+                :mode="EDIT"
+                :should-show-label="false"
+                :aliased-node-data="ipa.initialProjectReview?.frpr"
+                placeholder="Select FRPR value"
+                graph-slug="project_assessment"
+                node-alias="frpr"
+                @update:value="updateModelValue($event, 'frpr')"
+            />
+        </LabelledInput>
+        <LabelledInput
+            label="Initial Level of Risk"
+            hint="???"
+            input-name="initialReviewLevelOfRisk"
+            :required="true"
         >
-            <LabelledInput
-                label="Initial Level of Risk"
-                hint="???"
-                input-name="initialReviewLevelOfRisk"
-                :error-message="$form.initialReviewLevelOfRisk?.error?.message"
-                :required="true"
-            >
-                <GenericWidget
-                    :mode="EDIT"
-                    :should-show-label="false"
-                    :aliased-node-data="blankLevelOfRisk"
-                    placeholder="Select Initial Review Level of Risk"
-                    graph-slug="project_assessment"
-                    node-alias="initial_review_level_of_risk"
-                />
-            </LabelledInput>
-        </FormField>
-        <FormField
-            :resolver="zodInitialReviewInternalNotesResolver"
-            name="initialReviewInternalNotes"
-        >
-            <LabelledInput
-                label="Initial Review Internal Notes"
-                hint="???"
-                input-name="initialReviewInternalNotes"
-                :error-message="
-                    $form.initialReviewInternalNotes?.error?.message
+            <GenericWidget
+                :mode="EDIT"
+                :should-show-label="false"
+                :aliased-node-data="
+                    ipa.initialProjectReview?.initial_review_level_of_risk
                 "
-                :required="true"
-            >
-                <Editor
-                    id="initialReviewInternalNotes"
-                    ref="initialReviewInternalNotesField"
-                    v-model="
-                        ipa.initialProjectReview.initialReviewInternalNotes
-                    "
-                    theme="snow"
-                    aria-describedby="initial-review-internal-notes-help"
-                    aria-required="true"
-                    fluid
-                />
-            </LabelledInput>
-        </FormField>
+                placeholder="Select Initial Review Level of Risk"
+                graph-slug="project_assessment"
+                node-alias="initial_review_level_of_risk"
+                @update:value="
+                    updateModelValue($event, 'initial_review_level_of_risk')
+                "
+            />
+        </LabelledInput>
+        <LabelledInput
+            label="Initial Review Internal Notes"
+            hint="???"
+            input-name="initialReviewInternalNotes"
+            :required="true"
+        >
+            <Editor
+                id="initialReviewInternalNotes"
+                ref="initialReviewInternalNotesField"
+                v-model="ipa.initialProjectReview.initial_review_internal_notes"
+                theme="snow"
+                aria-describedby="initial-review-internal-notes-help"
+                aria-required="true"
+                fluid
+                @update:value="
+                    updateModelValue($event, 'initial_review_internal_notes')
+                "
+            />
+        </LabelledInput>
     </Form>
 </template>

@@ -25,7 +25,7 @@ const blankProjectDocuments = ref({
 
 const ipa = inject<Ref<IPA>>('ipa');
 
-if (!ipa) {
+if (!ipa || !ipa.value) {
     throw new Error('IPA instance not provided.');
 }
 

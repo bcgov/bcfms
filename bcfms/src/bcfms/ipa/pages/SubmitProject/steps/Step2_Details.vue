@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTemplateRef, inject, computed } from 'vue';
+import { useTemplateRef, inject } from 'vue';
 import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';

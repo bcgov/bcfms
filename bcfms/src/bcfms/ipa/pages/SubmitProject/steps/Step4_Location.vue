@@ -4,6 +4,7 @@ import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
 import { Form, type FormInstance } from '@primevue/forms';
+import { zodResolver } from '@primevue/forms/resolvers/zod';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
@@ -11,12 +12,13 @@ import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
 import {
     isValid as baseIsValid,
     updateModelValue as baseUpdateModelValue,
+    collapseFieldNames,
 } from '@/bcfms/utils.ts';
 import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
 
-if (!ipa) {
+if (!ipa || !ipa.value) {
     throw new Error('IPA instance not provided.');
 }
 
@@ -25,6 +27,8 @@ const emit = defineEmits(['update:stepIsValid']);
 const projectLocationForm: Ref<FormInstance | null> = useTemplateRef(
     'projectLocationForm',
 ) as Ref<FormInstance | null>;
+
+const baseZodResolver = zodResolver(ProjectDetailsSchema);
 
 const isValid = () => {
     return baseIsValid(
@@ -46,19 +50,33 @@ const updateModelValue = function (
     emit('update:stepIsValid', isValid());
 };
 
+const projectLocationResolver /* : Resolver<Record<string, any>> */ = async (
+    values: any,
+) => {
+    // Run Zod first
+    const base = (await baseZodResolver(values)) || {};
+    const rawErrors = { ...(base.errors ?? {}) } as Record<
+        string,
+        Array<{ type?: string; message: string }>
+    >;
+    const errors = collapseFieldNames(rawErrors);
+    // Return just the errors bag; PrimeVue derives $form.*.invalid from this
+    return { errors };
+};
+
 defineExpose({ isValid });
 </script>
 <template>
     <Form
         ref="projectLocationForm"
-        v-slot="$form"
         name="projectLocationForm"
         :validateOnBlur="true"
+        :validateOnValueUpdate="true"
+        :resolver="projectLocationResolver"
     >
         <LabelledInput
             hint="Provide geographic names and distances -- e.g., A River, 3km north of Highway XX crossing"
             input-name="locationDescription"
-            :error-message="$form.locationDescription?.error?.message"
         >
             <GenericWidget
                 graph-slug="project_assessment"
@@ -72,7 +90,6 @@ defineExpose({ isValid });
             label="Geometry Qualifier"
             hint="Select the meaning of the geometry"
             input-name="geometryQualifier"
-            :error-message="$form.geometryQualifier?.error?.message"
         >
             <GenericWidget
                 :mode="EDIT"
@@ -87,7 +104,6 @@ defineExpose({ isValid });
             label="Multiple Geometry Qualifier"
             hint="If the project has more than one area, add any qualifying remarks here"
             input-name="multipleGeometryQualifier"
-            :error-message="$form.multipleGeometryQualifier?.error?.message"
         >
             <GenericWidget
                 :mode="EDIT"

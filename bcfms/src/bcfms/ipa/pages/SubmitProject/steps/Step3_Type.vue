@@ -4,6 +4,7 @@ import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
 import { Form, type FormInstance } from '@primevue/forms';
+import { zodResolver } from '@primevue/forms/resolvers/zod';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
@@ -12,11 +13,12 @@ import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
 import {
     isValid as baseIsValid,
     updateModelValue as baseUpdateModelValue,
+    collapseFieldNames,
 } from '@/bcfms/utils.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
 
-if (!ipa) {
+if (!ipa || !ipa.value) {
     throw new Error('IPA instance not provided.');
 }
 
@@ -25,6 +27,7 @@ const emit = defineEmits(['update:stepIsValid']);
 const projectTypeForm: Ref<FormInstance | null> = useTemplateRef(
     'projectTypeForm',
 ) as Ref<FormInstance | null>;
+const baseZodResolver = zodResolver(ProjectDetailsSchema);
 
 const isValid = () => {
     return baseIsValid(
@@ -45,6 +48,18 @@ const updateModelValue = function (
     emit('update:stepIsValid', isValid());
 };
 
+const projectTypeResolver /* : Resolver<Record<string, any>> */ = async (
+    values: any,
+) => {
+    const base = (await baseZodResolver(values)) || {};
+    const rawErrors = { ...(base.errors ?? {}) } as Record<
+        string,
+        Array<{ type?: string; message: string }>
+    >;
+    const errors = collapseFieldNames(rawErrors);
+    return { errors };
+};
+
 defineExpose({ isValid });
 </script>
 <template>
@@ -53,6 +68,8 @@ defineExpose({ isValid });
         v-slot="$form"
         name="projectTypeForm"
         :validateOnBlur="true"
+        :validateOnValueUpdate="true"
+        :resolver="projectTypeResolver"
     >
         <LabelledInput
             hint="Select type of project. If project type is not listed, select Other"
