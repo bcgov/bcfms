@@ -12,9 +12,9 @@ import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
 import {
     isValid as baseIsValid,
     updateModelValue as baseUpdateModelValue,
-    collapseFieldNames,
 } from '@/bcfms/utils.ts';
 import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
+import { collapseFieldNames } from '@/bcgov_arches_common/validation-utils.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
 

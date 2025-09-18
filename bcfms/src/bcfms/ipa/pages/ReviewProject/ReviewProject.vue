@@ -195,8 +195,9 @@ onMounted(() => {
                         <StepperNavigation
                             :step-number="currentStep"
                             :is-valid="currentStepIsValid"
+                            :show-previous="showPrevious"
                             :next-label="nextLabel"
-                            @next-click="printDetails"
+                            @next-click="activateNextStep"
                             @previous-click="activatePreviousStep"
                         >
                         </StepperNavigation>
