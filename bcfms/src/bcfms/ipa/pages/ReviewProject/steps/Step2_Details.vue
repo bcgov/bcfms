@@ -15,7 +15,7 @@ import {
     isValid as baseIsValid,
     updateModelValue as baseUpdateModelValue,
 } from '@/bcfms/utils.ts';
-import { collapseFieldNames } from '@/bcgov_arches_common/validation-utils.ts';
+import { getFlattenResolver } from '@/bcgov_arches_common/validation-utils.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
 const emit = defineEmits(['update:stepIsValid']);
@@ -27,7 +27,9 @@ if (!ipa || !ipa.value) {
 const projectDetailsForm: Ref<FormInstance | null> = useTemplateRef(
     'projectDetailsForm',
 ) as Ref<FormInstance | null>;
-const baseZodResolver = zodResolver(InitialProjectReviewSchema);
+const projectDetailsResolver = getFlattenResolver(
+    zodResolver(InitialProjectReviewSchema),
+);
 const isValid = () => {
     return baseIsValid(
         projectDetailsForm as Ref<FormInstance>,
@@ -45,19 +47,6 @@ const updateModelValue = function (
         projectDetailsForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
-};
-const projectDetailsResolver /* : Resolver<Record<string, any>> */ = async (
-    values: any,
-) => {
-    // Run Zod first
-    const base = (await baseZodResolver(values)) || {};
-    const rawErrors = { ...(base.errors ?? {}) } as Record<
-        string,
-        Array<{ type?: string; message: string }>
-    >;
-    const errors = collapseFieldNames(rawErrors);
-    // Return just the errors bag; PrimeVue derives $form.*.invalid from this
-    return { errors };
 };
 
 defineExpose({ isValid });

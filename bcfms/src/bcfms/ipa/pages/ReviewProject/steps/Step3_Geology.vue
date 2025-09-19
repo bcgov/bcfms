@@ -14,7 +14,7 @@ import {
     isValid as baseIsValid,
     updateModelValue as baseUpdateModelValue,
 } from '@/bcfms/utils.ts';
-import { collapseFieldNames } from '@/bcgov_arches_common/validation-utils.ts';
+import { getFlattenResolver } from '@/bcgov_arches_common/validation-utils.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
 const emit = defineEmits(['update:stepIsValid']);
@@ -25,7 +25,9 @@ if (!ipa || !ipa.value) {
 const projectGeologyForm: Ref<FormInstance | null> = useTemplateRef(
     'projectGeologyForm',
 ) as Ref<FormInstance | null>;
-const baseZodResolver = zodResolver(InitialProjectReviewSchema);
+const projectGeologyResolver = getFlattenResolver(
+    zodResolver(InitialProjectReviewSchema),
+);
 
 const isValid = () => {
     return baseIsValid(
@@ -44,18 +46,6 @@ const updateModelValue = function (
         projectGeologyForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
-};
-
-const projectGeologyResolver /* : Resolver<Record<string, any>> */ = async (
-    values: any,
-) => {
-    const base = (await baseZodResolver(values)) || {};
-    const rawErrors = { ...(base.errors ?? {}) } as Record<
-        string,
-        Array<{ type?: string; message: string }>
-    >;
-    const errors = collapseFieldNames(rawErrors);
-    return { errors };
 };
 
 defineExpose({ isValid });

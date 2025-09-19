@@ -14,7 +14,7 @@ import {
     isValid as baseIsValid,
     updateModelValue as baseUpdateModelValue,
 } from '@/bcfms/utils.ts';
-import { collapseFieldNames } from '@/bcgov_arches_common/validation-utils.ts';
+import { getFlattenResolver } from '@/bcgov_arches_common/validation-utils.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
 
@@ -27,7 +27,9 @@ const emit = defineEmits(['update:stepIsValid']);
 const projectTypeForm: Ref<FormInstance | null> = useTemplateRef(
     'projectTypeForm',
 ) as Ref<FormInstance | null>;
-const baseZodResolver = zodResolver(ProjectDetailsSchema);
+const projectTypeResolver = getFlattenResolver(
+    zodResolver(ProjectDetailsSchema),
+);
 
 const isValid = () => {
     return baseIsValid(
@@ -46,18 +48,6 @@ const updateModelValue = function (
         projectTypeForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
-};
-
-const projectTypeResolver /* : Resolver<Record<string, any>> */ = async (
-    values: any,
-) => {
-    const base = (await baseZodResolver(values)) || {};
-    const rawErrors = { ...(base.errors ?? {}) } as Record<
-        string,
-        Array<{ type?: string; message: string }>
-    >;
-    const errors = collapseFieldNames(rawErrors);
-    return { errors };
 };
 
 defineExpose({ isValid });

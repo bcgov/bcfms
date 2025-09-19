@@ -14,7 +14,7 @@ import {
     updateModelValue as baseUpdateModelValue,
 } from '@/bcfms/utils.ts';
 import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
-import { collapseFieldNames } from '@/bcgov_arches_common/validation-utils.ts';
+import { getFlattenResolver } from '@/bcgov_arches_common/validation-utils.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
 
@@ -28,7 +28,9 @@ const projectLocationForm: Ref<FormInstance | null> = useTemplateRef(
     'projectLocationForm',
 ) as Ref<FormInstance | null>;
 
-const baseZodResolver = zodResolver(ProjectDetailsSchema);
+const projectLocationResolver = getFlattenResolver(
+    zodResolver(ProjectDetailsSchema),
+);
 
 const isValid = () => {
     return baseIsValid(
@@ -48,20 +50,6 @@ const updateModelValue = function (
         projectLocationForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
-};
-
-const projectLocationResolver /* : Resolver<Record<string, any>> */ = async (
-    values: any,
-) => {
-    // Run Zod first
-    const base = (await baseZodResolver(values)) || {};
-    const rawErrors = { ...(base.errors ?? {}) } as Record<
-        string,
-        Array<{ type?: string; message: string }>
-    >;
-    const errors = collapseFieldNames(rawErrors);
-    // Return just the errors bag; PrimeVue derives $form.*.invalid from this
-    return { errors };
 };
 
 defineExpose({ isValid });

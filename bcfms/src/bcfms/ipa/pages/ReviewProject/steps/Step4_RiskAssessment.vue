@@ -16,7 +16,7 @@ import {
     updateModelValue as baseUpdateModelValue,
 } from '@/bcfms/utils.ts';
 import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
-import { collapseFieldNames } from '@/bcgov_arches_common/validation-utils.ts';
+import { getFlattenResolver } from '@/bcgov_arches_common/validation-utils.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
 const emit = defineEmits(['update:stepIsValid']);
@@ -28,7 +28,9 @@ if (!ipa || !ipa.value) {
 const projectRiskAssessmentForm: Ref<FormInstance | null> = useTemplateRef(
     'projectRiskAssessmentForm',
 ) as Ref<FormInstance | null>;
-const baseZodResolver = zodResolver(InitialProjectReviewSchema);
+const projectRiskAssessmentResolver = getFlattenResolver(
+    zodResolver(InitialProjectReviewSchema),
+);
 
 const isValid = () => {
     return baseIsValid(
@@ -48,22 +50,6 @@ const updateModelValue = function (
     );
     emit('update:stepIsValid', isValid());
 };
-
-const projectRiskAssessmentResolver /* : Resolver<Record<string, any>> */ =
-    async (values: any) => {
-        //  DOMPurify.sanitize(
-        //             (ipa as any).value?.initialProjectReview
-        //                 ?.initialReviewInternalNotes ?? '',
-        //             { ALLOWED_TAGS: [] },
-        //         )
-        const base = (await baseZodResolver(values)) || {};
-        const rawErrors = { ...(base.errors ?? {}) } as Record<
-            string,
-            Array<{ type?: string; message: string }>
-        >;
-        const errors = collapseFieldNames(rawErrors);
-        return { errors };
-    };
 
 defineExpose({ isValid });
 </script>
