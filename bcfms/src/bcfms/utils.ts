@@ -1,10 +1,8 @@
 import type { Ref } from 'vue';
 import type { LanguageValue } from '@/arches_component_lab/datatypes/string/types.ts';
 import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
-import * as z from 'zod';
 import type { FormInstance } from '@primevue/forms';
-
-type GenericZodObjectType = typeof z.object;
+import type { GenericZodObjectType } from '@/bcgov_arches_common/validation-utils.ts';
 
 export const blankStringValue = function () {
     return {
