@@ -43,7 +43,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.projectDetails,
+        ipa.value.initialProjectReview,
         projectDetailsForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -96,25 +96,25 @@ defineExpose({ isValid });
         <p>Intersects with Important Fossil Area</p>
         <div class="flex-row">
             <RadioButton
-                v-model="ipa.initialProjectReview.intersectsIFA"
-                inputId="intersectsIFA1"
+                v-model="ipa.initialProjectReview.intersects_ifa"
+                inputId="intersects_ifa1"
                 class="margin-bottom"
                 :value="true"
             />
             <label
                 class="margin-left"
-                for="intersectsIFA1"
+                for="intersects_ifa1"
                 >Yes</label
             >
             <RadioButton
-                v-model="ipa.initialProjectReview.intersectsIFA"
-                inputId="intersectsIFA0"
+                v-model="ipa.initialProjectReview.intersects_ifa"
+                inputId="intersects_ifa0"
                 :value="false"
                 class="margin-left margin-bottom"
             />
             <label
                 class="margin-left"
-                for="intersectsIFA0"
+                for="intersects_ifa0"
                 >No</label
             >
         </div>
