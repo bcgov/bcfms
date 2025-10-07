@@ -131,6 +131,7 @@ defineExpose({ isValid });
                 placeholder="Fossil Proximity"
                 graph-slug="project_assessment"
                 node-alias="proximity_to_fos"
+                @update:value="updateModelValue($event, 'proximity_to_fos')"
             />
         </LabelledInput>
         <LabelledInput
@@ -148,6 +149,7 @@ defineExpose({ isValid });
                 placeholder="Ground Disturbance"
                 graph-slug="project_assessment"
                 node-alias="ground_disturbance"
+                @update:value="updateModelValue($event, 'ground_disturbance')"
             />
         </LabelledInput>
     </Form>
