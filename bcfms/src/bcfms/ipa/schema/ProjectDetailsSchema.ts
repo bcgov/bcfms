@@ -84,4 +84,5 @@ export {
     ProjectDetailsSchema,
     getProjectDetails,
     requiredProjectDetailsSchema,
+    type ProjectDetailsType,
 };

@@ -1,0 +1,36 @@
+import type { ProjectDetailsType } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
+import type { IPAType } from '@/bcfms/ipa/schema/IPASchema.ts';
+import { getToken } from '@/bcgov_arches_common/api.ts';
+import arches from 'arches';
+
+export async function getBlankIpa(): Promise<IPAType> {
+    const response = await fetch(
+        arches.urls.api_resource_blank('project_assessment') + '?format=json',
+        {},
+    );
+    return await response.json();
+}
+
+export async function submitIPA(
+    ipaProjectDetails: ProjectDetailsType,
+): Promise<IPAType> {
+    const csrftoken = await getToken();
+    fetch(
+        arches.urls.submit_ipa,
+        // 'bc-fossil-management/api/submit-ipa/',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({ project_details: ipaProjectDetails }),
+        },
+    )
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log('error', error);
+        });
+}

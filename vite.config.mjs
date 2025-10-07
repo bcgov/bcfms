@@ -178,12 +178,12 @@ export default defineConfig({
     ssr: { optimizeDeps: { noDiscovery: false } },
     server: {
         root: path.resolve('./bcfms/src'),
-        host: 'localhost',
+        host: '0.0.0.0',
         port: 5174,
+        origin: 'http://localhost:81',
         open: false,
         cors: true,
         base: '/bc-fossil-management/static',
-        origin: 'http://localhost:81',
         watch: {
             usePolling: true,
             disableGlobbing: false,
@@ -195,7 +195,8 @@ export default defineConfig({
         // Force all API calls back to the Arches Dev server
         // These are internal URLs - don't use docker mapped port
         proxy: {
-            '/bc-fossil-management/arches-component-lab/api': 'http://localhost:80',
+            '/bc-fossil-management/arches-component-lab/api':
+                'http://localhost:80',
             '/bc-fossil-management/api': 'http://localhost:80',
             '/bc-fossil-management/static/css': 'http://localhost:80',
             '/bc-fossil-management/static/img': 'http://localhost:80',

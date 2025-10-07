@@ -42,7 +42,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.projectDetails,
+        ipa.value.project_details,
         projectGeologyForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());

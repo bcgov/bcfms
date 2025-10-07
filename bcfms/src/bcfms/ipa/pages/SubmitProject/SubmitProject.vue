@@ -16,15 +16,29 @@ import SubmitProjectStep4 from '@/bcfms/ipa/pages/SubmitProject/steps/Step4_Loca
 import SubmitProjectStep5 from '@/bcfms/ipa/pages/SubmitProject/steps/Step5_Documents.vue';
 import SubmitProjectStep6 from '@/bcfms/ipa/pages/SubmitProject/steps/Step6_ReviewSubmission.vue';
 import { getIPA } from '@/bcfms/ipa/schema/IPASchema.ts';
+import { getBlankIpa } from '@/bcfms/ipa/api.ts';
 import { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import type { Ref } from 'vue';
+import { submitIPA } from '@/bcfms/ipa/api.ts';
 
 const activateNextStep = () => {
-    myStepper.value.d_value++;
-    setCurrentStepValid(
-        steps[myStepper.value.d_value - 1].value.isValid(),
-        myStepper.value.d_value,
-    );
+    if (currentStep.value === 6) {
+        submitFormData().then((response) => {
+            console.log('submitFormData', response);
+            myStepper.value.d_value++;
+            setCurrentStepValid(
+                steps[myStepper.value.d_value - 1].value.isValid(),
+                myStepper.value.d_value,
+            );
+        });
+        return;
+    } else {
+        myStepper.value.d_value++;
+        setCurrentStepValid(
+            steps[myStepper.value.d_value - 1].value.isValid(),
+            myStepper.value.d_value,
+        );
+    }
 };
 const activatePreviousStep = () => {
     setCurrentStepValid(
@@ -66,6 +80,17 @@ const isValid = (step: number) => {
     return stepValid;
 };
 
+const submitFormData = async () => {
+    console.log('submit IPA', ipa);
+    submitIPA(ipa.value)
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => {
+            console.log('error', error);
+        });
+};
+
 const printDetails = () => {
     console.log('printDetails');
 };
@@ -96,7 +121,8 @@ const nextLabel = computed(() => {
     return currentStep.value < steps.length ? 'Next' : 'Submit';
 });
 const showPrevious = computed(() => {
-    return !(currentStep.value === steps.length || currentStep.value === 1);
+    // return !(currentStep.value === steps.length || currentStep.value === 1);
+    return true;
 });
 
 const showDebug = ref(false);
@@ -104,6 +130,9 @@ const showDebug = ref(false);
 onMounted(() => {
     steps.push(step1, step2, step3, step4, step5, step6, step7);
     stepStatuses.value[0] = true;
+    getBlankIpa().then((response) => {
+        ipa.value = response.aliased_data as unknown as typeof IPA;
+    });
 });
 </script>
 

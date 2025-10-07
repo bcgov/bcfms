@@ -47,7 +47,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.projectDetails,
+        ipa.value.project_details?.aliased_data,
         projectDetailsForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -69,7 +69,9 @@ defineExpose({ isValid });
         >
             <GenericWidget
                 :mode="EDIT"
-                :aliased-node-data="ipa?.projectDetails.project_name"
+                :aliased-node-data="
+                    ipa?.project_details?.aliased_data?.project_name
+                "
                 graph-slug="project_assessment"
                 node-alias="project_name"
                 @update:value="updateModelValue($event, 'project_name')"
@@ -81,7 +83,9 @@ defineExpose({ isValid });
         >
             <GenericWidget
                 :mode="EDIT"
-                :aliased-node-data="ipa?.projectDetails.project_initiator"
+                :aliased-node-data="
+                    ipa?.project_details?.aliased_data?.project_initiator
+                "
                 graph-slug="project_assessment"
                 node-alias="project_initiator"
                 @update:value="updateModelValue($event, 'project_initiator')"
@@ -95,7 +99,9 @@ defineExpose({ isValid });
         >
             <GenericWidget
                 :mode="EDIT"
-                :aliased-node-data="ipa?.projectDetails.industry_company_name"
+                :aliased-node-data="
+                    ipa?.project_details?.aliased_data?.industry_company_name
+                "
                 graph-slug="project_assessment"
                 node-alias="industry_company_name"
                 :should-show-label="false"
@@ -113,7 +119,8 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa?.projectDetails.project_authorizing_agency
+                    ipa?.project_details?.aliased_data
+                        ?.project_authorizing_agency
                 "
                 graph-slug="project_assessment"
                 node-alias="project_authorizing_agency"
@@ -126,7 +133,9 @@ defineExpose({ isValid });
         <LabelledInput input-name="landActFileNumber">
             <GenericWidget
                 :mode="EDIT"
-                :aliased-node-data="ipa?.projectDetails?.land_act_file_number"
+                :aliased-node-data="
+                    ipa?.project_details?.aliased_data?.land_act_file_number
+                "
                 graph-slug="project_assessment"
                 node-alias="land_act_file_number"
                 placeholder="Land Act Number"
@@ -137,7 +146,9 @@ defineExpose({ isValid });
             <div class="formfield-flex-grow">
                 <GenericWidget
                     :mode="EDIT"
-                    :aliased-node-data="ipa?.projectDetails.project_start_date"
+                    :aliased-node-data="
+                        ipa?.project_details?.aliased_data?.project_start_date
+                    "
                     graph-slug="project_assessment"
                     node-alias="project_start_date"
                     placeholder="Project Start Date"
@@ -149,7 +160,9 @@ defineExpose({ isValid });
             <div class="formfield-flex-grow">
                 <GenericWidget
                     :mode="EDIT"
-                    :aliased-node-data="ipa?.projectDetails.project_end_date"
+                    :aliased-node-data="
+                        ipa?.project_details?.aliased_data?.project_end_date
+                    "
                     graph-slug="project_assessment"
                     node-alias="project_end_date"
                     placeholder="Project End Date"

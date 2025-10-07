@@ -46,7 +46,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.projectDetails,
+        ipa.value.project_details,
         projectLocationForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -70,7 +70,7 @@ defineExpose({ isValid });
                 graph-slug="project_assessment"
                 node-alias="location_description"
                 :mode="EDIT"
-                :aliased-node-data="ipa?.projectDetails.location_description"
+                :aliased-node-data="ipa?.project_details.location_description"
                 @update:value="updateModelValue($event, 'location_description')"
             />
         </LabelledInput>
@@ -82,7 +82,7 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :should-show-label="false"
-                :aliased-node-data="ipa?.projectDetails.geometry_qualifier"
+                :aliased-node-data="ipa?.project_details.geometry_qualifier"
                 graph-slug="project_assessment"
                 node-alias="geometry_qualifier"
                 @update:value="updateModelValue($event, 'geometry_qualifier')"
@@ -97,7 +97,7 @@ defineExpose({ isValid });
                 :mode="EDIT"
                 :should-show-label="false"
                 :aliased-node-data="
-                    ipa?.projectDetails.multiple_geometry_qualifier
+                    ipa?.project_details.multiple_geometry_qualifier
                 "
                 graph-slug="project_assessment"
                 node-alias="multiple_geometry_qualifier"

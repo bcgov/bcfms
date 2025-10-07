@@ -30,7 +30,10 @@ emit('update:stepIsValid', isValid());
         <div class="div-grid-cols">
             <div>Submission Date</div>
             <div>
-                {{ ipa?.projectDetails.project_start_date.display_value }}
+                {{
+                    ipa?.project_details?.aliased_data?.project_start_date
+                        .display_value
+                }}
             </div>
         </div>
         <div class="div-grid-cols">
@@ -39,43 +42,57 @@ emit('update:stepIsValid', isValid());
 
         <GenericWidget
             :mode="VIEW"
-            :aliased-node-data="ipa?.projectDetails.project_name"
+            :aliased-node-data="
+                ipa?.project_details?.aliased_data?.project_name
+            "
             graph-slug="project_assessment"
             node-alias="project_name"
         />
         <GenericWidget
             :mode="VIEW"
-            :aliased-node-data="ipa?.projectDetails.project_initiator"
+            :aliased-node-data="
+                ipa?.project_details?.aliased_data?.project_initiator
+            "
             graph-slug="project_assessment"
             node-alias="project_initiator"
         />
         <GenericWidget
             :mode="VIEW"
-            :aliased-node-data="ipa?.projectDetails.industry_company_name"
+            :aliased-node-data="
+                ipa?.project_details?.aliased_data?.industry_company_name
+            "
             graph-slug="project_assessment"
             node-alias="industry_company_name"
         />
         <GenericWidget
             :mode="VIEW"
-            :aliased-node-data="ipa?.projectDetails.project_authorizing_agency"
+            :aliased-node-data="
+                ipa?.project_details?.aliased_data?.project_authorizing_agency
+            "
             graph-slug="project_assessment"
             node-alias="project_authorizing_agency"
         />
         <GenericWidget
             :mode="VIEW"
-            :aliased-node-data="ipa?.projectDetails?.land_act_file_number"
+            :aliased-node-data="
+                ipa?.project_details?.aliased_data?.land_act_file_number
+            "
             graph-slug="project_assessment"
             node-alias="land_act_file_number"
         />
         <GenericWidget
             :mode="VIEW"
-            :aliased-node-data="ipa?.projectDetails.project_start_date"
+            :aliased-node-data="
+                ipa?.project_details?.aliased_data?.project_start_date
+            "
             graph-slug="project_assessment"
             node-alias="project_start_date"
         />
         <GenericWidget
             :mode="VIEW"
-            :aliased-node-data="ipa?.projectDetails.project_end_date"
+            :aliased-node-data="
+                ipa?.project_details?.aliased_data?.project_end_date
+            "
             graph-slug="project_assessment"
             node-alias="project_end_date"
         />
@@ -84,35 +101,47 @@ emit('update:stepIsValid', isValid());
             graph-slug="project_assessment"
             node-alias="project_type"
             :mode="VIEW"
-            :aliased-node-data="ipa?.projectDetails.project_type"
+            :aliased-node-data="
+                ipa?.project_details?.aliased_data?.project_type
+            "
         />
         <GenericWidget
             graph-slug="project_assessment"
             node-alias="other_project_type"
             :mode="VIEW"
-            :aliased-node-data="ipa?.projectDetails?.other_project_type"
+            :aliased-node-data="
+                ipa?.project_details?.aliased_data?.other_project_type
+            "
         />
         <GenericWidget
             graph-slug="project_assessment"
             node-alias="proposed_activity"
-            :aliased-node-data="ipa?.projectDetails?.proposed_activity"
+            :aliased-node-data="
+                ipa?.project_details?.aliased_data?.proposed_activity
+            "
             :mode="VIEW"
         />
         <GenericWidget
             graph-slug="project_assessment"
             node-alias="location_description"
             :mode="VIEW"
-            :aliased-node-data="ipa?.projectDetails.location_description"
+            :aliased-node-data="
+                ipa?.project_details?.aliased_data?.location_description
+            "
         />
         <GenericWidget
             :mode="VIEW"
-            :aliased-node-data="ipa?.projectDetails.geometry_qualifier"
+            :aliased-node-data="
+                ipa?.project_details?.aliased_data?.geometry_qualifier
+            "
             graph-slug="project_assessment"
             node-alias="geometry_qualifier"
         />
         <GenericWidget
             :mode="VIEW"
-            :aliased-node-data="ipa?.projectDetails.multiple_geometry_qualifier"
+            :aliased-node-data="
+                ipa?.project_details.aliased_data?.multiple_geometry_qualifier
+            "
             graph-slug="project_assessment"
             node-alias="multiple_geometry_qualifier"
         />

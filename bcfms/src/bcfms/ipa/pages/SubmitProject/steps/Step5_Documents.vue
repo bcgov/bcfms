@@ -45,7 +45,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.projectDetails,
+        ipa.value.project_details,
         projectDocumentsForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
