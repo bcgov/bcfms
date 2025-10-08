@@ -102,7 +102,8 @@ emit('update:stepIsValid', isValid());
             node-alias="project_type"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.project_type
+                ipa?.project_details?.aliased_data?.project_type?.aliased_data
+                    .project_type
             "
         />
         <GenericWidget
@@ -110,14 +111,16 @@ emit('update:stepIsValid', isValid());
             node-alias="other_project_type"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.other_project_type
+                ipa?.project_details?.aliased_data?.project_type?.aliased_data
+                    .other_project_type
             "
         />
         <GenericWidget
             graph-slug="project_assessment"
             node-alias="proposed_activity"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.proposed_activity
+                ipa?.project_details?.aliased_data?.project_type?.aliased_data
+                    .proposed_activity
             "
             :mode="VIEW"
         />
@@ -126,13 +129,15 @@ emit('update:stepIsValid', isValid());
             node-alias="location_description"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.location_description
+                ipa?.project_details?.aliased_data?.project_site?.aliased_data
+                    .location_description
             "
         />
         <GenericWidget
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.geometry_qualifier
+                ipa?.project_details?.aliased_data?.project_site?.aliased_data
+                    .geometry_qualifier
             "
             graph-slug="project_assessment"
             node-alias="geometry_qualifier"
@@ -140,12 +145,14 @@ emit('update:stepIsValid', isValid());
         <GenericWidget
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details.aliased_data?.multiple_geometry_qualifier
+                ipa?.project_details.aliased_data?.project_site?.aliased_data
+                    .multiple_geometry_qualifier
             "
             graph-slug="project_assessment"
             node-alias="multiple_geometry_qualifier"
         />
     </div>
+    <div>{{ ipa }}</div>
 </template>
 <style scoped>
 .step-title {

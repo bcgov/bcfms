@@ -44,7 +44,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.project_details,
+        ipa.value.project_details.aliased_data.project_type.aliased_data,
         projectTypeForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -70,7 +70,9 @@ defineExpose({ isValid });
                 graph-slug="project_assessment"
                 node-alias="project_type"
                 :mode="EDIT"
-                :aliased-node-data="ipa?.project_details.project_type"
+                :aliased-node-data="
+                    ipa?.project_details?.aliased_data?.project_type
+                "
                 @update:value="updateModelValue($event, 'project_type')"
             />
         </LabelledInput>
@@ -83,7 +85,9 @@ defineExpose({ isValid });
                 graph-slug="project_assessment"
                 node-alias="other_project_type"
                 :mode="EDIT"
-                :aliased-node-data="ipa?.project_details?.other_project_type"
+                :aliased-node-data="
+                    ipa?.project_details?.aliased_data?.other_project_type
+                "
                 @update:value="updateModelValue($event, 'other_project_type')"
             />
         </LabelledInput>
@@ -95,9 +99,12 @@ defineExpose({ isValid });
             <GenericWidget
                 graph-slug="project_assessment"
                 node-alias="proposed_activity"
-                :aliased-node-data="ipa?.project_details?.proposed_activity"
+                :aliased-node-data="
+                    ipa?.project_details?.aliased_data?.project_type
+                        ?.aliased_data.proposed_activity
+                "
                 :mode="EDIT"
-                @update:value="updateModelValue($event, 'other_project_type')"
+                @update:value="updateModelValue($event, 'proposed_activity')"
             />
         </LabelledInput>
     </Form>
