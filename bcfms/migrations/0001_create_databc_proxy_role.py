@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
     """
 
     grant_databc_proxy_schema = """
-        grant all privileges on schema databc to postgres;
+        grant all privileges on schema databc to {{ arches_db_user }};
     """
 
     create_databc_proxy_role = """
@@ -26,21 +26,21 @@ class Migration(migrations.Migration):
             DECLARE
                 databc_role_exists boolean;
             BEGIN
-                select count(*) > 0 into databc_role_exists from pg_roles where rolname = 'proxy_databc';
+                select count(*) > 0 into databc_role_exists from pg_roles where rolname = '{{ db_databc_user }}';
                 if not databc_role_exists then
-                    Raise NOTICE 'Creating role proxy_databc';
-                    create role proxy_databc password 'proxy_databc';
+                    Raise NOTICE 'Creating role {{ db_databc_user }}';
+                    create role {{ db_databc_user }} password '{{ db_databc_password }}';
                 else
-                    Raise NOTICE 'Not creating role proxy_databc - it already exists';
+                    Raise NOTICE 'Not creating role {{ db_databc_user }} - it already exists';
                 end if;
-                alter role proxy_databc with login;
-                alter role proxy_databc set search_path = databc,public;
-                revoke all on schema public from proxy_databc;
-                grant connect on database bcfms to proxy_databc;
-                grant usage on schema databc to proxy_databc;
-                grant select on geometry_columns TO proxy_databc;
-                grant select on geography_columns TO proxy_databc;
-                grant select on spatial_ref_sys TO proxy_databc;
+                alter role {{ db_databc_user }} with login;
+                alter role {{ db_databc_user }} set search_path = databc,public;
+                revoke all on schema public from {{ db_databc_user }};
+                grant connect on database {{ arches_db_name }} to {{ db_databc_user }};
+                grant usage on schema databc to {{ db_databc_user }};
+                grant select on geometry_columns TO {{ db_databc_user }};
+                grant select on geography_columns TO {{ db_databc_user }};
+                grant select on spatial_ref_sys TO {{ db_databc_user }};
             END
         $$ language plpgsql;
     """
@@ -51,10 +51,10 @@ class Migration(migrations.Migration):
             DECLARE
                 databc_role record;
             BEGIN
-                for databc_role in (select rolname from pg_roles where rolname = 'proxy_databc') loop
-                    Raise NOTICE 'Dropping role proxy_databc and all associated grants';
-                    drop owned by proxy_databc cascade;
-                    drop role proxy_databc;
+                for databc_role in (select rolname from pg_roles where rolname = '{{ db_databc_user }}') loop
+                    Raise NOTICE 'Dropping role {{ db_databc_user }} and all associated grants';
+                    drop owned by {{ db_databc_user }} cascade;
+                    drop role {{ db_databc_user }};
                 end loop;
             END
         $$ language plpgsql;
