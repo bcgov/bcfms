@@ -13,8 +13,8 @@ import {
 import { getStringValueRequiredSchema } from '@/bcgov_arches_common/datatypes/string/validation/zod.ts';
 
 const InitialProjectReviewSchema = z.object({
-    date_submitted: DateValueRequiredSchema,
-    assessment_due_date: DateValueSchema,
+    assessment_start_date: DateValueRequiredSchema,
+    assessment_completion_date: DateValueSchema,
     intersects_ifa: z.boolean().default(false),
     proximity_to_fos: ConceptValueRequiredSchema,
     ground_disturbance: ConceptValueRequiredSchema,
@@ -38,8 +38,8 @@ function getInitialProjectReview(): InitialProjectReviewType {
 
 class InitialProjectReview implements InitialProjectReviewType {
     constructor() {
-        this.date_submitted = currentDateValue();
-        this.assessment_due_date = currentDateValue();
+        this.assessment_start_date = currentDateValue();
+        this.assessment_completion_date = currentDateValue();
         this.intersects_ifa = false;
         this.proximity_to_fos = blankConceptValue();
         this.ground_disturbance = blankConceptValue();
@@ -52,8 +52,8 @@ class InitialProjectReview implements InitialProjectReviewType {
         this.initial_review_internal_notes = blankStringValue();
         this.initial_review_outcome = blankStringValue();
     }
-    date_submitted: DateValue;
-    assessment_due_date: DateValue;
+    assessment_start_date: DateValue;
+    assessment_completion_date: DateValue;
     intersects_ifa: boolean;
     proximity_to_fos: ConceptValue;
     ground_disturbance: ConceptValue;

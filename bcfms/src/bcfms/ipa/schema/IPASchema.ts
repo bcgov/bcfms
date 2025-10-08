@@ -3,7 +3,10 @@ import {
     ProjectDetailsSchema,
     getProjectDetails,
 } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
-import { InitialProjectReviewSchema } from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
+import {
+    InitialProjectReviewSchema,
+    getInitialProjectReview,
+} from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
 
 const IPASchema = z.object({
     projectDetails: z.array(ProjectDetailsSchema),
@@ -21,7 +24,7 @@ function getIPA(): IPAType {
 class IPA implements IPAType {
     constructor() {
         this.projectDetails = getProjectDetails();
-        this.initialProjectReview = {};
+        this.initialProjectReview = getInitialProjectReview();
     }
     projectDetails: typeof ProjectDetailsSchema;
     initialProjectReview: typeof InitialProjectReviewSchema;

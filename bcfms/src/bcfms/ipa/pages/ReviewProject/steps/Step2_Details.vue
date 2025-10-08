@@ -63,14 +63,12 @@ defineExpose({ isValid });
             <div class="formfield-flex-grow">
                 <GenericWidget
                     :mode="EDIT"
-                    :should-show-label="false"
                     :aliased-node-data="
                         ipa.initialProjectReview?.assessment_start_date
                     "
                     graph-slug="project_assessment"
                     node-alias="assessment_start_date"
                     placeholder="Assessment Start Date"
-                    group-direction="column"
                     @update:value="
                         updateModelValue($event, 'assessment_start_date')
                     "
@@ -79,14 +77,12 @@ defineExpose({ isValid });
             <div class="formfield-flex-grow">
                 <GenericWidget
                     :mode="EDIT"
-                    :should-show-label="false"
                     :aliased-node-data="
                         ipa.initialProjectReview?.assessment_completion_date
                     "
                     graph-slug="project_assessment"
                     node-alias="assessment_completion_date"
                     placeholder="Assessment Completion Date"
-                    group-direction="column"
                     @update:value="
                         updateModelValue($event, 'assessment_completion_date')
                     "
