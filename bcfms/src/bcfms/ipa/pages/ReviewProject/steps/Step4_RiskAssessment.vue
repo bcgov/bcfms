@@ -104,6 +104,7 @@ defineExpose({ isValid });
         >
             <GenericWidget
                 :mode="EDIT"
+                :should-show-label="false"
                 :aliased-node-data="
                     ipa.initialProjectReview?.initial_review_internal_notes
                 "
