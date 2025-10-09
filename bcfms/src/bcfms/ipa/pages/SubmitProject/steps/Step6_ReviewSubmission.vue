@@ -152,7 +152,6 @@ emit('update:stepIsValid', isValid());
             node-alias="multiple_geometry_qualifier"
         />
     </div>
-    <div>{{ ipa }}</div>
 </template>
 <style scoped>
 .step-title {

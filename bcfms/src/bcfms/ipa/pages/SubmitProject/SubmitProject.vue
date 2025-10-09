@@ -7,6 +7,8 @@ import StepList from 'primevue/steplist';
 import StepPanels from 'primevue/steppanels';
 import StepperNavigation from '@/bcgov_arches_common/components/Stepper/components/StepperNavigation/StepperNavigation.vue';
 import Panel from 'primevue/panel';
+import ProgressSpinner from 'primevue/progressspinner';
+
 import type { StepperProps } from 'primevue/stepper';
 import type { StepperState } from 'primevue/stepper';
 import SubmitProjectStep1 from '@/bcfms/ipa/pages/SubmitProject/steps/Step1_About.vue';
@@ -15,23 +17,15 @@ import SubmitProjectStep3 from '@/bcfms/ipa/pages/SubmitProject/steps/Step3_Type
 import SubmitProjectStep4 from '@/bcfms/ipa/pages/SubmitProject/steps/Step4_Location.vue';
 import SubmitProjectStep5 from '@/bcfms/ipa/pages/SubmitProject/steps/Step5_Documents.vue';
 import SubmitProjectStep6 from '@/bcfms/ipa/pages/SubmitProject/steps/Step6_ReviewSubmission.vue';
-import { getIPA } from '@/bcfms/ipa/schema/IPASchema.ts';
+import { getIPA, type IPAType } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { getBlankIpa } from '@/bcfms/ipa/api.ts';
 import { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import type { Ref } from 'vue';
 import { submitIPA } from '@/bcfms/ipa/api.ts';
 
-const activateNextStep = () => {
+const activateNextStep = async () => {
     if (currentStep.value === 6) {
-        submitFormData().then((response) => {
-            console.log('submitFormData', response);
-            myStepper.value.d_value++;
-            setCurrentStepValid(
-                steps[myStepper.value.d_value - 1].value.isValid(),
-                myStepper.value.d_value,
-            );
-        });
-        return;
+        submitIpaData();
     } else {
         myStepper.value.d_value++;
         setCurrentStepValid(
@@ -40,6 +34,27 @@ const activateNextStep = () => {
         );
     }
 };
+
+const submitIpaData = async () => {
+    console.log('submit IPA', ipa);
+    submitting.value = true;
+    submitIPA(ipa.value)
+        .then((updatedIPA) => {
+            const newIPA = updatedIPA as Promise<IPAType>;
+            myStepper.value.d_value++;
+            setCurrentStepValid(
+                steps[myStepper.value.d_value - 1].value.isValid(),
+                myStepper.value.d_value,
+            );
+            console.log('newIPA', newIPA);
+            submitting.value = false;
+        })
+        .catch((error) => {
+            console.log('error', error);
+            submitting.value = false;
+        });
+};
+
 const activatePreviousStep = () => {
     setCurrentStepValid(
         steps[myStepper.value.d_value - 2].value.isValid(),
@@ -80,17 +95,6 @@ const isValid = (step: number) => {
     return stepValid;
 };
 
-const submitFormData = async () => {
-    console.log('submit IPA', ipa);
-    submitIPA(ipa.value)
-        .then((response) => {
-            return response;
-        })
-        .catch((error) => {
-            console.log('error', error);
-        });
-};
-
 const printDetails = () => {
     console.log('printDetails');
 };
@@ -111,14 +115,15 @@ const currentStep = computed(() => {
     return myStepper.value?.d_value;
 });
 const submitted = ref(false);
-const ipa: Ref<typeof IPA> = ref(getIPA());
+const submitting = ref(false);
+const ipa: Ref<IPAType> = ref(getIPA());
 
 provide('ipa', ipa);
 
 const nextLabel = computed(() => {
     if (currentStep.value === 1) return 'Start';
     if (currentStep.value === steps.length) return 'Print';
-    return currentStep.value < steps.length ? 'Next' : 'Submit';
+    return currentStep.value < steps.length - 1 ? 'Next' : 'Submit';
 });
 const showPrevious = computed(() => {
     // return !(currentStep.value === steps.length || currentStep.value === 1);
@@ -137,6 +142,12 @@ onMounted(() => {
 </script>
 
 <template>
+    <div
+        v-if="submitting"
+        class="submit-overlay"
+    >
+        <ProgressSpinner />
+    </div>
     <div
         id="debug-div"
         :v-show="showDebug"
@@ -275,6 +286,20 @@ onMounted(() => {
     max-width: 33%;
 }
 
+.submit-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    z-index: 500;
+    left: 0;
+    top: 0;
+}
+
 .p-card-content {
     font-size: 1rem;
 }
@@ -311,5 +336,10 @@ li {
 
 .heading-black {
     color: black;
+}
+</style>
+<style>
+.p-select-label {
+    font-size: 0.8rem;
 }
 </style>

@@ -72,7 +72,8 @@ defineExpose({ isValid });
                 node-alias="location_description"
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa?.project_details.aliased_data?.location_description
+                    ipa?.project_details.aliased_data?.project_site
+                        ?.aliased_data.location_description
                 "
                 @update:value="updateModelValue($event, 'location_description')"
             />
@@ -86,8 +87,8 @@ defineExpose({ isValid });
                 :mode="EDIT"
                 :should-show-label="false"
                 :aliased-node-data="
-                    ipa?.project_details.aliased_data?.project_site.aliased_data
-                        .project_location.aliased_data.geometry_qualifier
+                    ipa?.project_details.aliased_data?.project_site
+                        ?.aliased_data.geometry_qualifier
                 "
                 graph-slug="project_assessment"
                 node-alias="geometry_qualifier"
@@ -104,7 +105,6 @@ defineExpose({ isValid });
                 :should-show-label="false"
                 :aliased-node-data="
                     ipa?.project_details.aliased_data?.project_site.aliased_data
-                        .project_location.aliased_data
                         ?.multiple_geometry_qualifier
                 "
                 graph-slug="project_assessment"

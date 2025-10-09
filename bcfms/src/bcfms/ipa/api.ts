@@ -15,7 +15,7 @@ export async function submitIPA(
     ipaProjectDetails: ProjectDetailsType,
 ): Promise<IPAType> {
     const csrftoken = await getToken();
-    fetch(
+    const response = await fetch(
         arches.urls.submit_ipa,
         // 'bc-fossil-management/api/submit-ipa/',
         {
@@ -26,11 +26,12 @@ export async function submitIPA(
             },
             body: JSON.stringify({ project_details: ipaProjectDetails }),
         },
-    )
-        .then((response) => {
-            console.log(response);
-        })
-        .catch((error) => {
-            console.log('error', error);
-        });
+    );
+    if (response.status !== 201) {
+        console.log('error', response.statusText);
+        throw Error(`Unable to save submission: ${response.statusText}`);
+    } else {
+        console.log(response);
+        return response.json();
+    }
 }
