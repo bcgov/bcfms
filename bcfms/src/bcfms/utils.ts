@@ -48,9 +48,10 @@ export const isValid = (
     const formStates = form?.value?.states;
     const fields = Object.keys(form.value.states);
 
-    const allValid = fields.every(
-        (field) =>
-            schema.shape[field].safeParse(formStates?.[field]?.value).success,
+    const allValid = fields.every((field) =>
+        schema.shape?.[field]
+            ? schema.shape[field]?.safeParse(formStates?.[field]?.value).success
+            : true,
     );
     return allValid;
 };
