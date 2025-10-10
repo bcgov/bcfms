@@ -44,10 +44,7 @@ urlpatterns = [
         name="bcfms_local_tile_server",
     ),
     re_path(
-        bc_path_prefix(
-            r"^get_next_report_number/(?P<nodeid>%s)/(?P<typeAbbreviation>%s)$"
-            % (uuid_regex, "[A-Z]{2,4}")
-        ),
+        bc_path_prefix(r"^get_next_report_number/(?P<nodeid>%s)$" % uuid_regex),
         ReportNumberGenerator.as_view(),
         name="get_next_report_number",
     ),

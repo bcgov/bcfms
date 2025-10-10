@@ -11,6 +11,7 @@ import ProgressSpinner from 'primevue/progressspinner';
 
 import type { StepperProps } from 'primevue/stepper';
 import type { StepperState } from 'primevue/stepper';
+import type { ErrorMessage } from '@/bcfms/types.ts';
 import SubmitProjectStep1 from '@/bcfms/ipa/pages/SubmitProject/steps/Step1_About.vue';
 import SubmitProjectStep2 from '@/bcfms/ipa/pages/SubmitProject/steps/Step2_Details.vue';
 import SubmitProjectStep3 from '@/bcfms/ipa/pages/SubmitProject/steps/Step3_Type.vue';
@@ -40,20 +41,23 @@ const submitIpaData = async () => {
     submitting.value = true;
     submitIPA(ipa.value)
         .then((updatedIPA) => {
-            const newIPA = updatedIPA as Promise<IPAType>;
+            ipa.value = updatedIPA.aliased_data as Promise<IPAType>;
             myStepper.value.d_value++;
             setCurrentStepValid(
                 steps[myStepper.value.d_value - 1].value.isValid(),
                 myStepper.value.d_value,
             );
-            console.log('newIPA', newIPA);
+            submissionErrors.value = [];
             submitting.value = false;
         })
         .catch((error) => {
             console.log('error', error);
+            submissionErrors.value.push(error);
             submitting.value = false;
         });
 };
+
+const submissionErrors = ref([] as ErrorMessage[]);
 
 const activatePreviousStep = () => {
     setCurrentStepValid(
@@ -248,6 +252,7 @@ onMounted(() => {
                             </h3>
                             <SubmitProjectStep6
                                 ref="step6"
+                                :submission-errors="submissionErrors"
                                 @update:step-is-valid="
                                     setCurrentStepValid($event, 6)
                                 "
@@ -259,6 +264,7 @@ onMounted(() => {
                             </h3>
                             <SubmitProjectStep6
                                 ref="step7"
+                                :submission-errors="submissionErrors"
                                 @update:step-is-valid="
                                     setCurrentStepValid($event, 7)
                                 "

@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { inject } from 'vue';
 import type { Ref } from 'vue';
+import Message from 'primevue/message';
+import type { ErrorMessage } from '@/bcfms/types.ts';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { VIEW } from '@/arches_component_lab/widgets/constants.ts';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 
 const ipa = inject<Ref<IPA>>('ipa');
+
+defineProps<{
+    submissionErrors: ErrorMessage[];
+}>();
 
 const isValid = () => {
     console.log(ipa?.value);
@@ -22,20 +28,72 @@ emit('update:stepIsValid', isValid());
 <template>
     <div class="review_submit_page">
         <div class="step-title">Submission Details</div>
+        <section
+            v-if="submissionErrors && submissionErrors.length"
+            class="mt-4"
+        >
+            <h3 class="text-lg font-semibold mb-2 text-red-600">
+                Submission Errors
+            </h3>
+
+            <div class="flex flex-col gap-2">
+                <Message
+                    v-for="(error, index) in submissionErrors"
+                    :key="index"
+                    severity="error"
+                    :closable="false"
+                >
+                    <div
+                        class="flex flex-col sm:flex-row sm:items-center gap-1"
+                    >
+                        <span class="font-medium">{{ error.error }}</span>
+                        <span class="text-sm text-gray-600"
+                            >({{ error.type }})</span
+                        >
+                    </div>
+                    <div class="text-sm">
+                        {{ error.message }}
+                    </div>
+                </Message>
+            </div>
+        </section>
+
         <p class="p-margin-top-bottom">
             Please review the entered information prior to submitting the
             application:
         </p>
-        <p class="p-underline-bold">Filling Details</p>
-        <div class="div-grid-cols">
+        <p class="p-underline-bold">Filing Details</p>
+        <div
+            v-if="
+                ipa?.assessment_details?.aliased_data?.assessment_start_date
+                    .display_value
+            "
+            class="div-grid-cols"
+        >
             <div>Submission Date</div>
             <div>
                 {{
-                    ipa?.project_details?.aliased_data?.project_start_date
+                    ipa?.assessment_details?.aliased_data?.assessment_start_date
                         .display_value
                 }}
             </div>
         </div>
+
+        <div
+            v-if="
+                ipa?.assessment_details?.aliased_data?.ipa_number?.display_value
+            "
+            class="div-grid-cols"
+        >
+            <div>Reference Number</div>
+            <div>
+                {{
+                    ipa?.assessment_details?.aliased_data?.ipa_number
+                        ?.display_value
+                }}
+            </div>
+        </div>
+
         <div class="div-grid-cols">
             <div>Uploaded Files</div>
         </div>
