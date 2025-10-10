@@ -24,19 +24,29 @@ import {
 } from '@/bcgov_arches_common/datatypes/date/validation/zod.ts';
 
 const ProjectDetailsSchema = z.object({
-    project_name: getStringValueRequiredSchema(120),
-    project_initiator: ResourceInstanceValueRequiredSchema,
-    industry_company_name: getStringValueRequiredSchema(60),
-    project_authorizing_agency: ConceptValueRequiredSchema,
-    land_act_file_number: getStringValueSchema(30),
-    project_start_date: DateValueRequiredSchema,
-    project_end_date: DateValueSchema,
-    project_type: ConceptValueRequiredSchema,
-    other_project_type: getStringValueSchema(60),
-    proposed_activity: getStringValueRequiredSchema(60),
-    location_description: getStringValueRequiredSchema(60),
-    geometry_qualifier: ConceptValueSchema,
-    multiple_geometry_qualifier: getStringValueSchema(120),
+    aliased_data: z.object({
+        project_name: getStringValueRequiredSchema(120),
+        project_initiator: ResourceInstanceValueRequiredSchema,
+        industry_company_name: getStringValueRequiredSchema(60),
+        project_authorizing_agency: ConceptValueRequiredSchema,
+        land_act_file_number: getStringValueSchema(30),
+        project_start_date: DateValueRequiredSchema,
+        project_end_date: DateValueSchema,
+        project_type: z.object({
+            aliased_data: z.object({
+                project_type: ConceptValueRequiredSchema,
+                other_project_type: getStringValueSchema(60),
+                proposed_activity: getStringValueRequiredSchema(60),
+            }),
+        }),
+        project_site: z.object({
+            aliased_data: z.object({
+                location_description: getStringValueRequiredSchema(60),
+                geometry_qualifier: ConceptValueSchema,
+                multiple_geometry_qualifier: getStringValueSchema(120),
+            }),
+        }),
+    }),
 });
 
 const requiredProjectDetailsSchema = ProjectDetailsSchema.partial();
@@ -50,33 +60,53 @@ function getProjectDetails(): ProjectDetailsType {
 // @todo - Figure out object state - New/Updated/Deleted
 class ProjectDetails implements ProjectDetailsType {
     constructor() {
-        this.project_name = blankStringValue();
-        this.project_initiator = blankResourceInstanceValue();
-        this.industry_company_name = blankStringValue();
-        this.project_authorizing_agency = blankConceptValue();
-        this.land_act_file_number = blankStringValue();
-        this.project_start_date = currentDateValue();
-        this.project_end_date = currentDateValue();
-        this.project_type = blankConceptValue();
-        this.other_project_type = blankStringValue();
-        this.proposed_activity = blankStringValue();
-        this.location_description = blankStringValue();
-        this.geometry_qualifier = blankConceptValue();
-        this.multiple_geometry_qualifier = blankStringValue();
+        this.aliased_data = {
+            project_name: blankStringValue(),
+            project_initiator: blankResourceInstanceValue(),
+            industry_company_name: blankStringValue(),
+            project_authorizing_agency: blankConceptValue(),
+            land_act_file_number: blankStringValue(),
+            project_start_date: currentDateValue(),
+            project_end_date: currentDateValue(),
+            project_type: {
+                aliased_data: {
+                    project_type: blankConceptValue(),
+                    other_project_type: blankStringValue(),
+                    proposed_activity: blankStringValue(),
+                },
+            },
+            project_site: {
+                aliased_data: {
+                    location_description: blankStringValue(),
+                    geometry_qualifier: blankConceptValue(),
+                    multiple_geometry_qualifier: blankStringValue(),
+                },
+            },
+        };
     }
-    project_name: StringValue;
-    project_initiator: ResourceInstanceValue;
-    industry_company_name: StringValue;
-    project_authorizing_agency: ConceptValue;
-    land_act_file_number: StringValue;
-    project_start_date: DateValue;
-    project_end_date: DateValue;
-    project_type: ConceptValue;
-    other_project_type: StringValue;
-    proposed_activity: StringValue;
-    location_description: StringValue;
-    geometry_qualifier: ConceptValue;
-    multiple_geometry_qualifier: StringValue;
+    aliased_data: {
+        project_name: StringValue;
+        project_initiator: ResourceInstanceValue;
+        industry_company_name: StringValue;
+        project_authorizing_agency: ConceptValue;
+        land_act_file_number: StringValue;
+        project_start_date: DateValue;
+        project_end_date: DateValue;
+        project_type: {
+            aliased_data: {
+                project_type: ConceptValue;
+                other_project_type: StringValue;
+                proposed_activity: StringValue;
+            };
+        };
+        project_site: {
+            aliased_data: {
+                location_description: StringValue;
+                geometry_qualifier: ConceptValue;
+                multiple_geometry_qualifier: StringValue;
+            };
+        };
+    };
 }
 
 export {

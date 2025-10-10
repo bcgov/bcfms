@@ -24,18 +24,18 @@ if (!ipa || !ipa.value) {
 
 const emit = defineEmits(['update:stepIsValid']);
 
+const projectTypeShape =
+    ProjectDetailsSchema.shape['aliased_data'].shape['project_type'].shape[
+        'aliased_data'
+    ];
+
 const projectTypeForm: Ref<FormInstance | null> = useTemplateRef(
     'projectTypeForm',
 ) as Ref<FormInstance | null>;
-const projectTypeResolver = getFlattenResolver(
-    zodResolver(ProjectDetailsSchema),
-);
+const projectTypeResolver = getFlattenResolver(zodResolver(projectTypeShape));
 
 const isValid = () => {
-    return baseIsValid(
-        projectTypeForm as Ref<FormInstance>,
-        ProjectDetailsSchema,
-    );
+    return baseIsValid(projectTypeForm as Ref<FormInstance>, projectTypeShape);
 };
 const updateModelValue = function (
     newValue: AliasedNodeData,

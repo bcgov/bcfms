@@ -30,13 +30,13 @@ const projectDetailsForm: Ref<FormInstance | null> = useTemplateRef(
 ) as Ref<FormInstance | null>;
 
 const projectDetailsResolver = getFlattenResolver(
-    zodResolver(ProjectDetailsSchema),
+    zodResolver(ProjectDetailsSchema.shape['aliased_data']),
 );
 
 const isValid = () => {
     return baseIsValid(
         projectDetailsForm as Ref<FormInstance>,
-        ProjectDetailsSchema,
+        ProjectDetailsSchema.shape['aliased_data'],
     );
 };
 

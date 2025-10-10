@@ -24,18 +24,23 @@ if (!ipa || !ipa.value) {
 
 const emit = defineEmits(['update:stepIsValid']);
 
+const projectSiteShape =
+    ProjectDetailsSchema.shape['aliased_data'].shape['project_site'].shape[
+        'aliased_data'
+    ];
+
 const projectLocationForm: Ref<FormInstance | null> = useTemplateRef(
     'projectLocationForm',
 ) as Ref<FormInstance | null>;
 
 const projectLocationResolver = getFlattenResolver(
-    zodResolver(ProjectDetailsSchema),
+    zodResolver(projectSiteShape),
 );
 
 const isValid = () => {
     return baseIsValid(
         projectLocationForm as Ref<FormInstance>,
-        ProjectDetailsSchema,
+        projectSiteShape,
     );
 };
 
@@ -46,7 +51,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.project_details.aliased_data.project_site.aliased_data,
+        ipa.value.project_details?.aliased_data.project_site?.aliased_data,
         projectLocationForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -104,8 +109,8 @@ defineExpose({ isValid });
                 :mode="EDIT"
                 :should-show-label="false"
                 :aliased-node-data="
-                    ipa?.project_details.aliased_data?.project_site.aliased_data
-                        ?.multiple_geometry_qualifier
+                    ipa?.project_details.aliased_data?.project_site
+                        ?.aliased_data.multiple_geometry_qualifier
                 "
                 graph-slug="project_assessment"
                 node-alias="multiple_geometry_qualifier"
