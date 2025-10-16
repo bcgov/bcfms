@@ -27,53 +27,59 @@ emit('update:stepIsValid', isValid());
             application:
         </p>
         <p class="p-underline-bold">Filling Details</p>
-        <div class="div-grid-cols">
-            <div>Submission Date</div>
-            <div>
-                {{ ipa?.projectDetails.project_start_date.display_value }}
+        <div>
+            <div class="div-grid-cols">Reference Number</div>
+            <div class="div-grid-cols">
+                <p>Submission Date</p>
+                <span>{{
+                    ipa?.projectDetails.project_start_date.node_value
+                }}</span>
             </div>
         </div>
-        <div class="div-grid-cols">
-            <div>Uploaded Files</div>
-        </div>
-
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="ipa?.projectDetails.project_name"
             graph-slug="project_assessment"
             node-alias="project_name"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="ipa?.projectDetails.project_initiator"
             graph-slug="project_assessment"
             node-alias="project_initiator"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="ipa?.projectDetails.industry_company_name"
             graph-slug="project_assessment"
             node-alias="industry_company_name"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="ipa?.projectDetails.project_authorizing_agency"
             graph-slug="project_assessment"
             node-alias="project_authorizing_agency"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="ipa?.projectDetails?.land_act_file_number"
             graph-slug="project_assessment"
             node-alias="land_act_file_number"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="ipa?.projectDetails.project_start_date"
             graph-slug="project_assessment"
             node-alias="project_start_date"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="ipa?.projectDetails.project_end_date"
             graph-slug="project_assessment"
@@ -81,41 +87,50 @@ emit('update:stepIsValid', isValid());
         />
 
         <GenericWidget
+            class="div-grid-cols"
             graph-slug="project_assessment"
             node-alias="project_type"
             :mode="VIEW"
             :aliased-node-data="ipa?.projectDetails.project_type"
         />
         <GenericWidget
+            class="div-grid-cols"
             graph-slug="project_assessment"
             node-alias="other_project_type"
             :mode="VIEW"
             :aliased-node-data="ipa?.projectDetails?.other_project_type"
         />
         <GenericWidget
+            class="div-grid-cols"
             graph-slug="project_assessment"
             node-alias="proposed_activity"
             :aliased-node-data="ipa?.projectDetails?.proposed_activity"
             :mode="VIEW"
         />
         <GenericWidget
+            class="div-grid-cols"
             graph-slug="project_assessment"
             node-alias="location_description"
             :mode="VIEW"
             :aliased-node-data="ipa?.projectDetails.location_description"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="ipa?.projectDetails.geometry_qualifier"
             graph-slug="project_assessment"
             node-alias="geometry_qualifier"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="ipa?.projectDetails.multiple_geometry_qualifier"
             graph-slug="project_assessment"
             node-alias="multiple_geometry_qualifier"
         />
+        <div class="div-grid-cols">
+            <div>Uploaded Files</div>
+        </div>
     </div>
 </template>
 <style scoped>

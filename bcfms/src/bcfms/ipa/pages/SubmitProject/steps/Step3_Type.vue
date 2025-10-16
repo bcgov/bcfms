@@ -55,7 +55,6 @@ defineExpose({ isValid });
 <template>
     <Form
         ref="projectTypeForm"
-        v-slot="$form"
         name="projectTypeForm"
         :validateOnBlur="true"
         :validateOnValueUpdate="true"
@@ -64,7 +63,6 @@ defineExpose({ isValid });
         <LabelledInput
             hint="Select type of project. If project type is not listed, select Other"
             input-name="projectType"
-            :error-message="$form.projectType?.error?.message"
         >
             <GenericWidget
                 graph-slug="project_assessment"
@@ -75,9 +73,12 @@ defineExpose({ isValid });
             />
         </LabelledInput>
         <LabelledInput
+            v-if="
+                ipa?.projectDetails.project_type.node_value ===
+                '54722cfa-61f7-41e9-9e02-5b676e3bcc3e'
+            "
             hint="Enter a brief project type"
             input-name="otherProjectType"
-            :error-message="$form.otherProjectType?.error?.message"
         >
             <GenericWidget
                 graph-slug="project_assessment"
@@ -90,7 +91,6 @@ defineExpose({ isValid });
         <LabelledInput
             hint="Enter the primary proposed activity"
             input-name="proposedActivity"
-            :error-message="$form.proposedActivity?.error?.message"
         >
             <GenericWidget
                 graph-slug="project_assessment"
