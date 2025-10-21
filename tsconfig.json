@@ -20,5 +20,6 @@
     ],
     "allowImportingTsExtensions": true
   },
-  "exclude": ["vite-shims/*"]
+  "include": ["bcfms/src/**/*.ts", "bcfms/src/**/*.vue"],
+  "exclude": ["vite-shims", "tests/playwright"]
 }
