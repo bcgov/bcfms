@@ -3,7 +3,10 @@ import {
     ProjectDetailsSchema,
     getProjectDetails,
 } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
-import { InitialProjectReviewSchema } from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
+import {
+    InitialProjectReviewSchema,
+    getInitialProjectReview,
+} from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
 import type { AssessmentDetailsType } from '@/bcfms/ipa/schema/AssessmentDetailsSchema.ts';
 import { AssessmentDetails } from '@/bcfms/ipa/schema/AssessmentDetailsSchema.ts';
 
@@ -23,7 +26,7 @@ function getIPA(): IPAType {
 class IPA implements IPAType {
     constructor() {
         this.project_details = getProjectDetails();
-        this.initialProjectReview = {};
+        this.initialProjectReview = getInitialProjectReview();
         this.assessment_details = new AssessmentDetails();
     }
     project_details: typeof ProjectDetailsSchema;

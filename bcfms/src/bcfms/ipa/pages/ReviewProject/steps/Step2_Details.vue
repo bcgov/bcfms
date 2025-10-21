@@ -43,7 +43,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.project_details,
+        ipa.value.initialProjectReview,
         projectDetailsForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -63,14 +63,12 @@ defineExpose({ isValid });
             <div class="formfield-flex-grow">
                 <GenericWidget
                     :mode="EDIT"
-                    :should-show-label="false"
                     :aliased-node-data="
                         ipa.initialProjectReview?.assessment_start_date
                     "
                     graph-slug="project_assessment"
                     node-alias="assessment_start_date"
                     placeholder="Assessment Start Date"
-                    group-direction="column"
                     @update:value="
                         updateModelValue($event, 'assessment_start_date')
                     "
@@ -79,14 +77,12 @@ defineExpose({ isValid });
             <div class="formfield-flex-grow">
                 <GenericWidget
                     :mode="EDIT"
-                    :should-show-label="false"
                     :aliased-node-data="
                         ipa.initialProjectReview?.assessment_completion_date
                     "
                     graph-slug="project_assessment"
                     node-alias="assessment_completion_date"
                     placeholder="Assessment Completion Date"
-                    group-direction="column"
                     @update:value="
                         updateModelValue($event, 'assessment_completion_date')
                     "
@@ -96,25 +92,25 @@ defineExpose({ isValid });
         <p>Intersects with Important Fossil Area</p>
         <div class="flex-row">
             <RadioButton
-                v-model="ipa.initialProjectReview.intersectsIFA"
-                inputId="intersectsIFA1"
+                v-model="ipa.initialProjectReview.intersects_ifa"
+                inputId="intersects_ifa1"
                 class="margin-bottom"
                 :value="true"
             />
             <label
                 class="margin-left"
-                for="intersectsIFA1"
+                for="intersects_ifa1"
                 >Yes</label
             >
             <RadioButton
-                v-model="ipa.initialProjectReview.intersectsIFA"
-                inputId="intersectsIFA0"
+                v-model="ipa.initialProjectReview.intersects_ifa"
+                inputId="intersects_ifa0"
                 :value="false"
                 class="margin-left margin-bottom"
             />
             <label
                 class="margin-left"
-                for="intersectsIFA0"
+                for="intersects_ifa0"
                 >No</label
             >
         </div>
@@ -131,6 +127,7 @@ defineExpose({ isValid });
                 placeholder="Fossil Proximity"
                 graph-slug="project_assessment"
                 node-alias="proximity_to_fos"
+                @update:value="updateModelValue($event, 'proximity_to_fos')"
             />
         </LabelledInput>
         <LabelledInput
@@ -148,6 +145,7 @@ defineExpose({ isValid });
                 placeholder="Ground Disturbance"
                 graph-slug="project_assessment"
                 node-alias="ground_disturbance"
+                @update:value="updateModelValue($event, 'ground_disturbance')"
             />
         </LabelledInput>
     </Form>

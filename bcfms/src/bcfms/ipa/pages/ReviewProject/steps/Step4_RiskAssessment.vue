@@ -3,7 +3,6 @@ import { useTemplateRef, inject } from 'vue';
 import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
-import Editor from 'primevue/editor';
 import { Form, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
@@ -45,7 +44,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.project_details,
+        ipa.value.initialProjectReview,
         projectRiskAssessmentForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -103,14 +102,15 @@ defineExpose({ isValid });
             input-name="initialReviewInternalNotes"
             :required="true"
         >
-            <Editor
-                id="initialReviewInternalNotes"
-                ref="initialReviewInternalNotesField"
-                v-model="ipa.initialProjectReview.initial_review_internal_notes"
-                theme="snow"
-                aria-describedby="initial-review-internal-notes-help"
-                aria-required="true"
-                fluid
+            <GenericWidget
+                :mode="EDIT"
+                :should-show-label="false"
+                :aliased-node-data="
+                    ipa.initialProjectReview?.initial_review_internal_notes
+                "
+                placeholder="Enter Initial Review Internal Notes"
+                graph-slug="project_assessment"
+                node-alias="initial_review_internal_notes"
                 @update:value="
                     updateModelValue($event, 'initial_review_internal_notes')
                 "
