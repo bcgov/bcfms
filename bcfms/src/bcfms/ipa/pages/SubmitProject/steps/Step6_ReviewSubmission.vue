@@ -85,16 +85,16 @@ emit('update:stepIsValid', isValid());
             "
             class="div-grid-cols"
         >
-            <div>Reference Number</div>
-            <div>
+            <div class="div-grid-cols">Reference Number</div>
+            <div class="div-grid-cols">
                 {{
                     ipa?.assessment_details?.aliased_data?.ipa_number
                         ?.display_value
                 }}
             </div>
         </div>
-
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
                 ipa?.project_details?.aliased_data?.project_name
@@ -103,6 +103,7 @@ emit('update:stepIsValid', isValid());
             node-alias="project_name"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
                 ipa?.project_details?.aliased_data?.project_initiator
@@ -111,6 +112,7 @@ emit('update:stepIsValid', isValid());
             node-alias="project_initiator"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
                 ipa?.project_details?.aliased_data?.industry_company_name
@@ -119,6 +121,7 @@ emit('update:stepIsValid', isValid());
             node-alias="industry_company_name"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
                 ipa?.project_details?.aliased_data?.project_authorizing_agency
@@ -127,6 +130,7 @@ emit('update:stepIsValid', isValid());
             node-alias="project_authorizing_agency"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
                 ipa?.project_details?.aliased_data?.land_act_file_number
@@ -135,6 +139,7 @@ emit('update:stepIsValid', isValid());
             node-alias="land_act_file_number"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
                 ipa?.project_details?.aliased_data?.project_start_date
@@ -143,6 +148,7 @@ emit('update:stepIsValid', isValid());
             node-alias="project_start_date"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
                 ipa?.project_details?.aliased_data?.project_end_date
@@ -152,6 +158,7 @@ emit('update:stepIsValid', isValid());
         />
 
         <GenericWidget
+            class="div-grid-cols"
             graph-slug="project_assessment"
             node-alias="project_type"
             :mode="VIEW"
@@ -161,6 +168,7 @@ emit('update:stepIsValid', isValid());
             "
         />
         <GenericWidget
+            class="div-grid-cols"
             graph-slug="project_assessment"
             node-alias="other_project_type"
             :mode="VIEW"
@@ -170,6 +178,7 @@ emit('update:stepIsValid', isValid());
             "
         />
         <GenericWidget
+            class="div-grid-cols"
             graph-slug="project_assessment"
             node-alias="proposed_activity"
             :aliased-node-data="
@@ -179,6 +188,7 @@ emit('update:stepIsValid', isValid());
             :mode="VIEW"
         />
         <GenericWidget
+            class="div-grid-cols"
             graph-slug="project_assessment"
             node-alias="location_description"
             :mode="VIEW"
@@ -188,6 +198,7 @@ emit('update:stepIsValid', isValid());
             "
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
                 ipa?.project_details?.aliased_data?.project_site?.aliased_data
@@ -197,6 +208,7 @@ emit('update:stepIsValid', isValid());
             node-alias="geometry_qualifier"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
                 ipa?.project_details.aliased_data?.project_site?.aliased_data
@@ -206,6 +218,7 @@ emit('update:stepIsValid', isValid());
             node-alias="multiple_geometry_qualifier"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
                 ipa?.project_details.aliased_data?.project_documents

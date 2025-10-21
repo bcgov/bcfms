@@ -11,7 +11,7 @@ defineExpose({ isValid });
     <FieldSet legend="Before you begin">
         <p>The entire submission will need to be completed at once.</p>
         <p>You will need the following:</p>
-        <ol>
+        <ol class="ol-margin-left">
             <li>First thing</li>
             <li>Second thing</li>
             <li>Third thing</li>
@@ -27,5 +27,10 @@ defineExpose({ isValid });
 li {
     color: unset;
     font-size: unset;
+}
+</style>
+<style scoped>
+.ol-margin-left {
+    margin-left: 1rem;
 }
 </style>
