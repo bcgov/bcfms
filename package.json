@@ -59,7 +59,6 @@
         "bcgov_arches_common": "file:../bcgov-arches-common",
         "ckeditor5": "44.2.0",
         "dayjs": "^1.11.13",
-        "dompurify": "^3.2.6",
         "js-cookie": "^2.1.1",
         "primevue": "^4.3.4",
         "quill": "^2.0.3",
