@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { useTemplateRef, ref, inject } from 'vue';
+import { useTemplateRef, inject } from 'vue';
 import type { Ref } from 'vue';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
 
 import { Form, type FormInstance } from '@primevue/forms';
-import type { FileReference } from '@/arches_component_lab/datatypes/file-list/types.ts';
 import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
 import {
     isValid as baseIsValid,
@@ -13,15 +12,8 @@ import {
 } from '@/bcfms/utils.ts';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
-
-const projectDocumentsForm: Ref<FormInstance | null> = useTemplateRef(
-    'projectDocumentsForm',
-) as Ref<FormInstance | null>;
-
-const blankProjectDocuments = ref({
-    display_value: '',
-    node_value: [] as FileReference[],
-});
+import { getFlattenResolver } from '@/bcgov_arches_common/validation-utils.ts';
+import { zodResolver } from '@primevue/forms/resolvers/zod';
 
 const ipa = inject<Ref<IPA>>('ipa');
 
@@ -29,10 +21,18 @@ if (!ipa || !ipa.value) {
     throw new Error('IPA instance not provided.');
 }
 
+const projectDocumentsForm: Ref<FormInstance | null> = useTemplateRef(
+    'projectDocumentsForm',
+) as Ref<FormInstance | null>;
+
+const projectDocumentsResolver = getFlattenResolver(
+    zodResolver(ProjectDetailsSchema.shape['aliased_data']),
+);
+
 const isValid = () => {
     return baseIsValid(
         projectDocumentsForm as Ref<FormInstance>,
-        ProjectDetailsSchema,
+        ProjectDetailsSchema.shape['aliased_data'],
     );
 };
 
@@ -45,7 +45,8 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.projectDetails,
+        ipa.value.project_details?.aliased_data?.project_documents
+            ?.aliased_data,
         projectDocumentsForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -57,7 +58,9 @@ defineExpose({ isValid });
     <Form
         ref="projectDocumentsForm"
         name="projectDocumentsForm"
-        :validateOnBlur="true"
+        :validate-on-blur="true"
+        :validate-on-value-update="true"
+        :resolver="projectDocumentsResolver"
     >
         <p class="p-font-bold">
             Upload project documents such as Application Information
@@ -68,7 +71,9 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :should-show-label="false"
-                :aliased-node-data="blankProjectDocuments"
+                :aliased-node-data="
+                    ipa?.project_details.aliased_data?.project_documents
+                "
                 graph-slug="project_assessment"
                 node-alias="project_documents"
                 @update:value="updateModelValue($event, 'project_documents')"
@@ -83,6 +88,5 @@ defineExpose({ isValid });
 }
 .div-file-widget {
     margin-top: 2rem;
-    margin-left: 20rem;
 }
 </style>

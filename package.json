@@ -56,7 +56,7 @@
         "@vue/cli": "^5.0.8",
         "arches": "github:bcgov/arches#v7.6.12.1_bcgov",
         "arches-component-lab": "github:archesproject/arches-component-lab#main",
-        "bcgov_arches_common": "github:bcgov/bcgov-arches-common#v1.2.4",
+        "bcgov_arches_common": "github:bcgov/bcgov-arches-common#release/1.2.7",
         "ckeditor5": "44.2.0",
         "dayjs": "^1.11.13",
         "js-cookie": "^2.1.1",

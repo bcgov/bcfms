@@ -7,25 +7,59 @@ import StepList from 'primevue/steplist';
 import StepPanels from 'primevue/steppanels';
 import StepperNavigation from '@/bcgov_arches_common/components/Stepper/components/StepperNavigation/StepperNavigation.vue';
 import Panel from 'primevue/panel';
+import ProgressSpinner from 'primevue/progressspinner';
+
 import type { StepperProps } from 'primevue/stepper';
 import type { StepperState } from 'primevue/stepper';
+import type { ErrorMessage } from '@/bcfms/types.ts';
 import SubmitProjectStep1 from '@/bcfms/ipa/pages/SubmitProject/steps/Step1_About.vue';
 import SubmitProjectStep2 from '@/bcfms/ipa/pages/SubmitProject/steps/Step2_Details.vue';
 import SubmitProjectStep3 from '@/bcfms/ipa/pages/SubmitProject/steps/Step3_Type.vue';
 import SubmitProjectStep4 from '@/bcfms/ipa/pages/SubmitProject/steps/Step4_Location.vue';
 import SubmitProjectStep5 from '@/bcfms/ipa/pages/SubmitProject/steps/Step5_Documents.vue';
 import SubmitProjectStep6 from '@/bcfms/ipa/pages/SubmitProject/steps/Step6_ReviewSubmission.vue';
-import { getIPA } from '@/bcfms/ipa/schema/IPASchema.ts';
+import { getIPA, type IPAType } from '@/bcfms/ipa/schema/IPASchema.ts';
+import { getBlankIpa } from '@/bcfms/ipa/api.ts';
 import { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import type { Ref } from 'vue';
+import { submitIPA } from '@/bcfms/ipa/api.ts';
 
-const activateNextStep = () => {
-    myStepper.value.d_value++;
-    setCurrentStepValid(
-        steps[myStepper.value.d_value - 1].value.isValid(),
-        myStepper.value.d_value,
-    );
+const activateNextStep = async () => {
+    if (currentStep.value === 6) {
+        submitIpaData();
+    } else {
+        myStepper.value.d_value++;
+        setCurrentStepValid(
+            steps[myStepper.value.d_value - 1].value.isValid(),
+            myStepper.value.d_value,
+        );
+    }
 };
+
+const submitIpaData = async () => {
+    console.log('submit IPA', ipa);
+    submitting.value = true;
+    submissionErrors.value = [];
+    submitIPA(ipa.value)
+        .then((updatedIPA) => {
+            ipa.value = updatedIPA.aliased_data as Promise<IPAType>;
+            myStepper.value.d_value++;
+            setCurrentStepValid(
+                steps[myStepper.value.d_value - 1].value.isValid(),
+                myStepper.value.d_value,
+            );
+            submissionErrors.value = [];
+            submitting.value = false;
+        })
+        .catch((error) => {
+            console.log('error', error);
+            submissionErrors.value.push(error);
+            submitting.value = false;
+        });
+};
+
+const submissionErrors = ref([] as ErrorMessage[]);
+
 const activatePreviousStep = () => {
     setCurrentStepValid(
         steps[myStepper.value.d_value - 2].value.isValid(),
@@ -86,17 +120,19 @@ const currentStep = computed(() => {
     return myStepper.value?.d_value;
 });
 const submitted = ref(false);
-const ipa: Ref<typeof IPA> = ref(getIPA());
+const submitting = ref(false);
+const ipa: Ref<IPAType> = ref(getIPA());
 
 provide('ipa', ipa);
 
 const nextLabel = computed(() => {
     if (currentStep.value === 1) return 'Start';
     if (currentStep.value === steps.length) return 'Print';
-    return currentStep.value < steps.length ? 'Next' : 'Submit Project';
+    return currentStep.value < steps.length - 1 ? 'Next' : 'Submit Project';
 });
 const showPrevious = computed(() => {
-    return !(currentStep.value === steps.length || currentStep.value === 1);
+    // return !(currentStep.value === steps.length || currentStep.value === 1);
+    return true;
 });
 
 const showDebug = ref(false);
@@ -104,10 +140,19 @@ const showDebug = ref(false);
 onMounted(() => {
     steps.push(step1, step2, step3, step4, step5, step6, step7);
     stepStatuses.value[0] = true;
+    getBlankIpa().then((response) => {
+        ipa.value = response.aliased_data as unknown as typeof IPA;
+    });
 });
 </script>
 
 <template>
+    <div
+        v-if="submitting"
+        class="submit-overlay"
+    >
+        <ProgressSpinner />
+    </div>
     <div
         id="debug-div"
         :v-show="showDebug"
@@ -208,6 +253,7 @@ onMounted(() => {
                             </h3>
                             <SubmitProjectStep6
                                 ref="step6"
+                                :submission-errors="submissionErrors"
                                 @update:step-is-valid="
                                     setCurrentStepValid($event, 6)
                                 "
@@ -219,6 +265,7 @@ onMounted(() => {
                             </h3>
                             <SubmitProjectStep6
                                 ref="step7"
+                                :submission-errors="submissionErrors"
                                 @update:step-is-valid="
                                     setCurrentStepValid($event, 7)
                                 "
@@ -246,6 +293,20 @@ onMounted(() => {
     font-size: 1.1rem;
     margin: 1rem;
     max-width: 33%;
+}
+
+.submit-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    z-index: 500;
+    left: 0;
+    top: 0;
 }
 
 .p-card-content {
@@ -284,5 +345,10 @@ li {
 
 .heading-black {
     color: black;
+}
+</style>
+<style>
+.p-select-label {
+    font-size: 0.8rem;
 }
 </style>

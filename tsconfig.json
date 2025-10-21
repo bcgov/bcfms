@@ -18,6 +18,8 @@
     "types": [
       "vitest/globals"
     ],
-    "allowImportingTsExtensions": true,
-  }
+    "allowImportingTsExtensions": true
+  },
+  "include": ["bcfms/src/**/*.ts", "bcfms/src/**/*.vue"],
+  "exclude": ["vite-shims", "tests/playwright"]
 }

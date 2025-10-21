@@ -9,6 +9,7 @@ from bcgov_arches_common.views.map import (
 )
 from bcfms.views.search import export_results as bcfms_export_results
 from bcfms.views.root import BcfmsRootView
+from bcfms.views.workflows.ipa import SubmitIPA
 import re
 
 uuid_regex = settings.UUID_REGEX
@@ -30,6 +31,9 @@ urlpatterns = [
         bc_path_prefix(r"^submissions/"), BcfmsRootView.as_view(), name="submissions"
     ),
     re_path(
+        bc_path_prefix(r"^api/submit_ipa/"), SubmitIPA.as_view(), name="submit_ipa"
+    ),
+    re_path(
         bc_path_prefix(r"^bctileserver/(?P<path>.*)$"),
         BCTileserverProxyView.as_view(),
         name="bcfms_tile_server",
@@ -40,10 +44,7 @@ urlpatterns = [
         name="bcfms_local_tile_server",
     ),
     re_path(
-        bc_path_prefix(
-            r"^get_next_report_number/(?P<nodeid>%s)/(?P<typeAbbreviation>%s)$"
-            % (uuid_regex, "[A-Z]{2,4}")
-        ),
+        bc_path_prefix(r"^get_next_report_number/(?P<nodeid>%s)$" % uuid_regex),
         ReportNumberGenerator.as_view(),
         name="get_next_report_number",
     ),
@@ -71,6 +72,7 @@ urlpatterns = [
     ),
     path(bc_path_prefix(), include("bcgov_arches_common.urls")),
     path(bc_path_prefix(), include("arches_component_lab.urls")),
+    path(bc_path_prefix(), include("arches_querysets.urls")),
     path(bc_path_prefix(), include("arches.urls")),
 ]
 

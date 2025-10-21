@@ -24,18 +24,23 @@ if (!ipa || !ipa.value) {
 
 const emit = defineEmits(['update:stepIsValid']);
 
+const projectSiteShape =
+    ProjectDetailsSchema.shape['aliased_data'].shape['project_site'].shape[
+        'aliased_data'
+    ];
+
 const projectLocationForm: Ref<FormInstance | null> = useTemplateRef(
     'projectLocationForm',
 ) as Ref<FormInstance | null>;
 
 const projectLocationResolver = getFlattenResolver(
-    zodResolver(ProjectDetailsSchema),
+    zodResolver(projectSiteShape),
 );
 
 const isValid = () => {
     return baseIsValid(
         projectLocationForm as Ref<FormInstance>,
-        ProjectDetailsSchema,
+        projectSiteShape,
     );
 };
 
@@ -46,7 +51,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.projectDetails,
+        ipa.value.project_details?.aliased_data.project_site?.aliased_data,
         projectLocationForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -62,6 +67,7 @@ defineExpose({ isValid });
         :validateOnValueUpdate="true"
         :resolver="projectLocationResolver"
     >
+        <div>Need to add map</div>
         <LabelledInput
             hint="Provide geographic names and distances -- e.g., A River, 3km north of Highway XX crossing"
             input-name="locationDescription"
@@ -70,7 +76,10 @@ defineExpose({ isValid });
                 graph-slug="project_assessment"
                 node-alias="location_description"
                 :mode="EDIT"
-                :aliased-node-data="ipa?.projectDetails.location_description"
+                :aliased-node-data="
+                    ipa?.project_details.aliased_data?.project_site
+                        ?.aliased_data.location_description
+                "
                 @update:value="updateModelValue($event, 'location_description')"
             />
         </LabelledInput>
@@ -82,7 +91,10 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :should-show-label="false"
-                :aliased-node-data="ipa?.projectDetails.geometry_qualifier"
+                :aliased-node-data="
+                    ipa?.project_details.aliased_data?.project_site
+                        ?.aliased_data.geometry_qualifier
+                "
                 graph-slug="project_assessment"
                 node-alias="geometry_qualifier"
                 @update:value="updateModelValue($event, 'geometry_qualifier')"
@@ -97,7 +109,8 @@ defineExpose({ isValid });
                 :mode="EDIT"
                 :should-show-label="false"
                 :aliased-node-data="
-                    ipa?.projectDetails.multiple_geometry_qualifier
+                    ipa?.project_details.aliased_data?.project_site
+                        ?.aliased_data.multiple_geometry_qualifier
                 "
                 graph-slug="project_assessment"
                 node-alias="multiple_geometry_qualifier"

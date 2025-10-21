@@ -24,18 +24,18 @@ if (!ipa || !ipa.value) {
 
 const emit = defineEmits(['update:stepIsValid']);
 
+const projectTypeShape =
+    ProjectDetailsSchema.shape['aliased_data'].shape['project_type'].shape[
+        'aliased_data'
+    ];
+
 const projectTypeForm: Ref<FormInstance | null> = useTemplateRef(
     'projectTypeForm',
 ) as Ref<FormInstance | null>;
-const projectTypeResolver = getFlattenResolver(
-    zodResolver(ProjectDetailsSchema),
-);
+const projectTypeResolver = getFlattenResolver(zodResolver(projectTypeShape));
 
 const isValid = () => {
-    return baseIsValid(
-        projectTypeForm as Ref<FormInstance>,
-        ProjectDetailsSchema,
-    );
+    return baseIsValid(projectTypeForm as Ref<FormInstance>, projectTypeShape);
 };
 const updateModelValue = function (
     newValue: AliasedNodeData,
@@ -44,7 +44,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.projectDetails,
+        ipa.value.project_details.aliased_data.project_type.aliased_data,
         projectTypeForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -68,13 +68,15 @@ defineExpose({ isValid });
                 graph-slug="project_assessment"
                 node-alias="project_type"
                 :mode="EDIT"
-                :aliased-node-data="ipa?.projectDetails.project_type"
+                :aliased-node-data="
+                    ipa?.project_details?.aliased_data?.project_type
+                "
                 @update:value="updateModelValue($event, 'project_type')"
             />
         </LabelledInput>
         <LabelledInput
             v-if="
-                ipa?.projectDetails.project_type.node_value ===
+                ipa?.project_details.aliased_data?.project_type.node_value ===
                 '54722cfa-61f7-41e9-9e02-5b676e3bcc3e'
             "
             hint="Enter a brief project type"
@@ -84,7 +86,9 @@ defineExpose({ isValid });
                 graph-slug="project_assessment"
                 node-alias="other_project_type"
                 :mode="EDIT"
-                :aliased-node-data="ipa?.projectDetails?.other_project_type"
+                :aliased-node-data="
+                    ipa?.project_details?.aliased_data?.other_project_type
+                "
                 @update:value="updateModelValue($event, 'other_project_type')"
             />
         </LabelledInput>
@@ -95,9 +99,12 @@ defineExpose({ isValid });
             <GenericWidget
                 graph-slug="project_assessment"
                 node-alias="proposed_activity"
-                :aliased-node-data="ipa?.projectDetails?.proposed_activity"
+                :aliased-node-data="
+                    ipa?.project_details?.aliased_data?.project_type
+                        ?.aliased_data.proposed_activity
+                "
                 :mode="EDIT"
-                @update:value="updateModelValue($event, 'other_project_type')"
+                @update:value="updateModelValue($event, 'proposed_activity')"
             />
         </LabelledInput>
     </Form>
