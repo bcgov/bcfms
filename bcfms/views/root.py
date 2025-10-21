@@ -13,10 +13,6 @@ class BcfmsRootView(BaseManagerView):
         context["page_title"] = _("BCFMS Self Service")
         return render(
             request,
-            (
-                "bcfms/root_vue_dev.htm"
-                if settings.DJANGO_VITE["default"]["dev_mode"]
-                else "bcfms/root.htm"
-            ),
+            ("bcfms/root_vue_dev.htm" if settings.USE_VITE else "bcfms/root.htm"),
             context,
         )
