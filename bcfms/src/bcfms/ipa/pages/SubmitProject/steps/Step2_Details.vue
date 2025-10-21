@@ -127,16 +127,16 @@ defineExpose({ isValid });
                 "
             />
         </LabelledInput>
-            <GenericWidget
-                :mode="EDIT"
-                :aliased-node-data="
-                    ipa?.project_details?.aliased_data?.land_act_file_number
-                "
-                graph-slug="project_assessment"
-                node-alias="land_act_file_number"
-                placeholder="Land Act Number"
-                @update:value="updateModelValue($event, 'land_act_file_number')"
-            />
+        <GenericWidget
+            :mode="EDIT"
+            :aliased-node-data="
+                ipa?.project_details?.aliased_data?.land_act_file_number
+            "
+            graph-slug="project_assessment"
+            node-alias="land_act_file_number"
+            placeholder="Land Act Number"
+            @update:value="updateModelValue($event, 'land_act_file_number')"
+        />
         <div class="flex-row">
             <div class="formfield-flex-grow">
                 <LabelledInput
@@ -145,18 +145,19 @@ defineExpose({ isValid });
                     input-name="projectStartDate"
                     :required="true"
                 >
-                <GenericWidget
-                    :mode="EDIT"
-                    :should-show-label="false"
-                    :aliased-node-data="
-                        ipa?.project_details?.aliased_data?.project_start_date
-                    "
-                    graph-slug="project_assessment"
-                    node-alias="project_start_date"
-                    placeholder="Project Start Date"
-                    @update:value="
-                        updateModelValue($event, 'project_start_date')
-                    "
+                    <GenericWidget
+                        :mode="EDIT"
+                        :should-show-label="false"
+                        :aliased-node-data="
+                            ipa?.project_details?.aliased_data
+                                ?.project_start_date
+                        "
+                        graph-slug="project_assessment"
+                        node-alias="project_start_date"
+                        placeholder="Project Start Date"
+                        @update:value="
+                            updateModelValue($event, 'project_start_date')
+                        "
                 /></LabelledInput>
             </div>
             <div class="formfield-flex-grow">
@@ -165,16 +166,18 @@ defineExpose({ isValid });
                     hint="Enter the completion date if known"
                     input-name="projectEndDate"
                 >
-                <GenericWidget
-                    :mode="EDIT"
-                    :should-show-label="false"
-                    :aliased-node-data="
-                        ipa?.project_details?.aliased_data?.project_end_date
-                    "
-                    graph-slug="project_assessment"
-                    node-alias="project_end_date"
-                    placeholder="Project End Date"
-                    @update:value="updateModelValue($event, 'project_end_date')"
+                    <GenericWidget
+                        :mode="EDIT"
+                        :should-show-label="false"
+                        :aliased-node-data="
+                            ipa?.project_details?.aliased_data?.project_end_date
+                        "
+                        graph-slug="project_assessment"
+                        node-alias="project_end_date"
+                        placeholder="Project End Date"
+                        @update:value="
+                            updateModelValue($event, 'project_end_date')
+                        "
                 /></LabelledInput>
             </div>
         </div>
