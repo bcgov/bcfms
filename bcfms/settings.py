@@ -271,7 +271,7 @@ MIDDLEWARE.append(  # this must resolve last MIDDLEWARE entry
 )
 
 STATICFILES_DIRS = build_staticfiles_dirs(app_root=APP_ROOT)
-#STATICFILES_DIRS += (DJANGO_VITE_ASSETS_PATH,)
+# STATICFILES_DIRS += (DJANGO_VITE_ASSETS_PATH,)
 
 TEMPLATES = build_templates_config(
     debug=DEBUG,
@@ -347,6 +347,7 @@ LOGGING = {
             "propagate": True,
         },
         "bcfms": {"handlers": ["file", "console"], "level": "DEBUG", "propagate": True},
+        # "django.db.backends": {"level": "DEBUG", "handlers": ["console"], "propagate": False},
     },
 }
 
@@ -399,6 +400,16 @@ GRAPH_MODEL_CACHE_TIMEOUT = None
 SILENCED_SYSTEM_CHECKS = ["arches.E002"]
 
 OAUTH_CLIENT_ID = ""  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
+
+SESSION_COOKIE_SAMESITE = None  # allows cookie to be sent on third‑party POSTs
+SESSION_COOKIE_SECURE = True  # required for SameSite=None
+CSRF_COOKIE_SAMESITE = None  # if using CSRF in session-backed mode
+CSRF_COOKIE_SECURE = True
+if MODE == "DEV":
+    # trust proxy headers for host/port/proto
+    USE_X_FORWARDED_HOST = True
+    CSRF_TRUSTED_ORIGINS = ["http://localhost:81"]
+    PUBLIC_ORIGIN = "http://localhost:81"
 
 AUTHLIB_OAUTH_CLIENTS = {
     "default": {
