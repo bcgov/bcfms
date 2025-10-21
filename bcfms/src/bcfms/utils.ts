@@ -33,6 +33,14 @@ export const blankDateValue = function () {
     };
 };
 
+export const blankFileListValue = function () {
+    return {
+        display_value: '',
+        node_value: [],
+        details: [] as never[],
+    };
+};
+
 export const currentDateValue = function () {
     return {
         display_value: '',

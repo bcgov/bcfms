@@ -39,6 +39,7 @@ const activateNextStep = async () => {
 const submitIpaData = async () => {
     console.log('submit IPA', ipa);
     submitting.value = true;
+    submissionErrors.value = [];
     submitIPA(ipa.value)
         .then((updatedIPA) => {
             ipa.value = updatedIPA.aliased_data as Promise<IPAType>;

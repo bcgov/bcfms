@@ -9,8 +9,6 @@ from bcfms.util.business_data_proxy import (
 )
 from arches_component_lab.views.node_config_mixin import CardNodeWidgetConfigMixin
 
-import json
-
 from rest_framework.generics import ListCreateAPIView, CreateAPIView
 from rest_framework.parsers import JSONParser
 
@@ -21,13 +19,6 @@ from arches_querysets.rest_framework.serializers import (
     ArchesResourceSerializer,
 )
 from arches_querysets.rest_framework.view_mixins import ArchesModelAPIMixin
-
-
-# class IpaDetailsSerializer(ArchesTileSerializer):
-#     class Meta(ArchesTileSerializer.Meta):
-#         # used by ArchesModelAPIMixin
-#         graph_slug = "project_assessment"  # <- your graph
-#         root_node = "project_details"
 
 
 class IpaSerializer(ArchesResourceSerializer):

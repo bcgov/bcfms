@@ -94,10 +94,6 @@ emit('update:stepIsValid', isValid());
             </div>
         </div>
 
-        <div class="div-grid-cols">
-            <div>Uploaded Files</div>
-        </div>
-
         <GenericWidget
             :mode="VIEW"
             :aliased-node-data="
@@ -209,8 +205,24 @@ emit('update:stepIsValid', isValid());
             graph-slug="project_assessment"
             node-alias="multiple_geometry_qualifier"
         />
+        <GenericWidget
+            :mode="VIEW"
+            :aliased-node-data="
+                ipa?.project_details.aliased_data?.project_documents
+                    ?.aliased_data.project_documents
+            "
+            graph-slug="project_assessment"
+            node-alias="project_documents"
+        />
     </div>
 </template>
+<style>
+[data-node-alias='project_documents'] {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+}
+</style>
 <style scoped>
 .step-title {
     margin-bottom: 1rem;
