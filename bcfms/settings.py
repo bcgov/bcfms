@@ -199,9 +199,35 @@ INSTALLED_APPS = (
     # "silk",
     "storages",
     "bcfms",
+    "arches_querysets",
+    "arches_component_lab",
     "bcgov_arches_common",
 )
 INSTALLED_APPS += ("arches.app",)
+
+USE_VITE = False
+
+if USE_VITE:
+    INSTALLED_APPS += ("django_vite",)
+    DJANGO_VITE = {
+        "default": {
+            "dev_mode": False,
+            "dev_server_port": 5174,
+            "static_url_prefix": "/",
+        }
+    }
+
+    # django_vite SETTINGS
+    BASE_DIR = "/web_root/bcfms/bcfms/src"
+    # Where ViteJS assets are built.
+    DJANGO_VITE_ASSETS_PATH = os.path.join(BASE_DIR, "staticfiles", "dist")
+    # If use HMR or not.
+    # DJANGO_VITE_DEV_MODE = DEBUG
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:5174",
+        "http://localhost:81",
+    ]
+    # END django_vite SETTINGS
 
 ROOT_HOSTCONF = "bcfms.hosts"
 DEFAULT_HOST = "bcfms"
@@ -245,6 +271,7 @@ MIDDLEWARE.append(  # this must resolve last MIDDLEWARE entry
 )
 
 STATICFILES_DIRS = build_staticfiles_dirs(app_root=APP_ROOT)
+# STATICFILES_DIRS += (DJANGO_VITE_ASSETS_PATH,)
 
 TEMPLATES = build_templates_config(
     debug=DEBUG,
@@ -320,6 +347,7 @@ LOGGING = {
             "propagate": True,
         },
         "bcfms": {"handlers": ["file", "console"], "level": "DEBUG", "propagate": True},
+        # "django.db.backends": {"level": "DEBUG", "handlers": ["console"], "propagate": False},
     },
 }
 
@@ -372,6 +400,16 @@ GRAPH_MODEL_CACHE_TIMEOUT = None
 SILENCED_SYSTEM_CHECKS = ["arches.E002"]
 
 OAUTH_CLIENT_ID = ""  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
+
+SESSION_COOKIE_SAMESITE = None  # allows cookie to be sent on third‑party POSTs
+SESSION_COOKIE_SECURE = True  # required for SameSite=None
+CSRF_COOKIE_SAMESITE = None  # if using CSRF in session-backed mode
+CSRF_COOKIE_SECURE = True
+if MODE == "DEV":
+    # trust proxy headers for host/port/proto
+    USE_X_FORWARDED_HOST = True
+    CSRF_TRUSTED_ORIGINS = ["http://localhost:81"]
+    PUBLIC_ORIGIN = "http://localhost:81"
 
 AUTHLIB_OAUTH_CLIENTS = {
     "default": {
@@ -562,7 +600,7 @@ except ImportError:
 
 # Set this if the server-internal URL is different from the externally accessible URL
 WEBPACK_SERVER_ADDRESS = get_env_variable("WEBPACK_SERVER_ADDRESS")
-WEBPACK_DEVELOPMENT_SERVER_PORT = 9000
+WEBPACK_DEVELOPMENT_SERVER_PORT = 5174
 
 ARCHES_NAMESPACE_FOR_DATA_EXPORT = PUBLIC_SERVER_ADDRESS
 ADMIN_MEDIA_PREFIX = STATIC_URL + "admin/"

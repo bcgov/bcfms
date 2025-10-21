@@ -27,7 +27,7 @@ module.exports = () => {
         global.SITE_PACKAGES_DIRECTORY = parsedData['SITE_PACKAGES_DIRECTORY'];
         global.ROOT_DIR = parsedData['ROOT_DIR'];
         global.STATIC_URL = parsedData['STATIC_URL'];
-        global.PUBLIC_SERVER_ADDRESS = parsedData['WEBPACK_SERVER_ADDRESS'];
+        global.PUBLIC_SERVER_ADDRESS = parsedData['WEBPACK_SERVER_ADDRESS'] ? parsedData['WEBPACK_SERVER_ADDRESS'] : parsedData['PUBLIC_SERVER_ADDRESS'];
         global.WEBPACK_DEVELOPMENT_SERVER_PORT = parsedData['WEBPACK_DEVELOPMENT_SERVER_PORT'];
 
         // END get data from `.frontend-configuration-settings.json`
@@ -62,7 +62,7 @@ module.exports = () => {
             return acc;
         }, {});
         const projectJavascriptRelativeFilepathToAbsoluteFilepathLookup = Object.entries(projectEntryPointConfiguration).reduce((acc, [path, config]) => {
-            console.log(`Path: ${path}`);
+            // console.log(`Path: ${path}`);
             acc[path + '$'] = Path.resolve(__dirname, path, config['import']);
             return acc;
         }, {});
@@ -451,7 +451,7 @@ module.exports = () => {
                                             if (serverAddress.charAt(serverAddress.length - 1) === '/') {
                                                 serverAddress = serverAddress.slice(0, -1)
                                             }
-                                            
+
                                             resp = await fetch(serverAddress + templatePath);
 
                                             if (resp.status === 500) {

@@ -15,8 +15,11 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "types": ["vitest/globals"],
+    "types": [
+      "vitest/globals"
+    ],
     "allowImportingTsExtensions": true
-  }
+  },
+  "include": ["bcfms/src/**/*.ts", "bcfms/src/**/*.vue"],
+  "exclude": ["vite-shims", "tests/playwright"]
 }
-
