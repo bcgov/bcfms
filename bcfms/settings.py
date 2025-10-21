@@ -271,7 +271,7 @@ MIDDLEWARE.append(  # this must resolve last MIDDLEWARE entry
 )
 
 STATICFILES_DIRS = build_staticfiles_dirs(app_root=APP_ROOT)
-STATICFILES_DIRS += (DJANGO_VITE_ASSETS_PATH,)
+#STATICFILES_DIRS += (DJANGO_VITE_ASSETS_PATH,)
 
 TEMPLATES = build_templates_config(
     debug=DEBUG,
