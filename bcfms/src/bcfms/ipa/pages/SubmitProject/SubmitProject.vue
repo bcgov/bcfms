@@ -93,7 +93,7 @@ provide('ipa', ipa);
 const nextLabel = computed(() => {
     if (currentStep.value === 1) return 'Start';
     if (currentStep.value === steps.length) return 'Print';
-    return currentStep.value < steps.length ? 'Next' : 'Submit';
+    return currentStep.value < steps.length ? 'Next' : 'Submit Project';
 });
 const showPrevious = computed(() => {
     return !(currentStep.value === steps.length || currentStep.value === 1);
@@ -238,7 +238,9 @@ onMounted(() => {
         </Stepper>
     </Panel>
 </template>
-
+<style>
+@import url('@/bcgov_arches_common/css/arches_common.css');
+</style>
 <style scoped>
 .dashboard-card {
     font-size: 1.1rem;

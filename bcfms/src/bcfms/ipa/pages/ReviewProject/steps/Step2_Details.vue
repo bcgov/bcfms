@@ -61,32 +61,44 @@ defineExpose({ isValid });
     >
         <div class="flex-row">
             <div class="formfield-flex-grow">
-                <GenericWidget
-                    :mode="EDIT"
-                    :aliased-node-data="
-                        ipa.initialProjectReview?.assessment_start_date
-                    "
-                    graph-slug="project_assessment"
-                    node-alias="assessment_start_date"
-                    placeholder="Assessment Start Date"
-                    @update:value="
-                        updateModelValue($event, 'assessment_start_date')
-                    "
-                />
+                <LabelledInput
+                    hint="Date the project was submitted"
+                    input-name="proximityToFossils"
+                >
+                    <GenericWidget
+                        :mode="EDIT"
+                        :aliased-node-data="
+                            ipa.initialProjectReview?.assessment_start_date
+                        "
+                        graph-slug="project_assessment"
+                        node-alias="assessment_start_date"
+                        placeholder="Assessment Start Date"
+                        @update:value="
+                            updateModelValue($event, 'assessment_start_date')
+                        "
+                    />
+                </LabelledInput>
             </div>
             <div class="formfield-flex-grow">
-                <GenericWidget
-                    :mode="EDIT"
-                    :aliased-node-data="
-                        ipa.initialProjectReview?.assessment_completion_date
-                    "
-                    graph-slug="project_assessment"
-                    node-alias="assessment_completion_date"
-                    placeholder="Assessment Completion Date"
-                    @update:value="
-                        updateModelValue($event, 'assessment_completion_date')
-                    "
-                />
+                <LabelledInput
+                    hint="Date the review must be completed"
+                    input-name="proximityToFossils"
+                >
+                    <GenericWidget
+                        :mode="EDIT"
+                        :aliased-node-data="
+                            ipa.initialProjectReview?.assessment_completion_date
+                        "
+                        graph-slug="project_assessment"
+                        node-alias="assessment_completion_date"
+                        placeholder="Assessment Completion Date"
+                        @update:value="
+                            updateModelValue(
+                                $event,
+                                'assessment_completion_date',
+                            )
+                        "
+                /></LabelledInput>
             </div>
         </div>
         <p>Intersects with Important Fossil Area</p>
@@ -115,14 +127,11 @@ defineExpose({ isValid });
             >
         </div>
         <LabelledInput
-            label="Proximity To Fossils"
             hint="Identify the project proximity to known fossils"
             input-name="proximityToFossils"
-            :required="true"
         >
             <GenericWidget
                 :mode="EDIT"
-                :should-show-label="false"
                 :aliased-node-data="ipa.initialProjectReview?.proximity_to_fos"
                 placeholder="Fossil Proximity"
                 graph-slug="project_assessment"
@@ -131,14 +140,11 @@ defineExpose({ isValid });
             />
         </LabelledInput>
         <LabelledInput
-            label="Ground Disturbance"
             hint="Choose type of ground disturbance"
             input-name="groundDisturbance"
-            :required="true"
         >
             <GenericWidget
                 :mode="EDIT"
-                :should-show-label="false"
                 :aliased-node-data="
                     ipa.initialProjectReview?.ground_disturbance
                 "

@@ -95,20 +95,18 @@ defineExpose({ isValid });
         >
             <GenericWidget
                 :mode="EDIT"
+                :should-show-label="false"
                 :aliased-node-data="ipa?.projectDetails.industry_company_name"
                 graph-slug="project_assessment"
                 node-alias="industry_company_name"
-                :should-show-label="false"
                 @update:value="
                     updateModelValue($event, 'industry_company_name')
                 "
             />
         </LabelledInput>
         <LabelledInput
-            label="Authorizing Agency"
             hint="Select the Agency that is authorizing the project"
             input-name="projectAuthorizingAgency"
-            :required="true"
         >
             <GenericWidget
                 :mode="EDIT"
@@ -117,44 +115,60 @@ defineExpose({ isValid });
                 "
                 graph-slug="project_assessment"
                 node-alias="project_authorizing_agency"
-                :should-show-label="false"
                 @update:value="
                     updateModelValue($event, 'project_authorizing_agency')
                 "
             />
         </LabelledInput>
-        <LabelledInput input-name="landActFileNumber">
-            <GenericWidget
-                :mode="EDIT"
-                :aliased-node-data="ipa?.projectDetails?.land_act_file_number"
-                graph-slug="project_assessment"
-                node-alias="land_act_file_number"
-                placeholder="Land Act Number"
-                @update:value="updateModelValue($event, 'land_act_file_number')"
-            />
-        </LabelledInput>
+        <GenericWidget
+            :mode="EDIT"
+            :aliased-node-data="ipa?.projectDetails?.land_act_file_number"
+            graph-slug="project_assessment"
+            node-alias="land_act_file_number"
+            placeholder="Land Act Number"
+            @update:value="updateModelValue($event, 'land_act_file_number')"
+        />
         <div class="flex-row">
             <div class="formfield-flex-grow">
-                <GenericWidget
-                    :mode="EDIT"
-                    :aliased-node-data="ipa?.projectDetails.project_start_date"
-                    graph-slug="project_assessment"
-                    node-alias="project_start_date"
-                    placeholder="Project Start Date"
-                    @update:value="
-                        updateModelValue($event, 'project_start_date')
-                    "
-                />
+                <LabelledInput
+                    label="Estimated Project Start Date"
+                    hint="Enter the estimated start date"
+                    input-name="projectStartDate"
+                    :required="true"
+                >
+                    <GenericWidget
+                        :mode="EDIT"
+                        :should-show-label="false"
+                        :aliased-node-data="
+                            ipa?.projectDetails.project_start_date
+                        "
+                        graph-slug="project_assessment"
+                        node-alias="project_start_date"
+                        placeholder="Project Start Date"
+                        @update:value="
+                            updateModelValue($event, 'project_start_date')
+                        "
+                /></LabelledInput>
             </div>
             <div class="formfield-flex-grow">
-                <GenericWidget
-                    :mode="EDIT"
-                    :aliased-node-data="ipa?.projectDetails.project_end_date"
-                    graph-slug="project_assessment"
-                    node-alias="project_end_date"
-                    placeholder="Project End Date"
-                    @update:value="updateModelValue($event, 'project_end_date')"
-                />
+                <LabelledInput
+                    label="Estimated Project End Date"
+                    hint="Enter the completion date if known"
+                    input-name="projectEndDate"
+                >
+                    <GenericWidget
+                        :mode="EDIT"
+                        :should-show-label="false"
+                        :aliased-node-data="
+                            ipa?.projectDetails.project_end_date
+                        "
+                        graph-slug="project_assessment"
+                        node-alias="project_end_date"
+                        placeholder="Project End Date"
+                        @update:value="
+                            updateModelValue($event, 'project_end_date')
+                        "
+                /></LabelledInput>
             </div>
         </div>
     </Form>
