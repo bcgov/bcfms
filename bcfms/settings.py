@@ -197,7 +197,6 @@ INSTALLED_APPS = (
     "django_celery_results",
     # "compressor",
     # "silk",
-    "django_vite",
     "storages",
     "bcfms",
     "arches_querysets",
@@ -206,24 +205,29 @@ INSTALLED_APPS = (
 )
 INSTALLED_APPS += ("arches.app",)
 
-DJANGO_VITE = {
-    "default": {
-        "dev_mode": False,
-        "dev_server_port": 5174,
-        "static_url_prefix": "/",
-    }
-}
+USE_VITE = False
 
-# django_vite SETTINGS
-BASE_DIR = "/web_root/bcfms/bcfms/src"
-# Where ViteJS assets are built.
-DJANGO_VITE_ASSETS_PATH = os.path.join(BASE_DIR, "staticfiles", "dist")
-# If use HMR or not.
-# DJANGO_VITE_DEV_MODE = DEBUG
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5174",
-]
-# END django_vite SETTINGS
+if USE_VITE:
+    INSTALLED_APPS += ("django_vite",)
+    DJANGO_VITE = {
+        "default": {
+            "dev_mode": False,
+            "dev_server_port": 5174,
+            "static_url_prefix": "/",
+        }
+    }
+
+    # django_vite SETTINGS
+    BASE_DIR = "/web_root/bcfms/bcfms/src"
+    # Where ViteJS assets are built.
+    DJANGO_VITE_ASSETS_PATH = os.path.join(BASE_DIR, "staticfiles", "dist")
+    # If use HMR or not.
+    # DJANGO_VITE_DEV_MODE = DEBUG
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:5174",
+        "http://localhost:81",
+    ]
+    # END django_vite SETTINGS
 
 ROOT_HOSTCONF = "bcfms.hosts"
 DEFAULT_HOST = "bcfms"
