@@ -20,5 +20,5 @@
     ],
     "allowImportingTsExtensions": true
   },
-  "exclude": ["vite-shims/*"]
+  "exclude": ["vite-shims", "tests/playwright"]
 }
