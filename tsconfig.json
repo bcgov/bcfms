@@ -18,6 +18,7 @@
     "types": [
       "vitest/globals"
     ],
-    "allowImportingTsExtensions": true,
-  }
+    "allowImportingTsExtensions": true
+  },
+  "exclude": ["vite-shims/*"]
 }
