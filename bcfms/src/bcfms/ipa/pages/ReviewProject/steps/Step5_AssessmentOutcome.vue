@@ -23,78 +23,91 @@ emit('update:stepIsValid', isValid());
     <div>
         <p class="step-title">Project Assessment Details</p>
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.project_details.assessment_start_date"
+            :aliased-node-data="ipa?.initialProjectReview.assessment_start_date"
             graph-slug="project_assessment"
             node-alias="assessment_start_date"
         />
-        -
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.project_details.assessment_completion_date"
+            :aliased-node-data="
+                ipa?.initialProjectReview.assessment_completion_date
+            "
             graph-slug="project_assessment"
             node-alias="assessment_completion_date"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.project_details.intersects_ifa"
+            :aliased-node-data="ipa?.initialProjectReview.intersects_ifa"
             graph-slug="project_assessment"
             node-alias="intersects_ifa"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.project_details.proximity_to_fos"
+            :aliased-node-data="ipa?.initialProjectReview.proximity_to_fos"
             graph-slug="project_assessment"
             node-alias="proximity_to_fos"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.project_details.ground_disturbance"
+            :aliased-node-data="ipa?.initialProjectReview.ground_disturbance"
             graph-slug="project_assessment"
             node-alias="ground_disturbance"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.project_details.metamorphic_rock"
+            :aliased-node-data="ipa?.initialProjectReview.metamorphic_rock"
             graph-slug="project_assessment"
             node-alias="metamorphic_rock"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.project_details.igneous_rock"
+            :aliased-node-data="ipa?.initialProjectReview.igneous_rock"
             graph-slug="project_assessment"
             node-alias="igneous_rock"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.project_details.sedimentary_rock"
+            :aliased-node-data="ipa?.initialProjectReview.sedimentary_rock"
             graph-slug="project_assessment"
             node-alias="sedimentary_rock"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.project_details.quaternary_deposits"
+            :aliased-node-data="ipa?.initialProjectReview.quaternary_deposits"
             graph-slug="project_assessment"
             node-alias="quaternary_deposits"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.project_details.frpr"
+            :aliased-node-data="ipa?.initialProjectReview.frpr"
             graph-slug="project_assessment"
             node-alias="frpr"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details.initial_review_level_of_risk
+                ipa?.initialProjectReview.initial_review_level_of_risk
             "
             graph-slug="project_assessment"
             node-alias="initial_review_level_of_risk"
         />
         <GenericWidget
+            class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details.initial_review_internal_notes
+                ipa?.initialProjectReview.initial_review_internal_notes
             "
             graph-slug="project_assessment"
             node-alias="initial_review_internal_notes"
