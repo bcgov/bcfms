@@ -76,7 +76,7 @@ defineExpose({ isValid });
         </LabelledInput>
         <LabelledInput
             v-if="
-                ipa?.projectDetails.project_type.node_value ===
+                ipa?.project_details.aliased_data?.project_type.node_value ===
                 '54722cfa-61f7-41e9-9e02-5b676e3bcc3e'
             "
             hint="Enter a brief project type"
