@@ -24,11 +24,7 @@ const { $gettext } = useGettext();
                 />
                 <Card
                     :label="$gettext('Review Project')"
-                    :subtitle="
-                        $gettext(
-                            'Add aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa new project',
-                        )
-                    "
+                    :subtitle="$gettext('Review an existing project')"
                     :description="$gettext('Review existing project')"
                     :icon="'fa fa-file'"
                     :class="'dashboard-card ipa'"
@@ -43,5 +39,6 @@ const { $gettext } = useGettext();
 .dashboard-div-flex {
     display: flex;
     max-width: 46rem;
+    flex-wrap: wrap;
 }
 </style>
