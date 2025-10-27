@@ -9,7 +9,7 @@ import {
     DateValueSchema,
     DateValueRequiredSchema,
 } from '@/bcgov_arches_common/datatypes/date/validation/zod.ts';
-import { getStringValueRequiredSchema } from '@/bcgov_arches_common/datatypes/string/validation/zod.ts';
+import { getRichTextValueRequiredSchema } from '@/bcgov_arches_common/datatypes/string/validation/zod.ts';
 
 const InitialProjectReviewSchema = z.object({
     assessment_start_date: DateValueRequiredSchema,
@@ -23,8 +23,8 @@ const InitialProjectReviewSchema = z.object({
     quaternary_deposits: ConceptValueRequiredSchema,
     frpr: ConceptValueRequiredSchema,
     initial_review_level_of_risk: ConceptValueRequiredSchema,
-    initial_review_internal_notes: getStringValueRequiredSchema(500),
-    initial_review_outcome: getStringValueRequiredSchema(500),
+    initial_review_internal_notes: getRichTextValueRequiredSchema(500),
+    initial_review_outcome: getRichTextValueRequiredSchema(500),
 });
 
 const requiredInitialProjectReviewSchema = InitialProjectReviewSchema.partial();
