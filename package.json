@@ -57,7 +57,7 @@
         "arches": "github:bcgov/arches#v7.6.12.1_bcgov",
         "arches-component-lab": "github:archesproject/arches-component-lab#main",
         "arches-querysets": "github:archesproject/arches-querysets#main",
-        "bcgov_arches_common": "github:bcgov/bcgov-arches-common#release/1.2.7",
+        "bcgov_arches_common": "github:bcgov/bcgov-arches-common#brf/bugfix/remove_hard_coded_urls",
         "ckeditor5": "44.2.0",
         "dayjs": "^1.11.13",
         "js-cookie": "^2.1.1",
