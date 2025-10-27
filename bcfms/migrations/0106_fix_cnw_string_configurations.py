@@ -12,7 +12,7 @@ def ensure_default_string_i18n_value(apps, schema_editor):
             cnw.config.raw_value["defaultValue"] = {
                 "en": {"value": "", "direction": "ltr"}
             }
-            cnw.config.save()
+            cnw.save()
 
 
 class Migration(migrations.Migration):
