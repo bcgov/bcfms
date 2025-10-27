@@ -14,11 +14,7 @@ import {
     systemLanguageKey,
 } from '@/bcgov_arches_common/constants.ts';
 import { routeNames } from '@/bcfms/routes.ts';
-import {
-    fetchUser,
-    setUrlPrefix,
-    setUrlContextRoot,
-} from '@/bcgov_arches_common/api.ts';
+import { fetchUser } from '@/bcgov_arches_common/api.ts';
 import PageHeader from '@/bcgov_arches_common/components/header/PageHeader.vue';
 import SideNav from '@/bcgov_arches_common/components/sidenav/SideNav.vue';
 import type { Ref } from 'vue';
@@ -40,8 +36,6 @@ const router = useRouter();
 const route = useRoute();
 const toast = useToast();
 const { $gettext } = useGettext();
-setUrlPrefix('http://localhost:81');
-setUrlContextRoot('/bc-fossil-management');
 
 router.beforeEach(async (to, _from, next) => {
     try {
