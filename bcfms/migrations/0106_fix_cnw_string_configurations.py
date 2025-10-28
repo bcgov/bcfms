@@ -14,6 +14,11 @@ def ensure_default_string_i18n_value(apps, schema_editor):
             }
             cnw.save()
 
+    for cnw in CardXNodeXWidget.objects.filter(node__datatype="date").all():
+        if cnw.config.raw_value["defaultValue"]:
+            cnw.config.raw_value["defaultValue"] = ""
+            cnw.save()
+
 
 class Migration(migrations.Migration):
 
