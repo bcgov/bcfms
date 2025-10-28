@@ -24,9 +24,9 @@ classifiers = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "arches @ git+https://github.com/bcgov/arches@7.6.12+bcgov.1#egg=arches",
-    "arches-component-lab",
-    "arches-querysets",
+    "arches @ git+https://github.com/bcgov/arches@7.6.12+bcgov.1",
+    "arches-component-lab @ git+https://github.com/archesproject/arches-component-lab@main",
+    "arches-querysets @ git+https://github.com/archesproject/arches-querysets@main",
     "bcgov_arches_common @ git+https://github.com/bcgov/bcgov-arches-common@brf/bugfix/remove_hard_coded_urls",
     "django-storages==1.13",
     "python-dotenv",
