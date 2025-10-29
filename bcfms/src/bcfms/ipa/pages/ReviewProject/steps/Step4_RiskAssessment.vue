@@ -27,13 +27,13 @@ const projectRiskAssessmentForm: Ref<FormInstance | null> = useTemplateRef(
     'projectRiskAssessmentForm',
 ) as Ref<FormInstance | null>;
 const projectRiskAssessmentResolver = getFlattenResolver(
-    zodResolver(InitialProjectReviewSchema),
+    zodResolver(InitialProjectReviewSchema.shape['aliased_data']),
 );
 
 const isValid = () => {
     return baseIsValid(
         projectRiskAssessmentForm as Ref<FormInstance>,
-        InitialProjectReviewSchema,
+        InitialProjectReviewSchema.shape['aliased_data'],
     );
 };
 const updateModelValue = function (
@@ -43,7 +43,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.initialProjectReview,
+        ipa.value.initial_project_review?.aliased_data,
         projectRiskAssessmentForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -68,7 +68,9 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :should-show-label="false"
-                :aliased-node-data="ipa.initialProjectReview?.frpr"
+                :aliased-node-data="
+                    ipa.initial_project_review?.aliased_data?.frpr
+                "
                 placeholder="Select FRPR value"
                 graph-slug="project_assessment"
                 node-alias="frpr"
@@ -85,7 +87,8 @@ defineExpose({ isValid });
                 :mode="EDIT"
                 :should-show-label="false"
                 :aliased-node-data="
-                    ipa.initialProjectReview?.initial_review_level_of_risk
+                    ipa.initial_project_review?.aliased_data
+                        ?.initial_review_level_of_risk
                 "
                 placeholder="Select Initial Review Level of Risk"
                 graph-slug="project_assessment"
@@ -105,7 +108,8 @@ defineExpose({ isValid });
                 :mode="EDIT"
                 :should-show-label="false"
                 :aliased-node-data="
-                    ipa.initialProjectReview?.initial_review_internal_notes
+                    ipa.initial_project_review?.aliased_data
+                        ?.initial_review_internal_notes
                 "
                 placeholder="Enter Initial Review Internal Notes"
                 graph-slug="project_assessment"

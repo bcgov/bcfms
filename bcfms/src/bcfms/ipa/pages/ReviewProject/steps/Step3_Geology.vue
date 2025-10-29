@@ -26,13 +26,13 @@ const projectGeologyForm: Ref<FormInstance | null> = useTemplateRef(
     'projectGeologyForm',
 ) as Ref<FormInstance | null>;
 const projectGeologyResolver = getFlattenResolver(
-    zodResolver(InitialProjectReviewSchema),
+    zodResolver(InitialProjectReviewSchema.shape['aliased_data']),
 );
 
 const isValid = () => {
     return baseIsValid(
         projectGeologyForm as Ref<FormInstance>,
-        InitialProjectReviewSchema,
+        InitialProjectReviewSchema.shape['aliased_data'],
     );
 };
 const updateModelValue = function (
@@ -42,7 +42,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.initialProjectReview,
+        ipa.value.initial_project_review?.aliased_data,
         projectGeologyForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -67,7 +67,9 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :should-show-label="false"
-                :aliased-node-data="ipa.initialProjectReview?.metamorphic_rock"
+                :aliased-node-data="
+                    ipa.initial_project_review?.aliased_data?.metamorphic_rock
+                "
                 placeholder="Select Metamorphic Rock"
                 graph-slug="project_assessment"
                 node-alias="metamorphic_rock"
@@ -82,7 +84,9 @@ defineExpose({ isValid });
         >
             <GenericWidget
                 :mode="EDIT"
-                :aliased-node-data="ipa.initialProjectReview?.igneous_rock"
+                :aliased-node-data="
+                    ipa.initial_project_review?.aliased_data?.igneous_rock
+                "
                 :should-show-label="false"
                 placeholder="Select Igneous Rock"
                 graph-slug="project_assessment"
@@ -98,7 +102,9 @@ defineExpose({ isValid });
         >
             <GenericWidget
                 :mode="EDIT"
-                :aliased-node-data="ipa.initialProjectReview?.sedimentary_rock"
+                :aliased-node-data="
+                    ipa.initial_project_review?.aliased_data?.sedimentary_rock
+                "
                 :should-show-label="false"
                 placeholder="Select Sedimentary Rock"
                 graph-slug="project_assessment"
@@ -115,7 +121,8 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa.initialProjectReview?.quaternary_deposits
+                    ipa.initial_project_review?.aliased_data
+                        ?.quaternary_deposits
                 "
                 :should-show-label="false"
                 placeholder="Select Quaternary Sediments"

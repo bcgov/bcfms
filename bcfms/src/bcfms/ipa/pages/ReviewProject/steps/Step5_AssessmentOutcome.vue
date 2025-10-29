@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { inject } from 'vue';
 import type { Ref } from 'vue';
+import Message from 'primevue/message';
+import type { ErrorMessage } from '@/bcfms/types.ts';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { VIEW } from '@/arches_component_lab/widgets/constants.ts';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 
 const ipa = inject<Ref<IPA>>('ipa');
+
+defineProps<{
+    submissionErrors: ErrorMessage[];
+}>();
 
 const isValid = () => {
     console.log(ipa?.value);
@@ -22,10 +28,70 @@ emit('update:stepIsValid', isValid());
 <template>
     <div>
         <p class="step-title">Project Assessment Details</p>
+        <section
+            v-if="submissionErrors && submissionErrors.length"
+            class="mt-4"
+        >
+            <h3>Submission Errors</h3>
+            <div>
+                <Message
+                    v-for="(error, index) in submissionErrors"
+                    :key="index"
+                    severity="error"
+                    :closable="false"
+                >
+                    <div>
+                        <span>{{ error.error }}</span>
+                        <span>({{ error.type }})</span>
+                    </div>
+                    <div>
+                        {{ error.message }}
+                    </div>
+                </Message>
+            </div>
+        </section>
+
+        <p class="p-margin-top-bottom">
+            Please review the entered information prior to submitting the
+            application:
+        </p>
+        <p class="p-underline-bold">Filing Details</p>
+        <div
+            v-if="
+                ipa?.assessment_details?.aliased_data?.assessment_start_date
+                    .display_value
+            "
+            class="div-grid-cols"
+        >
+            <div>Submission Date</div>
+            <div>
+                {{
+                    ipa?.assessment_details?.aliased_data?.assessment_start_date
+                        .display_value
+                }}
+            </div>
+        </div>
+
+        <div
+            v-if="
+                ipa?.assessment_details?.aliased_data?.ipa_number?.display_value
+            "
+            class="div-grid-cols"
+        >
+            <div class="div-grid-cols">Reference Number</div>
+            <div class="div-grid-cols">
+                {{
+                    ipa?.assessment_details?.aliased_data?.ipa_number
+                        ?.display_value
+                }}
+            </div>
+        </div>
         <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.initialProjectReview.assessment_start_date"
+            :aliased-node-data="
+                ipa?.initial_project_review?.aliased_data?.assessment_start_date
+            "
             graph-slug="project_assessment"
             node-alias="assessment_start_date"
         />
@@ -33,7 +99,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.initialProjectReview.assessment_completion_date
+                ipa?.initial_project_review?.aliased_data
+                    ?.assessment_completion_date
             "
             graph-slug="project_assessment"
             node-alias="assessment_completion_date"
@@ -41,56 +108,70 @@ emit('update:stepIsValid', isValid());
         <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.initialProjectReview.intersects_ifa"
+            :aliased-node-data="
+                ipa?.initial_project_review?.aliased_data?.intersects_ifa
+            "
             graph-slug="project_assessment"
             node-alias="intersects_ifa"
         />
         <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.initialProjectReview.proximity_to_fos"
+            :aliased-node-data="
+                ipa?.initial_project_review?.aliased_data?.proximity_to_fos
+            "
             graph-slug="project_assessment"
             node-alias="proximity_to_fos"
         />
         <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.initialProjectReview.ground_disturbance"
+            :aliased-node-data="
+                ipa?.initial_project_review?.aliased_data?.ground_disturbance
+            "
             graph-slug="project_assessment"
             node-alias="ground_disturbance"
         />
         <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.initialProjectReview.metamorphic_rock"
+            :aliased-node-data="
+                ipa?.initial_project_review?.aliased_data?.metamorphic_rock
+            "
             graph-slug="project_assessment"
             node-alias="metamorphic_rock"
         />
         <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.initialProjectReview.igneous_rock"
+            :aliased-node-data="
+                ipa?.initial_project_review?.aliased_data?.igneous_rock
+            "
             graph-slug="project_assessment"
             node-alias="igneous_rock"
         />
         <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.initialProjectReview.sedimentary_rock"
+            :aliased-node-data="
+                ipa?.initial_project_review?.aliased_data?.sedimentary_rock
+            "
             graph-slug="project_assessment"
             node-alias="sedimentary_rock"
         />
         <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.initialProjectReview.quaternary_deposits"
+            :aliased-node-data="
+                ipa?.initial_project_review?.aliased_data?.quaternary_deposits
+            "
             graph-slug="project_assessment"
             node-alias="quaternary_deposits"
         />
         <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.initialProjectReview.frpr"
+            :aliased-node-data="ipa?.initial_project_review?.aliased_data?.frpr"
             graph-slug="project_assessment"
             node-alias="frpr"
         />
@@ -98,7 +179,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.initialProjectReview.initial_review_level_of_risk
+                ipa?.initial_project_review?.aliased_data
+                    ?.initial_review_level_of_risk
             "
             graph-slug="project_assessment"
             node-alias="initial_review_level_of_risk"
@@ -107,7 +189,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.initialProjectReview.initial_review_internal_notes
+                ipa?.initial_project_review?.aliased_data
+                    ?.initial_review_internal_notes
             "
             graph-slug="project_assessment"
             node-alias="initial_review_internal_notes"
