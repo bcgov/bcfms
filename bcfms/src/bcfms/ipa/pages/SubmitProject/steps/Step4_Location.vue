@@ -8,6 +8,8 @@ import { zodResolver } from '@primevue/forms/resolvers/zod';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
+import BCGenericWidget from '@/bcgov_arches_common/generics/BCGenericWidget/BCGenericWidget.vue';
+import type { AllowableWidgetOverrides } from '@/bcgov_arches_common/generics/types.ts';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
 import {
     isValid as baseIsValid,
@@ -57,6 +59,13 @@ const updateModelValue = function (
     emit('update:stepIsValid', isValid());
 };
 
+const mapOverrides = {
+    widget: {
+        component:
+            'bcgov_arches_common/widgets/MapDropZoneWidget/MapDropZoneWidget.vue',
+    },
+} satisfies Partial<AllowableWidgetOverrides>;
+
 defineExpose({ isValid });
 </script>
 <template>
@@ -67,7 +76,17 @@ defineExpose({ isValid });
         :validateOnValueUpdate="true"
         :resolver="projectLocationResolver"
     >
-        <div>Need to add map</div>
+        <BCGenericWidget
+            graph-slug="project_assessment"
+            node-alias="project_location"
+            :config-overrides="mapOverrides"
+            :mode="EDIT"
+            :aliased-node-data="
+                ipa?.project_details.aliased_data?.project_site?.aliased_data
+                    .project_location
+            "
+            @update:value="updateModelValue($event, 'project_location')"
+        ></BCGenericWidget>
         <LabelledInput
             hint="Provide geographic names and distances -- e.g., A River, 3km north of Highway XX crossing"
             input-name="locationDescription"

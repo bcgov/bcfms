@@ -1,8 +1,10 @@
 import type { Ref } from 'vue';
 import type { LanguageValue } from '@/arches_component_lab/datatypes/string/types.ts';
+import type { GeoJSONFeatureCollectionValue } from '@/bcgov_arches_common/datatypes/geojson-feature-collection/types.ts';
 import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
 import type { FormInstance } from '@primevue/forms';
 import type { GenericZodObjectType } from '@/bcgov_arches_common/validation-utils.ts';
+import type { Feature } from 'geojson';
 
 export const blankStringValue = function () {
     return {
@@ -37,6 +39,17 @@ export const blankFileListValue = function () {
         node_value: [],
         details: [] as never[],
     };
+};
+
+export const blankGeoJSONValue = function (): GeoJSONFeatureCollectionValue {
+    return {
+        display_value: '',
+        node_value: {
+            type: 'FeatureCollection',
+            features: [] as Feature[],
+        },
+        details: [] as never[],
+    } satisfies GeoJSONFeatureCollectionValue;
 };
 
 export const currentDateValue = function () {
