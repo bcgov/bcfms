@@ -131,8 +131,7 @@ const nextLabel = computed(() => {
     return currentStep.value < steps.length - 1 ? 'Next' : 'Submit Project';
 });
 const showPrevious = computed(() => {
-    // return !(currentStep.value === steps.length || currentStep.value === 1);
-    return true;
+    return !(currentStep.value === steps.length || currentStep.value === 1);
 });
 
 const showDebug = ref(false);
