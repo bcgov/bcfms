@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useTemplateRef, inject } from 'vue';
+import { computed, ref, useTemplateRef, inject } from 'vue';
 import type { Ref } from 'vue';
 
+import type { StringValue } from '@/arches_component_lab/datatypes/string/types.ts';
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
 import { Form, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
@@ -15,6 +16,7 @@ import {
 } from '@/bcfms/utils.ts';
 import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
 import { getFlattenResolver } from '@/bcgov_arches_common/validation-utils.ts';
+import { htmlToPlainText } from '@/bcgov_arches_common/datatypes/string/validation/utils.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
 const emit = defineEmits(['update:stepIsValid']);
@@ -46,10 +48,20 @@ const updateModelValue = function (
         ipa.value.initial_project_review?.aliased_data,
         projectRiskAssessmentForm as Ref<FormInstance>,
     );
+    if (
+        attribute_name === 'initial_review_internal_notes' &&
+        (newValue as StringValue)?.node_value?.['en']?.['value']
+    ) {
+        internalReviewLength.value = htmlToPlainText(
+            (newValue as StringValue).node_value?.['en']?.['value'] ?? '',
+        ).length;
+    }
     emit('update:stepIsValid', isValid());
 };
 
 defineExpose({ isValid });
+const internalReviewLength = ref(0);
+const internalReviewHint = computed(() => `${internalReviewLength.value}/500`);
 </script>
 <template>
     <Form
@@ -100,7 +112,7 @@ defineExpose({ isValid });
         </LabelledInput>
         <LabelledInput
             label="Initial Review Internal Notes"
-            hint="???"
+            :hint="internalReviewHint"
             input-name="initialReviewInternalNotes"
             :required="true"
         >
