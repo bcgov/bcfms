@@ -1,4 +1,5 @@
 import type { ProjectDetailsType } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
+import type { InitialProjectReviewType } from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
 import type { IPAType } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { getToken } from '@/bcgov_arches_common/api.ts';
 import arches from 'arches';
@@ -14,17 +15,39 @@ export async function getBlankIpa(): Promise<IPAType> {
 }
 
 export async function submitIPA(
-    ipaProjectDetails: ProjectDetailsType,
+    ...args:
+        | [ipaProjectDetails: ProjectDetailsType]
+        | [ipaInitialProjectReview: InitialProjectReviewType]
 ): Promise<IPAType> {
     const csrftoken = await getToken();
-    const files =
-        ipaProjectDetails.project_details.aliased_data.project_documents
-            .aliased_data.project_documents.node_value;
     const fd = new FormData();
-    fd.append('json', JSON.stringify({ project_details: ipaProjectDetails }));
-    files.forEach((file: FileReference) => {
-        fd.append(`file-list_${file.node_id}`, file.file as File, file.name);
-    });
+    const [param] = args;
+
+    if ('project_details' in param) {
+        const ipaProjectDetails = param;
+        const files =
+            ipaProjectDetails.project_details.aliased_data.project_documents
+                .aliased_data.project_documents.node_value;
+
+        fd.append(
+            'json',
+            JSON.stringify({ project_details: ipaProjectDetails }),
+        );
+        files.forEach((file: FileReference) => {
+            fd.append(
+                `file-list_${file.node_id}`,
+                file.file as File,
+                file.name,
+            );
+        });
+    } else {
+        const ipaInitialProjectReview = param;
+        fd.append(
+            'json',
+            JSON.stringify({ initial_project_review: ipaInitialProjectReview }),
+        );
+    }
+
     const headers: Record<string, string> = {
         'X-CSRFToken': csrftoken,
         Accept: 'application/json',
@@ -35,6 +58,7 @@ export async function submitIPA(
         headers: headers,
         body: fd,
     });
+
     if (response.status !== 201) {
         console.log('error', response.statusText);
         throw Error(`Unable to save submission: ${response.statusText}`);
