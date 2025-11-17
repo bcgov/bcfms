@@ -9,22 +9,24 @@ import {
     DateValueSchema,
     DateValueRequiredSchema,
 } from '@/bcgov_arches_common/datatypes/date/validation/zod.ts';
-import { getStringValueRequiredSchema } from '@/bcgov_arches_common/datatypes/string/validation/zod.ts';
+import { getRichTextValueRequiredSchema } from '@/bcgov_arches_common/datatypes/string/validation/zod.ts';
 
 const InitialProjectReviewSchema = z.object({
-    assessment_start_date: DateValueRequiredSchema,
-    assessment_completion_date: DateValueSchema,
-    intersects_ifa: z.boolean().default(false),
-    proximity_to_fos: ConceptValueRequiredSchema,
-    ground_disturbance: ConceptValueRequiredSchema,
-    metamorphic_rock: ConceptValueRequiredSchema,
-    igneous_rock: ConceptValueRequiredSchema,
-    sedimentary_rock: ConceptValueRequiredSchema,
-    quaternary_deposits: ConceptValueRequiredSchema,
-    frpr: ConceptValueRequiredSchema,
-    initial_review_level_of_risk: ConceptValueRequiredSchema,
-    initial_review_internal_notes: getStringValueRequiredSchema(500),
-    initial_review_outcome: getStringValueRequiredSchema(500),
+    aliased_data: z.object({
+        assessment_start_date: DateValueRequiredSchema,
+        assessment_completion_date: DateValueSchema,
+        intersects_ifa: z.boolean().default(false),
+        proximity_to_fos: ConceptValueRequiredSchema,
+        ground_disturbance: ConceptValueRequiredSchema,
+        metamorphic_rock: ConceptValueRequiredSchema,
+        igneous_rock: ConceptValueRequiredSchema,
+        sedimentary_rock: ConceptValueRequiredSchema,
+        quaternary_deposits: ConceptValueRequiredSchema,
+        frpr: ConceptValueRequiredSchema,
+        initial_review_level_of_risk: ConceptValueRequiredSchema,
+        initial_review_internal_notes: getRichTextValueRequiredSchema(500),
+        initial_review_outcome: getRichTextValueRequiredSchema(500),
+    }),
 });
 
 const requiredInitialProjectReviewSchema = InitialProjectReviewSchema.partial();
@@ -37,33 +39,37 @@ function getInitialProjectReview(): InitialProjectReviewType {
 
 class InitialProjectReview implements InitialProjectReviewType {
     constructor() {
-        this.assessment_start_date = currentDateValue();
-        this.assessment_completion_date = currentDateValue();
-        this.intersects_ifa = false;
-        this.proximity_to_fos = blankConceptValue();
-        this.ground_disturbance = blankConceptValue();
-        this.metamorphic_rock = blankConceptValue();
-        this.igneous_rock = blankConceptValue();
-        this.sedimentary_rock = blankConceptValue();
-        this.quaternary_deposits = blankConceptValue();
-        this.frpr = blankConceptValue();
-        this.initial_review_level_of_risk = blankConceptValue();
-        this.initial_review_internal_notes = blankStringValue();
-        this.initial_review_outcome = blankStringValue();
+        this.aliased_data = {
+            assessment_start_date: currentDateValue(),
+            assessment_completion_date: currentDateValue(),
+            intersects_ifa: false,
+            proximity_to_fos: blankConceptValue(),
+            ground_disturbance: blankConceptValue(),
+            metamorphic_rock: blankConceptValue(),
+            igneous_rock: blankConceptValue(),
+            sedimentary_rock: blankConceptValue(),
+            quaternary_deposits: blankConceptValue(),
+            frpr: blankConceptValue(),
+            initial_review_level_of_risk: blankConceptValue(),
+            initial_review_internal_notes: blankStringValue(),
+            initial_review_outcome: blankStringValue(),
+        };
     }
-    assessment_start_date: DateValue;
-    assessment_completion_date: DateValue;
-    intersects_ifa: boolean;
-    proximity_to_fos: ConceptValue;
-    ground_disturbance: ConceptValue;
-    frpr: ConceptValue;
-    initial_review_level_of_risk: ConceptValue;
-    initial_review_internal_notes: StringValue;
-    metamorphic_rock: ConceptValue;
-    igneous_rock: ConceptValue;
-    sedimentary_rock: ConceptValue;
-    quaternary_deposits: ConceptValue;
-    initial_review_outcome: StringValue;
+    aliased_data: {
+        assessment_start_date: DateValue;
+        assessment_completion_date: DateValue;
+        intersects_ifa: boolean;
+        proximity_to_fos: ConceptValue;
+        ground_disturbance: ConceptValue;
+        frpr: ConceptValue;
+        initial_review_level_of_risk: ConceptValue;
+        initial_review_internal_notes: StringValue;
+        metamorphic_rock: ConceptValue;
+        igneous_rock: ConceptValue;
+        sedimentary_rock: ConceptValue;
+        quaternary_deposits: ConceptValue;
+        initial_review_outcome: StringValue;
+    };
 }
 
 export {
@@ -71,4 +77,5 @@ export {
     InitialProjectReviewSchema,
     getInitialProjectReview,
     requiredInitialProjectReviewSchema,
+    type InitialProjectReviewType,
 };
