@@ -12,6 +12,7 @@ from arches_component_lab.views.node_config_mixin import CardNodeWidgetConfigMix
 from rest_framework.generics import ListCreateAPIView, CreateAPIView
 from rest_framework.parsers import JSONParser
 
+import json
 from arches_querysets.rest_framework.multipart_json_parser import MultiPartJSONParser
 from arches_querysets.rest_framework.pagination import ArchesLimitOffsetPagination
 from arches_querysets.rest_framework.permissions import ReadOnly, ResourceEditor
@@ -75,28 +76,35 @@ class SubmitIPA(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, CreateAPIView):
         return filtered[0][2] if filtered else None
 
     def patch_data(self, ipa):
-        print("!!!! PATCH until location is added")
         ipa["aliased_data"]["project_details"]["aliased_data"]["project_site"][
             "aliased_data"
-        ]["project_location"][
-            "node_value"
-        ] = """{
-                   "type": "FeatureCollection",
-                   "features": [
-                      {
-                         "geometry": {
-                            "coordinates": [
-                               -122.9167,
-                               51.0861
-                            ],
-                            "type": "Point"
-                         },
-                         "id": "205ea789-1643-4061-a05c-826626c60d48",
-                         "properties": {},
-                         "type": "Feature"
-                      }
-                   ]
-                }"""
+        ]["project_location"]["node_value"] = json.dumps(
+            ipa["aliased_data"]["project_details"]["aliased_data"]["project_site"][
+                "aliased_data"
+            ]["project_location"]["node_value"]
+        )
+        # print("!!!! PATCH until location is added")
+        # ipa["aliased_data"]["project_details"]["aliased_data"]["project_site"][
+        #     "aliased_data"
+        # ]["project_location"][
+        #     "node_value"
+        # ] = """{
+        #            "type": "FeatureCollection",
+        #            "features": [
+        #               {
+        #                  "geometry": {
+        #                     "coordinates": [
+        #                        -122.9167,
+        #                        51.0861
+        #                     ],
+        #                     "type": "Point"
+        #                  },
+        #                  "id": "205ea789-1643-4061-a05c-826626c60d48",
+        #                  "properties": {},
+        #                  "type": "Feature"
+        #               }
+        #            ]
+        #         }"""
 
         ipa_number_config = self.get_card_x_node_x_widget(
             "project_assessment", "ipa_number"

@@ -105,7 +105,7 @@ emit('update:stepIsValid', isValid());
             graph-slug="project_assessment"
             node-alias="assessment_completion_date"
         />
-        <GenericWidget
+        <!-- GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
@@ -113,7 +113,35 @@ emit('update:stepIsValid', isValid());
             "
             graph-slug="project_assessment"
             node-alias="intersects_ifa"
-        />
+        /-->
+        <div
+            class="widget div-grid-cols"
+            data-graph-slug="project_assessment"
+            data-node-alias="intersects_ifa"
+        >
+            <label
+                class="widget-label"
+                for="proximity_to_fos"
+            >
+                <div
+                    style="display: flex"
+                    data-pd-tooltip="true"
+                >
+                    <span data-v-ed582886=""
+                        >Intersects with Important Fossil Area</span
+                    >
+                    <!--v-if-->
+                </div> </label
+            ><!--v-if-->
+            <div>
+                {{
+                    ipa?.initial_project_review?.aliased_data?.intersects_ifa
+                        ?.node_value
+                        ? 'Yes'
+                        : 'No'
+                }}
+            </div>
+        </div>
         <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
@@ -215,6 +243,6 @@ emit('update:stepIsValid', isValid());
 }
 .div-grid-cols {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr) 1fr);
+    grid-template-columns: repeat(1, minmax(0, 1fr) 2fr);
 }
 </style>

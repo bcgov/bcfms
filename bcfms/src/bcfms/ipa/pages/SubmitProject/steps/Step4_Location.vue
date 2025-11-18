@@ -8,7 +8,6 @@ import { zodResolver } from '@primevue/forms/resolvers/zod';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
-import BCGenericWidget from '@/bcgov_arches_common/generics/BCGenericWidget/BCGenericWidget.vue';
 import type { AllowableWidgetOverrides } from '@/bcgov_arches_common/generics/types.ts';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
 import {
@@ -76,17 +75,17 @@ defineExpose({ isValid });
         :validateOnValueUpdate="true"
         :resolver="projectLocationResolver"
     >
-        <BCGenericWidget
+        <GenericWidget
             graph-slug="project_assessment"
             node-alias="project_location"
-            :config-overrides="mapOverrides"
+            :card-x-node-x-widget-data-overrides="mapOverrides"
             :mode="EDIT"
             :aliased-node-data="
                 ipa?.project_details.aliased_data?.project_site?.aliased_data
                     .project_location
             "
             @update:value="updateModelValue($event, 'project_location')"
-        ></BCGenericWidget>
+        ></GenericWidget>
         <LabelledInput
             hint="Provide geographic names and distances -- e.g., A River, 3km north of Highway XX crossing"
             input-name="locationDescription"
