@@ -42,20 +42,35 @@ const updateModelValue = function (
     newValue: AliasedNodeData,
     attribute_name: string,
 ) {
+    if (
+        attribute_name === 'initial_review_internal_notes' &&
+        (newValue as StringValue)?.node_value?.['en']?.['value'] !== undefined
+    ) {
+        const stringValue = newValue as StringValue;
+        const nodeValue = stringValue.node_value;
+
+        //Ensure node_value and and 'en' node exist before updating them
+        if (!nodeValue) return;
+
+        const enNode = nodeValue['en'];
+
+        if (!enNode) return;
+
+        const raw = enNode.value ?? '';
+        const plain = htmlToPlainText(raw);
+
+        internalReviewLength.value = plain.length;
+        enNode.value = plain;
+    }
+
+    //baseUpdateModelValue now only ever sees sanitized content and does not overwrite
     baseUpdateModelValue(
         newValue,
         attribute_name,
         ipa.value.aliased_data.initial_project_review?.aliased_data,
         projectRiskAssessmentForm as Ref<FormInstance>,
     );
-    if (
-        attribute_name === 'initial_review_internal_notes' &&
-        (newValue as StringValue)?.node_value?.['en']?.['value']
-    ) {
-        internalReviewLength.value = htmlToPlainText(
-            (newValue as StringValue).node_value?.['en']?.['value'] ?? '',
-        ).length;
-    }
+
     emit('update:stepIsValid', isValid());
 };
 
