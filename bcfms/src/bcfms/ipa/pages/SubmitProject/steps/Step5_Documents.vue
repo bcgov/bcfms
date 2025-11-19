@@ -45,7 +45,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.project_details?.aliased_data?.project_documents
+        ipa.value.aliased_data?.project_details?.aliased_data?.project_documents
             ?.aliased_data,
         projectDocumentsForm as Ref<FormInstance>,
     );
@@ -72,7 +72,8 @@ defineExpose({ isValid });
                 :mode="EDIT"
                 :should-show-label="false"
                 :aliased-node-data="
-                    ipa?.project_details.aliased_data?.project_documents
+                    ipa?.aliased_data?.project_details.aliased_data
+                        ?.project_documents
                 "
                 graph-slug="project_assessment"
                 node-alias="project_documents"

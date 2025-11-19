@@ -140,7 +140,7 @@ onMounted(() => {
     steps.push(step1, step2, step3, step4, step5, step6, step7);
     stepStatuses.value[0] = true;
     getBlankIpa().then((response) => {
-        ipa.value = response.aliased_data as unknown as typeof IPA;
+        ipa.value = response as unknown as typeof IPA;
     });
 });
 </script>

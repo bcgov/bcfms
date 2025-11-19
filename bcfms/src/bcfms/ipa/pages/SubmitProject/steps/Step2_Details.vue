@@ -47,7 +47,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.project_details?.aliased_data,
+        ipa.value.aliased_data?.project_details?.aliased_data,
         projectDetailsForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -70,7 +70,8 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa?.project_details?.aliased_data?.project_name
+                    ipa?.aliased_data?.project_details?.aliased_data
+                        ?.project_name
                 "
                 graph-slug="project_assessment"
                 node-alias="project_name"
@@ -84,7 +85,8 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa?.project_details?.aliased_data?.project_initiator
+                    ipa?.aliased_data?.project_details?.aliased_data
+                        ?.project_initiator
                 "
                 graph-slug="project_assessment"
                 node-alias="project_initiator"
@@ -100,7 +102,8 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa?.project_details?.aliased_data?.industry_company_name
+                    ipa?.aliased_data?.project_details?.aliased_data
+                        ?.industry_company_name
                 "
                 graph-slug="project_assessment"
                 node-alias="industry_company_name"
@@ -117,7 +120,7 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa?.project_details?.aliased_data
+                    ipa?.aliased_data?.project_details?.aliased_data
                         ?.project_authorizing_agency
                 "
                 graph-slug="project_assessment"
@@ -130,7 +133,8 @@ defineExpose({ isValid });
         <GenericWidget
             :mode="EDIT"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.land_act_file_number
+                ipa?.aliased_data?.project_details?.aliased_data
+                    ?.land_act_file_number
             "
             graph-slug="project_assessment"
             node-alias="land_act_file_number"
@@ -149,7 +153,7 @@ defineExpose({ isValid });
                         :mode="EDIT"
                         :should-show-label="false"
                         :aliased-node-data="
-                            ipa?.project_details?.aliased_data
+                            ipa?.aliased_data?.project_details?.aliased_data
                                 ?.project_start_date
                         "
                         graph-slug="project_assessment"
@@ -170,7 +174,8 @@ defineExpose({ isValid });
                         :mode="EDIT"
                         :should-show-label="false"
                         :aliased-node-data="
-                            ipa?.project_details?.aliased_data?.project_end_date
+                            ipa?.aliased_data?.project_details?.aliased_data
+                                ?.project_end_date
                         "
                         graph-slug="project_assessment"
                         node-alias="project_end_date"

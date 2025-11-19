@@ -109,8 +109,8 @@ class SubmitIPA(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, CreateAPIView):
         raw = request.data
         cleaned_object = {
             "aliased_data": {
-                "project_details": raw.get("project_details")["project_details"],
-                "assessment_details": raw.get("project_details")["assessment_details"],
+                "project_details": raw.get("aliased_data")["project_details"],
+                "assessment_details": raw.get("aliased_data")["assessment_details"],
             },
         }
         # print(f"\n\n\nBefore: {cleaned_object}\n\n\n")

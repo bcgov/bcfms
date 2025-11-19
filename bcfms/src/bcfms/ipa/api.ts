@@ -35,39 +35,18 @@ export async function getIpasForReview(
     return await response.json();
 }
 
-export async function submitIPA(
-    ...args:
-        | [ipaProjectDetails: ProjectDetailsType]
-        | [ipaInitialProjectReview: InitialProjectReviewType]
-): Promise<IPAType> {
+export async function submitIPA(ipa: IPAType): Promise<IPAType> {
     const csrftoken = await getToken();
     const fd = new FormData();
-    const [param] = args;
 
-    if ('project_details' in param) {
-        const ipaProjectDetails = param;
-        const files =
-            ipaProjectDetails.project_details.aliased_data.project_documents
-                .aliased_data.project_documents.node_value;
+    const files =
+        ipa.aliased_data.project_details.aliased_data.project_documents
+            .aliased_data.project_documents.node_value;
 
-        fd.append(
-            'json',
-            JSON.stringify({ project_details: ipaProjectDetails }),
-        );
-        files.forEach((file: FileReference) => {
-            fd.append(
-                `file-list_${file.node_id}`,
-                file.file as File,
-                file.name,
-            );
-        });
-    } else {
-        const ipaInitialProjectReview = param;
-        fd.append(
-            'json',
-            JSON.stringify({ initial_project_review: ipaInitialProjectReview }),
-        );
-    }
+    fd.append('json', JSON.stringify(ipa));
+    files.forEach((file: FileReference) => {
+        fd.append(`file-list_${file.node_id}`, file.file as File, file.name);
+    });
 
     const headers: Record<string, string> = {
         'X-CSRFToken': csrftoken,
