@@ -40,12 +40,24 @@ const updateModelValue = function (
     newValue: AliasedNodeData,
     attribute_name: string,
 ) {
-    baseUpdateModelValue(
-        newValue,
-        attribute_name,
-        ipa.value.aliased_data.initial_project_review?.aliased_data,
-        projectDetailsForm as Ref<FormInstance>,
-    );
+    if (
+        attribute_name === 'assessment_start_date' ||
+        attribute_name === 'assessment_completion_date'
+    ) {
+        baseUpdateModelValue(
+            newValue,
+            attribute_name,
+            ipa.value.aliased_data.assessment_details?.aliased_data,
+            projectDetailsForm as Ref<FormInstance>,
+        );
+    } else {
+        baseUpdateModelValue(
+            newValue,
+            attribute_name,
+            ipa.value.aliased_data.initial_project_review?.aliased_data,
+            projectDetailsForm as Ref<FormInstance>,
+        );
+    }
     emit('update:stepIsValid', isValid());
 };
 
@@ -68,8 +80,8 @@ defineExpose({ isValid });
                     <GenericWidget
                         :mode="EDIT"
                         :aliased-node-data="
-                            ipa.aliased_data.initial_project_review
-                                ?.aliased_data?.assessment_start_date
+                            ipa.aliased_data.assessment_details?.aliased_data
+                                ?.assessment_start_date
                         "
                         graph-slug="project_assessment"
                         node-alias="assessment_start_date"
@@ -88,8 +100,8 @@ defineExpose({ isValid });
                     <GenericWidget
                         :mode="EDIT"
                         :aliased-node-data="
-                            ipa.aliased_data.initial_project_review
-                                ?.aliased_data?.assessment_completion_date
+                            ipa.aliased_data.assessment_details?.aliased_data
+                                ?.assessment_completion_date
                         "
                         graph-slug="project_assessment"
                         node-alias="assessment_completion_date"

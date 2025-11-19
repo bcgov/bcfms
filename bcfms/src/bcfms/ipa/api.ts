@@ -88,3 +88,31 @@ export async function submitIPA(
         return response.json();
     }
 }
+
+export async function submitIPAReview(ipa: IPAType): Promise<IPAType> {
+    const csrftoken = await getToken();
+    const fd = new FormData();
+    fd.append('json', JSON.stringify(ipa));
+
+    const headers: Record<string, string> = {
+        'X-CSRFToken': csrftoken,
+        Accept: 'application/json',
+        // DO NOT set Content-Type; the browser will add the correct multipart boundary.
+    };
+    const response = await fetch(
+        arches.urls.submit_ipa_review(ipa.resourceinstanceid),
+        {
+            method: 'PATCH',
+            headers: headers,
+            body: fd,
+        },
+    );
+
+    if (response.status !== 200) {
+        console.log('error', response.statusText);
+        throw Error(`Unable to save submission: ${response.statusText}`);
+    } else {
+        console.log(response);
+        return response.json();
+    }
+}

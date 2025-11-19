@@ -149,18 +149,31 @@ class SubmitIPAReview(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, UpdateAPIV
     valid_keys = ["aliased_data"]
 
     def patch_data(self, ipa):
-        return ipa
-
-    def patch(self, request, *args, **kwargs):
-        raw = request.data
-        cleaned_object = {
+        return {
+            "resourceinstanceid": ipa["resourceinstanceid"],
+            "legacyid": ipa["legacyid"],
+            "createdtime": ipa["createdtime"],
+            "graph": ipa["graph"],
+            "graph_publication": ipa["graph_publication"],
+            "principaluser": ipa["principaluser"],
+            "graph_has_different_publication": ipa["graph_has_different_publication"],
+            "descriptors": ipa["descriptors"],
             "aliased_data": {
-                "project_details": raw.get("project_details")["project_details"],
-                "assessment_details": raw.get("project_details")["assessment_details"],
+                "initial_project_review": ipa["aliased_data"]["initial_project_review"],
+                "assessment_details": ipa["aliased_data"]["assessment_details"],
             },
         }
+
+    def put(self, request, *args, **kwargs):
+        return self.patch(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        cleaned_object = request.data
         patched = self.patch_data(cleaned_object)
-        serializer = self.get_serializer(data=patched)
+        print(patched)
+
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=patched, partial=True)
         if not serializer.is_valid():
             # print the errors you’re currently not seeing
             print("serializer.errors:", serializer.errors)
@@ -180,10 +193,7 @@ class SubmitIPAReview(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, UpdateAPIV
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        headers = self.get_success_headers(serializer.data)
-        return JSONResponse(
-            serializer.data, status=status.HTTP_201_CREATED, headers=headers
-        )
+        return JSONResponse(serializer.data, status=status.HTTP_200_OK)
 
 
 class IPAsForReviewPagination(ArchesLimitOffsetPagination):

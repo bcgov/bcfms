@@ -21,7 +21,7 @@ import { getIPA, type IPAType } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { getIpa } from '@/bcfms/ipa/api.ts';
 import { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import type { Ref } from 'vue';
-import { submitIPA } from '@/bcfms/ipa/api.ts';
+import { submitIPAReview } from '@/bcfms/ipa/api.ts';
 
 const route = useRoute();
 const resourceinstanceid = ref(route.params.resourceinstanceid as string);
@@ -41,9 +41,9 @@ const submitIpaData = async () => {
     console.log('submit IPA', ipa);
     submitting.value = true;
     submissionErrors.value = [];
-    submitIPA(ipa.value)
+    submitIPAReview(ipa.value)
         .then((updatedIPA) => {
-            ipa.value = updatedIPA.aliased_data as Promise<IPAType>;
+            ipa.value = updatedIPA as Promise<IPAType>;
             myStepper.value.d_value++;
             setCurrentStepValid(
                 steps[myStepper.value.d_value - 1].value.isValid(),
