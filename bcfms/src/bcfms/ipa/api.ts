@@ -1,5 +1,3 @@
-import type { ProjectDetailsType } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
-import type { InitialProjectReviewType } from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
 import type { IPAType } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { getToken } from '@/bcgov_arches_common/api.ts';
 import arches from 'arches';
