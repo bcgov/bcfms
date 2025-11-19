@@ -42,7 +42,7 @@ const submitIpaData = async () => {
     submissionErrors.value = [];
     submitIPA(ipa.value)
         .then((updatedIPA) => {
-            ipa.value = updatedIPA.aliased_data as Promise<IPAType>;
+            ipa.value = updatedIPA as Promise<IPAType>;
             myStepper.value.d_value++;
             setCurrentStepValid(
                 steps[myStepper.value.d_value - 1].value.isValid(),

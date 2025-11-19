@@ -261,7 +261,7 @@ emit('update:stepIsValid', isValid());
 }
 .div-grid-cols {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr) 1fr);
+    grid-template-columns: repeat(1, minmax(0, 1fr) 2fr);
 }
 .widget {
     margin-bottom: 1rem;
