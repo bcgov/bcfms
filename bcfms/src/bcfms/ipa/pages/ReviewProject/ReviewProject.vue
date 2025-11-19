@@ -18,14 +18,13 @@ import ReviewProjectStep3 from '@/bcfms/ipa/pages/ReviewProject/steps/Step3_Geol
 import ReviewProjectStep4 from '@/bcfms/ipa/pages/ReviewProject/steps/Step4_RiskAssessment.vue';
 import ReviewProjectStep5 from '@/bcfms/ipa/pages/ReviewProject/steps/Step5_AssessmentOutcome.vue';
 import { getIPA, type IPAType } from '@/bcfms/ipa/schema/IPASchema.ts';
-import { getBlankIpa, getIpa } from '@/bcfms/ipa/api.ts';
+import { getIpa } from '@/bcfms/ipa/api.ts';
 import { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import type { Ref } from 'vue';
 import { submitIPA } from '@/bcfms/ipa/api.ts';
 
 const route = useRoute();
 const resourceinstanceid = ref(route.params.resourceinstanceid as string);
-console.log(route.params);
 
 const activateNextStep = async () => {
     if (currentStep.value === 5) {
@@ -134,7 +133,7 @@ onMounted(() => {
     steps.push(step1, step2, step3, step4, step5, step6);
     stepStatuses.value[0] = true;
     getIpa(resourceinstanceid.value).then((response) => {
-        ipa.value = response.aliased_data as unknown as typeof IPA;
+        ipa.value = response as unknown as typeof IPA;
     });
 });
 </script>
@@ -184,8 +183,8 @@ onMounted(() => {
                     <h1 class="heading-black">
                         Review New Project -
                         {{
-                            ipa?.assessment_details?.aliased_data?.ipa_number
-                                ?.display_value
+                            ipa?.aliased_data?.assessment_details?.aliased_data
+                                ?.ipa_number?.display_value
                         }}
                     </h1>
                     <StepPanels>

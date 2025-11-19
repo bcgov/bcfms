@@ -45,7 +45,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.initial_project_review?.aliased_data,
+        ipa.value.aliased_data.initial_project_review?.aliased_data,
         projectRiskAssessmentForm as Ref<FormInstance>,
     );
     if (
@@ -81,7 +81,7 @@ const internalReviewHint = computed(() => `${internalReviewLength.value}/500`);
                 :mode="EDIT"
                 :should-show-label="false"
                 :aliased-node-data="
-                    ipa.initial_project_review?.aliased_data?.frpr
+                    ipa.aliased_data.initial_project_review?.aliased_data?.frpr
                 "
                 placeholder="Select FRPR value"
                 graph-slug="project_assessment"
@@ -99,7 +99,7 @@ const internalReviewHint = computed(() => `${internalReviewLength.value}/500`);
                 :mode="EDIT"
                 :should-show-label="false"
                 :aliased-node-data="
-                    ipa.initial_project_review?.aliased_data
+                    ipa.aliased_data.initial_project_review?.aliased_data
                         ?.initial_review_level_of_risk
                 "
                 placeholder="Select Initial Review Level of Risk"
@@ -120,7 +120,7 @@ const internalReviewHint = computed(() => `${internalReviewLength.value}/500`);
                 :mode="EDIT"
                 :should-show-label="false"
                 :aliased-node-data="
-                    ipa.initial_project_review?.aliased_data
+                    ipa.aliased_data.initial_project_review?.aliased_data
                         ?.initial_review_internal_notes
                 "
                 placeholder="Enter Initial Review Internal Notes"

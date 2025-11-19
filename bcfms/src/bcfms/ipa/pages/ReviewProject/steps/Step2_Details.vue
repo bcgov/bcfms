@@ -43,7 +43,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.initial_project_review?.aliased_data,
+        ipa.value.aliased_data.initial_project_review?.aliased_data,
         projectDetailsForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -68,8 +68,8 @@ defineExpose({ isValid });
                     <GenericWidget
                         :mode="EDIT"
                         :aliased-node-data="
-                            ipa.initial_project_review?.aliased_data
-                                ?.assessment_start_date
+                            ipa.aliased_data.initial_project_review
+                                ?.aliased_data?.assessment_start_date
                         "
                         graph-slug="project_assessment"
                         node-alias="assessment_start_date"
@@ -88,8 +88,8 @@ defineExpose({ isValid });
                     <GenericWidget
                         :mode="EDIT"
                         :aliased-node-data="
-                            ipa.initial_project_review?.aliased_data
-                                ?.assessment_completion_date
+                            ipa.aliased_data.initial_project_review
+                                ?.aliased_data?.assessment_completion_date
                         "
                         graph-slug="project_assessment"
                         node-alias="assessment_completion_date"
@@ -106,7 +106,10 @@ defineExpose({ isValid });
         <p>Intersects with Important Fossil Area</p>
         <div class="flex-row">
             <RadioButton
-                v-model="ipa.initial_project_review.aliased_data.intersects_ifa"
+                v-model="
+                    ipa.aliased_data.initial_project_review.aliased_data
+                        .intersects_ifa
+                "
                 inputId="intersects_ifa1"
                 class="margin-bottom"
                 :value="true"
@@ -117,7 +120,10 @@ defineExpose({ isValid });
                 >Yes</label
             >
             <RadioButton
-                v-model="ipa.initial_project_review.aliased_data.intersects_ifa"
+                v-model="
+                    ipa.aliased_data.initial_project_review.aliased_data
+                        .intersects_ifa
+                "
                 inputId="intersects_ifa0"
                 :value="false"
                 class="margin-left margin-bottom"
@@ -135,7 +141,8 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa.initial_project_review?.aliased_data?.proximity_to_fos
+                    ipa.aliased_data.initial_project_review?.aliased_data
+                        ?.proximity_to_fos
                 "
                 placeholder="Fossil Proximity"
                 graph-slug="project_assessment"
@@ -150,7 +157,8 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa.initial_project_review?.aliased_data?.ground_disturbance
+                    ipa.aliased_data.initial_project_review?.aliased_data
+                        ?.ground_disturbance
                 "
                 placeholder="Ground Disturbance"
                 graph-slug="project_assessment"

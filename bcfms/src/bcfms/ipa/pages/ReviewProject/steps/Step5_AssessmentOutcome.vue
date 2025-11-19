@@ -58,31 +58,32 @@ emit('update:stepIsValid', isValid());
         <p class="p-underline-bold">Filing Details</p>
         <div
             v-if="
-                ipa?.assessment_details?.aliased_data?.assessment_start_date
-                    .display_value
+                ipa?.aliased_data?.assessment_details?.aliased_data
+                    ?.assessment_start_date.display_value
             "
             class="div-grid-cols"
         >
             <div>Submission Date</div>
             <div>
                 {{
-                    ipa?.assessment_details?.aliased_data?.assessment_start_date
-                        .display_value
+                    ipa?.aliased_data?.assessment_details?.aliased_data
+                        ?.assessment_start_date.display_value
                 }}
             </div>
         </div>
 
         <div
             v-if="
-                ipa?.assessment_details?.aliased_data?.ipa_number?.display_value
+                ipa?.aliased_data?.assessment_details?.aliased_data?.ipa_number
+                    ?.display_value
             "
             class="div-grid-cols"
         >
             <div class="div-grid-cols">Reference Number</div>
             <div class="div-grid-cols">
                 {{
-                    ipa?.assessment_details?.aliased_data?.ipa_number
-                        ?.display_value
+                    ipa?.aliased_data?.assessment_details?.aliased_data
+                        ?.ipa_number?.display_value
                 }}
             </div>
         </div>
@@ -90,7 +91,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.initial_project_review?.aliased_data?.assessment_start_date
+                ipa?.aliased_data?.initial_project_review?.aliased_data
+                    ?.assessment_start_date
             "
             graph-slug="project_assessment"
             node-alias="assessment_start_date"
@@ -99,7 +101,7 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.initial_project_review?.aliased_data
+                ipa?.aliased_data?.initial_project_review?.aliased_data
                     ?.assessment_completion_date
             "
             graph-slug="project_assessment"
@@ -135,8 +137,8 @@ emit('update:stepIsValid', isValid());
             ><!--v-if-->
             <div>
                 {{
-                    ipa?.initial_project_review?.aliased_data?.intersects_ifa
-                        ?.node_value
+                    ipa?.aliased_data?.initial_project_review?.aliased_data
+                        ?.intersects_ifa?.node_value
                         ? 'Yes'
                         : 'No'
                 }}
@@ -146,7 +148,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.initial_project_review?.aliased_data?.proximity_to_fos
+                ipa?.aliased_data?.initial_project_review?.aliased_data
+                    ?.proximity_to_fos
             "
             graph-slug="project_assessment"
             node-alias="proximity_to_fos"
@@ -155,7 +158,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.initial_project_review?.aliased_data?.ground_disturbance
+                ipa?.aliased_data?.initial_project_review?.aliased_data
+                    ?.ground_disturbance
             "
             graph-slug="project_assessment"
             node-alias="ground_disturbance"
@@ -164,7 +168,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.initial_project_review?.aliased_data?.metamorphic_rock
+                ipa?.aliased_data?.initial_project_review?.aliased_data
+                    ?.metamorphic_rock
             "
             graph-slug="project_assessment"
             node-alias="metamorphic_rock"
@@ -173,7 +178,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.initial_project_review?.aliased_data?.igneous_rock
+                ipa?.aliased_data?.initial_project_review?.aliased_data
+                    ?.igneous_rock
             "
             graph-slug="project_assessment"
             node-alias="igneous_rock"
@@ -182,7 +188,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.initial_project_review?.aliased_data?.sedimentary_rock
+                ipa?.aliased_data?.initial_project_review?.aliased_data
+                    ?.sedimentary_rock
             "
             graph-slug="project_assessment"
             node-alias="sedimentary_rock"
@@ -191,7 +198,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.initial_project_review?.aliased_data?.quaternary_deposits
+                ipa?.aliased_data?.initial_project_review?.aliased_data
+                    ?.quaternary_deposits
             "
             graph-slug="project_assessment"
             node-alias="quaternary_deposits"
@@ -199,7 +207,9 @@ emit('update:stepIsValid', isValid());
         <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
-            :aliased-node-data="ipa?.initial_project_review?.aliased_data?.frpr"
+            :aliased-node-data="
+                ipa?.aliased_data?.initial_project_review?.aliased_data?.frpr
+            "
             graph-slug="project_assessment"
             node-alias="frpr"
         />
@@ -207,7 +217,7 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.initial_project_review?.aliased_data
+                ipa?.aliased_data?.initial_project_review?.aliased_data
                     ?.initial_review_level_of_risk
             "
             graph-slug="project_assessment"
@@ -217,7 +227,7 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.initial_project_review?.aliased_data
+                ipa?.aliased_data?.initial_project_review?.aliased_data
                     ?.initial_review_internal_notes
             "
             graph-slug="project_assessment"

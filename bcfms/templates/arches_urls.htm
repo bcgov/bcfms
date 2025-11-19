@@ -12,7 +12,8 @@
      dashboard="{% url 'submissions' %}"
      submit_ipa='{% url "submit_ipa" %}'
      ipas_for_review='{% url "ipas-for-review" %}'
-     api_resource_blank='(graph) => {return "{% url "arches_querysets:api-resource-blank" "----p1" %}".replace("----p1", graph)}'>
+     api_resource_blank='(graph) => {return "{% url "arches_querysets:api-resource-blank" "----p1" %}".replace("----p1", graph)}'
+     api_resource='(graph,pk) => {return "{% url "arches_querysets:api-resource" "----p1" "00000000-0000-0000-0000-000000000000" %}".replace("----p1", graph).replace("00000000-0000-0000-0000-000000000000", pk)}'>
 </div>
 
 {% endblock arches_urls %}

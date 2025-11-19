@@ -9,7 +9,7 @@ from bcfms.util.business_data_proxy import (
 )
 from arches_component_lab.views.node_config_mixin import CardNodeWidgetConfigMixin
 
-from rest_framework.generics import ListCreateAPIView, CreateAPIView
+from rest_framework.generics import ListCreateAPIView, CreateAPIView, UpdateAPIView
 from rest_framework.parsers import JSONParser
 
 import json
@@ -83,28 +83,6 @@ class SubmitIPA(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, CreateAPIView):
                 "aliased_data"
             ]["project_location"]["node_value"]
         )
-        # print("!!!! PATCH until location is added")
-        # ipa["aliased_data"]["project_details"]["aliased_data"]["project_site"][
-        #     "aliased_data"
-        # ]["project_location"][
-        #     "node_value"
-        # ] = """{
-        #            "type": "FeatureCollection",
-        #            "features": [
-        #               {
-        #                  "geometry": {
-        #                     "coordinates": [
-        #                        -122.9167,
-        #                        51.0861
-        #                     ],
-        #                     "type": "Point"
-        #                  },
-        #                  "id": "205ea789-1643-4061-a05c-826626c60d48",
-        #                  "properties": {},
-        #                  "type": "Feature"
-        #               }
-        #            ]
-        #         }"""
 
         ipa_number_config = self.get_card_x_node_x_widget(
             "project_assessment", "ipa_number"
@@ -146,6 +124,51 @@ class SubmitIPA(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, CreateAPIView):
         serializer.is_valid(raise_exception=True)
         try:
             self.perform_create(serializer)
+        except Exception as e:
+            print(f"Unable to create: {e}")
+            traceback.print_exc()
+            return JSONResponse(
+                {
+                    "error": "Unable to create resource",
+                    "message": str(e),
+                    "type": e.__class__.__name__,
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        headers = self.get_success_headers(serializer.data)
+        return JSONResponse(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
+
+
+class SubmitIPAReview(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, UpdateAPIView):
+    permission_classes = [ResourceEditor | ReadOnly]
+    serializer_class = IpaSerializer
+    parser_classes = [JSONParser, MultiPartJSONParser]
+    pagination_class = ArchesLimitOffsetPagination
+    valid_keys = ["aliased_data"]
+
+    def patch_data(self, ipa):
+        return ipa
+
+    def patch(self, request, *args, **kwargs):
+        raw = request.data
+        cleaned_object = {
+            "aliased_data": {
+                "project_details": raw.get("project_details")["project_details"],
+                "assessment_details": raw.get("project_details")["assessment_details"],
+            },
+        }
+        patched = self.patch_data(cleaned_object)
+        serializer = self.get_serializer(data=patched)
+        if not serializer.is_valid():
+            # print the errors you’re currently not seeing
+            print("serializer.errors:", serializer.errors)
+            return JSONResponse(serializer.errors, status=400)
+        serializer.is_valid(raise_exception=True)
+
+        try:
+            self.perform_update(serializer)
         except Exception as e:
             print(f"Unable to create: {e}")
             traceback.print_exc()
