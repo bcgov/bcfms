@@ -9,7 +9,7 @@ from bcgov_arches_common.views.map import (
 )
 from bcfms.views.search import export_results as bcfms_export_results
 from bcfms.views.root import BcfmsRootView
-from bcfms.views.workflows.ipa import SubmitIPA
+from bcfms.views.workflows.ipa import SubmitIPA, IPAsForReview
 import re
 
 uuid_regex = settings.UUID_REGEX
@@ -32,6 +32,9 @@ urlpatterns = [
     ),
     re_path(
         bc_path_prefix(r"^api/submit_ipa/"), SubmitIPA.as_view(), name="submit_ipa"
+    ),
+    re_path(
+        bc_path_prefix(r"^api/ipas_for_review/"), IPAsForReview.as_view(), name="ipas-for-review"
     ),
     re_path(
         bc_path_prefix(r"^bctileserver/(?P<path>.*)$"),

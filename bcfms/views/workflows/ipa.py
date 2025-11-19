@@ -161,3 +161,22 @@ class SubmitIPA(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, CreateAPIView):
         return JSONResponse(
             serializer.data, status=status.HTTP_201_CREATED, headers=headers
         )
+
+
+class IPAsForReviewPagination(ArchesLimitOffsetPagination):
+    default_limit = 10
+
+
+class IPAsForReview(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, ListCreateAPIView):
+    permission_classes = [ResourceEditor | ReadOnly]
+    serializer_class = IpaSerializer
+    parser_classes = [JSONParser, MultiPartJSONParser]
+    pagination_class = IPAsForReviewPagination
+
+    def filter_queryset(self, queryset):
+        queryset = super().filter_queryset(queryset)
+        queryset = queryset.filter(initial_review_level_of_risk__isnull=True)
+        sort = self.request.GET.get("sort")
+        if sort:
+            queryset = queryset.order_by(sort)
+        return queryset

@@ -5,10 +5,22 @@ import { getToken } from '@/bcgov_arches_common/api.ts';
 import arches from 'arches';
 // import type { FileReference } from '@/arches_component_lab/datatypes/file-list/types.ts';
 import type { FileReference } from '@/bcgov_arches_common/datatypes/file-list/types.ts';
+import type { IPAListResponseType } from '@/bcfms/ipa/types.ts';
 
 export async function getBlankIpa(): Promise<IPAType> {
     const response = await fetch(
         arches.urls.api_resource_blank('project_assessment') + '?format=json',
+        {},
+    );
+    return await response.json();
+}
+
+export async function getIpasForReview(
+    url: string | null,
+): Promise<IPAListResponseType> {
+    const response = await fetch(
+        url ??
+            `${arches.urls.ipas_for_review}?format=json&page=0&sort=createdtime`,
         {},
     );
     return await response.json();

@@ -8,13 +8,15 @@ import { zodResolver } from '@primevue/forms/resolvers/zod';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
-import type { AllowableWidgetOverrides } from '@/bcgov_arches_common/generics/types.ts';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
 import {
     isValid as baseIsValid,
     updateModelValue as baseUpdateModelValue,
 } from '@/bcfms/utils.ts';
-import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
+import type {
+    AliasedNodeData,
+    CardXNodeXWidgetData,
+} from '@/arches_component_lab/types.ts';
 import { getFlattenResolver } from '@/bcgov_arches_common/validation-utils.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
@@ -60,10 +62,11 @@ const updateModelValue = function (
 
 const mapOverrides = {
     widget: {
+        widgetid: '',
         component:
             'bcgov_arches_common/widgets/MapDropZoneWidget/MapDropZoneWidget.vue',
     },
-} satisfies Partial<AllowableWidgetOverrides>;
+} satisfies Partial<CardXNodeXWidgetData>;
 
 defineExpose({ isValid });
 </script>
