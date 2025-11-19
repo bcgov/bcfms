@@ -34,10 +34,14 @@ urlpatterns = [
         bc_path_prefix(r"^api/submit_ipa/"), SubmitIPA.as_view(), name="submit_ipa"
     ),
     re_path(
-        bc_path_prefix(r"^api/submit_ipa_review/(?P<pk>%s|())" % uuid_regex), SubmitIPAReview.as_view(), name="submit-ipa-review"
+        bc_path_prefix(r"^api/submit_ipa_review/(?P<pk>%s|())" % uuid_regex),
+        SubmitIPAReview.as_view(),
+        name="submit-ipa-review",
     ),
     re_path(
-        bc_path_prefix(r"^api/ipas_for_review/"), IPAsForReview.as_view(), name="ipas-for-review"
+        bc_path_prefix(r"^api/ipas_for_review/"),
+        IPAsForReview.as_view(),
+        name="ipas-for-review",
     ),
     re_path(
         bc_path_prefix(r"^bctileserver/(?P<path>.*)$"),
