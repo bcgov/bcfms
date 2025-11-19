@@ -27,7 +27,6 @@
         "@turf/helpers": "7.2.0",
         "@turf/centroid": "7.2.0",
         "@turf/bbox": "7.2.0",
-        "geojson": "0.5.0",
         "underscore": "^1.13.6"
     },
     "devDependencies": {
@@ -59,7 +58,7 @@
         "@vitejs/plugin-vue": "^5.2.1",
         "@vue/cli": "^5.0.8",
         "arches": "github:bcgov/arches#v7.6.12.1_bcgov",
-        "arches-component-lab": "github:archesproject/arches-component-lab#main",
+        "arches-component-lab": "github:archesproject/arches-component-lab#brf/bugfix/allow_partial_override",
         "arches-querysets": "github:archesproject/arches-querysets#main",
         "bcgov_arches_common": "github:bcgov/bcgov-arches-common#brf/feat/add_goeom_dropzone",
         "ckeditor5": "44.2.0",
