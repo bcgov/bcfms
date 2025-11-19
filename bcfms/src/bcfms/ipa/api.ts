@@ -15,6 +15,15 @@ export async function getBlankIpa(): Promise<IPAType> {
     return await response.json();
 }
 
+export async function getIpa(resourceinstanceid: string): Promise<IPAType> {
+    const response = await fetch(
+        arches.urls.api_resource('project_assessment', resourceinstanceid) +
+            '?format=json&fill_blanks=true',
+        {},
+    );
+    return await response.json();
+}
+
 export async function getIpasForReview(
     url: string | null,
 ): Promise<IPAListResponseType> {

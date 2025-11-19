@@ -22,7 +22,7 @@ const routes = [
         },
     },
     {
-        path: '/bc-fossil-management/submissions/review-project/',
+        path: '/bc-fossil-management/submissions/review-project/:resourceinstanceid',
         name: 'reviewProject',
         component: () =>
             import('@/bcfms/ipa/pages/ReviewProject/ReviewProject.vue'),

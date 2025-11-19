@@ -49,7 +49,7 @@ onMounted(() => {
                     :subtitle="$gettext('Add a new project')"
                     :icon="'fa fa-file'"
                     :class="'dashboard-card ipa'"
-                    :route-name="routeNames.submitProject"
+                    :route="{ name: routeNames.submitProject }"
                 />
             </div>
             <div class="section-title">
@@ -89,7 +89,12 @@ onMounted(() => {
                     :description="$gettext('Review project')"
                     :icon="'fa fa-file'"
                     :class="'dashboard-card ipa'"
-                    :route-name="routeNames.reviewProject"
+                    :route="{
+                        name: routeNames.reviewProject,
+                        params: {
+                            resourceinstanceid: ipa?.resourceinstanceid,
+                        },
+                    }"
                 />
             </div>
         </Fluid>
