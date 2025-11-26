@@ -77,13 +77,13 @@ onMounted(() => {
                     :label="
                         $gettext(
                             ipa?.aliased_data?.assessment_details?.aliased_data
-                                ?.ipa_number?.display_value,
+                                ?.ipa_number?.display_value ?? '',
                         )
                     "
                     :subtitle="
                         $gettext(
                             ipa?.aliased_data?.project_details?.aliased_data
-                                ?.project_name?.display_value,
+                                ?.project_name?.display_value ?? '',
                         )
                     "
                     :description="$gettext('Review project')"
