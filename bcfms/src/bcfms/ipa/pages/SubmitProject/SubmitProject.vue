@@ -348,6 +348,10 @@ li {
 </style>
 <style>
 .p-select-label {
-    font-size: 0.8rem;
+    font-size: 0.8rem !important;
+}
+
+.language-selector {
+    display: none !important;
 }
 </style>
