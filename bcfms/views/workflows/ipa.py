@@ -1,3 +1,4 @@
+import logging
 from datetime import date
 import traceback
 from urllib.parse import urlparse, parse_qs
@@ -20,6 +21,8 @@ from arches_querysets.rest_framework.serializers import (
     ArchesResourceSerializer,
 )
 from arches_querysets.rest_framework.view_mixins import ArchesModelAPIMixin
+
+logger = logging.getLogger(__name__)
 
 
 class IpaSerializer(ArchesResourceSerializer):
@@ -113,17 +116,24 @@ class SubmitIPA(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, CreateAPIView):
                 "assessment_details": raw.get("aliased_data")["assessment_details"],
             },
         }
-        # print(f"\n\n\nBefore: {cleaned_object}\n\n\n")
+        logger.info(f"Before clean")
         patched = self.patch_data(cleaned_object)
+        logger.info(f"After clean")
         # print(f"\n\n\nCleaned: {patched}\n\n\n")
         serializer = self.get_serializer(data=patched)
+        logger.info(f"After get_serializer")
+
+        logger.info(f"Checking valid")
         if not serializer.is_valid():
             # print the errors you’re currently not seeing
             print("serializer.errors:", serializer.errors)
             return JSONResponse(serializer.errors, status=400)
         serializer.is_valid(raise_exception=True)
+        logger.info("It's valid again")
         try:
+            logger.info("Before perform_create")
             self.perform_create(serializer)
+            logger.info("Created")
         except Exception as e:
             print(f"Unable to create: {e}")
             traceback.print_exc()
@@ -135,7 +145,9 @@ class SubmitIPA(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, CreateAPIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        logger.info("Created successfully... getting headers")
         headers = self.get_success_headers(serializer.data)
+        logger.info("Got headers, returning JSON response")
         return JSONResponse(
             serializer.data, status=status.HTTP_201_CREATED, headers=headers
         )
@@ -176,13 +188,15 @@ class SubmitIPAReview(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, UpdateAPIV
         serializer = self.get_serializer(instance, data=patched, partial=True)
         if not serializer.is_valid():
             # print the errors you’re currently not seeing
-            print("serializer.errors:", serializer.errors)
+            logger.warning("serializer.errors:", serializer.errors)
             return JSONResponse(serializer.errors, status=400)
+        logger.info("It's valid... validating again")
         serializer.is_valid(raise_exception=True)
 
         try:
             self.perform_update(serializer)
         except Exception as e:
+            logger.warning("Got an exception")
             print(f"Unable to create: {e}")
             traceback.print_exc()
             return JSONResponse(
