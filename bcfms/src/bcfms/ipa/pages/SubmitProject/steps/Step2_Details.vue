@@ -130,24 +130,25 @@ defineExpose({ isValid });
                 "
             />
         </LabelledInput>
-        <GenericWidget
-            :mode="EDIT"
-            :aliased-node-data="
-                ipa?.aliased_data?.project_details?.aliased_data
-                    ?.land_act_file_number
-            "
-            graph-slug="project_assessment"
-            node-alias="land_act_file_number"
-            placeholder="Land Act Number"
-            @update:value="updateModelValue($event, 'land_act_file_number')"
-        />
+        <LabelledInput>
+            <GenericWidget
+                :mode="EDIT"
+                :aliased-node-data="
+                    ipa?.aliased_data?.project_details?.aliased_data
+                        ?.land_act_file_number
+                "
+                graph-slug="project_assessment"
+                node-alias="land_act_file_number"
+                placeholder="Land Act Number"
+                @update:value="updateModelValue($event, 'land_act_file_number')"
+            />
+        </LabelledInput>
         <div class="flex-row">
             <div class="formfield-flex-grow">
                 <LabelledInput
                     label="Estimated Project Start Date"
                     hint="Enter the estimated start date"
                     input-name="projectStartDate"
-                    :required="true"
                 >
                     <GenericWidget
                         :mode="EDIT"
