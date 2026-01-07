@@ -236,13 +236,7 @@ emit('update:stepIsValid', isValid());
         />
     </div>
 </template>
-<style>
-[data-node-alias='project_documents'] {
-    max-width: 200px;
-    max-height: 200px;
-    object-fit: contain;
-}
-</style>
+<style></style>
 <style scoped>
 .step-title {
     margin-bottom: 1rem;

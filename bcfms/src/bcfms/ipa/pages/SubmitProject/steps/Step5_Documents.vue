@@ -90,4 +90,11 @@ defineExpose({ isValid });
 .div-file-widget {
     margin-top: 2rem;
 }
+[data-node-alias='project_documents'] {
+    max-width: 500px;
+    max-height: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: clip;
+}
 </style>
