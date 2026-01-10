@@ -1,0 +1,8 @@
+# App-specific environment files
+# This is set in the container environment$
+GITHUB_APP_REPO=bcgov/bcfms
+
+FORCE_CORE_PIP_INSTALL=True
+CORE_REPO_TAG=stable/7.6.12_bcgov_12008
+COMMON_REPO_TAG=brf/feat/add_goeom_dropzone
+CONFIG_BRANCH=release/1.3.0_ipa_workflows

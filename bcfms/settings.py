@@ -337,6 +337,11 @@ LOGGING = {
         },
     },
     "loggers": {
+        # 'django.db.backends': {
+        #     'handlers': ['console'],
+        #     'level': 'DEBUG',  # DEBUG = log every SQL query
+        #     'propagate': False,
+        # },
         "django": {
             "handlers": ["file", "console"],
             "level": "INFO",

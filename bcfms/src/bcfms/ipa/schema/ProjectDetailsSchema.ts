@@ -21,10 +21,7 @@ import {
 } from '@/bcgov_arches_common/datatypes/string/validation/zod.ts';
 import { ResourceInstanceValueRequiredSchema } from '@/bcgov_arches_common/datatypes/resource-instance/validation/zod.ts';
 import { FileListValueSchema } from '@/bcgov_arches_common/datatypes/file-list/validation/zod.ts';
-import {
-    DateValueSchema,
-    DateValueRequiredSchema,
-} from '@/bcgov_arches_common/datatypes/date/validation/zod.ts';
+import { DateValueSchema } from '@/bcgov_arches_common/datatypes/date/validation/zod.ts';
 import type { FileListValue } from '@/arches_component_lab/datatypes/file-list/types.ts';
 import type { GeoJSONFeatureCollectionValue } from '@/bcgov_arches_common/datatypes/geojson-feature-collection/types.ts';
 
@@ -35,7 +32,7 @@ const ProjectDetailsSchema = z.object({
         industry_company_name: getStringValueRequiredSchema(60),
         project_authorizing_agency: ConceptValueRequiredSchema,
         land_act_file_number: getStringValueSchema(30),
-        project_start_date: DateValueRequiredSchema,
+        project_start_date: DateValueSchema,
         project_end_date: DateValueSchema,
         project_documents: FileListValueSchema,
         project_type: z.object({

@@ -179,7 +179,7 @@ onMounted(() => {
                 <div class="bcgov-vertical-steps">
                     <StepList>
                         <Step :value="1">Submission Requirements</Step>
-                        <Step :value="2">Details</Step>
+                        <Step :value="2">Project Name & Initiator</Step>
                         <Step :value="3">Project Type</Step>
                         <Step :value="4">Location</Step>
                         <Step :value="5">Documents</Step>
@@ -206,7 +206,7 @@ onMounted(() => {
                         </StepPanel>
                         <StepPanel :value="2">
                             <h3 class="heading-margin-bottom">
-                                Project Details
+                                Project Name & Initiator
                             </h3>
                             <SubmitProjectStep2
                                 ref="step2"
