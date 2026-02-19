@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, provide, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import Stepper from 'primevue/stepper';
 import Step from 'primevue/step';
 import StepPanel from 'primevue/steppanel';
@@ -17,10 +18,13 @@ import ReviewProjectStep3 from '@/bcfms/ipa/pages/ReviewProject/steps/Step3_Geol
 import ReviewProjectStep4 from '@/bcfms/ipa/pages/ReviewProject/steps/Step4_RiskAssessment.vue';
 import ReviewProjectStep5 from '@/bcfms/ipa/pages/ReviewProject/steps/Step5_AssessmentOutcome.vue';
 import { getIPA, type IPAType } from '@/bcfms/ipa/schema/IPASchema.ts';
-import { getBlankIpa } from '@/bcfms/ipa/api.ts';
+import { getIpa } from '@/bcfms/ipa/api.ts';
 import { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import type { Ref } from 'vue';
-import { submitIPA } from '@/bcfms/ipa/api.ts';
+import { submitIPAReview } from '@/bcfms/ipa/api.ts';
+
+const route = useRoute();
+const resourceinstanceid = ref(route.params.resourceinstanceid as string);
 
 const activateNextStep = async () => {
     if (currentStep.value === 5) {
@@ -37,9 +41,9 @@ const submitIpaData = async () => {
     console.log('submit IPA', ipa);
     submitting.value = true;
     submissionErrors.value = [];
-    submitIPA(ipa.value)
+    submitIPAReview(ipa.value)
         .then((updatedIPA) => {
-            ipa.value = updatedIPA.aliased_data as Promise<IPAType>;
+            ipa.value = updatedIPA as Promise<IPAType>;
             myStepper.value.d_value++;
             setCurrentStepValid(
                 steps[myStepper.value.d_value - 1].value.isValid(),
@@ -128,8 +132,8 @@ const showDebug = ref(false);
 onMounted(() => {
     steps.push(step1, step2, step3, step4, step5, step6);
     stepStatuses.value[0] = true;
-    getBlankIpa().then((response) => {
-        ipa.value = response.aliased_data as unknown as typeof IPA;
+    getIpa(resourceinstanceid.value).then((response) => {
+        ipa.value = response as unknown as typeof IPA;
     });
 });
 </script>
@@ -176,7 +180,13 @@ onMounted(() => {
                     </StepList>
                 </div>
                 <div class="bcgov-vertical-step-panels">
-                    <h1 class="heading-black">Review New Project</h1>
+                    <h1 class="heading-black">
+                        Review New Project -
+                        {{
+                            ipa?.aliased_data?.assessment_details?.aliased_data
+                                ?.ipa_number?.display_value
+                        }}
+                    </h1>
                     <StepPanels>
                         <StepperNavigation
                             :step-number="currentStep"

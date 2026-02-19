@@ -42,7 +42,7 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.initial_project_review?.aliased_data,
+        ipa.value.aliased_data.initial_project_review?.aliased_data,
         projectGeologyForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -68,7 +68,8 @@ defineExpose({ isValid });
                 :mode="EDIT"
                 :should-show-label="false"
                 :aliased-node-data="
-                    ipa.initial_project_review?.aliased_data?.metamorphic_rock
+                    ipa.aliased_data.initial_project_review?.aliased_data
+                        ?.metamorphic_rock
                 "
                 placeholder="Select Metamorphic Rock"
                 graph-slug="project_assessment"
@@ -85,7 +86,8 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa.initial_project_review?.aliased_data?.igneous_rock
+                    ipa.aliased_data.initial_project_review?.aliased_data
+                        ?.igneous_rock
                 "
                 :should-show-label="false"
                 placeholder="Select Igneous Rock"
@@ -103,7 +105,8 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa.initial_project_review?.aliased_data?.sedimentary_rock
+                    ipa.aliased_data.initial_project_review?.aliased_data
+                        ?.sedimentary_rock
                 "
                 :should-show-label="false"
                 placeholder="Select Sedimentary Rock"
@@ -121,7 +124,7 @@ defineExpose({ isValid });
             <GenericWidget
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa.initial_project_review?.aliased_data
+                    ipa.aliased_data.initial_project_review?.aliased_data
                         ?.quaternary_deposits
                 "
                 :should-show-label="false"

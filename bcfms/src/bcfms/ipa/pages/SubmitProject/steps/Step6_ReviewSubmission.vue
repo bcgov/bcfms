@@ -65,31 +65,32 @@ emit('update:stepIsValid', isValid());
         <p class="p-underline-bold">Filing Details</p>
         <div
             v-if="
-                ipa?.assessment_details?.aliased_data?.assessment_start_date
-                    .display_value
+                ipa?.aliased_data?.assessment_details?.aliased_data
+                    ?.assessment_start_date.display_value
             "
             class="div-grid-cols"
         >
             <div>Submission Date</div>
             <div>
                 {{
-                    ipa?.assessment_details?.aliased_data?.assessment_start_date
-                        .display_value
+                    ipa?.aliased_data?.assessment_details?.aliased_data
+                        ?.assessment_start_date.display_value
                 }}
             </div>
         </div>
 
         <div
             v-if="
-                ipa?.assessment_details?.aliased_data?.ipa_number?.display_value
+                ipa?.aliased_data?.assessment_details?.aliased_data?.ipa_number
+                    ?.display_value
             "
             class="div-grid-cols"
         >
             <div class="div-grid-cols">Reference Number</div>
             <div class="div-grid-cols">
                 {{
-                    ipa?.assessment_details?.aliased_data?.ipa_number
-                        ?.display_value
+                    ipa?.aliased_data?.assessment_details?.aliased_data
+                        ?.ipa_number?.display_value
                 }}
             </div>
         </div>
@@ -97,7 +98,7 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.project_name
+                ipa?.aliased_data?.project_details?.aliased_data?.project_name
             "
             graph-slug="project_assessment"
             node-alias="project_name"
@@ -106,7 +107,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.project_initiator
+                ipa?.aliased_data?.project_details?.aliased_data
+                    ?.project_initiator
             "
             graph-slug="project_assessment"
             node-alias="project_initiator"
@@ -115,7 +117,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.industry_company_name
+                ipa?.aliased_data?.project_details?.aliased_data
+                    ?.industry_company_name
             "
             graph-slug="project_assessment"
             node-alias="industry_company_name"
@@ -124,7 +127,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.project_authorizing_agency
+                ipa?.aliased_data?.project_details?.aliased_data
+                    ?.project_authorizing_agency
             "
             graph-slug="project_assessment"
             node-alias="project_authorizing_agency"
@@ -133,7 +137,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.land_act_file_number
+                ipa?.aliased_data?.project_details?.aliased_data
+                    ?.land_act_file_number
             "
             graph-slug="project_assessment"
             node-alias="land_act_file_number"
@@ -142,7 +147,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.project_start_date
+                ipa?.aliased_data?.project_details?.aliased_data
+                    ?.project_start_date
             "
             graph-slug="project_assessment"
             node-alias="project_start_date"
@@ -151,7 +157,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.project_end_date
+                ipa?.aliased_data?.project_details?.aliased_data
+                    ?.project_end_date
             "
             graph-slug="project_assessment"
             node-alias="project_end_date"
@@ -163,8 +170,8 @@ emit('update:stepIsValid', isValid());
             node-alias="project_type"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.project_type?.aliased_data
-                    .project_type
+                ipa?.aliased_data?.project_details?.aliased_data?.project_type
+                    ?.aliased_data.project_type
             "
         />
         <GenericWidget
@@ -173,8 +180,8 @@ emit('update:stepIsValid', isValid());
             node-alias="other_project_type"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.project_type?.aliased_data
-                    .other_project_type
+                ipa?.aliased_data?.project_details?.aliased_data?.project_type
+                    ?.aliased_data.other_project_type
             "
         />
         <GenericWidget
@@ -182,8 +189,8 @@ emit('update:stepIsValid', isValid());
             graph-slug="project_assessment"
             node-alias="proposed_activity"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.project_type?.aliased_data
-                    .proposed_activity
+                ipa?.aliased_data?.project_details?.aliased_data?.project_type
+                    ?.aliased_data.proposed_activity
             "
             :mode="VIEW"
         />
@@ -193,16 +200,16 @@ emit('update:stepIsValid', isValid());
             node-alias="location_description"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.project_site?.aliased_data
-                    .location_description
+                ipa?.aliased_data?.project_details?.aliased_data?.project_site
+                    ?.aliased_data.location_description
             "
         />
         <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details?.aliased_data?.project_site?.aliased_data
-                    .geometry_qualifier
+                ipa?.aliased_data?.project_details?.aliased_data?.project_site
+                    ?.aliased_data.geometry_qualifier
             "
             graph-slug="project_assessment"
             node-alias="geometry_qualifier"
@@ -211,8 +218,8 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details.aliased_data?.project_site?.aliased_data
-                    .multiple_geometry_qualifier
+                ipa?.aliased_data?.project_details.aliased_data?.project_site
+                    ?.aliased_data.multiple_geometry_qualifier
             "
             graph-slug="project_assessment"
             node-alias="multiple_geometry_qualifier"
@@ -221,21 +228,15 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.project_details.aliased_data?.project_documents
-                    ?.aliased_data.project_documents
+                ipa?.aliased_data?.project_details.aliased_data
+                    ?.project_documents?.aliased_data.project_documents
             "
             graph-slug="project_assessment"
             node-alias="project_documents"
         />
     </div>
 </template>
-<style>
-[data-node-alias='project_documents'] {
-    max-width: 200px;
-    max-height: 200px;
-    object-fit: contain;
-}
-</style>
+<style></style>
 <style scoped>
 .step-title {
     margin-bottom: 1rem;
@@ -254,7 +255,7 @@ emit('update:stepIsValid', isValid());
 }
 .div-grid-cols {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr) 1fr);
+    grid-template-columns: repeat(1, minmax(0, 1fr) 2fr);
 }
 .widget {
     margin-bottom: 1rem;

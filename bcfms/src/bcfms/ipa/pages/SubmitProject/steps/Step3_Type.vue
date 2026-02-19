@@ -44,7 +44,8 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.project_details.aliased_data.project_type.aliased_data,
+        ipa.value.aliased_data.project_details.aliased_data.project_type
+            .aliased_data,
         projectTypeForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
@@ -69,14 +70,16 @@ defineExpose({ isValid });
                 node-alias="project_type"
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa?.project_details?.aliased_data?.project_type
+                    ipa?.aliased_data?.project_details?.aliased_data
+                        ?.project_type
                 "
                 @update:value="updateModelValue($event, 'project_type')"
             />
         </LabelledInput>
         <LabelledInput
             v-if="
-                ipa?.project_details.aliased_data?.project_type.node_value ===
+                ipa?.aliased_data?.project_details?.aliased_data?.project_type
+                    .aliased_data.project_type.node_value ===
                 '54722cfa-61f7-41e9-9e02-5b676e3bcc3e'
             "
             hint="Enter a brief project type"
@@ -87,7 +90,8 @@ defineExpose({ isValid });
                 node-alias="other_project_type"
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa?.project_details?.aliased_data?.other_project_type
+                    ipa?.aliased_data?.project_details?.aliased_data
+                        ?.other_project_type
                 "
                 @update:value="updateModelValue($event, 'other_project_type')"
             />
@@ -100,8 +104,8 @@ defineExpose({ isValid });
                 graph-slug="project_assessment"
                 node-alias="proposed_activity"
                 :aliased-node-data="
-                    ipa?.project_details?.aliased_data?.project_type
-                        ?.aliased_data.proposed_activity
+                    ipa?.aliased_data?.project_details?.aliased_data
+                        ?.project_type?.aliased_data.proposed_activity
                 "
                 :mode="EDIT"
                 @update:value="updateModelValue($event, 'proposed_activity')"

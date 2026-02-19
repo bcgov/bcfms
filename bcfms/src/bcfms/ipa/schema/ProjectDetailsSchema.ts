@@ -5,6 +5,7 @@ import {
     blankResourceInstanceValue,
     blankStringValue,
     blankFileListValue,
+    blankGeoJSONValue,
 } from '@/bcfms/utils.ts';
 import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/utils.ts';
 import type { ConceptValue } from '@/arches_component_lab/datatypes/concept/types.ts';
@@ -20,11 +21,9 @@ import {
 } from '@/bcgov_arches_common/datatypes/string/validation/zod.ts';
 import { ResourceInstanceValueRequiredSchema } from '@/bcgov_arches_common/datatypes/resource-instance/validation/zod.ts';
 import { FileListValueSchema } from '@/bcgov_arches_common/datatypes/file-list/validation/zod.ts';
-import {
-    DateValueSchema,
-    DateValueRequiredSchema,
-} from '@/bcgov_arches_common/datatypes/date/validation/zod.ts';
+import { DateValueSchema } from '@/bcgov_arches_common/datatypes/date/validation/zod.ts';
 import type { FileListValue } from '@/arches_component_lab/datatypes/file-list/types.ts';
+import type { GeoJSONFeatureCollectionValue } from '@/bcgov_arches_common/datatypes/geojson-feature-collection/types.ts';
 
 const ProjectDetailsSchema = z.object({
     aliased_data: z.object({
@@ -33,7 +32,7 @@ const ProjectDetailsSchema = z.object({
         industry_company_name: getStringValueRequiredSchema(60),
         project_authorizing_agency: ConceptValueRequiredSchema,
         land_act_file_number: getStringValueSchema(30),
-        project_start_date: DateValueRequiredSchema,
+        project_start_date: DateValueSchema,
         project_end_date: DateValueSchema,
         project_documents: FileListValueSchema,
         project_type: z.object({
@@ -86,6 +85,7 @@ class ProjectDetails implements ProjectDetailsType {
             },
             project_site: {
                 aliased_data: {
+                    project_location: blankGeoJSONValue(),
                     location_description: blankStringValue(),
                     geometry_qualifier: blankConceptValue(),
                     multiple_geometry_qualifier: blankStringValue(),
@@ -115,6 +115,7 @@ class ProjectDetails implements ProjectDetailsType {
         };
         project_site: {
             aliased_data: {
+                project_location: GeoJSONFeatureCollectionValue;
                 location_description: StringValue;
                 geometry_qualifier: ConceptValue;
                 multiple_geometry_qualifier: StringValue;

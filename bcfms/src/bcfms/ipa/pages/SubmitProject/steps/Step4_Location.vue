@@ -13,7 +13,10 @@ import {
     isValid as baseIsValid,
     updateModelValue as baseUpdateModelValue,
 } from '@/bcfms/utils.ts';
-import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
+import type {
+    AliasedNodeData,
+    CardXNodeXWidgetData,
+} from '@/arches_component_lab/types.ts';
 import { getFlattenResolver } from '@/bcgov_arches_common/validation-utils.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
@@ -51,11 +54,20 @@ const updateModelValue = function (
     baseUpdateModelValue(
         newValue,
         attribute_name,
-        ipa.value.project_details?.aliased_data.project_site?.aliased_data,
+        ipa.value.aliased_data?.project_details?.aliased_data.project_site
+            ?.aliased_data,
         projectLocationForm as Ref<FormInstance>,
     );
     emit('update:stepIsValid', isValid());
 };
+
+const mapOverrides = {
+    widget: {
+        widgetid: '',
+        component:
+            'bcgov_arches_common/widgets/MapDropZoneWidget/MapDropZoneWidget.vue',
+    },
+} satisfies Partial<CardXNodeXWidgetData>;
 
 defineExpose({ isValid });
 </script>
@@ -67,7 +79,17 @@ defineExpose({ isValid });
         :validateOnValueUpdate="true"
         :resolver="projectLocationResolver"
     >
-        <div>Need to add map</div>
+        <GenericWidget
+            graph-slug="project_assessment"
+            node-alias="project_location"
+            :card-x-node-x-widget-data-overrides="mapOverrides"
+            :mode="EDIT"
+            :aliased-node-data="
+                ipa?.aliased_data?.project_details.aliased_data?.project_site
+                    ?.aliased_data.project_location
+            "
+            @update:value="updateModelValue($event, 'project_location')"
+        ></GenericWidget>
         <LabelledInput
             hint="Provide geographic names and distances -- e.g., A River, 3km north of Highway XX crossing"
             input-name="locationDescription"
@@ -77,8 +99,8 @@ defineExpose({ isValid });
                 node-alias="location_description"
                 :mode="EDIT"
                 :aliased-node-data="
-                    ipa?.project_details.aliased_data?.project_site
-                        ?.aliased_data.location_description
+                    ipa?.aliased_data?.project_details.aliased_data
+                        ?.project_site?.aliased_data.location_description
                 "
                 @update:value="updateModelValue($event, 'location_description')"
             />
@@ -92,8 +114,8 @@ defineExpose({ isValid });
                 :mode="EDIT"
                 :should-show-label="false"
                 :aliased-node-data="
-                    ipa?.project_details.aliased_data?.project_site
-                        ?.aliased_data.geometry_qualifier
+                    ipa?.aliased_data?.project_details.aliased_data
+                        ?.project_site?.aliased_data.geometry_qualifier
                 "
                 graph-slug="project_assessment"
                 node-alias="geometry_qualifier"
@@ -109,8 +131,8 @@ defineExpose({ isValid });
                 :mode="EDIT"
                 :should-show-label="false"
                 :aliased-node-data="
-                    ipa?.project_details.aliased_data?.project_site
-                        ?.aliased_data.multiple_geometry_qualifier
+                    ipa?.aliased_data?.project_details.aliased_data
+                        ?.project_site?.aliased_data.multiple_geometry_qualifier
                 "
                 graph-slug="project_assessment"
                 node-alias="multiple_geometry_qualifier"

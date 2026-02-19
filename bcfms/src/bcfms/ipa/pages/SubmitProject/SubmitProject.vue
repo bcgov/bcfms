@@ -42,7 +42,7 @@ const submitIpaData = async () => {
     submissionErrors.value = [];
     submitIPA(ipa.value)
         .then((updatedIPA) => {
-            ipa.value = updatedIPA.aliased_data as Promise<IPAType>;
+            ipa.value = updatedIPA as Promise<IPAType>;
             myStepper.value.d_value++;
             setCurrentStepValid(
                 steps[myStepper.value.d_value - 1].value.isValid(),
@@ -131,8 +131,7 @@ const nextLabel = computed(() => {
     return currentStep.value < steps.length - 1 ? 'Next' : 'Submit Project';
 });
 const showPrevious = computed(() => {
-    // return !(currentStep.value === steps.length || currentStep.value === 1);
-    return true;
+    return !(currentStep.value === steps.length || currentStep.value === 1);
 });
 
 const showDebug = ref(false);
@@ -141,7 +140,7 @@ onMounted(() => {
     steps.push(step1, step2, step3, step4, step5, step6, step7);
     stepStatuses.value[0] = true;
     getBlankIpa().then((response) => {
-        ipa.value = response.aliased_data as unknown as typeof IPA;
+        ipa.value = response as unknown as typeof IPA;
     });
 });
 </script>
@@ -180,7 +179,7 @@ onMounted(() => {
                 <div class="bcgov-vertical-steps">
                     <StepList>
                         <Step :value="1">Submission Requirements</Step>
-                        <Step :value="2">Details</Step>
+                        <Step :value="2">Project Name & Initiator</Step>
                         <Step :value="3">Project Type</Step>
                         <Step :value="4">Location</Step>
                         <Step :value="5">Documents</Step>
@@ -207,7 +206,7 @@ onMounted(() => {
                         </StepPanel>
                         <StepPanel :value="2">
                             <h3 class="heading-margin-bottom">
-                                Project Details
+                                Project Name & Initiator
                             </h3>
                             <SubmitProjectStep2
                                 ref="step2"
@@ -349,6 +348,10 @@ li {
 </style>
 <style>
 .p-select-label {
-    font-size: 0.8rem;
+    font-size: 0.8rem !important;
+}
+
+.language-selector {
+    display: none !important;
 }
 </style>

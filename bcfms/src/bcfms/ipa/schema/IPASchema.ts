@@ -11,8 +11,10 @@ import type { AssessmentDetailsType } from '@/bcfms/ipa/schema/AssessmentDetails
 import { AssessmentDetails } from '@/bcfms/ipa/schema/AssessmentDetailsSchema.ts';
 
 const IPASchema = z.object({
-    project_details: z.array(ProjectDetailsSchema),
-    initial_project_review: z.array(InitialProjectReviewSchema),
+    aliased_data: z.object({
+        project_details: z.array(ProjectDetailsSchema),
+        initial_project_review: z.array(InitialProjectReviewSchema),
+    }),
 });
 
 const requiredIPASchema = IPASchema.partial();
@@ -25,13 +27,17 @@ function getIPA(): IPAType {
 
 class IPA implements IPAType {
     constructor() {
-        this.project_details = getProjectDetails();
-        this.initial_project_review = getInitialProjectReview();
-        this.assessment_details = new AssessmentDetails();
+        this.aliased_data = {
+            project_details: getProjectDetails(),
+            initial_project_review: getInitialProjectReview(),
+            assessment_details: new AssessmentDetails(),
+        };
     }
-    project_details: typeof ProjectDetailsSchema;
-    initial_project_review: typeof InitialProjectReviewSchema;
-    assessment_details: AssessmentDetailsType;
+    aliased_data: {
+        project_details: typeof ProjectDetailsSchema;
+        initial_project_review: typeof InitialProjectReviewSchema;
+        assessment_details: AssessmentDetailsType;
+    };
 }
 
 console.log(requiredIPASchema);

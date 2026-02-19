@@ -11,7 +11,10 @@
      user_profile_manager="{% url 'user_profile_manager' %}"
      dashboard="{% url 'submissions' %}"
      submit_ipa='{% url "submit_ipa" %}'
-     api_resource_blank='(graph) => {return "{% url "arches_querysets:api-resource-blank" "----p1" %}".replace("----p1", graph)}'>
+     submit_ipa_review='(pk) => { return "{%url "submit-ipa-review" "00000000-0000-0000-0000-000000000000" %}".replace("00000000-0000-0000-0000-000000000000", pk) }'
+     ipas_for_review='{% url "ipas-for-review" %}'
+     api_resource_blank='(graph) => {return "{% url "arches_querysets:api-resource-blank" "----p1" %}".replace("----p1", graph)}'
+     api_resource='(graph,pk) => {return "{% url "arches_querysets:api-resource" "----p1" "00000000-0000-0000-0000-000000000000" %}".replace("----p1", graph).replace("00000000-0000-0000-0000-000000000000", pk)}'>
 </div>
 
 {% endblock arches_urls %}

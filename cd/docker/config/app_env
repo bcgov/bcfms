@@ -1,0 +1,7 @@
+# App-specific environment files
+GITHUB_APP_REPO=bcgov/bcfms
+
+FORCE_CORE_PIP_INSTALL=True
+CORE_REPO_TAG=stable/7.6.12_bcgov_12008
+COMMON_REPO_TAG=brf/feat/add_goeom_dropzone
+CONFIG_BRANCH=brf/bugfix/add_missing_queryset_dependency

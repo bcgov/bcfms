@@ -1,3 +1,4 @@
+import logging
 from datetime import date
 import traceback
 from urllib.parse import urlparse, parse_qs
@@ -9,9 +10,10 @@ from bcfms.util.business_data_proxy import (
 )
 from arches_component_lab.views.node_config_mixin import CardNodeWidgetConfigMixin
 
-from rest_framework.generics import ListCreateAPIView, CreateAPIView
+from rest_framework.generics import ListCreateAPIView, CreateAPIView, UpdateAPIView
 from rest_framework.parsers import JSONParser
 
+import json
 from arches_querysets.rest_framework.multipart_json_parser import MultiPartJSONParser
 from arches_querysets.rest_framework.pagination import ArchesLimitOffsetPagination
 from arches_querysets.rest_framework.permissions import ReadOnly, ResourceEditor
@@ -19,6 +21,8 @@ from arches_querysets.rest_framework.serializers import (
     ArchesResourceSerializer,
 )
 from arches_querysets.rest_framework.view_mixins import ArchesModelAPIMixin
+
+logger = logging.getLogger(__name__)
 
 
 class IpaSerializer(ArchesResourceSerializer):
@@ -75,28 +79,13 @@ class SubmitIPA(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, CreateAPIView):
         return filtered[0][2] if filtered else None
 
     def patch_data(self, ipa):
-        print("!!!! PATCH until location is added")
         ipa["aliased_data"]["project_details"]["aliased_data"]["project_site"][
             "aliased_data"
-        ]["project_location"][
-            "node_value"
-        ] = """{
-                   "type": "FeatureCollection",
-                   "features": [
-                      {
-                         "geometry": {
-                            "coordinates": [
-                               -122.9167,
-                               51.0861
-                            ],
-                            "type": "Point"
-                         },
-                         "id": "205ea789-1643-4061-a05c-826626c60d48",
-                         "properties": {},
-                         "type": "Feature"
-                      }
-                   ]
-                }"""
+        ]["project_location"]["node_value"] = json.dumps(
+            ipa["aliased_data"]["project_details"]["aliased_data"]["project_site"][
+                "aliased_data"
+            ]["project_location"]["node_value"]
+        )
 
         ipa_number_config = self.get_card_x_node_x_widget(
             "project_assessment", "ipa_number"
@@ -123,21 +112,28 @@ class SubmitIPA(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, CreateAPIView):
         raw = request.data
         cleaned_object = {
             "aliased_data": {
-                "project_details": raw.get("project_details")["project_details"],
-                "assessment_details": raw.get("project_details")["assessment_details"],
+                "project_details": raw.get("aliased_data")["project_details"],
+                "assessment_details": raw.get("aliased_data")["assessment_details"],
             },
         }
-        # print(f"\n\n\nBefore: {cleaned_object}\n\n\n")
+        logger.info(f"Before clean")
         patched = self.patch_data(cleaned_object)
+        logger.info(f"After clean")
         # print(f"\n\n\nCleaned: {patched}\n\n\n")
         serializer = self.get_serializer(data=patched)
+        logger.info(f"After get_serializer")
+
+        logger.info(f"Checking valid")
         if not serializer.is_valid():
             # print the errors you’re currently not seeing
             print("serializer.errors:", serializer.errors)
             return JSONResponse(serializer.errors, status=400)
         serializer.is_valid(raise_exception=True)
+        logger.info("It's valid again")
         try:
+            logger.info("Before perform_create")
             self.perform_create(serializer)
+            logger.info("Created")
         except Exception as e:
             print(f"Unable to create: {e}")
             traceback.print_exc()
@@ -149,7 +145,85 @@ class SubmitIPA(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, CreateAPIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        logger.info("Created successfully... getting headers")
         headers = self.get_success_headers(serializer.data)
+        logger.info("Got headers, returning JSON response")
         return JSONResponse(
             serializer.data, status=status.HTTP_201_CREATED, headers=headers
         )
+
+
+class SubmitIPAReview(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, UpdateAPIView):
+    permission_classes = [ResourceEditor | ReadOnly]
+    serializer_class = IpaSerializer
+    parser_classes = [JSONParser, MultiPartJSONParser]
+    pagination_class = ArchesLimitOffsetPagination
+    valid_keys = ["aliased_data"]
+
+    def patch_data(self, ipa):
+        return {
+            "resourceinstanceid": ipa["resourceinstanceid"],
+            "legacyid": ipa["legacyid"],
+            "createdtime": ipa["createdtime"],
+            "graph": ipa["graph"],
+            "graph_publication": ipa["graph_publication"],
+            "principaluser": ipa["principaluser"],
+            "graph_has_different_publication": ipa["graph_has_different_publication"],
+            "descriptors": ipa["descriptors"],
+            "aliased_data": {
+                "initial_project_review": ipa["aliased_data"]["initial_project_review"],
+                "assessment_details": ipa["aliased_data"]["assessment_details"],
+            },
+        }
+
+    def put(self, request, *args, **kwargs):
+        return self.patch(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        cleaned_object = request.data
+        patched = self.patch_data(cleaned_object)
+        print(patched)
+
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=patched, partial=True)
+        if not serializer.is_valid():
+            # print the errors you’re currently not seeing
+            logger.warning("serializer.errors:", serializer.errors)
+            return JSONResponse(serializer.errors, status=400)
+        logger.info("It's valid... validating again")
+        serializer.is_valid(raise_exception=True)
+
+        try:
+            self.perform_update(serializer)
+        except Exception as e:
+            logger.warning("Got an exception")
+            print(f"Unable to create: {e}")
+            traceback.print_exc()
+            return JSONResponse(
+                {
+                    "error": "Unable to create resource",
+                    "message": str(e),
+                    "type": e.__class__.__name__,
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        return JSONResponse(serializer.data, status=status.HTTP_200_OK)
+
+
+class IPAsForReviewPagination(ArchesLimitOffsetPagination):
+    default_limit = 10
+
+
+class IPAsForReview(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, ListCreateAPIView):
+    permission_classes = [ResourceEditor | ReadOnly]
+    serializer_class = IpaSerializer
+    parser_classes = [JSONParser, MultiPartJSONParser]
+    pagination_class = IPAsForReviewPagination
+
+    def filter_queryset(self, queryset):
+        queryset = super().filter_queryset(queryset)
+        queryset = queryset.filter(initial_review_level_of_risk__isnull=True)
+        sort = self.request.GET.get("sort")
+        if sort:
+            queryset = queryset.order_by(sort)
+        return queryset
