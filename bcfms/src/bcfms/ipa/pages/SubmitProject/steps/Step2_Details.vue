@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { useTemplateRef, inject } from 'vue';
+import { useTemplateRef, inject, ref } from 'vue';
 import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
 import { Form, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
+import Message from 'primevue/message';
+
 // @ts-ignore
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
@@ -18,6 +20,7 @@ import {
 import { getFlattenResolver } from '@/bcgov_arches_common/validation-utils.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
+const dateErrorMessage = ref<string>('');
 
 const emit = defineEmits(['update:stepIsValid']);
 
@@ -33,11 +36,43 @@ const projectDetailsResolver = getFlattenResolver(
     zodResolver(ProjectDetailsSchema.shape['aliased_data']),
 );
 
-const isValid = () => {
-    return baseIsValid(
+const isValid = (
+    incomingValue?: AliasedNodeData,
+    incomingAttribute?: string,
+) => {
+    const isBaseValid = baseIsValid(
         projectDetailsForm as Ref<FormInstance>,
         ProjectDetailsSchema.shape['aliased_data'],
     );
+
+    //date checking
+    const details = ipa.value?.aliased_data?.project_details?.aliased_data;
+    let startVal = details?.project_start_date?.node_value;
+    let endVal = details?.project_end_date?.node_value;
+
+    if (incomingAttribute === 'project_start_date') {
+        startVal = incomingValue?.node_value;
+    } else if (incomingAttribute === 'project_end_date') {
+        endVal = incomingValue?.node_value;
+    }
+    let areDatesValid = true;
+
+    if (startVal && endVal) {
+        const startDate = new Date(startVal as string);
+        const endDate = new Date(endVal as string);
+
+        if (endDate < startDate) {
+            areDatesValid = false;
+            dateErrorMessage.value =
+                'Estimated Project End Date cannot be before the Start Date.';
+        } else {
+            dateErrorMessage.value = '';
+        }
+    } else {
+        dateErrorMessage.value = '';
+    }
+
+    return isBaseValid && areDatesValid;
 };
 
 const updateModelValue = function (
@@ -50,7 +85,8 @@ const updateModelValue = function (
         ipa.value.aliased_data?.project_details?.aliased_data,
         projectDetailsForm as Ref<FormInstance>,
     );
-    emit('update:stepIsValid', isValid());
+
+    emit('update:stepIsValid', isValid(newValue, attribute_name));
 };
 
 defineExpose({ isValid });
@@ -130,7 +166,13 @@ defineExpose({ isValid });
                 "
             />
         </LabelledInput>
-        <LabelledInput>
+        <LabelledInput
+            v-if="
+                ipa?.aliased_data?.project_details?.aliased_data
+                    ?.project_authorizing_agency?.display_value ===
+                'Front Counter BC (FCBC)'
+            "
+        >
             <GenericWidget
                 :mode="EDIT"
                 :aliased-node-data="
@@ -184,7 +226,15 @@ defineExpose({ isValid });
                         @update:value="
                             updateModelValue($event, 'project_end_date')
                         "
-                /></LabelledInput>
+                    />
+                    <Message
+                        v-if="dateErrorMessage"
+                        severity="error"
+                        size="small"
+                    >
+                        {{ dateErrorMessage }}
+                    </Message>
+                </LabelledInput>
             </div>
         </div>
     </Form>
@@ -204,6 +254,7 @@ defineExpose({ isValid });
 .formfield-flex-grow {
     flex-grow: 2;
     margin-right: 1rem;
+    max-width: calc(50% - 0.5rem);
 }
 
 .datepicker-width {
