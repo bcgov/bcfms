@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTemplateRef, inject } from 'vue';
+import { useTemplateRef, inject, onMounted } from 'vue';
 import type { Ref } from 'vue';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
@@ -30,6 +30,14 @@ const projectDocumentsResolver = getFlattenResolver(
 );
 
 const isValid = () => {
+    const files =
+        ipa.value.aliased_data?.project_details?.aliased_data?.project_documents
+            ?.node_value;
+
+    if (!files?.length) {
+        return true;
+    }
+
     return baseIsValid(
         projectDocumentsForm as Ref<FormInstance>,
         ProjectDetailsSchema.shape['aliased_data'],
@@ -51,6 +59,10 @@ const updateModelValue = function (
     );
     emit('update:stepIsValid', isValid());
 };
+
+onMounted(async () => {
+    emit('update:stepIsValid', isValid());
+});
 
 defineExpose({ isValid });
 </script>
