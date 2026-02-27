@@ -149,42 +149,55 @@ defineExpose({ isValid });
                 "
             />
         </LabelledInput>
-        <LabelledInput
-            hint="Select the Agency that is authorizing the project"
-            input-name="projectAuthorizingAgency"
-        >
-            <GenericWidget
-                :mode="EDIT"
-                :aliased-node-data="
+        <div class="flex-row flex-gap">
+            <div class="agency-col">
+                <LabelledInput
+                    hint="Select the Agency that is authorizing the project"
+                    input-name="projectAuthorizingAgency"
+                >
+                    <GenericWidget
+                        :mode="EDIT"
+                        :aliased-node-data="
+                            ipa?.aliased_data?.project_details?.aliased_data
+                                ?.project_authorizing_agency
+                        "
+                        graph-slug="project_assessment"
+                        node-alias="project_authorizing_agency"
+                        @update:value="
+                            updateModelValue(
+                                $event,
+                                'project_authorizing_agency',
+                            )
+                        "
+                    />
+                </LabelledInput>
+            </div>
+
+            <div
+                v-if="
                     ipa?.aliased_data?.project_details?.aliased_data
-                        ?.project_authorizing_agency
+                        ?.project_authorizing_agency?.display_value ===
+                    'Front Counter BC (FCBC)'
                 "
-                graph-slug="project_assessment"
-                node-alias="project_authorizing_agency"
-                @update:value="
-                    updateModelValue($event, 'project_authorizing_agency')
-                "
-            />
-        </LabelledInput>
-        <LabelledInput
-            v-if="
-                ipa?.aliased_data?.project_details?.aliased_data
-                    ?.project_authorizing_agency?.display_value ===
-                'Front Counter BC (FCBC)'
-            "
-        >
-            <GenericWidget
-                :mode="EDIT"
-                :aliased-node-data="
-                    ipa?.aliased_data?.project_details?.aliased_data
-                        ?.land_act_file_number
-                "
-                graph-slug="project_assessment"
-                node-alias="land_act_file_number"
-                placeholder="Land Act Number"
-                @update:value="updateModelValue($event, 'land_act_file_number')"
-            />
-        </LabelledInput>
+                class="land-act-col"
+            >
+                <LabelledInput>
+                    <GenericWidget
+                        :mode="EDIT"
+                        :aliased-node-data="
+                            ipa?.aliased_data?.project_details?.aliased_data
+                                ?.land_act_file_number
+                        "
+                        graph-slug="project_assessment"
+                        node-alias="land_act_file_number"
+                        placeholder="Land Act Number"
+                        @update:value="
+                            updateModelValue($event, 'land_act_file_number')
+                        "
+                    />
+                </LabelledInput>
+            </div>
+        </div>
         <div class="flex-row">
             <div class="formfield-flex-grow">
                 <LabelledInput
@@ -259,5 +272,20 @@ defineExpose({ isValid });
 
 .datepicker-width {
     width: 85%;
+}
+
+.flex-gap {
+    gap: 1rem;
+    width: 100%;
+}
+
+.agency-col {
+    flex: 3;
+    min-width: 0;
+}
+
+.land-act-col {
+    flex: 1;
+    min-width: 0;
 }
 </style>
