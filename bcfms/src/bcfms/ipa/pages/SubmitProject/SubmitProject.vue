@@ -27,6 +27,8 @@ import { submitIPA } from '@/bcfms/ipa/api.ts';
 const activateNextStep = async () => {
     if (currentStep.value === 6) {
         submitIpaData();
+    } else if (currentStep.value === 7) {
+        printDetails();
     } else {
         myStepper.value.d_value++;
         setCurrentStepValid(
@@ -101,7 +103,8 @@ const isValid = (step: number) => {
 };
 
 const printDetails = () => {
-    console.log('printDetails');
+    window.print();
+    // console.log('printDetails');
 };
 
 const stepperProps: Ref<StepperProps | null> = ref(null);
