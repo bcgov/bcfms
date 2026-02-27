@@ -6,12 +6,21 @@ import type { ErrorMessage } from '@/bcfms/types.ts';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { VIEW } from '@/arches_component_lab/widgets/constants.ts';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
+import type { CardXNodeXWidgetData } from '@/arches_component_lab/types.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
 
 defineProps<{
     submissionErrors: ErrorMessage[];
 }>();
+
+const mapOverrides = {
+    widget: {
+        widgetid: '',
+        component:
+            'bcgov_arches_common/widgets/MapDropZoneWidget/MapDropZoneWidget.vue',
+    },
+} satisfies Partial<CardXNodeXWidgetData>;
 
 const isValid = () => {
     console.log(ipa?.value);
@@ -134,6 +143,11 @@ emit('update:stepIsValid', isValid());
             node-alias="project_authorizing_agency"
         />
         <GenericWidget
+            v-if="
+                ipa?.aliased_data?.project_details?.aliased_data
+                    ?.project_authorizing_agency?.display_value ===
+                'Front Counter BC (FCBC)'
+            "
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
@@ -175,6 +189,10 @@ emit('update:stepIsValid', isValid());
             "
         />
         <GenericWidget
+            v-if="
+                ipa?.aliased_data?.project_details?.aliased_data?.project_type
+                    ?.aliased_data?.project_type?.display_value === 'Other'
+            "
             class="div-grid-cols"
             graph-slug="project_assessment"
             node-alias="other_project_type"
@@ -204,6 +222,27 @@ emit('update:stepIsValid', isValid());
                     ?.aliased_data.location_description
             "
         />
+        <!-- map -->
+        <div class="div-grid-cols">
+            <div class="font-bold">Project Location</div>
+            <div></div>
+        </div>
+
+        <div class="print-map-container">
+            <div class="map-print-wrapper">
+                <GenericWidget
+                    graph-slug="project_assessment"
+                    node-alias="project_location"
+                    :card-x-node-x-widget-data-overrides="mapOverrides"
+                    :mode="VIEW"
+                    :should-show-label="false"
+                    :aliased-node-data="
+                        ipa?.aliased_data?.project_details.aliased_data
+                            ?.project_site?.aliased_data.project_location
+                    "
+                ></GenericWidget>
+            </div>
+        </div>
         <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
@@ -224,19 +263,88 @@ emit('update:stepIsValid', isValid());
             graph-slug="project_assessment"
             node-alias="multiple_geometry_qualifier"
         />
-        <GenericWidget
+        <!-- <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.aliased_data?.project_details.aliased_data
-                    ?.project_documents?.aliased_data.project_documents
+                ipa?.aliased_data?.project_details?.aliased_data
+                    ?.project_documents?.aliased_data?.project_documents
             "
             graph-slug="project_assessment"
             node-alias="project_documents"
-        />
+        /> -->
+        <div class="div-grid-cols widget">
+            <div class="font-bold">Project Documents</div>
+            <div>
+                <template
+                    v-if="
+                        ipa?.aliased_data?.project_details?.aliased_data
+                            ?.project_documents?.aliased_data?.project_documents
+                            ?.node_value?.length
+                    "
+                >
+                    <ul>
+                        <li
+                            v-for="file in ipa.aliased_data.project_details
+                                .aliased_data.project_documents.aliased_data
+                                .project_documents.node_value"
+                            :key="file.node_id"
+                        >
+                            {{ file.name }}
+                        </li>
+                    </ul>
+                </template>
+                <span v-else>No documents uploaded</span>
+            </div>
+        </div>
     </div>
 </template>
-<style></style>
+<style>
+@media print {
+    aside,
+    .bcgov-vertical-steps,
+    .stepper-nav-panel,
+    .sidenav {
+        display: none !important;
+    }
+    html,
+    body {
+        height: auto !important;
+        overflow: visible !important;
+    }
+    .main-content-area,
+    .page-wrapper,
+    main {
+        position: static !important;
+        overflow: visible !important;
+        height: auto !important;
+    }
+    .print-map-container {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        width: 100% !important;
+    }
+
+    .mapboxgl-map,
+    .mapboxgl-canvas-container,
+    canvas.mapboxgl-canvas {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+.print-map-container {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    width: 100% !important;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.map-print-wrapper {
+    width: 750px !important;
+    margin: 0 auto !important;
+}
+</style>
 <style scoped>
 .step-title {
     margin-bottom: 1rem;
@@ -262,5 +370,8 @@ emit('update:stepIsValid', isValid());
 }
 .review_submit_page {
     line-height: 1.25;
+}
+.font-bold {
+    font-weight: bold;
 }
 </style>
