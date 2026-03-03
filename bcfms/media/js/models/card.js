@@ -1,13 +1,14 @@
 import _ from 'underscore';
-import arches from 'arches';
-import cardComopnentLookup from 'card-components';
-import AbstractModel from 'models/abstract';
-import NodeModel from 'models/node';
-import CardWidgetModel from 'models/card-widget';
 import ko from 'knockout';
 import koMapping from 'knockout-mapping';
+import 'utils/dispose';
+
+import arches from 'arches';
+import AbstractModel from 'models/abstract';
+import CardWidgetModel from 'models/card-widget';
 import CardConstraintsViewModel from 'viewmodels/card-constraints';
-import dispose from 'utils/dispose';
+import cardComponentLookup from 'card-components';
+
 const CardModel = AbstractModel.extend({
     /**
      * A backbone model to manage card data
@@ -195,7 +196,6 @@ const CardModel = AbstractModel.extend({
         document?.addEventListener('keydown', keyListener);
         // dispose of eventlistener
         this.dispose = function () {
-            //console.log('disposing CardModel');
             dispose(self);
             document?.removeEventListener('keydown', keyListener);
         };
@@ -208,8 +208,6 @@ const CardModel = AbstractModel.extend({
      */
     parse: function (attributes) {
         var self = this;
-        // console.log(attributes.data.constraints[0].nodes)
-        // console.log(attributes.data.constraints[0].nodes)
         this._attributes = attributes;
 
         _.each(
@@ -388,6 +386,7 @@ const CardModel = AbstractModel.extend({
                 });
                 widget.label(originalWidgetData.label);
                 widget.widget_id(originalWidgetData.widget_id);
+                widget.visible(originalWidgetData.visible);
             }
         }, this);
         this.parse(this._attributes);
@@ -452,6 +451,9 @@ const CardModel = AbstractModel.extend({
             function (request, status, self) {
                 if (status === 'success') {
                     this._card(JSON.stringify(this.toJSON()));
+
+                    // adds event to trigger dirty state in graph-designer
+                    document.dispatchEvent(new Event('cardSave'));
                 }
                 if (typeof callback === 'function') {
                     callback(request, status, self);
@@ -461,4 +463,5 @@ const CardModel = AbstractModel.extend({
         );
     },
 });
+
 export default CardModel;

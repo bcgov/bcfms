@@ -1,4 +1,5 @@
 {% extends "base-root.htm" %}
+{% load render_bundle from webpack_loader %}
 {% load webpack_static from webpack_loader %}
 
 {% block title %}
@@ -8,13 +9,27 @@
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/css/bootstrap.min.css">
-<link href="{% webpack_static 'css/unify.css' %}" rel="stylesheet">
 <link href="{% webpack_static 'css/index.css' %}" rel="stylesheet">
+<link href="{% webpack_static 'node_modules/bcgov_arches_common/bcgov_arches_common/media/css/project.css' %}" rel="stylesheet">
+<link href="{% webpack_static 'node_modules/bcgov_arches_common/bcgov_arches_common/media/css/bc_index.css' %}" rel="stylesheet" />
 <link href="{% webpack_static 'css/project.css' %}" rel="stylesheet">
 <link href="{% webpack_static 'css/bc_index.css' %}" rel="stylesheet" />
-<link href="{% webpack_static 'css/accessibility.css' %}" rel="stylesheet">
+<link href="{% webpack_static 'css/accessibility.scss' %}" rel="stylesheet">
 {% endblock css %}
 
 {% block body %}
 <div id="bcfms-mounting-point" class="bcgov-vue-mounting-point"></div>
 {% endblock body %}
+
+{% block javascript %}
+    {% block pre_require_js %}
+    {% endblock pre_require_js %}
+
+    {% block arches_modules %}
+        {% include "arches_urls.htm" %}
+    {% endblock arches_modules %}
+
+    {% if main_script %}
+        {% render_bundle main_script 'js' %}
+    {% endif %}
+{% endblock javascript %}

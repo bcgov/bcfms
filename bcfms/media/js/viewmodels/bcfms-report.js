@@ -28,12 +28,22 @@ export default function (params) {
         ]);
     };
 
-    var nodeid_to_widget_lookup = _.object(
-        _.map(params.report.attributes.widgets, function (widget) {
-            return widget.node_id;
-        }),
-        params.report.attributes.widgets,
-    );
+    const createNodeLookup = (cards) => {
+        return cards.reduce((result, card) => {
+            card.widgets().forEach((widget) => {
+                result[widget.node.alias()] = {
+                    node: widget.node,
+                    widget: widget,
+                };
+            });
+            if (card.cards?.().length > 0) {
+                result = _.extend(result, createNodeLookup(card.cards()));
+            }
+            return result;
+        }, {});
+    };
+    const node_lookup = createNodeLookup(params.report.cards);
+
     var node_alias_to_node_lookup = _.object(
         _.map(params.report.attributes.nodes, function (node) {
             return node.alias;
@@ -49,12 +59,9 @@ export default function (params) {
 
     var getWidgetForAlias = function (node_alias) {
         if (node_alias in node_alias_to_node_lookup) {
-            return _.extend(
-                nodeid_to_widget_lookup[
-                    node_alias_to_node_lookup[node_alias].nodeid
-                ],
-                { node: node_alias_to_node_lookup[node_alias] },
-            );
+            return _.extend(node_lookup[node_alias].widget, {
+                node: node_alias_to_node_lookup[node_alias],
+            });
         }
         return null;
     };
