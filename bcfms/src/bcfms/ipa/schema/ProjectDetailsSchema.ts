@@ -52,6 +52,30 @@ const ProjectDetailsSchema = z.object({
     }),
 });
 
+const ProjectDateValidationSchema = z
+    .object({
+        project_start_date: z.any().optional(),
+        project_end_date: z.any().optional(),
+    })
+    .superRefine((data: any, ctx: any) => {
+        const startVal = data?.project_start_date?.node_value;
+        const endVal = data?.project_end_date?.node_value;
+
+        if (startVal && endVal) {
+            const startDate = new Date(startVal as string);
+            const endDate = new Date(endVal as string);
+
+            if (endDate < startDate) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message:
+                        'Estimated Project End Date cannot be before the Start Date.',
+                    path: ['project_end_date'],
+                });
+            }
+        }
+    });
+
 const requiredProjectDetailsSchema = ProjectDetailsSchema.partial();
 // @ts-ignore
 type ProjectDetailsType = z.infer<typeof ProjectDetailsSchema>;
@@ -60,7 +84,6 @@ function getProjectDetails(): ProjectDetailsType {
     return new ProjectDetails();
 }
 
-// @todo - Figure out object state - New/Updated/Deleted
 class ProjectDetails implements ProjectDetailsType {
     constructor() {
         this.aliased_data = {
@@ -127,6 +150,7 @@ class ProjectDetails implements ProjectDetailsType {
 export {
     ProjectDetails,
     ProjectDetailsSchema,
+    ProjectDateValidationSchema,
     getProjectDetails,
     requiredProjectDetailsSchema,
     type ProjectDetailsType,

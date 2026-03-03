@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTemplateRef, inject, ref } from 'vue';
+import { useTemplateRef, inject, computed, watch } from 'vue';
 import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
@@ -11,7 +11,10 @@ import Message from 'primevue/message';
 // @ts-ignore
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
-import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
+import {
+    ProjectDetailsSchema,
+    ProjectDateValidationSchema,
+} from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
 import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
 import {
     isValid as baseIsValid,
@@ -20,8 +23,6 @@ import {
 import { getFlattenResolver } from '@/bcgov_arches_common/validation-utils.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
-const dateErrorMessage = ref<string>('');
-
 const emit = defineEmits(['update:stepIsValid']);
 
 if (!ipa || !ipa.value) {
@@ -36,44 +37,30 @@ const projectDetailsResolver = getFlattenResolver(
     zodResolver(ProjectDetailsSchema.shape['aliased_data']),
 );
 
-const isValid = (
-    incomingValue?: AliasedNodeData,
-    incomingAttribute?: string,
-) => {
+const isValid = () => {
     const isBaseValid = baseIsValid(
         projectDetailsForm as Ref<FormInstance>,
         ProjectDetailsSchema.shape['aliased_data'],
     );
 
-    //date checking
-    const details = ipa.value?.aliased_data?.project_details?.aliased_data;
-    let startVal = details?.project_start_date?.node_value;
-    let endVal = details?.project_end_date?.node_value;
-
-    if (incomingAttribute === 'project_start_date') {
-        startVal = incomingValue?.node_value;
-    } else if (incomingAttribute === 'project_end_date') {
-        endVal = incomingValue?.node_value;
-    }
+    const data = ipa.value?.aliased_data?.project_details?.aliased_data;
     let areDatesValid = true;
 
-    if (startVal && endVal) {
-        const startDate = new Date(startVal as string);
-        const endDate = new Date(endVal as string);
-
-        if (endDate < startDate) {
-            areDatesValid = false;
-            dateErrorMessage.value =
-                'Estimated Project End Date cannot be before the Start Date.';
-        } else {
-            dateErrorMessage.value = '';
-        }
-    } else {
-        dateErrorMessage.value = '';
+    if (data) {
+        areDatesValid = ProjectDateValidationSchema.safeParse(data).success;
     }
 
     return isBaseValid && areDatesValid;
 };
+
+watch(
+    () => ipa.value?.aliased_data?.project_details?.aliased_data,
+    () => {
+        const validState = isValid();
+        emit('update:stepIsValid', validState);
+    },
+    { deep: true, immediate: true },
+);
 
 const updateModelValue = function (
     newValue: AliasedNodeData,
@@ -85,12 +72,22 @@ const updateModelValue = function (
         ipa.value.aliased_data?.project_details?.aliased_data,
         projectDetailsForm as Ref<FormInstance>,
     );
-
-    emit('update:stepIsValid', isValid(newValue, attribute_name));
 };
+
+const dateErrorMessage = computed(() => {
+    const data = ipa.value?.aliased_data?.project_details?.aliased_data;
+    if (!data) return '';
+
+    const result = ProjectDateValidationSchema.safeParse(data);
+    if (!result.success) {
+        return result.error.issues[0]?.message || '';
+    }
+    return '';
+});
 
 defineExpose({ isValid });
 </script>
+
 <template>
     <Form
         ref="projectDetailsForm"
@@ -224,7 +221,7 @@ defineExpose({ isValid });
                 <LabelledInput
                     label="Estimated Project End Date"
                     hint="Enter the completion date if known"
-                    input-name="projectEndDate"
+                    input-name="project_end_date"
                 >
                     <GenericWidget
                         :mode="EDIT"
@@ -244,6 +241,8 @@ defineExpose({ isValid });
                         v-if="dateErrorMessage"
                         severity="error"
                         size="small"
+                        class="mt-1"
+                        :closable="false"
                     >
                         {{ dateErrorMessage }}
                     </Message>
