@@ -22,9 +22,9 @@ class ParentCollectionEventRefresh(BaseFunction):
     def post_save(self, tile, request, context):
         # Recalculate descriptors and re-index all the collection events that relate to this sample
         resource_refs = models.ResourceXResource.objects.filter(
-            resourceinstanceidto=tile.resourceinstance.resourceinstanceid,
-            nodeid=ParentCollectionEventRefresh._ce_sample_node_id,
-        ).values_list("resourceinstanceidfrom", flat=True)
+            to_resource_id=tile.resourceinstance.resourceinstanceid,
+            node_id=ParentCollectionEventRefresh._ce_sample_node_id,
+        ).values_list("from_resource_id", flat=True)
         collection_events = Resource.objects.filter(
             resourceinstanceid__in=resource_refs
         )

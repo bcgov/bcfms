@@ -5,7 +5,7 @@ from django.conf.urls.i18n import i18n_patterns
 from bcfms.views.api import MVT, CollectionEventFossilNames, ReportNumberGenerator
 from bcgov_arches_common.views.map import (
     BCTileserverProxyView,
-    BCTileserverLocalProxyView,
+    # BCTileserverLocalProxyView,
 )
 from bcfms.views.search import export_results as bcfms_export_results
 from bcfms.views.root import BcfmsRootView
@@ -48,11 +48,11 @@ urlpatterns = [
         BCTileserverProxyView.as_view(),
         name="bcfms_tile_server",
     ),
-    re_path(
-        bc_path_prefix(r"^bclocaltileserver/(?P<path>.*)$"),
-        BCTileserverLocalProxyView.as_view(),
-        name="bcfms_local_tile_server",
-    ),
+    # re_path(
+    #     bc_path_prefix(r"^bclocaltileserver/(?P<path>.*)$"),
+    #     BCTileserverLocalProxyView.as_view(),
+    #     name="bcfms_local_tile_server",
+    # ),
     re_path(
         bc_path_prefix(r"^get_next_report_number/(?P<nodeid>%s)$" % uuid_regex),
         ReportNumberGenerator.as_view(),
@@ -88,6 +88,11 @@ urlpatterns = [
 
 # Adds URL pattern to serve media files during development
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler400 = "arches.app.views.main.custom_400"
+handler403 = "arches.app.views.main.custom_403"
+handler404 = "arches.app.views.main.custom_404"
+handler500 = "arches.app.views.main.custom_500"
 
 # Only handle i18n routing in active project. This will still handle the routes provided by Arches core and Arches applications,
 # but handling i18n routes in multiple places causes application errors.

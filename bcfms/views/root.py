@@ -9,7 +9,7 @@ from arches.app.views.base import BaseManagerView
 class BcfmsRootView(BaseManagerView):
     @method_decorator(ensure_csrf_cookie)
     def get(self, request, *args, **kwargs):
-        context = self.get_context_data(main_script="/views/root")
+        context = self.get_context_data(main_script="views/root")
         context["page_title"] = _("BCFMS Self Service")
         return render(
             request,

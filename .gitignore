@@ -153,9 +153,11 @@ node_modules
 
 *.egg-info
 .DS_STORE
-.tsconfig-paths.json
-.frontend-configuration-settings.json
 coverage/
+
+# Packaging
+build/
+dist/
 
 # Files copied from arches_common
 bcfms/media/css/project_common.css

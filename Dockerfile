@@ -35,6 +35,7 @@ RUN set -ex \
   dos2unix \
   git \
   gettext \
+  vim \
   " \
   && apt-get install -y --no-install-recommends curl \
   && curl -sL https://deb.nodesource.com/setup_20.x | bash - \
