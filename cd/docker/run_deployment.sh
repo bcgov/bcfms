@@ -1,5 +1,5 @@
 export APP_INSTANCE=$1
-export ANSIBLE_BRANCH=feat/split_bcrhp_bcfms
+export ANSIBLE_BRANCH=main
 docker exec -it \
       --env-file "./cd/docker/config/app_env" \
       --env-file "./cd/docker/config/deployment_secrets" \
