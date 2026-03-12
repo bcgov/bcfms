@@ -97,6 +97,7 @@ createVueApplication(BCFMSApp, {
     theme: {
         preset: BCGovPreset,
         options: {
+            darkModeSelector: 'system',
             cssLayer: {
                 name: 'primevue',
                 order: 'theme, base, primevue',

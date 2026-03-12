@@ -1,17 +1,18 @@
-define(['jquery',
-    'underscore',
-    'arches',
-    'knockout',
-    'knockout-mapping',
-    'viewmodels/function',
-    'bindings/chosen',
-    'views/components/simple-switch',
-    'templates/views/components/functions/bc-fossil-sample-descriptors.htm'],
-function($, _, arches, ko, koMapping, FunctionViewModel, chosen, simpleSwitch, defaultTemplate) {
-    return ko.components.register('views/components/functions/bc-fossil-sample-descriptors', {
-        viewModel: function(params) {
+import $ from 'jquery';
+import _ from 'underscore';
+import arches from 'arches';
+import ko from 'knockout';
+import koMapping from 'knockout-mapping';
+import FunctionViewModel from 'viewmodels/function-view-model';
+import chosen from 'bindings/chosen';
+import simpleSwitch from 'views/components/simple-switch';
+import defaultTemplate from 'templates/views/components/functions/bc-fossil-sample-descriptors.htm';
+export default ko.components.register(
+    'views/components/functions/bc-fossil-sample-descriptors',
+    {
+        viewModel: function (params) {
             FunctionViewModel.apply(this, arguments);
-            console.log("HERE!!");
+            console.log('HERE!!');
             var nodegroups = {};
             var sortedCards = [];
             this.triggering_nodegroups = params.config.triggering_nodegroups;
@@ -20,42 +21,44 @@ function($, _, arches, ko, koMapping, FunctionViewModel, chosen, simpleSwitch, d
             this.show_value = ko.observable(false);
             this.first_only = ko.observable(false);
 
-
-            this.graph.nodes.forEach(function(card){
+            this.graph.nodes.forEach(function (card) {
                 //this.cards.push(card);
-                if (card.datatype !== 'semantic')
-                {
+                if (card.datatype !== 'semantic') {
                     sortedCards.push(card);
                     nodegroups[card.nodeid] = true;
                 }
             }, this);
 
-            sortedCards.sort(function(a, b){ if ( a.name === b.name) return 0; return a.name > b.name ? 1 : -1 })
+            sortedCards.sort(function (a, b) {
+                if (a.name === b.name) return 0;
+                return a.name > b.name ? 1 : -1;
+            });
             this.cards = ko.observableArray(sortedCards);
 
-            this.name = params.config.descriptor_types.name
-            this.description = params.config.descriptor_types.description
-            this.map_popup = params.config.descriptor_types.map_popup
+            this.name = params.config.descriptor_types.name;
+            this.description = params.config.descriptor_types.description;
+            this.map_popup = params.config.descriptor_types.map_popup;
 
-
-            this.reindexdb = function(){
+            this.reindexdb = function () {
                 this.loading(true);
                 $.ajax({
-                    type: "POST",
+                    type: 'POST',
                     url: arches.urls.reindex,
                     context: this,
-                    data: JSON.stringify({'graphids': [this.graph.graphid]}),
-                    error: function() {
+                    data: JSON.stringify({ graphids: [this.graph.graphid] }),
+                    error: function () {
                         console.log('error');
                     },
-                    complete: function(){
+                    complete: function () {
                         this.loading(false);
-                    }
+                    },
                 });
             };
 
-            window.setTimeout(function(){$("select[data-bind^=chosen]").trigger("chosen:updated");}, 300);
+            window.setTimeout(function () {
+                $('select[data-bind^=chosen]').trigger('chosen:updated');
+            }, 300);
         },
-        template:  defaultTemplate
-    });
-});
+        template: defaultTemplate,
+    },
+);
