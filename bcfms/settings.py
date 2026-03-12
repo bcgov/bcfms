@@ -207,10 +207,7 @@ INSTALLED_APPS = (
     "arches_component_lab",
     "bcgov_arches_common",
 )
-INSTALLED_APPS += (
-    "arches.app",
-    "django.contrib.admin"
-)
+INSTALLED_APPS += ("arches.app", "django.contrib.admin")
 
 USE_VITE = False
 
@@ -650,15 +647,15 @@ TILESERVER_URL = "https://openmaps.gov.bc.ca/"
 BC_TILESERVER_URLS = {
     "maps": {
         "url": "https://maps.gov.bc.ca/",
-        "use_outbound_proxy": True  # Use outbound proxy for this source
+        "use_outbound_proxy": True,  # Use outbound proxy for this source
     },
     "openmaps": {
         "url": TILESERVER_URL,
-        "use_outbound_proxy": True  # Don't use outbound proxy for this source
+        "use_outbound_proxy": True,  # Don't use outbound proxy for this source
     },
     "local": {
         "url": get_env_variable("TILESERVER_LOCAL_URL"),
-        "use_outbound_proxy": False  # Local doesn't need outbound proxy
+        "use_outbound_proxy": False,  # Local doesn't need outbound proxy
     },
     # "local-feature": {
     #     "url": get_env_variable("FEATURESERVER_LOCAL_URL"),
