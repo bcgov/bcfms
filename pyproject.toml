@@ -23,7 +23,7 @@ classifiers = [
 ]
 requires-python = ">=3.11"
 dependencies = [
-    "arches @ git+https://github.com/bcgov/arches@stable/8.0.8_bcgov_12377",
+    "arches @git+https://github.com/bcgov/arches@stable/8.0.8_bcgov_12377_12600_12616_12502",
     "arches-component-lab @ git+https://github.com/archesproject/arches-component-lab@main",
     "arches_querysets[drf] @ git+https://github.com/archesproject/arches-querysets@dev/1.1.x",
     "bcgov_arches_common @ git+https://github.com/bcgov/bcgov-arches-common@dev/2.0.x_merge_1.3.0",
