@@ -1,15 +1,20 @@
 <script setup lang="ts">
-import { useTemplateRef, inject } from 'vue';
+import { useTemplateRef, inject, computed, watch } from 'vue';
 import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
 import { Form, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
+import Message from 'primevue/message';
+
 // @ts-ignore
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
-import { ProjectDetailsSchema } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
+import {
+    ProjectDetailsSchema,
+    ProjectDateValidationSchema,
+} from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
 import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
 import {
     isValid as baseIsValid,
@@ -18,7 +23,6 @@ import {
 import { getFlattenResolver } from '@/bcgov_arches_common/validation-utils.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
-
 const emit = defineEmits(['update:stepIsValid']);
 
 if (!ipa || !ipa.value) {
@@ -34,11 +38,29 @@ const projectDetailsResolver = getFlattenResolver(
 );
 
 const isValid = () => {
-    return baseIsValid(
+    const isBaseValid = baseIsValid(
         projectDetailsForm as Ref<FormInstance>,
         ProjectDetailsSchema.shape['aliased_data'],
     );
+
+    const data = ipa.value?.aliased_data?.project_details?.aliased_data;
+    let areDatesValid = true;
+
+    if (data) {
+        areDatesValid = ProjectDateValidationSchema.safeParse(data).success;
+    }
+
+    return isBaseValid && areDatesValid;
 };
+
+watch(
+    () => ipa.value?.aliased_data?.project_details?.aliased_data,
+    () => {
+        const validState = isValid();
+        emit('update:stepIsValid', validState);
+    },
+    { deep: true, immediate: true },
+);
 
 const updateModelValue = function (
     newValue: AliasedNodeData,
@@ -50,11 +72,22 @@ const updateModelValue = function (
         ipa.value.aliased_data?.project_details?.aliased_data,
         projectDetailsForm as Ref<FormInstance>,
     );
-    emit('update:stepIsValid', isValid());
 };
+
+const dateErrorMessage = computed(() => {
+    const data = ipa.value?.aliased_data?.project_details?.aliased_data;
+    if (!data) return '';
+
+    const result = ProjectDateValidationSchema.safeParse(data);
+    if (!result.success) {
+        return result.error.issues[0]?.message || '';
+    }
+    return '';
+});
 
 defineExpose({ isValid });
 </script>
+
 <template>
     <Form
         ref="projectDetailsForm"
@@ -113,36 +146,55 @@ defineExpose({ isValid });
                 "
             />
         </LabelledInput>
-        <LabelledInput
-            hint="Select the Agency that is authorizing the project"
-            input-name="projectAuthorizingAgency"
-        >
-            <GenericWidget
-                :mode="EDIT"
-                :aliased-node-data="
+        <div class="flex-row flex-gap">
+            <div class="agency-col">
+                <LabelledInput
+                    hint="Select the Agency that is authorizing the project"
+                    input-name="projectAuthorizingAgency"
+                >
+                    <GenericWidget
+                        :mode="EDIT"
+                        :aliased-node-data="
+                            ipa?.aliased_data?.project_details?.aliased_data
+                                ?.project_authorizing_agency
+                        "
+                        graph-slug="project_assessment"
+                        node-alias="project_authorizing_agency"
+                        @update:value="
+                            updateModelValue(
+                                $event,
+                                'project_authorizing_agency',
+                            )
+                        "
+                    />
+                </LabelledInput>
+            </div>
+
+            <div
+                v-if="
                     ipa?.aliased_data?.project_details?.aliased_data
-                        ?.project_authorizing_agency
+                        ?.project_authorizing_agency?.display_value ===
+                    'Front Counter BC (FCBC)'
                 "
-                graph-slug="project_assessment"
-                node-alias="project_authorizing_agency"
-                @update:value="
-                    updateModelValue($event, 'project_authorizing_agency')
-                "
-            />
-        </LabelledInput>
-        <LabelledInput>
-            <GenericWidget
-                :mode="EDIT"
-                :aliased-node-data="
-                    ipa?.aliased_data?.project_details?.aliased_data
-                        ?.land_act_file_number
-                "
-                graph-slug="project_assessment"
-                node-alias="land_act_file_number"
-                placeholder="Land Act Number"
-                @update:value="updateModelValue($event, 'land_act_file_number')"
-            />
-        </LabelledInput>
+                class="land-act-col"
+            >
+                <LabelledInput>
+                    <GenericWidget
+                        :mode="EDIT"
+                        :aliased-node-data="
+                            ipa?.aliased_data?.project_details?.aliased_data
+                                ?.land_act_file_number
+                        "
+                        graph-slug="project_assessment"
+                        node-alias="land_act_file_number"
+                        placeholder="Land Act Number"
+                        @update:value="
+                            updateModelValue($event, 'land_act_file_number')
+                        "
+                    />
+                </LabelledInput>
+            </div>
+        </div>
         <div class="flex-row">
             <div class="formfield-flex-grow">
                 <LabelledInput
@@ -169,7 +221,7 @@ defineExpose({ isValid });
                 <LabelledInput
                     label="Estimated Project End Date"
                     hint="Enter the completion date if known"
-                    input-name="projectEndDate"
+                    input-name="project_end_date"
                 >
                     <GenericWidget
                         :mode="EDIT"
@@ -184,7 +236,17 @@ defineExpose({ isValid });
                         @update:value="
                             updateModelValue($event, 'project_end_date')
                         "
-                /></LabelledInput>
+                    />
+                    <Message
+                        v-if="dateErrorMessage"
+                        severity="error"
+                        size="small"
+                        class="mt-1"
+                        :closable="false"
+                    >
+                        {{ dateErrorMessage }}
+                    </Message>
+                </LabelledInput>
             </div>
         </div>
     </Form>
@@ -204,9 +266,25 @@ defineExpose({ isValid });
 .formfield-flex-grow {
     flex-grow: 2;
     margin-right: 1rem;
+    max-width: calc(50% - 0.5rem);
 }
 
 .datepicker-width {
     width: 85%;
+}
+
+.flex-gap {
+    gap: 1rem;
+    width: 100%;
+}
+
+.agency-col {
+    flex: 3;
+    min-width: 0;
+}
+
+.land-act-col {
+    flex: 1;
+    min-width: 0;
 }
 </style>
