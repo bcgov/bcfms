@@ -250,9 +250,9 @@ class BCFossilsDescriptors(BCPrimaryDescriptorsFunction):
 
     def _get_samples(self, resource):
         return models.ResourceXResource.objects.filter(
-            resourceinstanceidfrom=resource.resourceinstanceid,
-            nodeid=BCFossilsDescriptors._collected_fossils_node.nodeid,
-        ).values_list("resourceinstanceidto", flat=True)
+            from_resource_id=resource.resourceinstanceid,
+            node_id=BCFossilsDescriptors._collected_fossils_node.nodeid,
+        ).values_list("to_resource_id", flat=True)
 
     def get_scientific_names_from_samples(self, samples, formatted=True):
         values = []
@@ -374,9 +374,9 @@ class BCFossilsDescriptors(BCPrimaryDescriptorsFunction):
         return_values = {}
 
         fossil_sample_values = models.ResourceXResource.objects.filter(
-            resourceinstanceidfrom=resource.resourceinstanceid,
+            from_resource_id=resource.resourceinstanceid,
             nodeid=BCFossilsDescriptors._collected_fossils_node.nodeid,
-        ).values_list("resourceinstanceidto", flat=True)
+        ).values_list("to_resource_id", flat=True)
 
         for child_values in values_config:
             tiles = models.TileModel.objects.filter(
