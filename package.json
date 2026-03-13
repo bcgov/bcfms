@@ -56,7 +56,6 @@
         "@primeuix/themes": "^1.1.1",
         "@primevue/forms": "^4.3.5",
         "@vitejs/plugin-vue": "^5.2.1",
-        "@vue/cli": "^5.0.8",
         "arches": "github:bcgov/arches#stable/8.0.8_bcgov_12377_12600_12616_12502",
         "arches-component-lab": "github:archesproject/arches-component-lab#main",
         "arches-querysets": "github:archesproject/arches-querysets#dev/1.1.x",
