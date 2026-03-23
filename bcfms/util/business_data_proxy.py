@@ -187,11 +187,11 @@ class CollectionEventDataProxy(BusinessDataProxy):
 
     def get_sample_ids(self, collection_event_id):
         return models.ResourceXResource.objects.filter(
-            resourceinstanceidfrom=collection_event_id,
-            nodeid=self._graph_lookup.get_node(
+            from_resource_id=collection_event_id,
+            node_id=self._graph_lookup.get_node(
                 CollectionEventAliases.SAMPLES_COLLECTED
             ).nodeid,
-        ).values_list("resourceinstanceidto", flat=True)
+        ).values_list("to_resource_id", flat=True)
 
 
 class IPADataProxy(BusinessDataProxy):

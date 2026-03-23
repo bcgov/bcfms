@@ -1,8 +1,16 @@
 <div class="workflow-select-plugin">
     <div>
-        <h2 class="workflow-select-card-container-title">Create New...</h2>
+        <h2 class="workflow-select-card-container-title">Fossil Management System submissions</h2>
     </div>
     <div class="workflow-select-card-container">
+        <a data-bind="attr: {href: '/bc-fossil-management/submissions', title: 'IPA Submissions'}" href="#"><div data-bind="style: {'background-color': 'blue'}" class="workflow-select-card">
+            <h4 class="workflow-select-title" data-bind="text: 'IPA Submissions'"></h4>
+            <div data-bind="style: {'background-color': 'lightBlue'}" class="workflow-select-wf-circle">
+                <span><i data-bind="attr:{class: ('fa fa-folder workflow-select-wf-icon')}"></i></span>
+            </div>
+            <p data-bind="text: 'Industry Project Assessment workflows'" class="workflow-select-desc"></p>
+        </div></a>
+        <!-- ko if: false -->
         <!-- ko foreach: {data: workflows, as: 'workflow'} -->
         <a data-bind="attr: {href: workflow.url, title: workflow.name}" href="#"><div data-bind="style: {'background-color': workflow.bgColor}" class="workflow-select-card">
             <h4 class="workflow-select-title" data-bind="text: workflow.name"></h4>
@@ -11,6 +19,7 @@
             </div>
             <p data-bind="text: workflow.desc" class="workflow-select-desc"></p>
         </div></a>
+        <!-- /ko -->
         <!-- /ko -->
     </div>
 </div>
