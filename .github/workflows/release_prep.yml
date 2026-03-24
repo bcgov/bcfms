@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   increment_version_and_pr:
-    uses: bcgov/bcgov-arches-common/.github/workflows/release_prep_common.yml@brf/update_gh_release_automation
+    uses: bcgov/bcgov-arches-common/.github/workflows/release_prep_common.yml@main
     with:
       github-repo: bcgov/bcfms
     secrets:
