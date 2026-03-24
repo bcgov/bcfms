@@ -38,7 +38,7 @@ load_dotenv(
 APP_NAME = "bcfms"
 APP_VERSION = semantic_version.Version(major=1, minor=2, patch=2)
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-DEPLOYMENT_TIMESTAMP=get_env_variable("DEPLOYMENT_TIMESTAMP")
+DEPLOYMENT_TIMESTAMP = get_env_variable("DEPLOYMENT_TIMESTAMP")
 
 # PROXY prefix used - NB - cannot have leading "/", and must have trailing "/"
 BCGOV_PROXY_PREFIX = get_env_variable("BCGOV_PROXY_PREFIX")
@@ -283,8 +283,8 @@ TEMPLATES = build_templates_config(
     app_root=APP_ROOT,
 )
 
-TEMPLATES[0]['OPTIONS']['context_processors'] += (
-    'bcfms.util.context_processors.deployment_settings',
+TEMPLATES[0]["OPTIONS"]["context_processors"] += (
+    "bcfms.util.context_processors.deployment_settings",
 )
 
 ALLOWED_HOSTS = get_env_variable("ALLOWED_HOSTS").split()
