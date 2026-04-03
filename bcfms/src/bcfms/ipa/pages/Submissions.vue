@@ -3,7 +3,8 @@ import Panel from 'primevue/panel';
 import Fluid from 'primevue/fluid';
 import { useGettext } from 'vue3-gettext';
 import { routeNames } from '@/bcfms/routes.ts';
-import Card from '@/bcgov_arches_common/components/card/card.vue';
+import SideCard from '@/bcgov_arches_common/components/card/SideCard.vue';
+import CenterCard from '@/bcgov_arches_common/components/card/CenterCard.vue';
 import { onMounted, ref, type Ref } from 'vue';
 
 import { getIpasForReview } from '@/bcfms/ipa/api.ts';
@@ -16,6 +17,7 @@ const nextPage = ref('');
 const previousPage = ref('');
 const ipaCount = ref(0);
 const offset = ref(0);
+
 const pageResults = function (url: string) {
     console.log(url);
     const tmpOffset = url?.split('offset=')[1]?.split('&')[0];
@@ -27,6 +29,7 @@ const pageResults = function (url: string) {
         offset.value = tmpOffset ? parseInt(tmpOffset) : 0;
     });
 };
+
 onMounted(() => {
     getIpasForReview(null).then((response: IPAListResponseType) => {
         ipasForReview.value = response.results;
@@ -36,6 +39,7 @@ onMounted(() => {
     });
 });
 </script>
+
 <template>
     <Panel
         header="Workflows"
@@ -43,7 +47,7 @@ onMounted(() => {
     >
         <Fluid>
             <div class="dashboard-div-flex">
-                <Card
+                <CenterCard
                     :label="$gettext('New Project')"
                     :description="$gettext('Add a new project')"
                     :subtitle="$gettext('Add a new project')"
@@ -52,6 +56,7 @@ onMounted(() => {
                     :route="{ name: routeNames.submitProject }"
                 />
             </div>
+
             <div class="section-title">
                 <i
                     v-if="previousPage"
@@ -70,8 +75,9 @@ onMounted(() => {
                 >
                 </i>
             </div>
+
             <div class="dashboard-div-flex">
-                <Card
+                <SideCard
                     v-for="ipa in ipasForReview"
                     :key="ipa?.resourceinstanceid"
                     :label="
@@ -87,13 +93,11 @@ onMounted(() => {
                         )
                     "
                     :description="$gettext('Review project')"
-                    :icon="'fa fa-file'"
                     :class="'dashboard-card ipa'"
+                    :icon="'pi pi-file'"
                     :route="{
                         name: routeNames.reviewProject,
-                        params: {
-                            resourceinstanceid: ipa?.resourceinstanceid,
-                        },
+                        params: { resourceinstanceid: ipa?.resourceinstanceid },
                     }"
                 />
             </div>
