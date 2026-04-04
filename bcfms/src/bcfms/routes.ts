@@ -1,9 +1,10 @@
 import type { RouteNamesType } from '@/bcgov_arches_common/routes.ts';
+import arches from 'arches';
 
 const dev_mode = true;
 const routes = [
     {
-        path: '/bc-fossil-management/submissions/',
+        path: arches.urls.plugin('init-workflow'),
         name: 'root',
         component: () => import('@/bcfms/ipa/pages/Submissions.vue'),
         meta: {
@@ -12,7 +13,7 @@ const routes = [
         },
     },
     {
-        path: '/bc-fossil-management/submissions/new-project/',
+        path: arches.urls.plugin('init-workflow/submissions/new-project/'),
         name: 'submitProject',
         component: () =>
             import('@/bcfms/ipa/pages/SubmitProject/SubmitProject.vue'),
@@ -22,7 +23,9 @@ const routes = [
         },
     },
     {
-        path: '/bc-fossil-management/submissions/review-project/:resourceinstanceid',
+        path: arches.urls.plugin(
+            'init-workflow/submissions/review-project/:resourceinstanceid',
+        ),
         name: 'reviewProject',
         component: () =>
             import('@/bcfms/ipa/pages/ReviewProject/ReviewProject.vue'),

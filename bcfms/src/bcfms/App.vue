@@ -81,11 +81,6 @@ router.beforeEach(async (to, _from, next) => {
 
 <template>
     <main>
-        <PageHeader
-            v-if="route.meta.shouldShowNavigation"
-            :route-names="routeNames"
-            system-name="BC Fossil Management System"
-        />
         <div
             style="
                 display: flex;
@@ -94,10 +89,6 @@ router.beforeEach(async (to, _from, next) => {
                 flex-direction: row;
             "
         >
-            <SideNav
-                v-if="route.meta.shouldShowNavigation"
-                :route-names="routeNames"
-            />
             <div
                 class="bcgov-main-content"
                 style="flex: auto; background-color: #e9e9e9"
@@ -125,10 +116,6 @@ main {
 </style>
 
 <style>
-#bcfms-mounting-point {
-    font-size: 0.8rem;
-}
-
 .bcgov-vertical-steps > .p-steplist {
     flex-direction: column;
     align-items: flex-start;
@@ -146,11 +133,5 @@ main {
 .bcgov-stepper {
     display: flex;
     flex-direction: row;
-}
-
-.p-tooltip-text,
-.p-button-label,
-.p-inputtext {
-    font-size: 0.8rem !important;
 }
 </style>
