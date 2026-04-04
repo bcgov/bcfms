@@ -39,7 +39,7 @@ export async function submitIPA(ipa: IPAType): Promise<IPAType> {
 
     const files =
         ipa.aliased_data.project_details.aliased_data.project_documents
-            .aliased_data.project_documents.node_value;
+            .aliased_data.project_documents.node_value ?? [];
 
     fd.append('json', JSON.stringify(ipa));
     files.forEach((file: FileReference) => {

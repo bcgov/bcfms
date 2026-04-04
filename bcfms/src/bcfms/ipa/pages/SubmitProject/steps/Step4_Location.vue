@@ -41,10 +41,22 @@ const projectLocationResolver = getFlattenResolver(
 );
 
 const isValid = () => {
-    return baseIsValid(
+    const formIsValid = baseIsValid(
         projectLocationForm as Ref<FormInstance>,
         projectSiteShape,
     );
+
+    const locationData =
+        ipa.value.aliased_data?.project_details.aliased_data?.project_site
+            ?.aliased_data.project_location;
+
+    const hasLocation = !!(
+        locationData?.node_value &&
+        (locationData.node_value.features?.length > 0 ||
+            locationData.node_value.length > 0)
+    );
+
+    return formIsValid && hasLocation;
 };
 
 const updateModelValue = function (
