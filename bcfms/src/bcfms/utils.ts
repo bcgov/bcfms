@@ -54,7 +54,7 @@ export const blankGeoJSONValue = function (): GeoJSONFeatureCollectionValue {
 
 export const currentDateValue = function () {
     return {
-        display_value: '',
+        display_value: new Date().toISOString().split('T')[0],
         node_value: new Date().toISOString().split('T')[0],
         details: [] as never[],
     };
