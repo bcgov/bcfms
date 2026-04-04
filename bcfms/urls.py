@@ -8,7 +8,6 @@ from bcgov_arches_common.views.map import (
     # BCTileserverLocalProxyView,
 )
 from bcfms.views.search import export_results as bcfms_export_results
-from bcfms.views.root import BcfmsRootView
 from bcfms.views.workflows.ipa import SubmitIPA, SubmitIPAReview, IPAsForReview
 import re
 
@@ -27,9 +26,6 @@ def bc_path_prefix(path=""):
 
 
 urlpatterns = [
-    re_path(
-        bc_path_prefix(r"^submissions/"), BcfmsRootView.as_view(), name="submissions"
-    ),
     re_path(
         bc_path_prefix(r"^api/submit_ipa/"), SubmitIPA.as_view(), name="submit_ipa"
     ),

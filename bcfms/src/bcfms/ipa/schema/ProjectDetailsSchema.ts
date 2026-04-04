@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import type { StringValue } from '@/arches_component_lab/datatypes/string/types.ts';
 import {
-    currentDateValue,
+    blankDateValue,
     blankResourceInstanceValue,
     blankStringValue,
     blankFileListValue,
@@ -92,8 +92,8 @@ class ProjectDetails implements ProjectDetailsType {
             industry_company_name: blankStringValue(),
             project_authorizing_agency: blankConceptValue(),
             land_act_file_number: blankStringValue(),
-            project_start_date: currentDateValue(),
-            project_end_date: currentDateValue(),
+            project_start_date: blankDateValue(),
+            project_end_date: blankDateValue(),
             project_documents: {
                 aliased_data: {
                     project_documents: blankFileListValue(),

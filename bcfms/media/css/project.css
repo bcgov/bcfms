@@ -1,5 +1,9 @@
 @import "map_legend.css";
 @import url("node_modules/bcgov_arches_common/bcgov_arches_common/media/css/project.css");
+:root {
+    --p-standard-font-size: 1.4rem;
+}
+
 
 /* Index page */
 .tp-caption {
@@ -56,6 +60,25 @@ dl.stratigraphy > dd > div.stratigraphy-level > div
    font-style: italic;
 }
 
+.p-datepicker-panel {
+    min-width: unset !important;
+    width: 300px !important;
+}
+
+.p-select-empty-message,
+.p-select-options,
+.p-select-option,
+.p-select-label,
+.p-select-overlay {
+    font-size: var(--p-standard-font-size) !important;
+}
+
+.p-select-option, .p-select-option-label{
+    padding-top: 0.2rem !important;
+    padding-bottom: 0.2rem !important;
+    height: unset !important;
+}
+
 .p-fieldset {
     border: solid thin #999;
     margin: 1rem 0;
@@ -63,7 +86,7 @@ dl.stratigraphy > dd > div.stratigraphy-level > div
     padding-bottom: 0.5rem;
 }
 .p-fieldset-legend {
-    font-size: 1.2rem;
+    font-size: 2.0rem;
     font-weight: 300;
     margin-top: -.6rem;
     margin-left: 1rem;
@@ -97,7 +120,6 @@ dl.stratigraphy > dd > div.stratigraphy-level > div
     align-items: flex-start;
     margin-top: .25rem;
     justify-content: space-between;
-    width: calc(100% - 2rem);
 }
 .p-fileupload-advanced {
     max-width: 350px;
