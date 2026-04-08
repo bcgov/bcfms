@@ -277,6 +277,9 @@ onMounted(() => {
 </template>
 <style>
 @import url('@/bcgov_arches_common/css/arches_common.css');
+.language-selector {
+    display: none !important;
+}
 </style>
 <style scoped>
 .dashboard-card {
