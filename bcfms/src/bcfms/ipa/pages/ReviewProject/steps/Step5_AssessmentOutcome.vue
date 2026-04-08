@@ -6,12 +6,21 @@ import type { ErrorMessage } from '@/bcfms/types.ts';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { VIEW } from '@/arches_component_lab/widgets/constants.ts';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
+import type { CardXNodeXWidgetData } from '@/arches_component_lab/types.ts';
 
 const ipa = inject<Ref<IPA>>('ipa');
 
 defineProps<{
     submissionErrors: ErrorMessage[];
 }>();
+
+const conceptCheckboxOverride = {
+    widget: {
+        widgetid: '',
+        component:
+            'arches_component_lab/widgets/ConceptMultiselectWidget/ConceptMultiselectWidget.vue',
+    },
+} satisfies Partial<CardXNodeXWidgetData>;
 
 const isValid = () => {
     console.log(ipa?.value);
@@ -232,6 +241,27 @@ emit('update:stepIsValid', isValid());
             "
             graph-slug="project_assessment"
             node-alias="initial_review_internal_notes"
+        />
+        <GenericWidget
+            class="div-grid-cols"
+            :mode="VIEW"
+            :aliased-node-data="
+                ipa?.aliased_data.assessment_details?.aliased_data
+                    ?.project_requirements
+            "
+            :card-x-node-x-widget-data-overrides="conceptCheckboxOverride"
+            graph-slug="project_assessment"
+            node-alias="project_requirements"
+        />
+        <GenericWidget
+            class="div-grid-cols"
+            :mode="VIEW"
+            :aliased-node-data="
+                ipa?.aliased_data.assessment_details?.aliased_data
+                    ?.fossil_repository_agreement
+            "
+            graph-slug="project_assessment"
+            node-alias="fossil_repository_agreement"
         />
     </div>
 </template>

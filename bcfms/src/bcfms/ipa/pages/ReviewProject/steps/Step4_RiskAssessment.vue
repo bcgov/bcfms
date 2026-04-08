@@ -14,7 +14,10 @@ import {
     isValid as baseIsValid,
     updateModelValue as baseUpdateModelValue,
 } from '@/bcfms/utils.ts';
-import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
+import type {
+    AliasedNodeData,
+    CardXNodeXWidgetData,
+} from '@/arches_component_lab/types.ts';
 import { getFlattenResolver } from '@/bcgov_arches_common/validation-utils.ts';
 import { htmlToPlainText } from '@/bcgov_arches_common/datatypes/string/validation/utils.ts';
 
@@ -42,12 +45,24 @@ const updateModelValue = function (
     newValue: AliasedNodeData,
     attribute_name: string,
 ) {
-    baseUpdateModelValue(
-        newValue,
-        attribute_name,
-        ipa.value.aliased_data.initial_project_review?.aliased_data,
-        projectRiskAssessmentForm as Ref<FormInstance>,
-    );
+    if (
+        attribute_name === 'project_requirements' ||
+        attribute_name === 'fossil_repository_agreement'
+    ) {
+        baseUpdateModelValue(
+            newValue,
+            attribute_name,
+            ipa.value.aliased_data.assessment_details?.aliased_data,
+            projectRiskAssessmentForm as Ref<FormInstance>,
+        );
+    } else {
+        baseUpdateModelValue(
+            newValue,
+            attribute_name,
+            ipa.value.aliased_data.initial_project_review?.aliased_data,
+            projectRiskAssessmentForm as Ref<FormInstance>,
+        );
+    }
     if (
         attribute_name === 'initial_review_internal_notes' &&
         (newValue as StringValue)?.node_value?.['en']?.['value']
@@ -58,6 +73,14 @@ const updateModelValue = function (
     }
     emit('update:stepIsValid', isValid());
 };
+
+const conceptCheckboxOverride = {
+    widget: {
+        widgetid: '',
+        component:
+            'arches_component_lab/widgets/ConceptMultiselectWidget/ConceptMultiselectWidget.vue',
+    },
+} satisfies Partial<CardXNodeXWidgetData>;
 
 defineExpose({ isValid });
 const internalReviewLength = ref(0);
@@ -131,5 +154,29 @@ const internalReviewHint = computed(() => `${internalReviewLength.value}/500`);
                 "
             />
         </LabelledInput>
+
+        <GenericWidget
+            :mode="EDIT"
+            :aliased-node-data="
+                ipa.aliased_data.assessment_details?.aliased_data
+                    ?.project_requirements
+            "
+            :card-x-node-x-widget-data-overrides="conceptCheckboxOverride"
+            graph-slug="project_assessment"
+            node-alias="project_requirements"
+            @update:value="updateModelValue($event, 'project_requirements')"
+        />
+        <GenericWidget
+            :mode="EDIT"
+            :aliased-node-data="
+                ipa.aliased_data.assessment_details?.aliased_data
+                    ?.fossil_repository_agreement
+            "
+            graph-slug="project_assessment"
+            node-alias="fossil_repository_agreement"
+            @update:value="
+                updateModelValue($event, 'fossil_repository_agreement')
+            "
+        />
     </Form>
 </template>
