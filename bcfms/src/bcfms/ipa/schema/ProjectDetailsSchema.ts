@@ -24,6 +24,7 @@ import { FileListValueSchema } from '@/bcgov_arches_common/datatypes/file-list/v
 import { DateValueSchema } from '@/bcgov_arches_common/datatypes/date/validation/zod.ts';
 import type { FileListValue } from '@/arches_component_lab/datatypes/file-list/types.ts';
 import type { GeoJSONFeatureCollectionValue } from '@/bcgov_arches_common/datatypes/geojson-feature-collection/types.ts';
+import { GeoJSONFeatureCollectionRequiredValueSchema } from '@/bcgov_arches_common/datatypes/geojson-feature-collection/validation/zod.ts';
 
 const ProjectDetailsSchema = z.object({
     aliased_data: z.object({
@@ -44,6 +45,7 @@ const ProjectDetailsSchema = z.object({
         }),
         project_site: z.object({
             aliased_data: z.object({
+                project_location: GeoJSONFeatureCollectionRequiredValueSchema,
                 location_description: getStringValueRequiredSchema(60),
                 geometry_qualifier: ConceptValueSchema,
                 multiple_geometry_qualifier: getStringValueSchema(120),
