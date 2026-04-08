@@ -62,7 +62,6 @@ defineExpose({ isValid });
             label="Metamorphic Rock"
             hint="Select option to best describe metamorphic rock, if present"
             input-name="metamorphicRock"
-            :required="true"
         >
             <GenericWidget
                 :mode="EDIT"
@@ -81,7 +80,6 @@ defineExpose({ isValid });
             label="Igneous Rock"
             hint="Select option to best describe igneous rock, if present"
             input-name="igneousRock"
-            :required="true"
         >
             <GenericWidget
                 :mode="EDIT"
@@ -100,7 +98,6 @@ defineExpose({ isValid });
             label="Sedimentary Rock"
             hint="Select option to best describe sedimentary rock, if present"
             input-name="sedimentaryRock"
-            :required="true"
         >
             <GenericWidget
                 :mode="EDIT"
@@ -119,7 +116,6 @@ defineExpose({ isValid });
             label="Quaternary Sediments"
             hint="Select option to best describe quaternary sediments, if present"
             input-name="quaternarySediments"
-            :required="true"
         >
             <GenericWidget
                 :mode="EDIT"
