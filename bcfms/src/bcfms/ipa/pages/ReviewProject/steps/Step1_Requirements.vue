@@ -8,7 +8,13 @@ const isValid = () => {
 defineExpose({ isValid });
 </script>
 <template>
-    <FieldSet legend="Review submitted project"> </FieldSet>
+    <FieldSet legend="Review submitted project">
+        <div>
+            To review submitted project, you will need the project location map
+            open with the project footprint visible to examine the bedrock
+            geology, FRPC layers, and collection events.
+        </div></FieldSet
+    >
 </template>
 
 <style>
