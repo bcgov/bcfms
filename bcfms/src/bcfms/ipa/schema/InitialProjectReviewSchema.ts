@@ -3,7 +3,10 @@ import type { StringValue } from '@/arches_component_lab/datatypes/string/types.
 import { blankStringValue } from '@/bcfms/utils.ts';
 import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/utils.ts';
 import type { ConceptValue } from '@/arches_component_lab/datatypes/concept/types.ts';
-import { ConceptValueRequiredSchema } from '@/bcgov_arches_common/datatypes/concept/validation/zod.ts';
+import {
+    ConceptValueRequiredSchema,
+    ConceptValueSchema,
+} from '@/bcgov_arches_common/datatypes/concept/validation/zod.ts';
 import { getRichTextValueRequiredSchema } from '@/bcgov_arches_common/datatypes/string/validation/zod.ts';
 
 const InitialProjectReviewSchema = z.object({
@@ -11,10 +14,10 @@ const InitialProjectReviewSchema = z.object({
         intersects_ifa: z.boolean().default(false),
         proximity_to_fos: ConceptValueRequiredSchema,
         ground_disturbance: ConceptValueRequiredSchema,
-        metamorphic_rock: ConceptValueRequiredSchema,
-        igneous_rock: ConceptValueRequiredSchema,
-        sedimentary_rock: ConceptValueRequiredSchema,
-        quaternary_deposits: ConceptValueRequiredSchema,
+        metamorphic_rock: ConceptValueSchema,
+        igneous_rock: ConceptValueSchema,
+        sedimentary_rock: ConceptValueSchema,
+        quaternary_deposits: ConceptValueSchema,
         frpr: ConceptValueRequiredSchema,
         initial_review_level_of_risk: ConceptValueRequiredSchema,
         initial_review_internal_notes: getRichTextValueRequiredSchema(500),
