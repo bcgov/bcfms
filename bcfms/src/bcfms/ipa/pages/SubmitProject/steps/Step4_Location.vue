@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { useTemplateRef, inject } from 'vue';
+import { useTemplateRef, inject, provide } from 'vue';
 import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
+import { type SimpleMapConfiguration } from '@/bcgov_arches_common/widgets/SimpleMap/types.ts';
 import { Form, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
@@ -18,6 +19,10 @@ import type {
     CardXNodeXWidgetData,
 } from '@/arches_component_lab/types.ts';
 import { getFlattenResolver } from '@/bcgov_arches_common/validation-utils.ts';
+
+provide('simpleMapConfig', {
+    showCentroidMarker: true,
+} as SimpleMapConfiguration);
 
 const ipa = inject<Ref<IPA>>('ipa');
 
@@ -94,6 +99,7 @@ defineExpose({ isValid });
         <GenericWidget
             graph-slug="project_assessment"
             node-alias="project_location"
+            style="--map-height: 400px; --map-max-width: 600px"
             :card-x-node-x-widget-data-overrides="mapOverrides"
             :mode="EDIT"
             :aliased-node-data="
