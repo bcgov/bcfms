@@ -1,4 +1,5 @@
 import ko from 'knockout';
+import arches from 'arches';
 import _ from 'underscore';
 import mapFilterUtils from 'utils/map-filter-utils';
 import toggle_template from 'templates/views/components/map_popup/toggle-map-popup.htm';
@@ -133,7 +134,12 @@ const popupDataProvider = {
     getPopupTemplate: function (features) {
         const templateRequest = new XMLHttpRequest();
 
-        templateRequest.open('GET', toggle_template, false);
+        console.log(arches.urls);
+        templateRequest.open(
+            'GET',
+            `${arches.urls.root}${toggle_template}`,
+            false,
+        );
         templateRequest.send();
         return templateRequest.responseText;
     },
