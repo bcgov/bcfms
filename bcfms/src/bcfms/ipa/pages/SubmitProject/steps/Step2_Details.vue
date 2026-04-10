@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useTemplateRef, inject, computed, watch } from 'vue';
+import { useTemplateRef, inject, computed, watch, ref } from 'vue';
+import { useDebounceFn } from '@vueuse/core';
 import type { Ref } from 'vue';
 
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
@@ -14,6 +15,7 @@ import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import {
     ProjectDetailsSchema,
     ProjectDateValidationSchema,
+    UniqueNameSchema,
 } from '@/bcfms/ipa/schema/ProjectDetailsSchema.ts';
 import type { AliasedNodeData } from '@/arches_component_lab/types.ts';
 import {
@@ -37,6 +39,28 @@ const projectDetailsResolver = getFlattenResolver(
     zodResolver(ProjectDetailsSchema.shape['aliased_data']),
 );
 
+const nameIsUniqueValid = ref(false);
+
+const checkNameUnique = useDebounceFn(async (value: string) => {
+    const fieldState = projectDetailsForm.value?.states?.project_name;
+    if (!fieldState) return;
+
+    const result = await UniqueNameSchema.safeParseAsync(value);
+    nameIsUniqueValid.value = result.success;
+
+    if (!result.success) {
+        fieldState.errors = result.error.issues.map(
+            (e: { message: string }) => ({
+                message: e.message,
+            }),
+        );
+        fieldState.invalid = true;
+        fieldState.valid = false;
+    } else if (fieldState.invalid) {
+        projectDetailsForm.value?.validate('project_name');
+    }
+}, 400);
+
 const isValid = () => {
     const isBaseValid = baseIsValid(
         projectDetailsForm as Ref<FormInstance>,
@@ -44,22 +68,37 @@ const isValid = () => {
     );
 
     const data = ipa.value?.aliased_data?.project_details?.aliased_data;
-    let areDatesValid = true;
+    const areDatesValid = data
+        ? ProjectDateValidationSchema.safeParse(data).success
+        : true;
 
-    if (data) {
-        areDatesValid = ProjectDateValidationSchema.safeParse(data).success;
-    }
-
-    return isBaseValid && areDatesValid;
+    return isBaseValid && areDatesValid && nameIsUniqueValid.value;
 };
 
 watch(
     () => ipa.value?.aliased_data?.project_details?.aliased_data,
     () => {
-        const validState = isValid();
-        emit('update:stepIsValid', validState);
+        emit('update:stepIsValid', isValid());
     },
     { deep: true, immediate: true },
+);
+
+watch(nameIsUniqueValid, () => {
+    emit('update:stepIsValid', isValid());
+});
+
+watch(
+    () =>
+        ipa.value?.aliased_data?.project_details?.aliased_data?.project_name
+            ?.display_value,
+    (val) => {
+        nameIsUniqueValid.value = false;
+        if (val)
+            checkNameUnique(
+                ipa.value?.aliased_data?.project_details?.aliased_data
+                    ?.project_name,
+            );
+    },
 );
 
 const updateModelValue = function (

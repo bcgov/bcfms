@@ -240,7 +240,7 @@ class IPAsWithName(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, ListCreateAPI
 
     def filter_queryset(self, queryset, name_to_check: str = None):
         queryset = super().filter_queryset(queryset)
-        queryset = queryset.filter(project_name__any_lang_icontains=name_to_check)
+        queryset = queryset.filter(project_name__en__value__iexact=name_to_check)
         return queryset
 
     def get(self, request, *args, **kwargs):
