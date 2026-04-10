@@ -5,6 +5,8 @@ from urllib.parse import urlparse, parse_qs
 from arches.app.utils.response import JSONResponse
 from arches.app.models.concept import Concept
 from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
 from bcfms.util.business_data_proxy import (
     IPADataProxy,
 )
@@ -227,3 +229,30 @@ class IPAsForReview(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, ListCreateAP
         if sort:
             queryset = queryset.order_by(sort)
         return queryset
+
+
+class IPAsWithName(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, ListCreateAPIView):
+    permission_classes = [ResourceEditor | ReadOnly]
+    serializer_class = IpaSerializer
+    parser_classes = [JSONParser, MultiPartJSONParser]
+    pagination_class = IPAsForReviewPagination
+    renderer_classes = [JSONRenderer]
+
+    def filter_queryset(self, queryset, name_to_check: str = None):
+        queryset = super().filter_queryset(queryset)
+        queryset = queryset.filter(project_name__en__value__iexact=name_to_check)
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        try:
+            name_to_check = request.query_params.get("name")
+            if not name_to_check:
+                raise Exception("name parameter is required")
+            queryset = self.filter_queryset(self.get_queryset(), name_to_check)
+            is_unique = queryset.count() == 0
+            return Response({"success": True, "is_unique": is_unique})
+        except Exception as e:
+            logger.exception("Error while checking IPA name uniqueness")
+            return Response(
+                {"success": False, "error": "An internal error has occurred."}
+            )

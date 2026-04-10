@@ -7,6 +7,7 @@ import {
     blankFileListValue,
     blankGeoJSONValue,
 } from '@/bcfms/utils.ts';
+import { isNameUniqueForIPA } from '@/bcfms/ipa/api.ts';
 import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/utils.ts';
 import type { ConceptValue } from '@/arches_component_lab/datatypes/concept/types.ts';
 import type { ResourceInstanceValue } from '@/arches_component_lab/datatypes/resource-instance/types.ts';
@@ -25,6 +26,23 @@ import { DateValueSchema } from '@/bcgov_arches_common/datatypes/date/validation
 import type { FileListValue } from '@/arches_component_lab/datatypes/file-list/types.ts';
 import type { GeoJSONFeatureCollectionValue } from '@/bcgov_arches_common/datatypes/geojson-feature-collection/types.ts';
 import { GeoJSONFeatureCollectionRequiredValueSchema } from '@/bcgov_arches_common/datatypes/geojson-feature-collection/validation/zod.ts';
+
+export const UniqueNameSchema = getStringValueRequiredSchema(120).superRefine(
+    async (val: StringValue, ctx: any) => {
+        // val is the string value being validated
+        const name = val?.node_value?.en?.value ?? '';
+        if (!name) return; // let the required check handle empty values
+
+        const is_unique = await isNameUniqueForIPA(name);
+
+        if (!is_unique) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: 'A project with this name already exists.',
+            });
+        }
+    },
+);
 
 const ProjectDetailsSchema = z.object({
     aliased_data: z.object({

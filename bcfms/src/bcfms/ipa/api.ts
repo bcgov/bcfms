@@ -93,3 +93,18 @@ export async function submitIPAReview(ipa: IPAType): Promise<IPAType> {
         return response.json();
     }
 }
+
+export async function isNameUniqueForIPA(name: string): Promise<IPAType> {
+    const url =
+        arches.urls.ipa_name_unique +
+        '?' +
+        new URLSearchParams({
+            name: encodeURIComponent(name),
+        }).toString();
+
+    const response = await fetch(url);
+
+    const { success, is_unique } = await response.json();
+
+    return success && is_unique;
+}
