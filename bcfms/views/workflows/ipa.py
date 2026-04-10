@@ -252,4 +252,5 @@ class IPAsWithName(ArchesModelAPIMixin, CardNodeWidgetConfigMixin, ListCreateAPI
             is_unique = queryset.count() == 0
             return Response({"success": True, "is_unique": is_unique})
         except Exception as e:
-            return Response({"success": False, "error": str(e)})
+            logger.exception("Error while checking IPA name uniqueness")
+            return Response({"success": False, "error": "An internal error has occurred."})
