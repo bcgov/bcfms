@@ -23,6 +23,7 @@
         "vitest": "vitest --run --coverage"
     },
     "overrides": {
+        "arches": "github:bcgov/arches#stable/8.0.10_bcgov_12578_12377_12616_12502_12697",
         "moment-timezone": "^0.5.45",
         "nomnom": "npm:@gerhobbelt/nomnom",
         "rimraf": "^5.0.7",
@@ -57,7 +58,7 @@
         "@primevue/forms": "^4.3.5",
         "@vitejs/plugin-vue": "^5.2.1",
         "@vueuse/core": "^14.2.1",
-        "arches": "github:bcgov/arches#stable/8.0.10_bcgov_12578_12377_12616_12502",
+        "arches": "github:bcgov/arches#stable/8.0.10_bcgov_12578_12377_12616_12502_12697",
         "arches-component-lab": "github:archesproject/arches-component-lab#main",
         "arches-querysets": "github:archesproject/arches-querysets#dev/1.1.x",
         "bcgov_arches_common": "github:bcgov/bcgov-arches-common#release/2.0.x",
