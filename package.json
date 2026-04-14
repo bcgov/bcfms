@@ -23,7 +23,7 @@
         "vitest": "vitest --run --coverage"
     },
     "overrides": {
-        "arches": "github:bcgov/arches#stable/8.0.10_bcgov_12578_12377_12616_12502_12697",
+        "arches": "github:bcgov/arches#stable/8.0.10_bcgov_12578_12377_12616_12502_12697_12610",
         "moment-timezone": "^0.5.45",
         "nomnom": "npm:@gerhobbelt/nomnom",
         "rimraf": "^5.0.7",
@@ -38,7 +38,7 @@
         "@typescript-eslint/parser": "^8.24.1",
         "@vue/eslint-config-prettier": "^10.2.0",
         "@vue/eslint-config-typescript": "^14.4.0",
-        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#stable/8.0.8",
+        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#stable/8.0.10",
         "eslint": "^9.29.0",
         "eslint-plugin-vue": "^9.32.0",
         "globals": "^16.0.0",
@@ -58,7 +58,7 @@
         "@primevue/forms": "^4.3.5",
         "@vitejs/plugin-vue": "^5.2.1",
         "@vueuse/core": "^14.2.1",
-        "arches": "github:bcgov/arches#stable/8.0.10_bcgov_12578_12377_12616_12502_12697",
+        "arches": "github:bcgov/arches#stable/8.0.10_bcgov_12578_12377_12616_12502_12697_12610",
         "arches-component-lab": "github:archesproject/arches-component-lab#main",
         "arches-querysets": "github:archesproject/arches-querysets#dev/1.1.x",
         "bcgov_arches_common": "github:bcgov/bcgov-arches-common#release/2.0.x",
