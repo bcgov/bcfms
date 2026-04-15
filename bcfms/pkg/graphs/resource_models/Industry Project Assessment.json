@@ -337,9 +337,7 @@
                     "card_id": "83860218-3ada-4ad1-bd45-ab1308647f04",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "IPA Number",
                         "maxLength": null,
                         "placeholder": {
@@ -363,9 +361,7 @@
                     "card_id": "67158fce-ef0f-490b-8dc4-5bcd1dbf4689",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Submission Number",
                         "maxLength": null,
                         "placeholder": {
@@ -409,9 +405,7 @@
                     "card_id": "83860218-3ada-4ad1-bd45-ab1308647f04",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Project Requirements",
                         "options": [
                             {
@@ -505,9 +499,7 @@
                     "card_id": "594f9cc0-dc5e-11ef-93b5-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Recommendations",
                         "maxLength": null,
                         "placeholder": {
@@ -534,9 +526,7 @@
                                 "value": "Enter title of the PSR"
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Document Title",
                         "maxLength": "80",
                         "placeholder": {
@@ -558,9 +548,7 @@
                     "card_id": "594f9cc0-dc5e-11ef-93b5-0242ac170009",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Paleo Company",
                         "placeholder": {
                             "en": ""
@@ -579,9 +567,7 @@
                     "card_id": "594f9cc0-dc5e-11ef-93b5-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Consultant Report Number",
                         "maxLength": "40",
                         "placeholder": {
@@ -603,9 +589,7 @@
                     "card_id": "594f9cc0-dc5e-11ef-93b5-0242ac170009",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Lead Paleontology Consultant",
                         "placeholder": {
                             "en": ""
@@ -642,9 +626,7 @@
                     "card_id": "65cc00ec-dc5e-11ef-93b5-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "FMO Response",
                         "maxLength": null,
                         "placeholder": {
@@ -666,9 +648,7 @@
                     "card_id": "65cc00ec-dc5e-11ef-93b5-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "FMO Determined Level of Risk",
                         "options": [],
                         "placeholder": {
@@ -703,9 +683,7 @@
                     "card_id": "65cc00ec-dc5e-11ef-93b5-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "FMO Internal Notes",
                         "maxLength": null,
                         "placeholder": {
@@ -727,9 +705,7 @@
                     "card_id": "83860218-3ada-4ad1-bd45-ab1308647f04",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Fossil Repository Agreement",
                         "options": [
                             {
@@ -788,9 +764,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Photograph View",
                         "maxLength": null,
                         "placeholder": {
@@ -817,9 +791,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Photograph Description",
                         "maxLength": null,
                         "placeholder": {
@@ -864,9 +836,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Photographer",
                         "maxLength": null,
                         "placeholder": {
@@ -907,9 +877,7 @@
                     "card_id": "a23812de-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Multiple Geometry Qualifier",
                         "maxLength": null,
                         "placeholder": {
@@ -931,9 +899,7 @@
                     "card_id": "a23812de-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Location Description",
                         "maxLength": null,
                         "placeholder": {
@@ -955,9 +921,7 @@
                     "card_id": "a23812de-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Geometry Qualifier",
                         "options": [],
                         "placeholder": {
@@ -977,9 +941,7 @@
                     "card_id": "a23812de-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Multiple Geometry Qualifier",
                         "maxLength": null,
                         "placeholder": {
@@ -1048,9 +1010,7 @@
                     "card_id": "a237b49c-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Project Initiator",
                         "placeholder": {
                             "en": ""
@@ -1089,9 +1049,7 @@
                     "card_id": "a237b49c-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Industry Company Name",
                         "maxLength": "80",
                         "placeholder": {
@@ -1148,9 +1106,7 @@
                     "card_id": "a237b49c-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Project Name",
                         "maxLength": "120",
                         "placeholder": {
@@ -1172,9 +1128,7 @@
                     "card_id": "a237b49c-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Land Act File Number",
                         "maxLength": "40",
                         "placeholder": {
@@ -1196,9 +1150,7 @@
                     "card_id": "a237b49c-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Project Authorizing Agency",
                         "options": [],
                         "placeholder": {
@@ -1218,9 +1170,7 @@
                     "card_id": "a2380afa-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "FRPR",
                         "options": [
                             {
@@ -1282,9 +1232,7 @@
                     "card_id": "a2380afa-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Initial Review Internal Notes",
                         "maxLength": "80",
                         "placeholder": {
@@ -1306,9 +1254,7 @@
                     "card_id": "a2380afa-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Proximity to Fossils",
                         "options": [
                             {
@@ -1353,9 +1299,7 @@
                     "card_id": "a2380afa-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Initial Review Level of Risk",
                         "options": [
                             {
@@ -1406,9 +1350,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Initial Review Outcome",
                         "maxLength": "80",
                         "placeholder": {
@@ -1430,9 +1372,7 @@
                     "card_id": "a2380afa-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Metamorphic rock",
                         "options": [],
                         "placeholder": {
@@ -1452,9 +1392,7 @@
                     "card_id": "a2380afa-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Ground Disturbance",
                         "options": [
                             {
@@ -1499,9 +1437,7 @@
                     "card_id": "a2380afa-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Sedimentary rock",
                         "options": [],
                         "placeholder": {
@@ -1521,9 +1457,7 @@
                     "card_id": "a2380afa-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Igneous rock",
                         "options": [
                             {
@@ -1583,9 +1517,7 @@
                     "card_id": "a2380afa-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Quaternary deposits",
                         "options": [],
                         "placeholder": {
@@ -1605,9 +1537,7 @@
                     "card_id": "a23848b2-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Other Project Type",
                         "maxLength": null,
                         "placeholder": {
@@ -1629,9 +1559,7 @@
                     "card_id": "a23848b2-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Proposed Activity",
                         "maxLength": null,
                         "placeholder": {
@@ -1653,9 +1581,7 @@
                     "card_id": "a23848b2-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Project Type",
                         "options": [],
                         "placeholder": {
@@ -1693,9 +1619,7 @@
                     "card_id": "a23819a0-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "IPA Phase",
                         "options": [],
                         "placeholder": {
@@ -1719,9 +1643,7 @@
                                 "direction": "ltr"
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "External Contact",
                         "maxLength": "80",
                         "placeholder": {
@@ -1762,9 +1684,7 @@
                     "card_id": "a23819a0-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "FMO Actor",
                         "placeholder": {
                             "en": "Select FMO contact"
@@ -1783,9 +1703,7 @@
                     "card_id": "a23819a0-dc5c-11ef-80ef-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Communication Note",
                         "maxLength": "80",
                         "placeholder": {
@@ -1807,9 +1725,7 @@
                     "card_id": "67158fce-ef0f-490b-8dc4-5bcd1dbf4689",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Submission Type",
                         "options": [],
                         "placeholder": {
@@ -1854,9 +1770,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Other Requirement Details",
                         "maxLength": null,
                         "placeholder": {
@@ -3076,7 +2990,7 @@
                                 "should": []
                             }
                         },
-                        "searchString": "/bc-fossil-management/search?paging-filter=1&tiles=true&format=tilecsv&reportlink=false&precision=6&total=0&advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22c4eca2de-9dea-11ed-9a7b-5254004d77d3%22%3A%7B%22op%22%3A%22eq%22%2C%22val%22%3A%22a7a00d7b-ac19-4b7a-b911-55b4fb1473ff%22%7D%2C%22e2f1c29a-c500-11ed-9089-5254004d77d3%22%3A%7B%22op%22%3A%22eq%22%2C%22val%22%3A%223489e41e-0168-4a8f-80f1-75fde26e2130%22%7D%2C%22c4ec9b2c-9dea-11ed-9a7b-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22c4eca13a-9dea-11ed-9a7b-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22a5b2cd72-c4f4-11ed-a06d-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22b5ed0072-c4f4-11ed-94de-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22009ba8da-faf6-11ed-ac37-5254004d77d3%22%3A%7B%22op%22%3A%22%22%2C%22val%22%3A%22%22%7D%2C%2299643f1e-9e4e-11ed-b6d5-5254004d77d3%22%3A%7B%22val%22%3A%22f%22%7D%7D%5D&sort-results=asc"
+                        "searchString": "/bc-fossil-management/search?paging-filter=1&tiles=true&format=tilecsv&reportlink=false&precision=6&total=0&advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22c4eca2de-9dea-11ed-9a7b-5254004d77d3%22%3A%7B%22op%22%3A%22eq%22%2C%22val%22%3A%22a7a00d7b-ac19-4b7a-b911-55b4fb1473ff%22%7D%2C%22e2f1c29a-c500-11ed-9089-5254004d77d3%22%3A%7B%22op%22%3A%22eq%22%2C%22val%22%3A%223489e41e-0168-4a8f-80f1-75fde26e2130%22%7D%2C%22c4ec9b2c-9dea-11ed-9a7b-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22c4eca13a-9dea-11ed-9a7b-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22a5b2cd72-c4f4-11ed-a06d-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22b5ed0072-c4f4-11ed-94de-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22009ba8da-faf6-11ed-ac37-5254004d77d3%22%3A%7B%22op%22%3A%22%22%2C%22val%22%3A%22%22%7D%2C%2299643f1e-9e4e-11ed-b6d5-5254004d77d3%22%3A%7B%22val%22%3A%22null%22%7D%7D%5D&sort-results=asc"
                     },
                     "datatype": "resource-instance",
                     "description": null,
@@ -3243,10 +3157,7 @@
                         "falseLabel": {
                             "en": "Requires Changes"
                         },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
+                        "i18n_properties": ["trueLabel", "falseLabel"],
                         "trueLabel": {
                             "en": "Accepted"
                         }
@@ -3844,10 +3755,7 @@
                         "falseLabel": {
                             "en": "In Progress"
                         },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
+                        "i18n_properties": ["trueLabel", "falseLabel"],
                         "trueLabel": {
                             "en": "Completed"
                         }
@@ -4106,10 +4014,7 @@
                         "falseLabel": {
                             "en": "No"
                         },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
+                        "i18n_properties": ["trueLabel", "falseLabel"],
                         "trueLabel": {
                             "en": "Yes"
                         }
@@ -4254,7 +4159,7 @@
                                 "should": []
                             }
                         },
-                        "searchString": "/bc-fossil-management/search?paging-filter=1&tiles=true&advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22c4eca2de-9dea-11ed-9a7b-5254004d77d3%22%3A%7B%22op%22%3A%22eq%22%2C%22val%22%3A%22%22%7D%2C%22e2f1c29a-c500-11ed-9089-5254004d77d3%22%3A%7B%22op%22%3A%22eq%22%2C%22val%22%3A%22%22%7D%2C%22c4ec9b2c-9dea-11ed-9a7b-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22c4eca13a-9dea-11ed-9a7b-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22a5b2cd72-c4f4-11ed-a06d-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22b5ed0072-c4f4-11ed-94de-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22009ba8da-faf6-11ed-ac37-5254004d77d3%22%3A%7B%22op%22%3A%22%22%2C%22val%22%3A%2265f6520c-a803-4b8c-9c93-5702c1231fe6%22%7D%2C%2299643f1e-9e4e-11ed-b6d5-5254004d77d3%22%3A%7B%22val%22%3A%22%22%7D%7D%5D&sort-results=asc"
+                        "searchString": "/bc-fossil-management/search?paging-filter=1&tiles=true&advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22c4eca2de-9dea-11ed-9a7b-5254004d77d3%22%3A%7B%22op%22%3A%22eq%22%2C%22val%22%3A%22%22%7D%2C%22e2f1c29a-c500-11ed-9089-5254004d77d3%22%3A%7B%22op%22%3A%22eq%22%2C%22val%22%3A%22%22%7D%2C%22c4ec9b2c-9dea-11ed-9a7b-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22c4eca13a-9dea-11ed-9a7b-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22a5b2cd72-c4f4-11ed-a06d-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22b5ed0072-c4f4-11ed-94de-5254004d77d3%22%3A%7B%22op%22%3A%22~%22%2C%22lang%22%3A%22en%22%2C%22val%22%3A%22%22%7D%2C%22009ba8da-faf6-11ed-ac37-5254004d77d3%22%3A%7B%22op%22%3A%22%22%2C%22val%22%3A%5B%2265f6520c-a803-4b8c-9c93-5702c1231fe6%22%5D%7D%2C%2299643f1e-9e4e-11ed-b6d5-5254004d77d3%22%3A%7B%22val%22%3A%22%22%7D%7D%5D&sort-results=asc"
                     },
                     "datatype": "resource-instance",
                     "description": null,
