@@ -1,5 +1,5 @@
 [build-system]
-requires = [ "setuptools>=77", "setuptools-scm",]
+requires = ["setuptools>=77", "setuptools-scm", ]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -36,7 +36,19 @@ dynamic = []
 text = "GNU AGPL3"
 
 [tool.setuptools]
-packages = [ "bcfms",]
+packages = ["bcfms", ]
 
 [dependency-groups]
-dev = [ "livereload", "sst", "coverage", "django-silk==5.1.0", "pre-commit==3.8.0", "black==24.4.2",]
+dev = ["livereload", "sst", "coverage", "django-silk==5.1.0", "pre-commit==3.8.0", "black==24.4.2", ]
+jupyter = [
+    { include-group = "dev" }, # pulls in dev deps too, if desired
+    "ipykernel",
+    "jupyterlab",
+    "pandas",
+    "matplotlib",
+    "seaborn",
+    "tabulate",
+    "openpyxl",
+    "nbstripout",
+]
+

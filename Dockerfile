@@ -92,3 +92,20 @@ ENTRYPOINT ["../entrypoint.sh"]
 CMD ["run_arches"]
 # Expose port 8000
 EXPOSE 8000
+
+# ---- Jupyter stage ----
+FROM base AS jupyter
+COPY ./bcfms/pyproject.toml ${APP_ROOT}/pyproject.toml
+RUN pip install --no-cache-dir --group jupyter
+
+#RUN mkdir -p ${APP_ROOT}/notebooks
+WORKDIR ${APP_ROOT}
+
+CMD ["jupyter", "server", \
+     "--ip=0.0.0.0", \
+     "--port=8888", \
+     "--no-browser", \
+     "--allow-root", \
+     "--ServerApp.notebook_dir=/web_root/bcfms/notebooks"]
+
+EXPOSE 8888

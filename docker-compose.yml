@@ -1,9 +1,9 @@
 version: '3.8'
-name: bcfms7-6
+name: bcfms
 services:
   bcfms:
-    container_name: bcfms7-6
-    hostname: bcfms7-6
+    container_name: bcfms
+    hostname: bcfms
     image: bcgov/bcfms7-6
     build:
       context: ..
@@ -25,27 +25,30 @@ services:
     stdin_open: true
     tty: true
 
-  # bcfms-webpack:
-  #   container_name: bcfms-webpack7-6
-  #   hostname: bcfms-webpack7-6
-  #   image: bcgov/bcfms-webpack7-6
-  #   build:
-  #     context: ..
-  #     dockerfile: bcfms/docker/webpack/Dockerfile
-  #   command: run_webpack
-  #   volumes:
-  #     - ../arches/:/web_root/arches
-  #     - ../bcgov-arches-common/:/web_root/bcgov-arches-common
-  #     - ./:/web_root/bcfms
-  #     - ../arches-component-lab/:/web_root/arches-component-lab
-  #   env_file:
-  #     - ./docker/webpack/env_file.env
-  #   ports:
-  #     - 8023:8021
-  #   stdin_open: true
-  #   tty: true
+  bcfms-jupyter:
+    container_name: bcfms-jupyter
+    image: bcgov/bcfms-jupyter          # reuse the same image
+    build:
+      context: ..
+      dockerfile: bcfms/Dockerfile
+      target: jupyter
+    volumes:
+      - ../arches/:/web_root/arches
+      - ./:/web_root/bcfms
+      - ../bcgov-arches-common/:/web_root/bcgov-arches-common
+      - ../arches-component-lab/:/web_root/arches-component-lab
+      - ../arches-querysets/:/web_root/arches-querysets
+    env_file:
+      - ./docker/env_file.env
+    ports:
+      - "8889:8888"
+    depends_on:
+      - bcfms
+    stdin_open: true
+    tty: true
+
   bcfms-proxy:
-    container_name: bcfms-proxy7-6
+    container_name: bcfms-proxy
     image: nginx:1.25-alpine
     depends_on:
       - bcfms
@@ -56,8 +59,8 @@ services:
     restart: unless-stopped
 
   bcfms-pg_tileserv:
-    container_name: bcfms-pg_tileserv7-6
-    hostname: bcfms-pg_tileserv7-6
+    container_name: bcfms-pg_tileserv
+    hostname: bcfms-pg_tileserv
     image: pramsey/pg_tileserv:latest
     env_file:
       - ./docker/pg_tileserv/pg_tileserv.env
