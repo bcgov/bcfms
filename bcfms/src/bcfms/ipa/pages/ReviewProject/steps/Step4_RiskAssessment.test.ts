@@ -18,11 +18,7 @@ vi.mock('@/bcfms/utils.ts', () => ({
 }));
 
 vi.mock('@/bcgov_arches_common/validation-utils.ts', () => ({
-    getFlattenResolver:
-        vi.fn(
-            (resolver: unknown) =>
-                resolver,
-        ),
+    getFlattenResolver: vi.fn((resolver: unknown) => resolver),
 }));
 
 vi.mock('@primevue/forms/resolvers/zod', () => ({
@@ -259,7 +255,9 @@ describe('Step4_RiskAssessment', () => {
 
         it('updates the character count after initial_review_internal_notes changes', async () => {
             const wrapper = mountComponent();
-            const widgets = wrapper.findAllComponents({ name: 'GenericWidget' });
+            const widgets = wrapper.findAllComponents({
+                name: 'GenericWidget',
+            });
             // 3rd widget (index 2) is bound to initial_review_internal_notes
             await widgets[2].vm.$emit('update:value', {
                 display_value: 'hello',
@@ -275,7 +273,9 @@ describe('Step4_RiskAssessment', () => {
 
         it('strips HTML tags when counting characters', async () => {
             const wrapper = mountComponent();
-            const widgets = wrapper.findAllComponents({ name: 'GenericWidget' });
+            const widgets = wrapper.findAllComponents({
+                name: 'GenericWidget',
+            });
             await widgets[2].vm.$emit('update:value', {
                 display_value: 'hi',
                 node_value: { en: { value: '<p>hi</p>', direction: 'ltr' } },
@@ -295,7 +295,9 @@ describe('Step4_RiskAssessment', () => {
     describe('updateModelValue routing', () => {
         it('emits update:stepIsValid after any field update', async () => {
             const wrapper = mountComponent();
-            const widgets = wrapper.findAllComponents({ name: 'GenericWidget' });
+            const widgets = wrapper.findAllComponents({
+                name: 'GenericWidget',
+            });
             await widgets[0].vm.$emit('update:value', {
                 display_value: 'Low',
                 node_value: 'some-uuid',
@@ -306,7 +308,9 @@ describe('Step4_RiskAssessment', () => {
         it('routes frpr to initial_project_review.aliased_data', async () => {
             const ipa = makeIpa();
             const wrapper = mountComponent(ipa);
-            const widgets = wrapper.findAllComponents({ name: 'GenericWidget' });
+            const widgets = wrapper.findAllComponents({
+                name: 'GenericWidget',
+            });
 
             const frprValue = { display_value: 'Low', node_value: 'uuid-1' };
             await widgets[0].vm.$emit('update:value', frprValue);
@@ -322,7 +326,9 @@ describe('Step4_RiskAssessment', () => {
         it('routes initial_review_level_of_risk to initial_project_review.aliased_data', async () => {
             const ipa = makeIpa();
             const wrapper = mountComponent(ipa);
-            const widgets = wrapper.findAllComponents({ name: 'GenericWidget' });
+            const widgets = wrapper.findAllComponents({
+                name: 'GenericWidget',
+            });
 
             await widgets[1].vm.$emit('update:value', {
                 display_value: 'High',
@@ -339,7 +345,9 @@ describe('Step4_RiskAssessment', () => {
         it('routes initial_review_internal_notes to initial_project_review.aliased_data', async () => {
             const ipa = makeIpa();
             const wrapper = mountComponent(ipa);
-            const widgets = wrapper.findAllComponents({ name: 'GenericWidget' });
+            const widgets = wrapper.findAllComponents({
+                name: 'GenericWidget',
+            });
 
             await widgets[2].vm.$emit('update:value', {
                 display_value: 'notes',
@@ -356,7 +364,9 @@ describe('Step4_RiskAssessment', () => {
         it('routes project_requirements to assessment_details.aliased_data', async () => {
             const ipa = makeIpa();
             const wrapper = mountComponent(ipa);
-            const widgets = wrapper.findAllComponents({ name: 'GenericWidget' });
+            const widgets = wrapper.findAllComponents({
+                name: 'GenericWidget',
+            });
 
             await widgets[3].vm.$emit('update:value', {
                 display_value: 'Req',
@@ -373,7 +383,9 @@ describe('Step4_RiskAssessment', () => {
         it('routes fossil_repository_agreement to assessment_details.aliased_data', async () => {
             const ipa = makeIpa();
             const wrapper = mountComponent(ipa);
-            const widgets = wrapper.findAllComponents({ name: 'GenericWidget' });
+            const widgets = wrapper.findAllComponents({
+                name: 'GenericWidget',
+            });
 
             await widgets[4].vm.$emit('update:value', {
                 display_value: 'Agreement',
@@ -393,7 +405,9 @@ describe('Step4_RiskAssessment', () => {
     describe('conceptCheckboxOverride', () => {
         it('passes card-x-node-x-widget-data-overrides to the project_requirements widget', () => {
             const wrapper = mountComponent();
-            const widgets = wrapper.findAllComponents({ name: 'GenericWidget' });
+            const widgets = wrapper.findAllComponents({
+                name: 'GenericWidget',
+            });
             const overrides = widgets[3].props(
                 'cardXNodeXWidgetDataOverrides',
             ) as { widget: { component: string } } | undefined;
@@ -405,7 +419,9 @@ describe('Step4_RiskAssessment', () => {
 
         it('does not pass overrides to non-project_requirements widgets', () => {
             const wrapper = mountComponent();
-            const widgets = wrapper.findAllComponents({ name: 'GenericWidget' });
+            const widgets = wrapper.findAllComponents({
+                name: 'GenericWidget',
+            });
 
             // widgets 0, 1, 2, 4 should have no override
             [0, 1, 2, 4].forEach((idx) => {
