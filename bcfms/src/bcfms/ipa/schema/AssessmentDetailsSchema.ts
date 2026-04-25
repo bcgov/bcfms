@@ -1,9 +1,30 @@
+import { z } from 'zod';
 import type { StringValue } from '@/arches_component_lab/datatypes/string/types.ts';
 import { currentDateValue, blankStringValue } from '@/bcfms/utils.ts';
 import { blankConceptValue } from '@/arches_component_lab/datatypes/concept/utils.ts';
 import type { ConceptValue } from '@/arches_component_lab/datatypes/concept/types.ts';
 import type { DateValue } from '@/arches_component_lab/datatypes/date/types.ts';
 import type { AliasedTileData } from '@/arches_component_lab/types.ts';
+import {
+    DateValueSchema,
+    DateValueRequiredSchema,
+} from '@/bcgov_arches_common/datatypes/date/validation/zod.ts';
+import { StringValueSchema } from '@/bcgov_arches_common/datatypes/string/validation/zod.ts';
+import {
+    ConceptValueRequiredSchema,
+    ConceptValueSchema,
+} from '@/bcgov_arches_common/datatypes/concept/validation/zod.ts';
+
+export const AssessmentDetailsSchema = z.object({
+    aliased_data: z.object({
+        ipa_number: StringValueSchema,
+        assessment_completion_date: DateValueSchema,
+        assessment_start_date: DateValueRequiredSchema,
+        project_requirements: ConceptValueSchema,
+        fossil_repository_agreement: ConceptValueRequiredSchema,
+        other_requirement_details: StringValueSchema,
+    }),
+});
 
 export interface AssessmentDetailsType extends AliasedTileData {
     aliased_data: {
