@@ -4,8 +4,7 @@ from django.db import migrations
 def replace_bclocaltileserver(apps, schema_editor):
     """Replace /bclocaltileserver/ with /bctileserver/ in map_sources.source tiles arrays."""
     with schema_editor.connection.cursor() as cursor:
-        cursor.execute(
-            """
+        cursor.execute("""
             UPDATE map_sources
             SET source = jsonb_set(
                 source,
@@ -18,15 +17,13 @@ def replace_bclocaltileserver(apps, schema_editor):
                 )
             )
             WHERE source::text LIKE '%/bclocaltileserver/%';
-            """
-        )
+            """)
 
 
 def restore_bclocaltileserver(apps, schema_editor):
     """Reverse: replace /bctileserver/ with /bclocaltileserver/ in map_sources.source tiles arrays."""
     with schema_editor.connection.cursor() as cursor:
-        cursor.execute(
-            """
+        cursor.execute("""
             UPDATE map_sources
             SET source = jsonb_set(
                 source,
@@ -39,8 +36,7 @@ def restore_bclocaltileserver(apps, schema_editor):
                 )
             )
             WHERE source::text LIKE '%source=local%';
-            """
-        )
+            """)
 
 
 class Migration(migrations.Migration):
