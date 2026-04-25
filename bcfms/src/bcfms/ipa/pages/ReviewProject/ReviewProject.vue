@@ -29,6 +29,8 @@ const resourceinstanceid = ref(route.params.resourceinstanceid as string);
 const activateNextStep = async () => {
     if (currentStep.value === 5) {
         submitIpaData();
+    } else if (currentStep.value === 6) {
+        printDetails();
     } else {
         myStepper.value.d_value++;
         setCurrentStepValid(
@@ -95,9 +97,11 @@ const isValid = (step: number) => {
 
     return stepValid;
 };
+
 const printDetails = () => {
-    console.log('printDetails');
+    window.print();
 };
+
 const stepperProps: Ref<StepperProps | null> = ref(null);
 const stepperState: Ref<StepperState | null> = ref(null);
 const myStepper = ref();
