@@ -15,15 +15,47 @@
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,
         "skipLibCheck": true,
-        "types": [
-            "vitest/globals"
-        ],
-        "allowImportingTsExtensions": true
+        "types": ["vitest/globals"],
+        "allowImportingTsExtensions": true,
+        "baseUrl": "./",
+        "paths": {
+            "geojson": ["./node_modules/@types/geojson/index.d.ts"],
+            "js-cookie": ["./node_modules/@types/js-cookie/index.d.ts"],
+            "@/bcfms/*": ["./bcfms/src/bcfms/*"],
+            "@/bcgov_arches_common/*": [
+                "./node_modules/bcgov_arches_common/bcgov_arches_common/src/bcgov_arches_common/*"
+            ],
+            "@/arches_component_lab/*": [
+                "./node_modules/arches-component-lab/arches_component_lab/src/arches_component_lab/*"
+            ],
+            "@/arches_controlled_lists/*": [
+                "./node_modules/arches-controlled-lists/arches_controlled_lists/src/arches_controlled_lists/*"
+            ],
+            "@/arches_querysets/*": [
+                "./node_modules/arches-querysets/arches_querysets/src/arches_querysets/*"
+            ],
+            // keep aliases from the generated file (they still apply)
+            "*": [
+                "*",
+                "./bcap/media/js/*",
+                "./node_modules/bcgov-arches-common/bcgov_arches_common/media/js/*",
+                "./node_modules/arches/arches/app/media/js/*",
+                "./node_modules/*"
+                //        "../node_modules/*"
+            ]
+        },
+        "rootDirs": [
+            "bcap/media/js",
+            "../bcgov-arches-common/bcgov_arches_common/media/js",
+            "../arches/arches/app/media/js"
+        ]
     },
     "exclude": [
         "vite-shims/**",
         "**/*.test.ts",
+        "**/notebooks/**",
         "**/build/**",
         "**/staticfiles/**",
+        "**/bcgov_arches_common/**"
     ]
 }

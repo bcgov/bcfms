@@ -34,6 +34,19 @@ function generateConfig(): Promise<UserConfig> {
         );
         const parsedData = JSON.parse(rawData);
 
+        // Exclude test files from external Arches application dependencies
+        // (those whose source trees live outside this project's directory).
+        for (const appPath of Object.values(
+            parsedData['ARCHES_APPLICATIONS_PATHS'] as {
+                [key: string]: string;
+            },
+        )) {
+            const resolved = path.resolve(filePath, appPath);
+            if (!resolved.startsWith(filePath)) {
+                exclude.push(path.join(resolved, '**'));
+            }
+        }
+
         const alias: { [key: string]: string } = {
             '@/arches': path.join(
                 parsedData['ROOT_DIR'],
@@ -65,8 +78,48 @@ function generateConfig(): Promise<UserConfig> {
             );
         }
 
+        // Override app aliases using paths from tsconfig.json (body only —
+        // no extends resolution, so the missing build-generated
+        // frontend_configuration/tsconfig-paths.json is never touched).
+        // bcfms/tsconfig.json overrides the generated live-source paths with
+        // installed node_modules paths for external apps, using the correct
+        // npm package name (e.g. arches-component-lab, not arches_component_lab).
+        // Reading it here keeps Vitest's aliases consistent with TypeScript's.
+        const tsconfigText = fs.readFileSync(
+            path.join(filePath, 'tsconfig.json'),
+            'utf-8',
+        );
+        // tsconfig uses JSONC — strip // line comments before parsing.
+        const tsconfigJson = JSON.parse(
+            tsconfigText.replace(/\/\/[^\n]*/g, ''),
+        );
+        const tsconfigPaths: Record<string, string[]> =
+            tsconfigJson.compilerOptions?.paths ?? {};
+        for (const [pattern, targets] of Object.entries(tsconfigPaths)) {
+            if (
+                pattern.startsWith('@/') &&
+                pattern.endsWith('/*') &&
+                targets.length > 0
+            ) {
+                const aliasKey = pattern.slice(0, -2); // strip trailing /*
+                const target = targets[0].replace(/\/\*$/, ''); // strip trailing /*
+                alias[aliasKey] = path.join(filePath, target);
+            }
+        }
+
         resolve({
             plugins: [vue() as any],
+            esbuild: {
+                tsconfigRaw: {
+                    compilerOptions: {
+                        target: 'ESNext',
+                        jsx: 'preserve',
+                        jsxImportSource: 'vue',
+                        useDefineForClassFields: true,
+                        verbatimModuleSyntax: true,
+                    },
+                },
+            },
             test: {
                 alias: alias,
                 coverage: {
