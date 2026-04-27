@@ -8,6 +8,7 @@ import { Form, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
 import { InitialProjectReviewSchema } from '@/bcfms/ipa/schema/InitialProjectReviewSchema.ts';
+import { AssessmentDetailsSchema } from '@/bcfms/ipa/schema/AssessmentDetailsSchema.ts';
 import GenericWidget from '@/arches_component_lab/generics/GenericWidget/GenericWidget.vue';
 import { EDIT } from '@/arches_component_lab/widgets/constants.ts';
 import {
@@ -36,9 +37,15 @@ const projectRiskAssessmentResolver = getFlattenResolver(
 );
 
 const isValid = () => {
-    return baseIsValid(
-        projectRiskAssessmentForm as Ref<FormInstance>,
-        InitialProjectReviewSchema.shape['aliased_data'],
+    return (
+        baseIsValid(
+            projectRiskAssessmentForm as Ref<FormInstance>,
+            InitialProjectReviewSchema.shape['aliased_data'],
+        ) &&
+        baseIsValid(
+            projectRiskAssessmentForm as Ref<FormInstance>,
+            AssessmentDetailsSchema.shape['aliased_data'],
+        )
     );
 };
 const updateModelValue = function (
