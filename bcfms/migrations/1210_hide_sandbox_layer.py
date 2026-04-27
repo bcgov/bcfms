@@ -1,6 +1,5 @@
 from django.db import migrations
 
-
 update_sandbox_visbility_sql = """
         update nodes set config = jsonb_set(nodes.config, '{addToMap}', to_jsonb(false))
         where nodes.nodeid = (
