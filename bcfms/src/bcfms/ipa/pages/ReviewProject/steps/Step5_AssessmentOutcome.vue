@@ -72,7 +72,7 @@ emit('update:stepIsValid', isValid());
             "
             class="div-grid-cols"
         >
-            <div>Submission Date</div>
+            <label class="div-grid-cols widget-label">Submission Date</label>
             <div>
                 {{
                     ipa?.aliased_data?.assessment_details?.aliased_data
@@ -88,7 +88,7 @@ emit('update:stepIsValid', isValid());
             "
             class="div-grid-cols"
         >
-            <div class="div-grid-cols">Reference Number</div>
+            <label class="div-grid-cols widget-label">Reference Number</label>
             <div class="div-grid-cols">
                 {{
                     ipa?.aliased_data?.assessment_details?.aliased_data
@@ -100,7 +100,7 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.aliased_data?.initial_project_review?.aliased_data
+                ipa?.aliased_data?.assessment_details?.aliased_data
                     ?.assessment_start_date
             "
             graph-slug="project_assessment"
@@ -110,7 +110,7 @@ emit('update:stepIsValid', isValid());
             class="div-grid-cols"
             :mode="VIEW"
             :aliased-node-data="
-                ipa?.aliased_data?.initial_project_review?.aliased_data
+                ipa?.aliased_data?.assessment_details?.aliased_data
                     ?.assessment_completion_date
             "
             graph-slug="project_assessment"
@@ -125,25 +125,10 @@ emit('update:stepIsValid', isValid());
             graph-slug="project_assessment"
             node-alias="intersects_ifa"
         /-->
-        <div
-            class="widget div-grid-cols"
-            data-graph-slug="project_assessment"
-            data-node-alias="intersects_ifa"
-        >
-            <label
-                class="widget-label"
-                for="proximity_to_fos"
-            >
-                <div
-                    style="display: flex"
-                    data-pd-tooltip="true"
-                >
-                    <span data-v-ed582886=""
-                        >Intersects with Important Fossil Area</span
-                    >
-                    <!--v-if-->
-                </div> </label
-            ><!--v-if-->
+        <div class="widget div-grid-cols">
+            <label class="widget-label">
+                Intersects with Important Fossil Area
+            </label>
             <div>
                 {{
                     ipa?.aliased_data?.initial_project_review?.aliased_data
@@ -266,6 +251,9 @@ emit('update:stepIsValid', isValid());
     </div>
 </template>
 <style scoped>
+.widget-label {
+    font-weight: 600;
+}
 .step-title {
     margin-bottom: 1rem;
     font-size: 21px;
