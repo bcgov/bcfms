@@ -99,7 +99,7 @@ export async function isNameUniqueForIPA(name: string): Promise<IPAType> {
         arches.urls.ipa_name_unique +
         '?' +
         new URLSearchParams({
-            name: encodeURIComponent(name),
+            name: name,
         }).toString();
 
     const response = await fetch(url);

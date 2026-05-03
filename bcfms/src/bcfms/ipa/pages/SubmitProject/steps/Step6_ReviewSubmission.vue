@@ -17,8 +17,7 @@ defineProps<{
 const mapOverrides = {
     widget: {
         widgetid: '',
-        component:
-            'bcgov_arches_common/widgets/MapDropZoneWidget/MapDropZoneWidget.vue',
+        component: 'bcgov_arches_common/widgets/SimpleMap/SimpleMap.vue',
     },
 } satisfies Partial<CardXNodeXWidgetData>;
 
@@ -225,24 +224,23 @@ emit('update:stepIsValid', isValid());
         <!-- map -->
         <div class="div-grid-cols">
             <div class="font-bold">Project Location</div>
-            <div></div>
-        </div>
-
-        <div class="print-map-container">
-            <div class="map-print-wrapper">
-                <GenericWidget
-                    graph-slug="project_assessment"
-                    node-alias="project_location"
-                    :card-x-node-x-widget-data-overrides="mapOverrides"
-                    :mode="VIEW"
-                    :should-show-label="false"
-                    :aliased-node-data="
-                        ipa?.aliased_data?.project_details.aliased_data
-                            ?.project_site?.aliased_data.project_location
-                    "
-                ></GenericWidget>
+            <div class="print-map-container">
+                <div class="map-print-wrapper">
+                    <GenericWidget
+                        graph-slug="project_assessment"
+                        node-alias="project_location"
+                        :card-x-node-x-widget-data-overrides="mapOverrides"
+                        :mode="VIEW"
+                        :should-show-label="false"
+                        :aliased-node-data="
+                            ipa?.aliased_data?.project_details.aliased_data
+                                ?.project_site?.aliased_data.project_location
+                        "
+                    ></GenericWidget>
+                </div>
             </div>
         </div>
+
         <GenericWidget
             class="div-grid-cols"
             :mode="VIEW"
@@ -336,13 +334,19 @@ emit('update:stepIsValid', isValid());
     page-break-inside: avoid;
     break-inside: avoid;
     width: 100% !important;
-    margin-top: 1.5rem;
+    margin-top: 0;
     margin-bottom: 1.5rem;
+    height: 310px;
+}
+
+.map-print-wrapper .map {
+    --map-height: 300px;
 }
 
 .map-print-wrapper {
     width: 750px !important;
-    margin: 0 auto !important;
+    height: 300px !important;
+    margin: 0 0 !important;
 }
 </style>
 <style scoped>

@@ -4,6 +4,7 @@ import type { Ref } from 'vue';
 
 import type { StringValue } from '@/arches_component_lab/datatypes/string/types.ts';
 import LabelledInput from '@/bcgov_arches_common/components/labelledinput/LabelledInput.vue';
+import { convertNbspToSpaces } from '@/bcgov_arches_common/datatypes/string/validation/utils.ts';
 import { Form, type FormInstance } from '@primevue/forms';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import type { IPA } from '@/bcfms/ipa/schema/IPASchema.ts';
@@ -63,6 +64,9 @@ const updateModelValue = function (
             projectRiskAssessmentForm as Ref<FormInstance>,
         );
     } else {
+        if (attribute_name === 'initial_review_internal_notes') {
+            newValue = convertNbspToSpaces(newValue as StringValue);
+        }
         baseUpdateModelValue(
             newValue,
             attribute_name,

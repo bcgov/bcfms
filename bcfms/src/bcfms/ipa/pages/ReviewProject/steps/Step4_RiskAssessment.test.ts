@@ -27,6 +27,7 @@ vi.mock('@primevue/forms/resolvers/zod', () => ({
 
 vi.mock('@/bcgov_arches_common/datatypes/string/validation/utils.ts', () => ({
     htmlToPlainText: vi.fn((html: string) => html.replace(/<[^>]+>/g, '')),
+    convertNbspToSpaces: vi.fn((v: unknown) => v),
 }));
 
 // ─── component import (after mocks) ─────────────────────────────────────────
