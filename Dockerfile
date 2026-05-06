@@ -64,6 +64,9 @@ RUN pip install -e .[dev]&& \
     pip install django_vite && \
     pip install --upgrade cryptography PyJWT
 
+ARG INSTALL_PYCHARM_DEBUG=false
+RUN if [ "$INSTALL_PYCHARM_DEBUG" = "true" ]; then pip install pydevd-pycharm~=253.31033.139; fi
+
 WORKDIR ${ARCHES_COMMON_ROOT}
 RUN pip install -e .
 

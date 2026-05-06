@@ -3,11 +3,17 @@ name: bcfms
 services:
   bcfms:
     container_name: bcfms
+    platform: ${DOCKER_HOST_PLATFORM:-linux}
     hostname: bcfms
-    image: bcgov/bcfms7-6
+    image: bcgov/bcfms
     build:
       context: ..
       dockerfile: bcfms/Dockerfile
+      args:
+        # Set this to true in the .env if debugging with PyCharm
+        INSTALL_PYCHARM_DEBUG: ${INSTALL_PYCHARM_DEBUG:-false}
+    environment:
+      PYCHARM_DEBUG: ${PYCHARM_DEBUG:-false}
     command: run_arches
     volumes:
       - ../arches/:/web_root/arches
@@ -16,7 +22,8 @@ services:
       - ../arches-component-lab/:/web_root/arches-component-lab
       - ../arches-querysets/:/web_root/arches-querysets
     env_file:
-      - ./docker/env_file.env
+      - ./.env
+      - ./docker/docker.dev.env
     ports:
       - 5689:5678
 #      - 81:80

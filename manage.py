@@ -24,6 +24,18 @@ import sys
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bcfms.settings")
 
+    if os.environ.get("PYCHARM_DEBUG", "").lower() in ("1", "true"):
+        if os.environ.get("RUN_MAIN") == "true":
+            import pydevd_pycharm
+
+            pydevd_pycharm.settrace(
+                os.environ.get("PYCHARM_DEBUG_HOST", "host.docker.internal"),
+                port=int(os.environ.get("PYCHARM_DEBUG_PORT", 5678)),
+                stdout_to_server=True,
+                stderr_to_server=True,
+                suspend=False,
+            )
+
     from django.core.management import execute_from_command_line
 
     execute_from_command_line(sys.argv)
