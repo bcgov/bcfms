@@ -14,8 +14,6 @@ services:
       args:
         # Set this to true in the .env or in the host env if debugging with PyCharm
         INSTALL_PYCHARM_DEBUG: ${INSTALL_PYCHARM_DEBUG:-false}
-    environment:
-      PYCHARM_DEBUG: ${PYCHARM_DEBUG:-false}
     command: run_arches
     volumes:
       - ../arches/:/web_root/arches
