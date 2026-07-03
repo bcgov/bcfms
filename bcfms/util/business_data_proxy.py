@@ -235,32 +235,19 @@ class IPADataProxy(BusinessDataProxy):
             raise ValueError("No abbreviation found")
 
         node = models.Node.objects.get(nodeid=node_id)
-        tiles = (
+        last_report_no = (
             models.TileModel.objects.filter(nodegroup_id=node.nodegroup_id)
-            .values_list("data", flat=True)
-            .all()
+            .filter(
+                **{
+                    f"data__{node_id}__startswith": f"{current_year}-{abbreviation.upper()}-"
+                }
+            )
+            .values_list(f"data__{node_id}", flat=True)
+            .order_by(f"-data__{node_id}")
+            .first()
         )
-        values = sorted(
-            list(
-                map(
-                    lambda tile: (
-                        tile[str(node_id)]
-                        if str(node_id) in tile
-                        and f"{current_year}-{abbreviation}-" in tile[str(node_id)]
-                        else ""
-                    ),
-                    tiles,
-                )
-            ),
-            reverse=True,
-        )
-
-        if (
-            len(values) < 1
-            or values[0] is None
-            or not re.match(r"^%s" % current_year, values[0])
-        ):
+        if last_report_no is None:
             return f"{current_year}-{abbreviation}-001"
         else:
-            val = "{:0=3}".format(int(re.split("-", values[0])[2]) + 1)
-            return re.sub("[^-]{3}$", val, values[0])
+            val = "{:0=3}".format(int(re.split("-", last_report_no)[2]) + 1)
+            return re.sub("[^-]{3}$", val, last_report_no)
