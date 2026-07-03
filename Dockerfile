@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 as base
+FROM ubuntu:22.04 AS base
 USER root
 ENV PROJECT_NAME=bcfms
 ## Setting default environment variables
