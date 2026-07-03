@@ -58,7 +58,7 @@
         "@vitejs/plugin-vue": "^5.2.1",
         "@vueuse/core": "^14.2.1",
         "arches": "github:bcgov/arches#v8.0.10-bcgov",
-        "arches-component-lab": "github:archesproject/arches-component-lab#main",
+        "arches-component-lab": "github:bcgov/arches-component-lab#v0.0.1a13-bcgov",
         "arches-querysets": "github:archesproject/arches-querysets#dev/1.1.x",
         "bcgov_arches_common": "github:bcgov/bcgov-arches-common#release/2.0.x",
         "ckeditor5": "44.2.0",
