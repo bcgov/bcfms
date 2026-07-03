@@ -147,7 +147,7 @@ run_django_server() {
     echo "Running Django"
 #  exec pip list && top
 #  exec top
-	exec sh -c "pip install debugpy -t /tmp && ${PYTHON_EXEC} -Wdefault /tmp/debugpy --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:${DJANGO_PORT}"
+	exec ${PYTHON_EXEC} -Wdefault manage.py runserver 0.0.0.0:${DJANGO_PORT}
 }
 
 run_livereload_server() {

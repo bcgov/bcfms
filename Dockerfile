@@ -64,6 +64,9 @@ RUN pip install -e .[dev]&& \
     pip install django_vite && \
     pip install --upgrade cryptography PyJWT
 
+ARG INSTALL_PYCHARM_DEBUG=false
+RUN if [ "$INSTALL_PYCHARM_DEBUG" = "true" ]; then pip install pydevd-pycharm~=253.31033.139; fi
+
 WORKDIR ${ARCHES_COMMON_ROOT}
 RUN pip install -e .
 
@@ -101,11 +104,12 @@ RUN pip install --no-cache-dir --group jupyter
 #RUN mkdir -p ${APP_ROOT}/notebooks
 WORKDIR ${APP_ROOT}
 
-CMD ["jupyter", "server", \
-     "--ip=0.0.0.0", \
-     "--port=8888", \
-     "--no-browser", \
-     "--allow-root", \
-     "--ServerApp.notebook_dir=/web_root/bcfms/notebooks"]
+CMD jupyter server \
+     --ip=0.0.0.0 \
+     --port=8888 \
+     --no-browser \
+     --allow-root \
+     ${JUPYTER_TOKEN:+--IdentityProvider.token=${JUPYTER_TOKEN}} \
+     --ServerApp.notebook_dir=/web_root/bcfms/notebooks
 
 EXPOSE 8888

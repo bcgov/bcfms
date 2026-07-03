@@ -11,7 +11,10 @@ core_repo_tag: "{{ lookup('ansible.builtin.env', 'CORE_REPO_TAG') }}"
 common_repo_tag: "{{ lookup('ansible.builtin.env', 'COMMON_REPO_TAG') }}"
 config_branch: "{{ lookup('ansible.builtin.env', 'CONFIG_BRANCH') }}"
 
-# Required for 7.6.x
+restart_s6_services: True
+reconfigure_s6_services: False
+
+# Required for 7.6.x+
 python_executable: /usr/bin/python3.12
 
 # If this is set to true the django migrate will be run.

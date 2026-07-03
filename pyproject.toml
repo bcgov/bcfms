@@ -23,8 +23,8 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
-    "arches @ git+https://github.com/bcgov/arches@stable/8.0.10_bcgov_12578_12377_12616_12502_12697_12610",
-    "arches-component-lab @ git+https://github.com/archesproject/arches-component-lab@main",
+    "arches @ git+https://github.com/bcgov/arches@v8.0.10-bcgov",
+    "arches-component-lab @ git+https://github.com/bcgov/arches-component-lab@v0.0.1a13-bcgov",
     "arches-querysets[drf] @ git+https://github.com/archesproject/arches-querysets@dev/1.1.x",
     "bcgov-arches-common @ git+https://github.com/bcgov/bcgov-arches-common@release/2.0.x",
     "django-storages==1.13",
