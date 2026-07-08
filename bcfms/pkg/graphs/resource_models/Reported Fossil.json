@@ -198,9 +198,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Description of Potential Fossil",
                         "maxLength": null,
                         "placeholder": {
@@ -237,9 +235,7 @@
                     "card_id": "0d42c5be-83d8-11ec-9043-5254008afee6",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Location Description",
                         "maxLength": null,
                         "placeholder": {
@@ -286,9 +282,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Photographer",
                         "maxLength": "80",
                         "placeholder": {
@@ -333,9 +327,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Photograph Description",
                         "maxLength": null,
                         "placeholder": {
@@ -362,9 +354,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Detailed Description of the Location",
                         "maxLength": null,
                         "placeholder": {
@@ -391,9 +381,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Additional Information",
                         "maxLength": null,
                         "placeholder": {
@@ -420,9 +408,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Observer Name",
                         "maxLength": null,
                         "placeholder": {
@@ -449,9 +435,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Phone Number",
                         "maxLength": null,
                         "placeholder": {
@@ -478,9 +462,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Email",
                         "maxLength": null,
                         "placeholder": {
@@ -502,9 +484,7 @@
                     "card_id": "cbe9538a-83be-11ec-805f-5254008afee6",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Geometry Qualifier",
                         "options": [],
                         "placeholder": {
@@ -572,9 +552,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Photograph View",
                         "maxLength": null,
                         "placeholder": {
@@ -596,9 +574,7 @@
                     "card_id": "08fd546f-a7b9-4d5e-9a88-3c2717faff24",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Fossil Common Name",
                         "placeholder": {
                             "en": "Select a name based on everyday language"
@@ -1026,10 +1002,7 @@
                         "falseLabel": {
                             "en": "Common Name Certain"
                         },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
+                        "i18n_properties": ["trueLabel", "falseLabel"],
                         "trueLabel": {
                             "en": "Common Name Uncertain"
                         }
