@@ -258,9 +258,7 @@
                         {
                             "card_id": "109ad7ba-d968-11ed-b8ae-5254004d77d3",
                             "constraintid": "26ceddf1-ad04-4aa1-86d9-7b7ef48f93e3",
-                            "nodes": [
-                                "56067456-3c48-11ee-b359-080027b7463b"
-                            ],
+                            "nodes": ["56067456-3c48-11ee-b359-080027b7463b"],
                             "uniquetoallinstances": true
                         }
                     ],
@@ -417,9 +415,7 @@
                     "card_id": "07f2e120-4834-11ef-8aee-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Interim Research Report Number",
                         "maxLength": null,
                         "placeholder": {
@@ -443,9 +439,7 @@
                     "card_id": "07f2e120-4834-11ef-8aee-0242ac170009",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Interim Research Report Title",
                         "maxLength": null,
                         "placeholder": {
@@ -487,9 +481,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "FMO Report Response",
                         "maxLength": null,
                         "placeholder": {
@@ -516,9 +508,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Internal Notes",
                         "maxLength": null,
                         "placeholder": {
@@ -565,9 +555,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Communication Content",
                         "maxLength": null,
                         "placeholder": {
@@ -589,9 +577,7 @@
                     "card_id": "10710974-fb0c-11ed-a587-5254004d77d3",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Communication Type",
                         "options": [],
                         "placeholder": {
@@ -649,9 +635,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Communication Content",
                         "maxLength": null,
                         "placeholder": {
@@ -698,9 +682,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "FMO Plan Response",
                         "maxLength": null,
                         "placeholder": {
@@ -727,9 +709,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Internal Notes",
                         "maxLength": null,
                         "placeholder": {
@@ -771,9 +751,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Location Description",
                         "maxLength": null,
                         "placeholder": {
@@ -795,9 +773,7 @@
                     "card_id": "109af20e-d968-11ed-b8ae-5254004d77d3",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Geometry Qualifier",
                         "options": [],
                         "placeholder": {
@@ -822,9 +798,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Multiple Geometry Qualifiers",
                         "maxLength": null,
                         "placeholder": {
@@ -893,9 +867,7 @@
                     "card_id": "109a8e72-d968-11ed-b8ae-5254004d77d3",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Final Research Report Title",
                         "maxLength": null,
                         "placeholder": {
@@ -935,9 +907,7 @@
                     "card_id": "109b48ee-d968-11ed-b8ae-5254004d77d3",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Research Plan Title",
                         "maxLength": null,
                         "placeholder": {
@@ -977,9 +947,7 @@
                     "card_id": "109ad7ba-d968-11ed-b8ae-5254004d77d3",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Project Initiator",
                         "placeholder": {
                             "en": "Select project initiator"
@@ -1003,9 +971,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "FMO Report Response",
                         "maxLength": null,
                         "placeholder": {
@@ -1032,9 +998,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Internal Notes",
                         "maxLength": null,
                         "placeholder": {
@@ -1076,9 +1040,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Project Name",
                         "maxLength": "40",
                         "placeholder": {
@@ -1125,9 +1087,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "External Contact",
                         "maxLength": null,
                         "placeholder": {
@@ -1169,9 +1129,7 @@
                     "card_id": "10710974-fb0c-11ed-a587-5254004d77d3",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "First Nations Contact",
                         "placeholder": {
                             "en": ""
@@ -1190,9 +1148,7 @@
                     "card_id": "109b48ee-d968-11ed-b8ae-5254004d77d3",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Research Plan Report Number",
                         "maxLength": null,
                         "placeholder": {
@@ -1216,9 +1172,7 @@
                     "card_id": "109a8e72-d968-11ed-b8ae-5254004d77d3",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Final Research Report Number",
                         "maxLength": null,
                         "placeholder": {
@@ -1242,9 +1196,7 @@
                     "card_id": "109a2554-d968-11ed-b8ae-5254004d77d3",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "FMO Contact",
                         "placeholder": {
                             "en": ""
@@ -1263,9 +1215,7 @@
                     "card_id": "10710974-fb0c-11ed-a587-5254004d77d3",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "FMO Contact Person",
                         "placeholder": {
                             "en": ""
@@ -1289,9 +1239,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "First Nations Consultation Areas",
                         "maxLength": null,
                         "placeholder": {
@@ -1313,9 +1261,7 @@
                     "card_id": "109b2404-d968-11ed-b8ae-5254004d77d3",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "RP Assessment Criteria",
                         "options": [
                             {
@@ -2121,10 +2067,7 @@
                         "falseLabel": {
                             "en": "Requires Changes"
                         },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
+                        "i18n_properties": ["trueLabel", "falseLabel"],
                         "trueLabel": {
                             "en": "Accepted"
                         }
@@ -2389,10 +2332,7 @@
                         "falseLabel": {
                             "en": "First Nation Initiated"
                         },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
+                        "i18n_properties": ["trueLabel", "falseLabel"],
                         "trueLabel": {
                             "en": "FMO Initiated"
                         }
@@ -2743,10 +2683,7 @@
                         "falseLabel": {
                             "en": "Requires Changes"
                         },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
+                        "i18n_properties": ["trueLabel", "falseLabel"],
                         "trueLabel": {
                             "en": "Accepted"
                         }
@@ -3037,10 +2974,7 @@
                         "falseLabel": {
                             "en": "Requires Changes"
                         },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
+                        "i18n_properties": ["trueLabel", "falseLabel"],
                         "trueLabel": {
                             "en": "Accepted"
                         }

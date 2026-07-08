@@ -234,9 +234,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Publication Identifier",
                         "maxLength": null,
                         "placeholder": {
@@ -276,9 +274,7 @@
                     "card_id": "77f2b830-b872-4a7a-847b-c2b31160c250",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Authors",
                         "placeholder": {
                             "en": "Select author"
@@ -322,9 +318,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Title of the Work",
                         "maxLength": null,
                         "placeholder": {
@@ -346,9 +340,7 @@
                     "card_id": "14566eac-86b2-4263-8a0b-613537f02478",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Fossil Site",
                         "placeholder": {
                             "en": ""
@@ -372,9 +364,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Original Source",
                         "maxLength": null,
                         "placeholder": {
@@ -412,11 +402,7 @@
                     "config": {
                         "defaultValue": "",
                         "format": "",
-                        "i18n_properties": [
-                            "placeholder",
-                            "prefix",
-                            "suffix"
-                        ],
+                        "i18n_properties": ["placeholder", "prefix", "suffix"],
                         "label": "Page Range Start",
                         "max": "",
                         "min": "",
@@ -467,9 +453,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Other Journal or Volume",
                         "maxLength": null,
                         "placeholder": {
@@ -491,9 +475,7 @@
                     "card_id": "28a2d308-2ac6-44ac-86ea-02b537b88acf",
                     "config": {
                         "defaultValue": "59e073cc-89fb-4e8c-a69a-ac68923486de",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Publication Identifier Type",
                         "options": [],
                         "placeholder": {
@@ -518,9 +500,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Publication Identifier",
                         "maxLength": null,
                         "placeholder": {
@@ -542,9 +522,7 @@
                     "card_id": "66575824-fa2d-4657-8c09-62e13a1ed6e5",
                     "config": {
                         "defaultValue": "1bae9ef6-3913-4405-b4d5-7bf7d94405ce",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Publication Type",
                         "options": [],
                         "placeholder": {
@@ -587,9 +565,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Agreement Text",
                         "maxLength": null,
                         "placeholder": {
@@ -611,9 +587,7 @@
                     "card_id": "a5f5ca84-c40c-11ed-82cd-5254004d77d3",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Copyright Type",
                         "options": [],
                         "placeholder": {
@@ -633,9 +607,7 @@
                     "card_id": "66575824-fa2d-4657-8c09-62e13a1ed6e5",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Publication Identifier Type",
                         "options": [],
                         "placeholder": {
@@ -655,9 +627,7 @@
                     "card_id": "14566eac-86b2-4263-8a0b-613537f02478",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Repository",
                         "placeholder": {
                             "en": ""
@@ -676,9 +646,7 @@
                     "card_id": "14566eac-86b2-4263-8a0b-613537f02478",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Collection Events",
                         "placeholder": {
                             "en": ""
@@ -698,11 +666,7 @@
                     "config": {
                         "defaultValue": "",
                         "format": "",
-                        "i18n_properties": [
-                            "placeholder",
-                            "prefix",
-                            "suffix"
-                        ],
+                        "i18n_properties": ["placeholder", "prefix", "suffix"],
                         "label": "Page Range End",
                         "max": "",
                         "min": "",
@@ -733,9 +697,7 @@
                     "card_id": "66575824-fa2d-4657-8c09-62e13a1ed6e5",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Journal or Volume the Publication was published in",
                         "placeholder": {
                             "en": "Select Journal or Publication Name"
@@ -754,9 +716,7 @@
                     "card_id": "14566eac-86b2-4263-8a0b-613537f02478",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Fossil Sample",
                         "placeholder": {
                             "en": ""
@@ -775,9 +735,7 @@
                     "card_id": "14566eac-86b2-4263-8a0b-613537f02478",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Fossil Type",
                         "placeholder": {
                             "en": ""
@@ -795,9 +753,7 @@
             ],
             "color": "rgba(37,168,152,1)",
             "config": {
-                "nodes": [
-                    "9f210d2d-e74a-11e6-84a6-026d961c88e6"
-                ]
+                "nodes": ["9f210d2d-e74a-11e6-84a6-026d961c88e6"]
             },
             "deploymentdate": null,
             "deploymentfile": null,
@@ -1477,10 +1433,7 @@
                         "falseLabel": {
                             "en": "Author list complete"
                         },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
+                        "i18n_properties": ["trueLabel", "falseLabel"],
                         "trueLabel": {
                             "en": "Additional unlisted authors"
                         }
@@ -1647,10 +1600,7 @@
                         "falseLabel": {
                             "en": "No"
                         },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
+                        "i18n_properties": ["trueLabel", "falseLabel"],
                         "trueLabel": {
                             "en": "Yes"
                         }

@@ -222,9 +222,7 @@
                     "card_id": "2371431c-70d9-11ed-9e2c-5254004d77d3",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Significance Ranking Details",
                         "options": [
                             {
@@ -381,9 +379,7 @@
                     "card_id": "b7c0c475-da15-4a18-b1ff-92ee0bbbce6e",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Significance Ranking Code",
                         "options": [
                             {
@@ -442,9 +438,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Photographer",
                         "maxLength": "80",
                         "placeholder": {
@@ -471,9 +465,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Photograph Description",
                         "maxLength": null,
                         "placeholder": {
@@ -538,9 +530,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Photograph View",
                         "maxLength": null,
                         "placeholder": {
@@ -562,9 +552,7 @@
                     "card_id": "5bfa11a6-b6e1-11ee-9438-080027b7463b",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Locational Precision",
                         "options": [],
                         "placeholder": {
@@ -589,9 +577,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Nearest Municipality",
                         "maxLength": null,
                         "placeholder": {
@@ -618,9 +604,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Detailed Location",
                         "maxLength": null,
                         "placeholder": {
@@ -647,9 +631,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "1:50k Mapsheet Number",
                         "maxLength": null,
                         "placeholder": {
@@ -723,9 +705,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Location Descriptor",
                         "maxLength": "40",
                         "placeholder": {
@@ -747,9 +727,7 @@
                     "card_id": "5bfa11a6-b6e1-11ee-9438-080027b7463b",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Geometry Qualifier",
                         "options": [],
                         "placeholder": {
@@ -774,9 +752,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "1:250k Mapsheet Name",
                         "maxLength": null,
                         "placeholder": {
@@ -803,9 +779,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "1:50k Mapsheet Name",
                         "maxLength": null,
                         "placeholder": {
@@ -847,9 +821,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Internal Notes",
                         "maxLength": null,
                         "placeholder": {
@@ -876,9 +848,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Historical Date String",
                         "maxLength": null,
                         "placeholder": {
@@ -905,9 +875,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Field Notes",
                         "maxLength": null,
                         "placeholder": {
@@ -929,9 +897,7 @@
                     "card_id": "945a5516-fa89-49f0-b388-bb2722725b87",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Collectors",
                         "placeholder": {
                             "en": ""
@@ -950,9 +916,7 @@
                     "card_id": "5e4ba65c-a079-11ec-bc6e-5254008afee6",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Samples Collected",
                         "placeholder": {
                             "en": ""
@@ -971,9 +935,7 @@
                     "card_id": "fa15d98f-3e13-4963-8857-9bf77fcc3724",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Fossil Abundance",
                         "options": [
                             {
@@ -1458,10 +1420,7 @@
                         "falseLabel": {
                             "en": "Non-significant"
                         },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
+                        "i18n_properties": ["trueLabel", "falseLabel"],
                         "trueLabel": {
                             "en": "Collection Event Significant"
                         }
@@ -2195,10 +2154,7 @@
                         "falseLabel": {
                             "en": "Collector Known"
                         },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
+                        "i18n_properties": ["trueLabel", "falseLabel"],
                         "trueLabel": {
                             "en": "Collector Unknown"
                         }

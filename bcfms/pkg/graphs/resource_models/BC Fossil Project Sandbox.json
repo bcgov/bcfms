@@ -70,9 +70,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Project Name",
                         "maxLength": null,
                         "placeholder": {
@@ -166,9 +164,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Area Description",
                         "maxLength": null,
                         "placeholder": {
@@ -215,9 +211,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Project Description",
                         "maxLength": null,
                         "placeholder": {

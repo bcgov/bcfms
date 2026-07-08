@@ -180,9 +180,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Note",
                         "maxLength": null,
                         "placeholder": {
@@ -209,9 +207,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Fossil Site Name",
                         "maxLength": null,
                         "placeholder": {
@@ -233,9 +229,7 @@
                     "card_id": "d08d1e4c-70d7-11ed-9c1b-5254004d77d3",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Significance Ranking Code",
                         "options": [],
                         "placeholder": {
@@ -255,9 +249,7 @@
                     "card_id": "23369344-1035-11ec-a3aa-5254008afee6",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Geometry Qualifiers",
                         "options": [],
                         "placeholder": {
@@ -277,9 +269,7 @@
                     "card_id": "f71e22ba-10aa-11ec-b169-5254008afee6",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Sub-sites",
                         "placeholder": {
                             "en": ""
@@ -350,9 +340,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Location Description",
                         "maxLength": null,
                         "placeholder": {
@@ -379,9 +367,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Photograph View",
                         "maxLength": null,
                         "placeholder": {
@@ -403,9 +389,7 @@
                     "card_id": "d08d1e4c-70d7-11ed-9c1b-5254004d77d3",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Significance Ranking Details",
                         "options": [
                             {
@@ -551,9 +535,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Photographer",
                         "maxLength": "80",
                         "placeholder": {
@@ -580,9 +562,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Photograph Description",
                         "maxLength": null,
                         "placeholder": {

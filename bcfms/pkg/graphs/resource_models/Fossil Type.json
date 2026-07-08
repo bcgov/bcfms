@@ -90,9 +90,7 @@
                     "card_id": "0f9d2510-6e5b-4c1a-a77c-7d64946d409a",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Size Category",
                         "options": [
                             {
@@ -130,9 +128,7 @@
                     "card_id": "d5e4c90a-33f7-4eb7-a513-cdfe5a47628e",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Related Names",
                         "placeholder": {
                             "en": ""
@@ -151,9 +147,7 @@
                     "card_id": "fdbc9f0e-1be8-11ec-abe5-5254008afee6",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Taxonomic Rank",
                         "options": [],
                         "placeholder": {
@@ -178,9 +172,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Species, Genus or Common Name",
                         "maxLength": null,
                         "placeholder": {
@@ -202,9 +194,7 @@
                     "card_id": "fdbc9f0e-1be8-11ec-abe5-5254008afee6",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Name Type",
                         "options": [
                             {
@@ -257,9 +247,7 @@
                     "card_id": "fdbc9f0e-1be8-11ec-abe5-5254008afee6",
                     "config": {
                         "defaultResourceInstance": [],
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Parent Genus if this is a Species",
                         "placeholder": {
                             "en": ""
@@ -564,10 +552,7 @@
                         "falseLabel": {
                             "en": "Alternate"
                         },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
+                        "i18n_properties": ["trueLabel", "falseLabel"],
                         "trueLabel": {
                             "en": "Primary"
                         }
@@ -716,10 +701,7 @@
                         "falseLabel": {
                             "en": "Common"
                         },
-                        "i18n_properties": [
-                            "trueLabel",
-                            "falseLabel"
-                        ],
+                        "i18n_properties": ["trueLabel", "falseLabel"],
                         "trueLabel": {
                             "en": "Significant"
                         }
