@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 AS base
+FROM ubuntu:24.04 AS base
 USER root
 ENV PROJECT_NAME=bcfms
 ## Setting default environment variables
@@ -24,14 +24,12 @@ RUN mkdir ${WEB_ROOT}
 RUN set -ex \
   && RUN_DEPS=" \
   build-essential \
-  python3.11-dev \
-  mime-support \
+  python3-dev \
+  media-types \
   libgdal-dev \
-  python3.11-venv \
   postgresql-client-16 \
-  python3.11 \
-  python3.11-distutils \
-  python3.11-venv \
+  python3 \
+  python3-venv \
   dos2unix \
   git \
   gettext \
@@ -43,8 +41,11 @@ RUN set -ex \
   && add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg main" \
   && apt-get update -y \
   && apt-get install -y --no-install-recommends $RUN_DEPS \
+  && apt-get remove -y python3-jwt python3-cryptography || true \
+  && apt-get autoremove -y \
+  && rm -f /usr/lib/python3.12/EXTERNALLY-MANAGED \
   && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
-  && python3.11 get-pip.py \
+  && python3 get-pip.py \
   && apt-get install -y nodejs
 #  && npm install -g yarn
 # Install Yarn components
