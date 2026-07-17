@@ -1,1 +1,1 @@
-graft *
+exclude bcfms/settings_local.py

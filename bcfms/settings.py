@@ -38,6 +38,7 @@ load_dotenv(
 APP_NAME = "bcfms"
 APP_VERSION = semantic_version.Version(major=1, minor=2, patch=2)
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+DEPLOYMENT_TIMESTAMP = get_env_variable("DEPLOYMENT_TIMESTAMP")
 
 # PROXY prefix used - NB - cannot have leading "/", and must have trailing "/"
 BCGOV_PROXY_PREFIX = get_env_variable("BCGOV_PROXY_PREFIX")
@@ -56,7 +57,7 @@ SEARCH_COMPONENT_LOCATIONS.append("bcfms.search.components")
 
 LOCALE_PATHS.insert(0, os.path.join(APP_ROOT, "locale"))
 
-FILE_TYPE_CHECKING = "Strict"
+FILE_TYPE_CHECKING = "strict"
 FILE_TYPES = [
     "bmp",
     "gif",
@@ -171,6 +172,9 @@ DATABASES = {
         "TEST": {"CHARSET": None, "COLLATION": None, "MIRROR": None, "NAME": None},
         "TIME_ZONE": None,
         "USER": get_env_variable("PGUSERNAME"),
+        "OPTIONS": {
+            "options": "-c cursor_tuple_fraction=1",
+        },
     }
 }
 
@@ -178,7 +182,6 @@ SEARCH_THUMBNAILS = False
 
 INSTALLED_APPS = (
     "webpack_loader",
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -190,7 +193,9 @@ INSTALLED_APPS = (
     "arches.app.models",
     "arches.management",
     "guardian",
-    "captcha",
+    "django_recaptcha",
+    "pgtrigger",
+    "django_migrate_sql",
     "revproxy",
     "corsheaders",
     "oauth2_provider",
@@ -199,9 +204,35 @@ INSTALLED_APPS = (
     # "silk",
     "storages",
     "bcfms",
+    "arches_querysets",
+    "arches_component_lab",
     "bcgov_arches_common",
 )
-INSTALLED_APPS += ("arches.app",)
+INSTALLED_APPS += ("arches.app", "django.contrib.admin")
+
+USE_VITE = False
+
+if USE_VITE:
+    INSTALLED_APPS += ("django_vite",)
+    DJANGO_VITE = {
+        "default": {
+            "dev_mode": False,
+            "dev_server_port": 5174,
+            "static_url_prefix": "/",
+        }
+    }
+
+    # django_vite SETTINGS
+    BASE_DIR = "/web_root/bcfms/bcfms/src"
+    # Where ViteJS assets are built.
+    DJANGO_VITE_ASSETS_PATH = os.path.join(BASE_DIR, "staticfiles", "dist")
+    # If use HMR or not.
+    # DJANGO_VITE_DEV_MODE = DEBUG
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:5174",
+        "http://localhost:81",
+    ]
+    # END django_vite SETTINGS
 
 ROOT_HOSTCONF = "bcfms.hosts"
 DEFAULT_HOST = "bcfms"
@@ -245,10 +276,15 @@ MIDDLEWARE.append(  # this must resolve last MIDDLEWARE entry
 )
 
 STATICFILES_DIRS = build_staticfiles_dirs(app_root=APP_ROOT)
+# STATICFILES_DIRS += (DJANGO_VITE_ASSETS_PATH,)
 
 TEMPLATES = build_templates_config(
     debug=DEBUG,
     app_root=APP_ROOT,
+)
+
+TEMPLATES[0]["OPTIONS"]["context_processors"] += (
+    "bcfms.util.context_processors.deployment_settings",
 )
 
 ALLOWED_HOSTS = get_env_variable("ALLOWED_HOSTS").split()
@@ -283,8 +319,6 @@ else:
 # Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = os.path.join(APP_ROOT, "staticfiles")
 
-OVERRIDE_RESOURCE_MODEL_LOCK = False
-
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, "logs", "resource_import.log")
 DEFAULT_RESOURCE_IMPORT_USER = {"username": "admin", "userid": 1}
 
@@ -310,16 +344,23 @@ LOGGING = {
         },
     },
     "loggers": {
-        "django": {
-            "handlers": ["file", "console"],
-            "level": "INFO",
-        },
+        # 'django.db.backends': {
+        #     'handlers': ['console'],
+        #     'level': 'DEBUG',  # DEBUG = log every SQL query
+        #     'propagate': False,
+        # },
         "arches": {
             "handlers": ["file", "console"],
-            "level": "DEBUG",
+            "level": "WARNING",
+            "propagate": True,
+        },
+        "django.request": {
+            "handlers": ["file", "console"],
+            "level": "WARNING",  # or consider ERROR if this is too noisy
             "propagate": True,
         },
         "bcfms": {"handlers": ["file", "console"], "level": "DEBUG", "propagate": True},
+        # "django.db.backends": {"level": "DEBUG", "handlers": ["console"], "propagate": False},
     },
 }
 
@@ -373,6 +414,16 @@ SILENCED_SYSTEM_CHECKS = ["arches.E002"]
 
 OAUTH_CLIENT_ID = ""  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
 
+SESSION_COOKIE_SAMESITE = None  # allows cookie to be sent on third‑party POSTs
+SESSION_COOKIE_SECURE = True  # required for SameSite=None
+CSRF_COOKIE_SAMESITE = None  # if using CSRF in session-backed mode
+CSRF_COOKIE_SECURE = True
+if MODE == "DEV":
+    # trust proxy headers for host/port/proto
+    USE_X_FORWARDED_HOST = True
+    CSRF_TRUSTED_ORIGINS = ["http://localhost:81"]
+    PUBLIC_ORIGIN = "http://localhost:81"
+
 AUTHLIB_OAUTH_CLIENTS = {
     "default": {
         "client_id": get_env_variable("OAUTH_CLIENT_ID"),
@@ -412,7 +463,7 @@ ENABLE_CAPTCHA = False
 NOCAPTCHA = True
 # RECAPTCHA_PROXY = 'http://127.0.0.1:8000'
 SILENCED_SYSTEM_CHECKS.append(  # this must resolve last MIDDLEWARE entry
-    "captcha.recaptcha_test_key_error"
+    "django_recaptcha.recaptcha_test_key_error"
 )
 
 
@@ -562,7 +613,7 @@ except ImportError:
 
 # Set this if the server-internal URL is different from the externally accessible URL
 WEBPACK_SERVER_ADDRESS = get_env_variable("WEBPACK_SERVER_ADDRESS")
-WEBPACK_DEVELOPMENT_SERVER_PORT = 9000
+WEBPACK_DEVELOPMENT_SERVER_PORT = 5174
 
 ARCHES_NAMESPACE_FOR_DATA_EXPORT = PUBLIC_SERVER_ADDRESS
 ADMIN_MEDIA_PREFIX = STATIC_URL + "admin/"
@@ -599,10 +650,24 @@ AWS_S3_PROXIES = {"https": get_env_variable("S3_PROXIES")}
 # This is the default if source isn't set as a parameter in the request
 TILESERVER_URL = "https://openmaps.gov.bc.ca/"
 BC_TILESERVER_URLS = {
-    "maps": "https://maps.gov.bc.ca/",
-    "openmaps": TILESERVER_URL,
-    "local": get_env_variable("TILESERVER_LOCAL_URL"),
+    "maps": {
+        "url": "https://maps.gov.bc.ca/",
+        "use_outbound_proxy": True,  # Use outbound proxy for this source
+    },
+    "openmaps": {
+        "url": TILESERVER_URL,
+        "use_outbound_proxy": True,  # Don't use outbound proxy for this source
+    },
+    "local": {
+        "url": get_env_variable("TILESERVER_LOCAL_URL"),
+        "use_outbound_proxy": False,  # Local doesn't need outbound proxy
+    },
+    # "local-feature": {
+    #     "url": get_env_variable("FEATURESERVER_LOCAL_URL"),
+    #     "use_outbound_proxy": False  # Local doesn't need outbound proxy
+    # },
 }
+
 
 AUTH_BYPASS_HOSTS = get_env_variable("AUTH_BYPASS_HOSTS")
 AUTH_NOACCESS_URL = "https://www2.gov.bc.ca/gov/content/industry/natural-resource-use/fossil-management/"

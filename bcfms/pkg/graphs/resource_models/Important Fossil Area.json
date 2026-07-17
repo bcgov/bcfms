@@ -146,9 +146,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Notes",
                         "maxLength": null,
                         "placeholder": {
@@ -175,9 +173,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Area Name",
                         "maxLength": null,
                         "placeholder": {
@@ -199,9 +195,7 @@
                     "card_id": "66fa7f80-e56c-4c75-a312-e97b9c8288a0",
                     "config": {
                         "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Potential Ranking",
                         "options": [],
                         "placeholder": {
@@ -226,9 +220,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Description",
                         "maxLength": null,
                         "placeholder": {

@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 as base
+FROM ubuntu:22.04 AS base
 USER root
 ENV PROJECT_NAME=bcfms
 ## Setting default environment variables
@@ -7,6 +7,9 @@ ENV APP_ROOT=${WEB_ROOT}/${PROJECT_NAME}
 # Root project folder
 ENV ARCHES_ROOT=${WEB_ROOT}/arches
 ENV ARCHES_COMMON_ROOT=${WEB_ROOT}/bcgov-arches-common
+# Arches Component Lab root
+ENV ARCHES_COMPONENT_LAB_ROOT=${WEB_ROOT}/arches-component-lab
+ENV ARCHES_QUERYSETS_ROOT=${WEB_ROOT}/arches-querysets
 ENV PG_TILESERV_ROOT=${WEB_ROOT}/pg_tileserv
 ENV WHEELS=/wheels
 ENV PYTHONUNBUFFERED=1
@@ -32,6 +35,7 @@ RUN set -ex \
   dos2unix \
   git \
   gettext \
+  vim \
   " \
   && apt-get install -y --no-install-recommends curl \
   && curl -sL https://deb.nodesource.com/setup_20.x | bash - \
@@ -51,13 +55,27 @@ RUN rm -rf /root/.cache/pip/*
 # FIXME: ADD from github repository instead?
 COPY ./arches ${ARCHES_ROOT}
 COPY ./bcgov-arches-common ${ARCHES_COMMON_ROOT}
+COPY ./arches-component-lab ${ARCHES_COMPONENT_LAB_ROOT}
+COPY ./arches-querysets ${ARCHES_QUERYSETS_ROOT}
 # From here, run commands from ARCHES_ROOT
 WORKDIR ${ARCHES_ROOT}
 RUN pip install -e .[dev]&& \
     pip install python-dotenv boto3==1.26 django-storages==1.13 oracledb html2text cffi redis && \
+    pip install django_vite && \
     pip install --upgrade cryptography PyJWT
 
+ARG INSTALL_PYCHARM_DEBUG=false
+RUN if [ "$INSTALL_PYCHARM_DEBUG" = "true" ]; then pip install pydevd-pycharm~=253.31033.139; fi
+
 WORKDIR ${ARCHES_COMMON_ROOT}
+RUN pip install -e .
+
+# Install Arches Component Lab
+WORKDIR ${ARCHES_COMPONENT_LAB_ROOT}
+RUN pip install -e .
+
+WORKDIR ${ARCHES_QUERYSETS_ROOT}
+RUN ls -l > ${ARCHES_COMMON_ROOT}/qs_list.txt
 RUN pip install -e .
 
 COPY ./bcfms/docker/entrypoint.sh ${WEB_ROOT}/entrypoint.sh
@@ -77,3 +95,21 @@ ENTRYPOINT ["../entrypoint.sh"]
 CMD ["run_arches"]
 # Expose port 8000
 EXPOSE 8000
+
+# ---- Jupyter stage ----
+FROM base AS jupyter
+COPY ./bcfms/pyproject.toml ${APP_ROOT}/pyproject.toml
+RUN pip install --no-cache-dir --group jupyter
+
+#RUN mkdir -p ${APP_ROOT}/notebooks
+WORKDIR ${APP_ROOT}
+
+CMD jupyter server \
+     --ip=0.0.0.0 \
+     --port=8888 \
+     --no-browser \
+     --allow-root \
+     ${JUPYTER_TOKEN:+--IdentityProvider.token=${JUPYTER_TOKEN}} \
+     --ServerApp.notebook_dir=/web_root/bcfms/notebooks
+
+EXPOSE 8888

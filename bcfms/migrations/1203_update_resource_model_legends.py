@@ -1,6 +1,5 @@
 from django.db import migrations
 
-
 update_legend_sql = """
         update nodes
         set config =

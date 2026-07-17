@@ -16,15 +16,12 @@ class TestIPADataProxy(ArchesTestCase):
     def setUp(self):
 
         cursor = connection.cursor()
-        cursor.execute(
-            """ 
+        cursor.execute(""" 
                     with graph as (select * from graphs where slug = 'project_assessment')
                         select __arches_create_resource_model_views(graph.graphid) from graph;
-         """
-        )
+         """)
         cursor.execute("drop function if exists bc_i18n;")
-        cursor.execute(
-            """ 
+        cursor.execute(""" 
         create or replace function bc_i18n(value text) returns jsonb as
         $$
         DECLARE
@@ -33,8 +30,7 @@ class TestIPADataProxy(ArchesTestCase):
         end
         $$
             language plpgsql;
-                 """
-        )
+                 """)
         pass
 
     def add_ipa_number(self, abbreviation):

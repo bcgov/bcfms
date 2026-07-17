@@ -1,5 +1,10 @@
 @import "map_legend.css";
 @import url("node_modules/bcgov_arches_common/bcgov_arches_common/media/css/project.css");
+:root {
+    --p-standard-font-size: 1.4rem;
+}
+
+
 /* Index page */
 .tp-caption {
    left: 0 !important;
@@ -55,11 +60,76 @@ dl.stratigraphy > dd > div.stratigraphy-level > div
    font-style: italic;
 }
 
+.p-datepicker-panel {
+    min-width: unset !important;
+    width: 300px !important;
+}
 
+.p-select-empty-message,
+.p-select-options,
+.p-select-option,
+.p-select-label,
+.p-select-overlay {
+    font-size: var(--p-standard-font-size) !important;
+}
+
+.p-select-option, .p-select-option-label{
+    padding-top: 0.2rem !important;
+    padding-bottom: 0.2rem !important;
+    height: unset !important;
+}
+
+.p-fieldset {
+    border: solid thin #999;
+    margin: 1rem 0;
+    padding: 0 1rem;
+    padding-bottom: 0.5rem;
+}
+.p-fieldset-legend {
+    font-size: 2.0rem;
+    font-weight: 300;
+    margin-top: -.6rem;
+    margin-left: 1rem;
+    padding: 0 .5rem;
+    width: fit-content;
+}
+.p-radiobutton {
+    align-self: start;
+    margin-right: .5rem;
+}
+.bcgov-vertical-step-panels {
+    max-width: calc(100% - 200px);
+}
+.p-inputtext-fluid.inline-block {
+    width: calc(100% - 6.5rem);
+    margin-right: 1rem;
+    vertical-align: top;
+    align-self: start;
+}
+.inline-block {
+    vertical-align: top;
+}
+.p-checkbox {
+    vertical-align: top;
+    margin-right: .5rem;
+}
+.stepper-nav-panel {
+    background: var(--p-panel-background);
+    display: flex;
+    height: 50px;
+    align-items: flex-start;
+    margin-top: .25rem;
+    justify-content: space-between;
+}
+.p-fileupload-advanced {
+    max-width: 350px;
+}
+.next-button {
+    right: 1rem;
+}
 .bc-details-tab dt {
    width: 300px !important;
 }
-
 .empty-section {
    color: lightgray !important;
    font-style: italic;

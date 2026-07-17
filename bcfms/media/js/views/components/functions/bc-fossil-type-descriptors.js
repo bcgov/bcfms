@@ -1,35 +1,38 @@
-define(['jquery',
-    'underscore',
-    'arches',
-    'knockout',
-    'knockout-mapping',
-    'viewmodels/function',
-    'bindings/chosen',
-    'views/components/simple-switch',
-    'templates/views/components/functions/bc-fossil-type-descriptors.htm'],
-function($, _, arches, ko, koMapping, FunctionViewModel, chosen, simpleSwitch, defaultFossilsDescriptorsTemplate) {
-    return ko.components.register('views/components/functions/bc-fossil-type-descriptors', {
-        viewModel: function(params) {
+import $ from 'jquery';
+import _ from 'underscore';
+import arches from 'arches';
+import ko from 'knockout';
+import koMapping from 'knockout-mapping';
+import FunctionViewModel from 'viewmodels/function-view-model';
+import chosen from 'bindings/chosen';
+import simpleSwitch from 'views/components/simple-switch';
+import defaultFossilsDescriptorsTemplate from 'templates/views/components/functions/bc-fossil-type-descriptors.htm';
+export default ko.components.register(
+    'views/components/functions/bc-fossil-type-descriptors',
+    {
+        viewModel: function (params) {
             FunctionViewModel.apply(this, arguments);
 
-            this.reindexdb = function(){
+            this.reindexdb = function () {
                 this.loading(true);
                 $.ajax({
-                    type: "POST",
+                    type: 'POST',
                     url: arches.urls.reindex,
                     context: this,
-                    data: JSON.stringify({'graphids': [this.graph.graphid]}),
-                    error: function() {
+                    data: JSON.stringify({ graphids: [this.graph.graphid] }),
+                    error: function () {
                         console.log('error');
                     },
-                    complete: function(){
+                    complete: function () {
                         this.loading(false);
-                    }
+                    },
                 });
             };
 
-            window.setTimeout(function(){$("select[data-bind^=chosen]").trigger("chosen:updated");}, 300);
+            window.setTimeout(function () {
+                $('select[data-bind^=chosen]').trigger('chosen:updated');
+            }, 300);
         },
-        template: defaultFossilsDescriptorsTemplate
-    });
-});
+        template: defaultFossilsDescriptorsTemplate,
+    },
+);

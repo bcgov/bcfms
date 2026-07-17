@@ -247,9 +247,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Storage Location Name",
                         "maxLength": null,
                         "placeholder": {
@@ -276,9 +274,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "City",
                         "maxLength": null,
                         "placeholder": {
@@ -305,9 +301,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Address Line 1",
                         "maxLength": null,
                         "placeholder": {
@@ -334,9 +328,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Address Line 2",
                         "maxLength": null,
                         "placeholder": {
@@ -358,9 +350,7 @@
                     "card_id": "2e2e3db8-0b03-11ee-ae56-5254004d77d3",
                     "config": {
                         "defaultValue": "992e6e03-6d42-493a-8bd6-34a089de52d6",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Province",
                         "options": [],
                         "placeholder": {
@@ -385,9 +375,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Postal Code",
                         "maxLength": null,
                         "placeholder": {
@@ -414,9 +402,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Address Notes",
                         "maxLength": null,
                         "placeholder": {
@@ -443,9 +429,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Storage Location Code",
                         "maxLength": null,
                         "placeholder": {
@@ -519,9 +503,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Place Description",
                         "maxLength": null,
                         "placeholder": {
@@ -548,9 +530,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Email Address",
                         "maxLength": null,
                         "placeholder": {
@@ -577,9 +557,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Note",
                         "maxLength": null,
                         "placeholder": {
@@ -606,9 +584,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Alternate Code",
                         "maxLength": null,
                         "placeholder": {
@@ -635,9 +611,7 @@
                                 "value": ""
                             }
                         },
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
+                        "i18n_properties": ["placeholder"],
                         "label": "Alternate Name",
                         "maxLength": null,
                         "placeholder": {

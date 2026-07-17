@@ -1,0 +1,7 @@
+# App-specific environment files
+GITHUB_APP_REPO=bcgov/bcfms
+
+FORCE_CORE_PIP_INSTALL=True
+CORE_REPO_TAG=stable/8.0.10_bcgov_12578_12377_12616_12502_12697_12610
+COMMON_REPO_TAG=release/2.0.x
+CONFIG_BRANCH=latest

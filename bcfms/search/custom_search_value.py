@@ -133,7 +133,9 @@ class CustomSearchValue(EsMappingModifier):
         return new_must_element
 
     @staticmethod
-    def add_search_filter(search_query, term):
+    def add_search_filter(
+        search_query, term, permitted_nodegroups, include_provisional
+    ):
         # print("Search query before: %s" % search_query)
         original_must_filter = search_query.dsl["bool"]["must"]
         search_query.dsl["bool"]["must"] = []

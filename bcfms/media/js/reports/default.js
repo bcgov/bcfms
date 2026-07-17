@@ -1,17 +1,12 @@
-define([
-        'knockout',
-        'viewmodels/bcfms-report',
-        'templates/views/report-templates/bcfms_default.htm',
-], function (ko, ReportViewModel, defaultTemplate) {
-    const viewModel = function(params) {
-        params.configKeys = [];
+import ko from 'knockout';
+import ReportViewModel from 'viewmodels/bcfms-report';
+import defaultTemplate from 'templates/views/report-templates/bcfms_default.htm';
+const viewModel = function (params) {
+    params.configKeys = [];
+    ReportViewModel.apply(this, [params]);
+};
 
-
-        ReportViewModel.apply(this, [params]);
-    };
-
-    return ko.components.register('default-report', {
-        viewModel: viewModel,
-        template: defaultTemplate
-    });
+export default ko.components.register('default-report', {
+    viewModel: viewModel,
+    template: defaultTemplate,
 });

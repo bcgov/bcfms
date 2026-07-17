@@ -67,7 +67,7 @@ init_arches() {
 
 		cd ${WEB_ROOT}
 
-		arches-project create ${ARCHES_PROJECT}
+		arches-admin startproject ${ARCHES_PROJECT}
 		run_setup_db
 
 		exit_code=$?
@@ -147,7 +147,7 @@ run_django_server() {
     echo "Running Django"
 #  exec pip list && top
 #  exec top
-	exec sh -c "pip install debugpy -t /tmp && ${PYTHON_EXEC} -Wdefault /tmp/debugpy --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:${DJANGO_PORT}"
+	exec ${PYTHON_EXEC} -Wdefault manage.py runserver 0.0.0.0:${DJANGO_PORT}
 }
 
 run_livereload_server() {
