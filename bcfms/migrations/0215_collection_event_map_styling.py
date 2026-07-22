@@ -32,6 +32,9 @@ def fix_collection_event_map_style(apps, schema_editor):
     node.config["advancedStyling"] = True
     node.config["advancedStyle"] = advanced_style
     node.save()
+    # graph.nodes was populated at init from the published graph cache (advancedStyling=False).
+    # Reload from the live nodes table so the serialization picks up the saved value.
+    graph.refresh_from_database()
     graph.update_published_graphs(notes="Fixed advanced styling.")
 
 
@@ -45,6 +48,7 @@ def revert_collection_event_map_style(apps, schema_editor):
     node.config["advancedStyling"] = False
     node.config["advancedStyle"] = ""
     node.save()
+    graph.refresh_from_database()
     graph.update_published_graphs(notes="Reverted advanced styling to default.")
 
 
