@@ -21,6 +21,7 @@
         "paths": {
             "geojson": ["./node_modules/@types/geojson/index.d.ts"],
             "js-cookie": ["./node_modules/@types/js-cookie/index.d.ts"],
+            "uuidesm": ["./node_modules/uuid/dist"],
             "@/bcfms/*": ["./bcfms/src/bcfms/*"],
             "@/bcgov_arches_common/*": [
                 "./node_modules/bcgov_arches_common/bcgov_arches_common/src/bcgov_arches_common/*"
