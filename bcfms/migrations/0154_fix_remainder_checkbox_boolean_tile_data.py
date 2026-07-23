@@ -187,15 +187,26 @@ def get_nodes_to_update():
     return result
 
 
-def reindex_contributors(apps, schema_editor):
-    for graph, nodes in get_nodes_to_update():
-        call_command(
-            "es",
-            operation="index_resources_by_type",
-            resource_types=[graph.graphid],
-            clear_index=True,
-            quiet=True,
+def reset_geojson_node_configs(source_graph, draft_graph):
+    # There is a bug in arches core that resets the geojson advanced styling every time a draft is created
+    geojson_nodes = [
+        node
+        for node in source_graph.node_set.all()
+        if node.datatype == "geojson-feature-collection"
+    ]
+    for node in geojson_nodes:
+        draft_node = next(
+            (
+                d_node
+                for d_node in draft_graph.node_set.all()
+                if d_node.alias == node.alias
+            ),
+            None,
         )
+        if draft_node:
+            print(f"Resetting geojson node config {draft_node.alias} in draft graph")
+            draft_node.config = node.config
+            draft_node.save()
 
 
 def fix_default_value(apps, schema_editor):
@@ -214,6 +225,10 @@ def fix_default_value(apps, schema_editor):
         if not draft_graph:
             print(f"\tno draft, creating one")
             draft_graph = source_graph.create_draft_graph()
+
+        # Fix the GeoJSON nodes - bug in core that causes all advanced styles to be cleared
+        reset_geojson_node_configs(source_graph, draft_graph)
+
         for node_to_update in nodes:
             cnw_to_update = models.CardXNodeXWidget.objects.get(node=node_to_update)
             print(f"\tConfig: {cnw_to_update.config}")
