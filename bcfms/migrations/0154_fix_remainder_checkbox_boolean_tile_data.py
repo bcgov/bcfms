@@ -378,6 +378,10 @@ drop_backup_sql = """
 DROP TABLE bcfms_checkbox_boolean_tile_backup_154;
 """
 
+refresh_geometry_sql = """
+select refresh_geojson_geometries();
+"""
+
 
 class Migration(migrations.Migration):
     dependencies = [
@@ -386,11 +390,11 @@ class Migration(migrations.Migration):
 
     operations = [
         # The reindex will take too long to run as part of the migration. Release will need a full reindex afterwards
-        # migrations.RunPython(migrations.RunPython.noop, reindex_contributors),
+        migrations.RunSQL(migrations.RunSQL.noop, refresh_geometry_sql),
         migrations.RunPython(fix_default_value, revert_default_value),
         migrations.RunSQL(
             sql=[backup_sql, fix_tile_data_sql],
             reverse_sql=[revert_tile_data_sql, drop_backup_sql],
         ),
-        # migrations.RunPython(reindex_contributors, migrations.RunPython.noop),
+        migrations.RunSQL(refresh_geometry_sql, migrations.RunSQL.noop),
     ]
